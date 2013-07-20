@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2013 ParanoidAndroid Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <CheckBoxPreference
+        android:key="expertmode"
+        android:title="@string/settings_expertmode_title"
+        android:summary="@string/settings_expertmode_summary" />
+
+    <PreferenceCategory
+        android:key="settings_update"
+        android:title="@string/settings_update" >
+
+        <ListPreference
+            android:key="checktime"
+            android:title="@string/settings_checktime_title"
+            android:summary="@string/settings_checktime_summary"
+            android:dialogTitle="@string/settings_checktime_title"
+            android:entries="@array/time_notifications_entries"
+            android:entryValues="@array/time_notifications_values" />  
+
+        <Preference
+            android:key="downloadpath"
+            android:title="@string/settings_download_path" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory 
+        android:key="settings_recovery"
+        android:title="@string/settings_recovery" >
+
+        <Preference
+            android:key="recovery"
+            android:summary="@string/settings_selectrecovery_summary"
+            android:title="@string/settings_selectrecovery_title" />
+
+        <Preference
+            android:key="internal-storage"
+            android:summary="@string/settings_internalsdcard_summary"
+            android:title="@string/settings_internalsdcard_title" />
+
+        <Preference
+            android:key="external-storage"
+            android:summary="@string/settings_externalsdcard_summary"
+            android:title="@string/settings_externalsdcard_title" />
+
+        <MultiSelectListPreference
+            android:key="showoptions"
+            android:title="@string/settings_showoptions_title"
+            android:summary="@string/settings_showoptions_summary"
+            android:entries="@array/install_options_entries"
+            android:entryValues="@array/install_options_values" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
