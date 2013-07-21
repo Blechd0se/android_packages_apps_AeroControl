@@ -16,6 +16,7 @@
 
 package com.paranoid.paranoidota.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -48,7 +49,11 @@ public class ChangelogFragment extends Fragment {
 
             public void onPageFinished(WebView view, String url) {
                 // When page is loaded, hide progress bar on activity
-                getActivity().setProgressBarVisibility(false);
+                Activity act = getActivity();
+                if (act == null) {
+                    return;
+                }
+                act.setProgressBarVisibility(false);
             }
 
             public void onReceivedError(WebView view, int errorCode, String description,
@@ -57,7 +62,9 @@ public class ChangelogFragment extends Fragment {
                 Toast.makeText(getActivity(), R.string.changelog_error, Toast.LENGTH_SHORT).show();
             }
         });
-        webView.loadUrl(CHANGELOG_URL);
+        if (savedInstanceState == null) {
+            webView.loadUrl(CHANGELOG_URL);
+        }
         return rootView;
     }
 
