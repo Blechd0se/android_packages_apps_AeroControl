@@ -123,11 +123,16 @@ public class DownloadHelper {
             sDownloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         }
         sSettingsHelper = new SettingsHelper(sContext);
-        checkDownloadFinished(true);
-        checkDownloadFinished(false);
+        checkDownloadFinished(true, true);
+        checkDownloadFinished(false, true);
     }
 
-    private static void checkDownloadFinished(boolean isRom) {
+    public static void clearDownload() {
+        checkDownloadFinished(true, false);
+        checkDownloadFinished(false, false);
+    }
+
+    private static void checkDownloadFinished(boolean isRom, boolean installIfFinished) {
         long id = isRom ? sSettingsHelper.getDownloadRomId() : sSettingsHelper.getDownloadGappsId();
         if (id == -1L) {
             return;
@@ -146,9 +151,11 @@ public class DownloadHelper {
                     removeDownload(id, isRom, true);
                     break;
                 case DownloadManager.STATUS_SUCCESSFUL:
-                    String uriString = cursor.getString(cursor
-                            .getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-                    sCallback.onDownloadFinished(Uri.parse(uriString), md5, isRom);
+                    if (installIfFinished) {
+                        String uriString = cursor.getString(cursor
+                                .getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                        sCallback.onDownloadFinished(Uri.parse(uriString), md5, isRom);
+                    }
                     removeDownload(id, isRom, false);
                     break;
                 default:

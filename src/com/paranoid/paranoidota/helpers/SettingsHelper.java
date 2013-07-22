@@ -38,6 +38,7 @@ public class SettingsHelper {
     public static final String PROPERTY_EXPERT = "expertmode";
     public static final String PROPERTY_CHECK_TIME = "checktime";
     public static final String PROPERTY_DOWNLOAD_PATH = "downloadpath";
+    public static final String PROPERTY_DOWNLOAD_FINISHED = "downloadfinished";
     public static final String PROPERTY_RECOVERY = "recovery";
     public static final String PROPERTY_INTERNAL_STORAGE = "internal-storage";
     public static final String PROPERTY_EXTERNAL_STORAGE = "external-storage";
@@ -53,6 +54,7 @@ public class SettingsHelper {
     private static final String DEFAULT_CHECK_TIME = "18000000"; // five hours
     private static final String DEFAULT_DOWNLOAD_PATH = new File(Environment
             .getExternalStorageDirectory(), "paranoidota/").getAbsolutePath();
+    private static final boolean DEFAULT_DOWNLOAD_FINISHED = true;
     private static final String DEFAULT_RECOVERY = "cwmbased";
     private static final String DEFAULT_INTERNAL_STORAGE = "emmc";
     private static final String DEFAULT_EXTERNAL_STORAGE = "sdcard";
@@ -118,6 +120,10 @@ public class SettingsHelper {
 
     public void setDownloadPath(String path) {
         savePreference(PROPERTY_DOWNLOAD_PATH, path);
+    }
+
+    public boolean getDownloadFinished() {
+        return settings.getBoolean(PROPERTY_DOWNLOAD_FINISHED, DEFAULT_DOWNLOAD_FINISHED);
     }
 
     public long getCheckTime() {

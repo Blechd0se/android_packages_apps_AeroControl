@@ -45,6 +45,7 @@ public class SettingsActivity extends PreferenceActivity implements
     private CheckBoxPreference mExpertMode;
     private ListPreference mCheckTime;
     private Preference mDownloadPath;
+    private CheckBoxPreference mDownloadFinished;
     private PreferenceCategory mRecoveryCategory;
     private Preference mRecovery;
     private Preference mInternalSdcard;
@@ -67,6 +68,7 @@ public class SettingsActivity extends PreferenceActivity implements
         mExpertMode = (CheckBoxPreference) findPreference(SettingsHelper.PROPERTY_EXPERT);
         mCheckTime = (ListPreference) findPreference(SettingsHelper.PROPERTY_CHECK_TIME);
         mDownloadPath = findPreference(SettingsHelper.PROPERTY_DOWNLOAD_PATH);
+        mDownloadFinished = (CheckBoxPreference) findPreference(SettingsHelper.PROPERTY_DOWNLOAD_FINISHED);
         mRecovery = findPreference(SettingsHelper.PROPERTY_RECOVERY);
         mInternalSdcard = findPreference(SettingsHelper.PROPERTY_INTERNAL_STORAGE);
         mExternalSdcard = findPreference(SettingsHelper.PROPERTY_EXTERNAL_STORAGE);
@@ -79,6 +81,7 @@ public class SettingsActivity extends PreferenceActivity implements
 
         mExpertMode.setDefaultValue(mSettingsHelper.getExpertMode());
         mCheckTime.setValue(String.valueOf(mSettingsHelper.getCheckTime()));
+        mDownloadFinished.setChecked(mSettingsHelper.getDownloadFinished());
         mOptions.setDefaultValue(mSettingsHelper.getShowOptions());
 
         updateSummaries();

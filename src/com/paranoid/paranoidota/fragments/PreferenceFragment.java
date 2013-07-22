@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.paranoid.paranoidota.IOUtils;
 import com.paranoid.paranoidota.MainActivity;
+import com.paranoid.paranoidota.R;
 import com.paranoid.paranoidota.helpers.DownloadHelper;
 import com.paranoid.paranoidota.helpers.SettingsHelper;
 import com.paranoid.paranoidota.updater.Updater;
@@ -51,6 +52,10 @@ public abstract class PreferenceFragment extends android.preference.PreferenceFr
             int index = Integer.parseInt(preference.getKey());
             PackageInfo info = mPackages[index];
             DownloadHelper.downloadFile(info.getPath(), info.getFilename(), info.getMd5(), isRom());
+            Toast.makeText(
+                    mContext,
+                    mContext.getResources().getString(R.string.download_title,
+                            new Object[] { info.getFilename() }), Toast.LENGTH_LONG).show();
             return false;
         }
     };

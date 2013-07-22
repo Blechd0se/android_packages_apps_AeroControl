@@ -17,6 +17,10 @@
 
 package com.paranoid.paranoidota;
 
+import com.paranoid.paranoidota.helpers.DownloadHelper;
+import com.paranoid.paranoidota.helpers.SettingsHelper;
+
+import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +29,14 @@ public class DownloadReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        String action = intent.getAction();
+        if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+            SettingsHelper helper = new SettingsHelper(context);
+            if (!helper.getDownloadFinished()) {
+                DownloadHelper.clearDownload();
+                return;
+            }
+        }
         Intent i = new Intent(context, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP
                 | Intent.FLAG_ACTIVITY_CLEAR_TOP);

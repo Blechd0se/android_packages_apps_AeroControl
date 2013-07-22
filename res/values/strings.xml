@@ -83,6 +83,8 @@
     <string name="settings_download_path_alert_title">Downloads path</string>
     <string name="settings_download_path_alert_summary">Specify the path to save the downloads</string>
     <string name="settings_download_path_alert_error">Please specify the path to save the downloads</string>
+    <string name="settings_download_finished_title">Open app on download finished</string>
+    <string name="settings_download_finished_summary">Untick this option if you want to manually enter the app after a download is completed</string>
     <string name="settings_recovery">Recovery</string>
     <string name="settings_selectrecovery_title">Select recovery</string>
     <string name="settings_selectrecovery_summary">Select the recovery installed in your device</string>

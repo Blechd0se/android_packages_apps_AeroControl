@@ -34,11 +34,16 @@
             android:summary="@string/settings_checktime_summary"
             android:dialogTitle="@string/settings_checktime_title"
             android:entries="@array/time_notifications_entries"
-            android:entryValues="@array/time_notifications_values" />  
+            android:entryValues="@array/time_notifications_values" />
 
         <Preference
             android:key="downloadpath"
             android:title="@string/settings_download_path" />
+
+        <CheckBoxPreference
+            android:key="downloadfinished"
+            android:title="@string/settings_download_finished_title"
+            android:summary="@string/settings_download_finished_summary" />
 
     </PreferenceCategory>
 
