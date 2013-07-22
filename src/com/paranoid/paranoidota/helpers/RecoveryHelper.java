@@ -323,7 +323,7 @@ public class RecoveryHelper {
     }
 
     public String[] getCommands(String[] items, boolean wipeSystem, boolean wipeData,
-            boolean wipeCaches, String backupFolder, String backupOptions, String restore)
+            boolean wipeCaches, String backupFolder, String backupOptions)
             throws Exception {
         List<String> commands = new ArrayList<String>();
 
@@ -335,12 +335,6 @@ public class RecoveryHelper {
 
         switch (info.getId()) {
             default:
-
-                if (restore != null) {
-                    commands.add("restore_rom(\"/" + internalStorage + "/clockworkmod/backup/"
-                            + restore
-                            + "\", \"boot\", \"system\", \"data\", \"cache\", \"sd-ext\")");
-                }
 
                 if (backupFolder != null) {
                     commands.add("backup_rom(\"/" + internalStorage + "/clockworkmod/backup/"
@@ -374,18 +368,6 @@ public class RecoveryHelper {
 
                 boolean hasAndroidSecure = hasAndroidSecure();
                 boolean hasSdExt = hasSdExt();
-
-                if (restore != null) {
-                    String str = "restore /" + internalStorage + "/TWRP/BACKUPS/" + restore
-                            + " SDCR123B";
-                    if (hasAndroidSecure) {
-                        str += "A";
-                    }
-                    if (hasSdExt) {
-                        str += "E";
-                    }
-                    commands.add(str);
-                }
 
                 if (backupFolder != null) {
                     String str = "backup ";

@@ -127,6 +127,22 @@ public class InstallOptionsCursor extends AbstractCursor {
         return isOption("BACKUP");
     }
 
+    public boolean hasWipeSystem() {
+        return hasOption("WIPESYSTEM");
+    }
+
+    public boolean hasWipeData() {
+        return hasOption("WIPEDATA");
+    }
+
+    public boolean hasWipeCaches() {
+        return hasOption("WIPECACHES");
+    }
+
+    public boolean hasBackup() {
+        return hasOption("BACKUP");
+    }
+
     public String getIsCheckedColumn() {
         return "CHECKED";
     }
@@ -139,6 +155,15 @@ public class InstallOptionsCursor extends AbstractCursor {
         for (int i = 0; i < getCount(); i++) {
             if (option.equals(mOption[i])) {
                 return mChecked[i] == 1;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasOption(String option) {
+        for (int i = 0; i < getCount(); i++) {
+            if (option.equals(mOption[i])) {
+                return true;
             }
         }
         return false;
