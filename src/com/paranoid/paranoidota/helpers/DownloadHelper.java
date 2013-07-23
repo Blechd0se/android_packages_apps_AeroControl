@@ -219,14 +219,14 @@ public class DownloadHelper {
         new AlertDialog.Builder(sContext)
                 .setTitle(R.string.cancel_download_alert_title)
                 .setMessage(R.string.cancel_download_alert_summary)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.cancel_download_alert_yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
                         removeDownload(id, isRom, true);
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel_download_alert_no, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
