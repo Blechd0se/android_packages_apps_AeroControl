@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <string name="app_name">Paranoid OTA</string>
+    <string name="app_name">Aero Control</string>
     <string name="slider_updates">Updates</string>
     <string name="slider_rom">ROM</string>
     <string name="slider_google_apps">Google apps</string>
