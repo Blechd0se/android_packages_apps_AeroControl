@@ -20,6 +20,7 @@
     <string name="slider_updates">Updates</string>
     <string name="slider_rom">ROM</string>
     <string name="slider_google_apps">Google apps</string>
+    <string name="slider_kernel_features">Kernel Features</string>
     <string name="slider_changelog">Changelog</string>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open navigation drawer</string>

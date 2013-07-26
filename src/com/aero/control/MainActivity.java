@@ -52,6 +52,7 @@ import android.widget.Toast;
 import com.aero.control.ListItems.PreferenceItem;
 import com.aero.control.Utils.NotificationInfo;
 import com.aero.control.activities.SettingsActivity;
+import com.aero.control.fragments.KernelFragment;
 import com.aero.control.fragments.ChangelogFragment;
 import com.aero.control.fragments.GappsFragment;
 import com.aero.control.fragments.RomFragment;
@@ -77,11 +78,13 @@ public class MainActivity extends Activity implements DownloadCallback, Notifica
     private static final int CHECK_UPDATES = 0;
     private static final int ROM = 1;
     private static final int GOOGLE_APPS = 2;
+    private static final int KERNEL_FEATURES = 3;
     private static final int CHANGELOG = 4;
 
     private UpdateFragment mUpdateFragment;
     private RomFragment mRomFragment;
     private GappsFragment mGappsFragment;
+    private KernelFragment mKernelFragment;
     private ChangelogFragment mChangelogFragment;
 
     private RomUpdater mRomUpdater;
@@ -404,8 +407,8 @@ public class MainActivity extends Activity implements DownloadCallback, Notifica
     }
 
     private void selectItem(int position) {
-        Fragment fragment = null;
-
+    	Fragment fragment = null;
+    		
         switch (position) {
             case CHECK_UPDATES:
                 if (mUpdateFragment == null) {
@@ -428,6 +431,12 @@ public class MainActivity extends Activity implements DownloadCallback, Notifica
                 mGappsFragment.setUpdater(mGappsUpdater);
                 fragment = mGappsFragment;
                 break;
+            case KERNEL_FEATURES:
+                if (mKernelFragment == null) {
+                    mKernelFragment = new KernelFragment();
+                }
+                fragment = mKernelFragment;
+                break;    
             case CHANGELOG:
                 if (mChangelogFragment == null) {
                     setProgressBarIndeterminate(true);
@@ -468,6 +477,10 @@ public class MainActivity extends Activity implements DownloadCallback, Notifica
 
     public void switchContent(final Fragment fragment) {
         getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+    }
+    
+    public void switchContentKernel(final Fragment mKernelFragment2) {
+        getFragmentManager().beginTransaction().replace(R.id.content_frame, mKernelFragment2).commit();
     }
 
     @Override

@@ -21,6 +21,7 @@
         <item>@string/slider_updates</item>
         <item>@string/slider_rom</item>
         <item>@string/slider_google_apps</item>
+        <item>@string/slider_kernel_features</item>
         <item>@string/slider_changelog</item>
     </string-array>
 
