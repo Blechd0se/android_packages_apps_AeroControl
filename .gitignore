@@ -1,6 +1,7 @@
 /assets/
 /bin/
-/gen/
+*/gen/
+*/out/
 .classpath
 .project
 project.properties
