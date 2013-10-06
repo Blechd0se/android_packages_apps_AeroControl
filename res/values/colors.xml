@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="host_action_bar_background">#ffdddddd</color>
-    <color name="notifications_text_color">#ffffffff</color>
-    <color name="notification_count_background">#ffdd4b39</color>
-</resources>

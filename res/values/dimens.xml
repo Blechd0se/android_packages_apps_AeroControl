@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="notification_count_radius">3.0sp</dimen>
-    <dimen name="notification_count_long_width">25.0dip</dimen>
-</resources>
