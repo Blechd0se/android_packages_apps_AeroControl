@@ -15,7 +15,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7820921b-a183-4104-97ee-16dbded86385" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
     </list>
     <ignored path="AeroControl.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,7 +82,7 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="5" selection-start="602" selection-end="602" vertical-scroll-proportion="0.46357617" vertical-offset="0" max-vertical-offset="780">
+            <state line="17" column="72" selection-start="604" selection-end="604" vertical-scroll-proportion="0.5629139" vertical-offset="0" max-vertical-offset="555">
               <folding />
             </state>
           </provider>
@@ -508,7 +508,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="5" selection-start="602" selection-end="602" vertical-scroll-proportion="0.46357617" vertical-offset="0" max-vertical-offset="780">
+        <state line="17" column="72" selection-start="604" selection-end="604" vertical-scroll-proportion="0.5629139" vertical-offset="0" max-vertical-offset="555">
           <folding />
         </state>
       </provider>
