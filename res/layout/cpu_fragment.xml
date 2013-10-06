@@ -1,0 +1,29 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory android:title="@string/pref_cpu_freq">
+
+        <ListPreference
+            android:key="max_frequency"
+            android:title="@string/pref_cpu_freqmax"
+            android:summary="@string/pref_cpu_freqmax" />
+
+        <ListPreference
+            android:key="min_frequency"
+            android:title="@string/pref_cpu_freqmin"
+            android:summary="@string/pref_cpu_freqmin" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_cpu_governor">
+
+        <ListPreference
+            android:key="set_governor"
+            android:title="@string/pref_gov_choose"
+            android:summary="@string/pref_gov_choose_sum" />
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

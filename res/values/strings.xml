@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">Aero Control</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="error_detected">Error ?</string>
+
+    <!-- Default Navigation Drawer entries -->
+
+    <string name="slider_overview">Overview</string>
+    <string name="slider_cpu_settings">CPU Settings</string>
+    <string name="slider_gpu_settings">GPU Settings</string>
+    <string name="slider_memory_settings">Memory Settings</string>
+    <string name="slider_defy_parts">Defy Parts</string>
+    <string name="slider_updater">Updater</string>
+
+    <string-array name="aero_array">
+        <item>@string/slider_overview</item>
+        <item>@string/slider_cpu_settings</item>
+        <item>@string/slider_gpu_settings</item>
+        <item>@string/slider_memory_settings</item>
+        <item>@string/slider_defy_parts</item>
+        <item>@string/slider_updater</item>
+    </string-array>
+
+    <!-- Overview Elements -->
+
+    <string name="kernel_version">Kernel:</string>
+    <string name="current_cpu_speed">CPU Frequency:</string>
+    <string name="current_gpu_speed">GPU Frequency:</string>
+    <string name="current_governor">Governor:</string>
+    <string name="current_io_governor">I/O-Scheduler:</string>
+    <string name="available_memory">Total Memory:</string>
+
+    <string-array name="overview_array">
+        <item>@string/kernel_version</item>
+        <item>@string/current_cpu_speed</item>
+        <item>@string/current_gpu_speed</item>
+        <item>@string/current_governor</item>
+        <item>@string/available_memory</item>
+    </string-array>
+
+    <!-- Action Overflow Menu -->
+
+    <string name="about">About</string>
+    <string name="aero_settings">Settings</string>
+
+    <!-- Preference Menu -->
+
+    <string name="pref_appspecific">App specific </string>
+    <string name="pref_setatboot">Set at Boot</string>
+    <string name="pref_setatboot_sum">Caution: This will set your settings at boot.</string>
+    <string name="pref_updatepath">Updatelocation:</string>
+    <string name="pref_updatepath_sum">Set your desired update path.</string>
+
+    <!-- CPU Fragment -->
+
+    <string name="pref_cpu_freq">Frequencies</string>
+    <string name="pref_cpu_freqmax">Max. Frequency</string>
+    <string name="pref_cpu_freqmin">Min. Frequency</string>
+    <string name="pref_cpu_governor">Governor Settings</string>
+    <string name="pref_cpu_suspend_freq">Suspend Frequency</string>
+
+    <string name="pref_gov_choose">Governor Settings</string>
+    <string name="pref_gov_choose_sum">This will set your favorite governor!</string>
+
+    <string name="pref_gov_set">Governor Specific Settings</string>
+    <string name="pref_gov_set_sum">Set the governor Specific settings here.</string>
+
+    <!-- Memory Fragment -->
+    <string name="pref_memory_settings">Memory Settings</string>
+
+    <string name="pref_memory_swappiness">Swappiness</string>
+    <string name="pref_memory_swappiness_sum">Swappiness defines how aggressive the kernel will swap memory pages </string>
+
+    <string name="pref_memory_compaction">Compaction</string>
+    <string name="pref_memory_compaction_sum">Enables compaction of memory.</string>
+
+    <string name="pref_memory_swap">Swap</string>
+    <string name="pref_memory_swap_sum">Create a swap device.</string>
+
+    <string name="pref_memory_zcache">zCache</string>
+    <string name="pref_memory_zcache_sum">Enable zCache</string>
+
+    <string name="pref_memory_zcache_compression">zCache Compression</string>
+    <string name="pref_memory_zcache_compression_sum">Choose the compression method for zCache.</string>
+
+    <!-- GPU Fragment -->
+    <string name="pref_gpu_controll_enable">GPU Control</string>
+    <string name="pref_gpu_controll_enable_sum">This will enable the GPU Control driver. It handles overclocking/undervolting as well
+                                            as some basic scheduling for the GPU.</string>
+    <string name="pref_gpu_max_freq">Max. Frequency</string>
+    <string name="pref_gpu_max_freq_sum">This will set the maximum GPU Frequency. Default is 200 MHz.</string>
+
+    <!-- static GPU Frequencies for now -->
+    <string name="pref_freq_idleing" value="100000000">100000000</string>
+    <string name="pref_freq_low_speed" value="1333333333">133333333</string>
+    <string name="pref_freq_below_speed" value="160000000">160000000</string>
+    <string name="pref_freq_speed" value="200000000">200000000</string>
+    <string name="pref_freq_oc" value="266666666">266666666</string>
+
+    <string-array name="gpu_frequency_list">
+        <item>@string/pref_freq_idleing</item>
+        <item>@string/pref_freq_low_speed</item>
+        <item>@string/pref_freq_below_speed</item>
+        <item>@string/pref_freq_speed</item>
+        <item>@string/pref_freq_oc</item>
+    </string-array>
+
+    <!-- IO Scheduler -->
+    <string name="io_scheduler">IO Scheduler</string>
+
+</resources>

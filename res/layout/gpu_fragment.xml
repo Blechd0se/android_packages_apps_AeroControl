@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory android:title="@string/pref_gpu_controll_enable">
+
+        <CheckBoxPreference
+            android:key="gpu_control_enable"
+            android:title="@string/pref_gpu_controll_enable"
+            android:summary="@string/pref_gpu_controll_enable_sum" />
+
+        <ListPreference
+            android:key="gpu_max_freq"
+            android:title="@string/pref_gpu_max_freq"
+            android:summary="@string/pref_gpu_max_freq_sum" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,48 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory android:title="@string/pref_memory_settings">
+
+        <EditTextPreference
+            android:key="swappiness"
+            android:title="@string/pref_memory_swappiness"
+            android:summary="@string/pref_memory_swappiness_sum"
+            android:dialogTitle="Lorum ipsorum" />
+
+        <EditTextPreference
+            android:key="compaction"
+            android:title="@string/pref_memory_compaction"
+            android:summary="@string/pref_memory_compaction_sum"
+            android:dialogTitle="Lorum ipsorum" />
+
+        <EditTextPreference
+            android:key="swap"
+            android:title="@string/pref_memory_swap"
+            android:summary="@string/pref_memory_swap_sum"
+            android:dialogTitle="Lorum ipsorum" />
+
+        <EditTextPreference
+            android:key="zcache"
+            android:title="@string/pref_memory_zcache"
+            android:summary="@string/pref_memory_zcache_sum"
+            android:dialogTitle="Lorum ipsorum" />
+
+        <EditTextPreference
+            android:key="zcache_compression"
+            android:title="@string/pref_memory_zcache_compression"
+            android:summary="@string/pref_memory_zcache_compression_sum"
+            android:dialogTitle="Lorum ipsorum" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/io_scheduler">
+
+        <ListPreference
+            android:key="io_scheduler_list"
+            android:title="IO Scheduler"
+            android:dialogTitle="IO Scheduler" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
