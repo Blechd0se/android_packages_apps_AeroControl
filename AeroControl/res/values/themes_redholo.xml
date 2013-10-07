@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="RedHolo" parent="android:Theme.Light">
+
+    <item name="android:editTextStyle">@style/EditTextRedHolo</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewRedHolo</item>
+
+    <item name="android:checkboxStyle">@style/CheckBoxRedHolo</item>
+
+    <item name="android:radioButtonStyle">@style/RadioButtonRedHolo</item>
+
+    <item name="android:buttonStyle">@style/ButtonRedHolo</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonRedHolo</item>
+
+    <item name="android:spinnerStyle">@style/SpinnerRedHolo</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerRedHolo.DropDown</item>
+
+    <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemRedHolo</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarRedHolo</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarRedHolo</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarRedHolo</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigRedHolo</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallRedHolo</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleRedHolo</item>
+
+    <item name="android:listViewStyle">@style/ListViewRedHolo</item>
+
+    <item name="android:listViewWhiteStyle">@style/ListViewRedHolo.White</item>
+
+    <item name="android:spinnerItemStyle">@style/SpinnerItemRedHolo</item>
+
+  </style>
+
+</resources>

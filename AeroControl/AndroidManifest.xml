@@ -10,7 +10,7 @@
     <application
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
-        android:theme="@android:style/Theme.Holo.Light">
+        android:theme="@style/RedHolo">
 
         <activity
             android:name="com.aero.control.MainActivity"
