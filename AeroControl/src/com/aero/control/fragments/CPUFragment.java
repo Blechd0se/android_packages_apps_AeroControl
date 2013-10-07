@@ -92,15 +92,17 @@ public class CPUFragment extends PreferenceFragment {
                  * value _before_ the value actually was changed.
                  */
                 String a = (String) o;
+
                 shell.setRootInfo(o, CURRENT_GOV_AVAILABLE);
 
                 // Check if it really sticks;
-                if(shell.checkPath(shell.getInfo(CURRENT_GOV_AVAILABLE), a))
+                if(shell.checkPath(shell.getInfo(CURRENT_GOV_AVAILABLE), a)) {
                     listPref.setSummary(a);
-                else
+                } else {
                     Toast.makeText(getActivity(), "Couldn't set governor."   + " Old value; " +
                             shell.getInfo(CURRENT_GOV_AVAILABLE) + " New Value; " + a, Toast.LENGTH_LONG).show();
-
+                    listPref.setSummary(shell.getInfo(CURRENT_GOV_AVAILABLE));
+                }
 
                 String complete_path = CPU_GOV_SET_BASE + a;
 
@@ -138,6 +140,10 @@ public class CPUFragment extends PreferenceFragment {
                             "There isn't any folder i can check. Does this governor has parameters?",
                             e);
 
+                    // Should restore old values if something goes wrong;
+                    listPref.setSummary(shell.getInfo(CURRENT_GOV_AVAILABLE));
+                    listPref.setValue(shell.getInfo(CURRENT_GOV_AVAILABLE));
+
                     // To clean up the UI;
                     if (PrefCat != null)
                         root.removePreference(PrefCat);
@@ -158,14 +164,17 @@ public class CPUFragment extends PreferenceFragment {
                  * Clocks than default...
                  */
                 String a = (String) o;
+                CharSequence oldValue = max_frequency.getSummary();
 
                 shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_MAX_FREQ);
 
-                if (shell.checkPath(shell.getInfo(CPU_MAX_FREQ), a))
+                if (shell.checkPath(shell.getInfo(CPU_MAX_FREQ), a)) {
                     max_frequency.setSummary(shell.toMHz((a.substring(0, a.length() - 4) + "000")));
-                else
+                } else {
                     Toast.makeText(getActivity(), "Couldn't set max frequency." + " Old value; " +
                             shell.getInfo(CPU_MAX_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
+                    max_frequency.setSummary(oldValue);
+                }
 
 
                 return true;
@@ -179,14 +188,17 @@ public class CPUFragment extends PreferenceFragment {
             public boolean onPreferenceChange(Preference preference, Object o) {
 
                 String a = (String) o;
+                CharSequence oldValue = min_frequency.getSummary();
 
                 shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_MIN_FREQ);
 
-                if (shell.checkPath(shell.getInfo(CPU_MIN_FREQ), a))
+                if (shell.checkPath(shell.getInfo(CPU_MIN_FREQ), a)) {
                     min_frequency.setSummary(shell.toMHz((a.substring(0, a.length() - 4) + "000")));
-                else
+                } else {
                     Toast.makeText(getActivity(), "Couldn't set min frequency."  + " Old value; " +
                             shell.getInfo(CPU_MIN_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
+                    min_frequency.setSummary(oldValue);
+                }
 
                 return true;
             }
@@ -225,14 +237,17 @@ public class CPUFragment extends PreferenceFragment {
                 public boolean onPreferenceChange(Preference preference, Object o) {
 
                     String a = (String) o;
+                    CharSequence oldValue = prefload.getSummary();
 
                     shell.setRootInfo(a, parameterPath);
 
-                    if (shell.checkPath(shell.getInfo(parameterPath), a))
+                    if (shell.checkPath(shell.getInfo(parameterPath), a)) {
                         prefload.setSummary(a);
-                    else
+                    } else {
                         Toast.makeText(getActivity(), "Couldn't set desired parameter"  + " Old value; " +
                                 shell.getInfo(parameterPath) + " New Value; " + a, Toast.LENGTH_LONG).show();
+                        prefload.setSummary(oldValue);
+                    }
 
                     return true;
                 }
