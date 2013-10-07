@@ -45,8 +45,13 @@ public class CPUFragment extends PreferenceFragment {
         // Just throw in our frequencies;
         max_frequency.setEntries(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
         max_frequency.setEntryValues(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
-        max_frequency.setValue(shell.getInfoArray(CPU_MAX_FREQ, 1, 0)[0]);
-        max_frequency.setSummary(shell.getInfoArray(CPU_MAX_FREQ, 1, 0)[0]);
+        try {
+            max_frequency.setValue(shell.getInfoArray(CPU_MAX_FREQ, 1, 0)[0]);
+            max_frequency.setSummary(shell.getInfoArray(CPU_MAX_FREQ, 1, 0)[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            max_frequency.setValue("Unavailable");
+            max_frequency.setSummary("Unavailable");
+        }
         max_frequency.setDialogIcon(R.drawable.lightning_dark);
 
         // Find our ListPreference (min_frequency);
@@ -54,8 +59,13 @@ public class CPUFragment extends PreferenceFragment {
         // Just throw in our frequencies;
         min_frequency.setEntries(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
         min_frequency.setEntryValues(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
-        min_frequency.setValue(shell.getInfoArray(CPU_MIN_FREQ, 1, 0)[0]);
-        min_frequency.setSummary(shell.getInfoArray(CPU_MIN_FREQ, 1, 0)[0]);
+        try {
+            min_frequency.setValue(shell.getInfoArray(CPU_MIN_FREQ, 1, 0)[0]);
+            min_frequency.setSummary(shell.getInfoArray(CPU_MIN_FREQ, 1, 0)[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            min_frequency.setValue("Unavailable");
+            min_frequency.setSummary("Unavailable");
+        }
         min_frequency.setDialogIcon(R.drawable.lightning_dark);
 
 

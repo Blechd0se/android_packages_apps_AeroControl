@@ -120,7 +120,7 @@ public class shellScripts {
     public String[] getInfoArray(String s, int flag, int flag_io) {
 
         String[] completeString = new String[0];
-        String[] output;
+        String[] output = null;
         // Just make some gerneric error-code
         String[] error = new String[0];
 
@@ -144,6 +144,7 @@ public class shellScripts {
             } finally {
                 reader.close();
             }
+
             return output;
         } catch (IOException e) {
             Log.e("Aero",

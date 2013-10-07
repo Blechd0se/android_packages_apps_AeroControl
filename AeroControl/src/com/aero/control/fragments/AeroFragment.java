@@ -29,62 +29,98 @@ public class AeroFragment extends Fragment {
     private static final String FILENAME_PROC_MEMINFO = "/proc/meminfo";
 
     public ListView listView1;
+    public ViewGroup root;
     public shellScripts shell = new shellScripts();
-    public String current_speed;
     public AeroAdapter adapter;
+    public AeroFragment mAeroFragment;
 
-    public static Fragment newInstance(Context context) {
-        AeroFragment f = new AeroFragment();
+    public Fragment newInstance(Context context) {
+        mAeroFragment = new AeroFragment();
 
-        return f;
+        return mAeroFragment;
     }
 
-    private class CurCPUThread extends Thread {
+    private class RefreshThread extends Thread {
+
         private boolean mInterrupt = false;
 
         public void interrupt() {
             mInterrupt = true;
         }
+        public void continueThread() {
+            mInterrupt = false;
+        }
+            @Override
+            public void run() {
+                try {
+                    while (!mInterrupt) {
+                        sleep(1000);
+                        mRefreshHandler.sendEmptyMessage(1);
+                    }
+                } catch (InterruptedException e) {
 
-        @Override
-        public void run() {
-            try {
-                while (!mInterrupt) {
-                    sleep(1000);
-                    final String curFreq = shell.getInfo(SCALE_CUR_FILE);
-                    if (curFreq != null)
-                        mCurCPUHandler.sendMessage(mCurCPUHandler.obtainMessage(0, curFreq));
                 }
-            } catch (InterruptedException e) {
             }
+        };
+
+        private RefreshThread mRefreshThread = new RefreshThread();
+
+        private Handler mRefreshHandler = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+
+                if (msg.what >= 1) {
+
+                    adapter.notifyDataSetChanged();
+
+                    if (isVisible()) {
+                        createList();
+                    } else {
+                        //
+                    }
+
+                }
+            }
+        };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mRefreshThread.interrupt();
+        try {
+            mRefreshThread.join();
+        } catch (InterruptedException e) {
         }
     }
 
-    ;
 
-    private CurCPUThread mCurCPUThread = new CurCPUThread();
-
-    private Handler mCurCPUHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            current_speed = (shell.toMHz((String) msg.obj));
-            adapter.notifyDataSetChanged();
-        }
-    };
 
     // Override for custom view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.overviewlist_item, null);
+        root = (ViewGroup) inflater.inflate(R.layout.overviewlist_item, null);
 
 
         /*
-         * We should refresh our list (to be exactly; cpu/gpu speed) every Second
-         * How can we update a dynamic list view?
+         * Start the refresh Thread at startup;
+         * Current Problem; Thread won't start again after FragmentSwitch
          */
+
         try {
-            mCurCPUThread.start();
+            mRefreshThread.start();
         } catch (Exception e) {
         }
+
+        // Generate our main ListView;
+        createList();
+
+
+
+        return root;
+    }
+
+    public void createList() {
 
         // Default Overview Menu
         adapterInit overview_data[] = new adapterInit[]
@@ -105,8 +141,6 @@ public class AeroFragment extends Fragment {
 
         listView1.setAdapter(adapter);
 
-        return root;
     }
-
 
 }

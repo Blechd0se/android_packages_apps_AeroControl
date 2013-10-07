@@ -38,8 +38,13 @@ public class GPUFragment extends PreferenceFragment {
         gpu_control_frequencies.setEntries(R.array.gpu_frequency_list);
         gpu_control_frequencies.setEntryValues(R.array.gpu_frequency_list);
 
-        gpu_control_frequencies.setValue(shell.getInfoArray(GPU_FREQ_MAX, 1, 0)[0]);
-        gpu_control_frequencies.setSummary(shell.getInfoArray(GPU_FREQ_MAX, 0, 0)[0]);
+        try  {
+            gpu_control_frequencies.setValue(shell.getInfoArray(GPU_FREQ_MAX, 1, 0)[0]);
+            gpu_control_frequencies.setSummary(shell.getInfoArray(GPU_FREQ_MAX, 0, 0)[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            gpu_control_frequencies.setValue("Unavailable");
+            gpu_control_frequencies.setSummary("Unavailable");
+        }
         gpu_control_frequencies.setDialogIcon(R.drawable.gpu_dark);
 
 
