@@ -34,6 +34,9 @@ public class GPUFragment extends PreferenceFragment {
 
         // Find our ListPreference (max_frequency);
         final ListPreference gpu_control_frequencies = (ListPreference)root.findPreference("gpu_max_freq");
+        // Set our gpu control flag;
+        final CheckBoxPreference gpu_control_enable = (CheckBoxPreference)root.findPreference("gpu_control_enable");
+
         // Just throw in our frequencies;
         gpu_control_frequencies.setEntries(R.array.gpu_frequency_list);
         gpu_control_frequencies.setEntryValues(R.array.gpu_frequency_list);
@@ -42,15 +45,17 @@ public class GPUFragment extends PreferenceFragment {
             gpu_control_frequencies.setValue(shell.getInfoArray(GPU_FREQ_MAX, 1, 0)[0]);
             gpu_control_frequencies.setSummary(shell.getInfoArray(GPU_FREQ_MAX, 0, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
+            /*
+             * If the folder is missing, disable this feature completely;
+             */
             gpu_control_frequencies.setValue("Unavailable");
             gpu_control_frequencies.setSummary("Unavailable");
+            gpu_control_frequencies.setEnabled(false);
+            gpu_control_enable.setEnabled(false);
+
+            Toast.makeText(getActivity(), "GPU Control is not supported with your kernel.", Toast.LENGTH_LONG).show();
         }
         gpu_control_frequencies.setDialogIcon(R.drawable.gpu_dark);
-
-
-        // Set our gpu control flag;
-        final CheckBoxPreference gpu_control_enable = (CheckBoxPreference)root.findPreference("gpu_control_enable");
-
 
         gpu_control_frequencies.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
