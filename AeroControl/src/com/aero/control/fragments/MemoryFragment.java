@@ -6,6 +6,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.text.InputType;
 import android.widget.Toast;
 
 import com.aero.control.R;
@@ -18,6 +19,7 @@ import com.aero.control.shell.shellScripts;
 public class MemoryFragment extends PreferenceFragment {
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
+    public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
 
     shellScripts shell = new shellScripts();
 
@@ -40,6 +42,12 @@ public class MemoryFragment extends PreferenceFragment {
         final EditTextPreference zcache = (EditTextPreference)root.findPreference("zcache");
         final EditTextPreference zcacheCompression = (EditTextPreference)root.findPreference("zcache_compression");
 
+
+        // Swappiness:
+        swappiness.setText(shell.getInfo(SWAPPNIESS_FILE));
+        // Only show numbers in input field;
+        swappiness.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+
         // Find our ListPreference (max_frequency);
         final ListPreference io_scheduler = (ListPreference) root.findPreference("io_scheduler_list");
         // Just throw in our frequencies;
@@ -55,8 +63,10 @@ public class MemoryFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
 
+                String a = (String) o;
 
-                Toast.makeText(getActivity(), "Changeing the IO Scheduler is currently not supported.", Toast.LENGTH_LONG).show();
+                shell.setRootInfo(a, GOV_IO_FILE);
+                io_scheduler.setSummary(a);
 
                 return true;
             };
@@ -66,8 +76,11 @@ public class MemoryFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
 
+                String a = (String) o;
 
-                Toast.makeText(getActivity(), "Changeing swappiness is currently not supported.", Toast.LENGTH_LONG).show();
+
+                shell.setRootInfo(a, SWAPPNIESS_FILE);
+                swappiness.setText(shell.getInfo(SWAPPNIESS_FILE));
 
                 return true;
             };

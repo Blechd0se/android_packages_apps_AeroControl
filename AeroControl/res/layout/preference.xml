@@ -16,6 +16,11 @@
             android:summary="@string/pref_updatepath_sum"
             android:dialogTitle="Lorum ipsorum" />
 
+        <ListPreference
+            android:key="app_theme_list"
+            android:title="App Theme"
+            android:summary="Change the Theme of the App!" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

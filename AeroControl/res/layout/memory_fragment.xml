@@ -8,7 +8,7 @@
             android:key="swappiness"
             android:title="@string/pref_memory_swappiness"
             android:summary="@string/pref_memory_swappiness_sum"
-            android:dialogTitle="Lorum ipsorum" />
+            android:dialogTitle="Swappiness" />
 
         <EditTextPreference
             android:key="compaction"
