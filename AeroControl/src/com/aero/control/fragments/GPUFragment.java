@@ -6,6 +6,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.aero.control.R;
@@ -39,11 +40,12 @@ public class GPUFragment extends PreferenceFragment {
 
         // Just throw in our frequencies;
         gpu_control_frequencies.setEntries(R.array.gpu_frequency_list);
-        gpu_control_frequencies.setEntryValues(R.array.gpu_frequency_list);
+        gpu_control_frequencies.setEntryValues(R.array.gpu_frequency_list_values);
 
         try  {
             gpu_control_frequencies.setValue(shell.getInfoArray(GPU_FREQ_MAX, 1, 0)[0]);
-            gpu_control_frequencies.setSummary(shell.getInfoArray(GPU_FREQ_MAX, 0, 0)[0]);
+            gpu_control_frequencies.setSummary(shell.toMHz((shell.getInfoArray(GPU_FREQ_MAX, 0, 0)[0].substring(0,
+                    shell.getInfoArray(GPU_FREQ_MAX, 0, 0)[0].length() - 3))));
         } catch (ArrayIndexOutOfBoundsException e) {
             /*
              * If the folder is missing, disable this feature completely;
@@ -67,11 +69,19 @@ public class GPUFragment extends PreferenceFragment {
                  * Clocks than default...
                  */
                 String a = (String) o;
-                Toast.makeText(getActivity(), a, Toast.LENGTH_LONG).show();
 
-                shell.setRootInfo(a, GPU_FREQ_MAX);
+                shell.setRootInfo(o, GPU_FREQ_MAX);
 
-                gpu_control_frequencies.setSummary(a);
+                // Sleep the thread again for UI delay;
+                try {
+                    Thread.currentThread().sleep(250);
+                } catch (InterruptedException e) {
+                    Log.e("Aero",
+                          "Something interrupted the main Thread, try again.",
+                           e);
+                }
+
+                gpu_control_frequencies.setSummary(shell.toMHz((a.substring(0, a.length() - 3))));
 
                 return true;
             };

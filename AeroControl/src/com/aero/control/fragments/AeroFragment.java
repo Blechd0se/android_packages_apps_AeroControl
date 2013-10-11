@@ -130,7 +130,7 @@ public class AeroFragment extends Fragment {
                         new adapterInit(0, getString(R.string.current_governor), shell.getInfo(GOV_FILE)),
                         new adapterInit(0, getString(R.string.current_io_governor), shell.getInfo(GOV_IO_FILE)),
                         new adapterInit(0, getString(R.string.current_cpu_speed), shell.toMHz(shell.getInfo(SCALE_CUR_FILE))),
-                        new adapterInit(0, getString(R.string.current_gpu_speed), shell.getInfo(GPU_FREQ)),
+                        new adapterInit(0, getString(R.string.current_gpu_speed), shell.toMHz((shell.getInfo(GPU_FREQ).substring(0, shell.getInfo(GPU_FREQ).length() - 3)))),
                         new adapterInit(0, getString(R.string.available_memory), shell.getMemory(FILENAME_PROC_MEMINFO))
                 };
 
