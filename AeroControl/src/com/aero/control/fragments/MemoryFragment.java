@@ -25,6 +25,8 @@ public class MemoryFragment extends PreferenceFragment {
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
 
+    public Handler progressHandler;
+
     shellScripts shell = new shellScripts();
 
     @Override
@@ -70,17 +72,58 @@ public class MemoryFragment extends PreferenceFragment {
 
                 final CharSequence[] system = {"/data", "/cache"};
 
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final ProgressDialog update = new ProgressDialog(getActivity());
                 builder.setTitle("Trim Options");
                 builder.setItems(system, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
 
                         final String b = (String)system[item];
 
-                        Toast.makeText(getActivity(), "Trimming in progress...", Toast.LENGTH_LONG).show();
-                        String a = shell.getRootInfo("fstrim -v", b);
+                        update.setTitle("Trimming...");
+                        update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        update.setCancelable(false);
+                        update.setMax(100);
+                        update.show();
 
-                        fstrim_toggle.setSummary(a);
+
+                        Thread background = new Thread (new Runnable() {
+                            public void run() {
+                                try {
+
+
+                                    while (update.getProgress()<= update.getMax()) {
+                                        // wait 500ms between each update
+                                        //Thread.sleep(500);
+
+                                        shell.getRootInfo("fstrim -v", b);
+
+                                        update.setProgress(100);
+                                        // active the update handler
+
+                                        if(update.getProgress()== 100)
+                                        {
+                                            update.setTitle("Successful!");
+                                            Thread.sleep(1000);
+                                            update.dismiss();
+                                            Thread.interrupted();
+                                        }
+                                        progressHandler.sendMessage(progressHandler.obtainMessage());
+
+                                    }
+
+                                } catch (Exception e) {
+                                    // if something fails do something smart
+                                }
+                            }
+                        });
+
+
+                        // start the background thread
+                        background.start();
+
+                       // Toast.makeText(getActivity(), "Trimming in progress...", Toast.LENGTH_LONG).show();
                     }
                 }).show();
 
