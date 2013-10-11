@@ -84,6 +84,9 @@
     <string name="pref_memory_zcache_compression">zCache Compression</string>
     <string name="pref_memory_zcache_compression_sum">Choose the compression method for zCache.</string>
 
+    <string name="fstrim_header">Trim Option</string>
+    <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
+
     <!-- GPU Fragment -->
     <string name="pref_gpu_controll_enable">GPU Control</string>
     <string name="pref_gpu_controll_enable_sum">This will enable the GPU Control driver. It handles overclocking/undervolting as well

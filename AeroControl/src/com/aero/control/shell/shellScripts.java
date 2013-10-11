@@ -1,15 +1,13 @@
 package com.aero.control.shell;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +19,8 @@ import java.util.regex.Pattern;
  * Summary of various shell-Methods, for easy method calling
  */
 public class shellScripts {
+
+    private static final int BUFF_LEN = 1024;
 
     public String getKernel() {
         // Taken from Andriods/CM Gingerbread Branch:
@@ -228,6 +228,43 @@ public class shellScripts {
             return true;
         else
             return false;
+    }
+
+
+    /**
+     * Executes a command in Terminal and returns output
+     *
+     * @param command   => set the command to execute
+     * @param parameter => set a parameter
+     *
+     * @return String
+     */
+    public String getRootInfo(String command, String parameter) {
+
+        try {
+            Process rooting = Runtime.getRuntime().exec("su");
+
+            DataOutputStream stdin = new DataOutputStream(rooting.getOutputStream());
+
+            stdin.writeBytes(command + " " + parameter + "\n");
+            InputStream stdout = rooting.getInputStream();
+            byte[] buffer = new byte[BUFF_LEN];
+            int read;
+            String output = new String();
+            while(true){
+                read = stdout.read(buffer);
+                output += new String(buffer, 0, read);
+                if(read<BUFF_LEN){
+                    //we have read everything
+                    break;
+                }
+            }
+            return output;
+
+        } catch (IOException e) {
+            Log.e("Aero", "Do you even root, bro? :/");
+        }
+        return "Couldn't do anything";
     }
 
 

@@ -34,6 +34,11 @@
             android:summary="@string/pref_memory_zcache_compression_sum"
             android:dialogTitle="Lorum ipsorum" />
 
+        <Preference
+            android:key="fstrim_toggle"
+            android:title="@string/fstrim_header"
+            android:summary="@string/fstrim_content" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/io_scheduler">

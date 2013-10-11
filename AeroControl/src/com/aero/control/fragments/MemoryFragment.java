@@ -1,6 +1,10 @@
 package com.aero.control.fragments;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -42,7 +46,6 @@ public class MemoryFragment extends PreferenceFragment {
         final EditTextPreference zcache = (EditTextPreference)root.findPreference("zcache");
         final EditTextPreference zcacheCompression = (EditTextPreference)root.findPreference("zcache_compression");
 
-
         // Swappiness:
         swappiness.setText(shell.getInfo(SWAPPNIESS_FILE));
         // Only show numbers in input field;
@@ -57,6 +60,34 @@ public class MemoryFragment extends PreferenceFragment {
         io_scheduler.setSummary(shell.getInfoArray(GOV_IO_FILE, 0, 1)[0]);
         io_scheduler.setDialogIcon(R.drawable.memory_dark);
 
+        final Preference fstrim_toggle = root.findPreference("fstrim_toggle");
+
+
+        fstrim_toggle.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                final CharSequence[] system = {"/data", "/cache"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Trim Options");
+                builder.setItems(system, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+
+                        final String b = (String)system[item];
+
+                        Toast.makeText(getActivity(), "Trimming in progress...", Toast.LENGTH_LONG).show();
+                        String a = shell.getRootInfo("fstrim -v", b);
+
+                        fstrim_toggle.setSummary(a);
+                    }
+                }).show();
+
+                return true;
+            };
+
+        });
 
         // Start our custom change listener;
         io_scheduler.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
