@@ -194,6 +194,8 @@ public class MemoryFragment extends PreferenceFragment {
                 String getState = shell.getInfo(CMDLINE_ZACHE);
                 String a =  o.toString();
 
+                shell.remountSystem();
+
                 // It's checked, so we can enable zcache;
                 if (a.equals("true")) {
 

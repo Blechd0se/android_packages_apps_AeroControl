@@ -223,6 +223,23 @@ public class shellScripts {
 
     }
 
+    public void remountSystem() {
+
+        Process rooting;
+        try {
+
+            rooting = Runtime.getRuntime().exec("su");
+            rooting.getOutputStream();
+
+            rooting = Runtime.getRuntime().exec("mount -o remount,rw /system");
+            rooting.getOutputStream();
+
+        } catch (IOException e) {
+            Log.e("Aero", "Do you even root, bro? :/");
+        }
+
+    }
+
     public boolean checkPath(String oldPath, String newPath) {
 
         if(!oldPath.equals(newPath))
