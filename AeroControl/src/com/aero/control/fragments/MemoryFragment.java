@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -24,6 +25,9 @@ public class MemoryFragment extends PreferenceFragment {
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
+    public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
+
+    public boolean checkDynFsync;
 
     public Handler progressHandler;
 
@@ -43,15 +47,21 @@ public class MemoryFragment extends PreferenceFragment {
 
         // Declare our entries;
         final EditTextPreference swappiness = (EditTextPreference)root.findPreference("swappiness");
-        final EditTextPreference swap = (EditTextPreference)root.findPreference("swap");
-        final EditTextPreference compaction = (EditTextPreference)root.findPreference("compaction");
-        final EditTextPreference zcache = (EditTextPreference)root.findPreference("zcache");
-        final EditTextPreference zcacheCompression = (EditTextPreference)root.findPreference("zcache_compression");
+        final CheckBoxPreference dynFsync = (CheckBoxPreference)root.findPreference("dynFsync");
+        final CheckBoxPreference zcache = (CheckBoxPreference)root.findPreference("zcache");
 
         // Swappiness:
         swappiness.setText(shell.getInfo(SWAPPNIESS_FILE));
         // Only show numbers in input field;
         swappiness.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        // Check if enabled or not;
+        if (shell.getInfo(DYANMIC_FSYNC).equals("1"))
+            checkDynFsync = true;
+        else
+            checkDynFsync = false;
+
+        dynFsync.setChecked(checkDynFsync);
 
         // Find our ListPreference (max_frequency);
         final ListPreference io_scheduler = (ListPreference) root.findPreference("io_scheduler_list");
@@ -83,8 +93,9 @@ public class MemoryFragment extends PreferenceFragment {
 
                         update.setTitle("Trimming...");
                         update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                        update.setCancelable(false);
+                        update.setCancelable(true);
                         update.setMax(100);
+                        update.setIndeterminate(true);
                         update.show();
 
 
@@ -97,18 +108,14 @@ public class MemoryFragment extends PreferenceFragment {
                                         // wait 500ms between each update
                                         //Thread.sleep(500);
 
+                                        // Set up the root-command;
                                         shell.getRootInfo("fstrim -v", b);
 
-                                        update.setProgress(100);
-                                        // active the update handler
+                                        update.setTitle("Successful!");
 
-                                        if(update.getProgress()== 100)
-                                        {
-                                            update.setTitle("Successful!");
-                                            Thread.sleep(1000);
-                                            update.dismiss();
-                                            Thread.interrupted();
-                                        }
+                                        update.dismiss();
+                                        Thread.interrupted();
+
                                         progressHandler.sendMessage(progressHandler.obtainMessage());
 
                                     }
@@ -118,7 +125,6 @@ public class MemoryFragment extends PreferenceFragment {
                                 }
                             }
                         });
-
 
                         // start the background thread
                         background.start();
@@ -160,23 +166,17 @@ public class MemoryFragment extends PreferenceFragment {
             };
         });
 
-        swap.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        dynFsync.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
 
 
-                Toast.makeText(getActivity(), "Changeing Swap is currently not supported.", Toast.LENGTH_LONG).show();
+                String a =  o.toString();
 
-                return true;
-            };
-        });
-
-        compaction.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-
-                Toast.makeText(getActivity(), "Changeing compaction is currently not supported.", Toast.LENGTH_LONG).show();
+                if (a.equals("true"))
+                    shell.setRootInfo("1", DYANMIC_FSYNC);
+                else if (a.equals("false"))
+                    shell.setRootInfo("0", DYANMIC_FSYNC);
 
                 return true;
             };
@@ -193,16 +193,6 @@ public class MemoryFragment extends PreferenceFragment {
             };
         });
 
-        zcacheCompression.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-
-                Toast.makeText(getActivity(), "Changeing zCache Compression is currently not supported.", Toast.LENGTH_LONG).show();
-
-                return true;
-            };
-        });
     }
 
 }

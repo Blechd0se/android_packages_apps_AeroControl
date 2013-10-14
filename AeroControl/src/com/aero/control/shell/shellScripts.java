@@ -259,12 +259,13 @@ public class shellScripts {
                     break;
                 }
             }
+            Log.e("Aero", "Output from su-Operation: " + output);
             return output;
 
         } catch (IOException e) {
             Log.e("Aero", "Do you even root, bro? :/");
         }
-        return "Couldn't do anything";
+        return "Something went wrong..";
     }
 
 

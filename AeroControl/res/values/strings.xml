@@ -72,8 +72,8 @@
     <string name="pref_memory_swappiness">Swappiness</string>
     <string name="pref_memory_swappiness_sum">Swappiness defines how aggressive the kernel will swap memory pages </string>
 
-    <string name="pref_memory_compaction">Compaction</string>
-    <string name="pref_memory_compaction_sum">Enables compaction of memory.</string>
+    <string name="pref_dynamic_fsync">Dynamic FSync</string>
+    <string name="pref_dynamic_fsync_sum">Dynamic FSync enables fsync only while the screen is off.</string>
 
     <string name="pref_memory_swap">Swap</string>
     <string name="pref_memory_swap_sum">Create a swap device.</string>

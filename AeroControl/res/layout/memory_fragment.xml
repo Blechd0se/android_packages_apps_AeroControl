@@ -4,35 +4,23 @@
 
     <PreferenceCategory android:title="@string/pref_memory_settings">
 
+        <CheckBoxPreference
+            android:key="dynFsync"
+            android:title="@string/pref_dynamic_fsync"
+            android:summary="@string/pref_dynamic_fsync_sum"
+            android:dialogTitle="@string/pref_dynamic_fsync" />
+
+        <CheckBoxPreference
+            android:key="zcache"
+            android:title="@string/pref_memory_zcache"
+            android:summary="@string/pref_memory_zcache_sum"
+            android:dialogTitle="@string/pref_memory_zcache" />
+
         <EditTextPreference
             android:key="swappiness"
             android:title="@string/pref_memory_swappiness"
             android:summary="@string/pref_memory_swappiness_sum"
             android:dialogTitle="Swappiness" />
-
-        <EditTextPreference
-            android:key="compaction"
-            android:title="@string/pref_memory_compaction"
-            android:summary="@string/pref_memory_compaction_sum"
-            android:dialogTitle="Lorum ipsorum" />
-
-        <EditTextPreference
-            android:key="swap"
-            android:title="@string/pref_memory_swap"
-            android:summary="@string/pref_memory_swap_sum"
-            android:dialogTitle="Lorum ipsorum" />
-
-        <EditTextPreference
-            android:key="zcache"
-            android:title="@string/pref_memory_zcache"
-            android:summary="@string/pref_memory_zcache_sum"
-            android:dialogTitle="Lorum ipsorum" />
-
-        <EditTextPreference
-            android:key="zcache_compression"
-            android:title="@string/pref_memory_zcache_compression"
-            android:summary="@string/pref_memory_zcache_compression_sum"
-            android:dialogTitle="Lorum ipsorum" />
 
         <Preference
             android:key="fstrim_toggle"
