@@ -26,6 +26,7 @@ public class MemoryFragment extends PreferenceFragment {
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
+    public static final String CMDLINE_ZACHE = "/system/bootmenu/2nd-boot/cmdline";
 
     public boolean checkDynFsync;
 
@@ -62,6 +63,10 @@ public class MemoryFragment extends PreferenceFragment {
             checkDynFsync = false;
 
         dynFsync.setChecked(checkDynFsync);
+
+        final String fileCMD = shell.getInfo(CMDLINE_ZACHE);
+        final boolean zcacheEnabled = fileCMD.length() == 0 ? false : fileCMD.contains("zcache");
+        zcache.setChecked(zcacheEnabled);
 
         // Find our ListPreference (max_frequency);
         final ListPreference io_scheduler = (ListPreference) root.findPreference("io_scheduler_list");
@@ -186,8 +191,30 @@ public class MemoryFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
 
+                String getState = shell.getInfo(CMDLINE_ZACHE);
+                String a =  o.toString();
 
-                Toast.makeText(getActivity(), "Changeing zCache is currently not supported.", Toast.LENGTH_LONG).show();
+                // It's checked, so we can enable zcache;
+                if (a.equals("true")) {
+
+                    // If already on, we can bail out;
+                    if (getState.contains("zcache")) return true;
+
+                    getState = getState + " zcache";
+
+                }
+                else if (a.equals("false")) {
+
+                    // bail out again, because its already how we want it;
+                    if (!getState.contains("zcache")) return true;
+
+                    getState = getState.replace("zcache", "");
+
+                }
+
+                // Set current State to path;
+                shell.setRootInfo(getState, CMDLINE_ZACHE);
+                Toast.makeText(getActivity(), "This may require a reboot.", Toast.LENGTH_LONG).show();
 
                 return true;
             };
