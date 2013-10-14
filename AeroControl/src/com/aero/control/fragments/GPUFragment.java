@@ -17,9 +17,10 @@ import com.aero.control.shell.shellScripts;
  */
 public class GPUFragment extends PreferenceFragment {
 
-    public static final String GPU_FREQ_MAX = "/proc/gpu/max_rate";
+    public static final String GPU_FREQ_MAX = "/sys/kernel/gpu_control/max_freq";
+    public static final String GPU_CONTROL_ACTIVE = "/sys/kernel/gpu_control/gpu_control_active";
     public static final String GPU_FREQ_CUR = "/proc/gpu/cur_rate";
-
+    public boolean checkGpuControl;
 
     shellScripts shell = new shellScripts();
 
@@ -46,6 +47,15 @@ public class GPUFragment extends PreferenceFragment {
             gpu_control_frequencies.setValue(shell.getInfoArray(GPU_FREQ_MAX, 1, 0)[0]);
             gpu_control_frequencies.setSummary(shell.toMHz((shell.getInfoArray(GPU_FREQ_MAX, 0, 0)[0].substring(0,
                     shell.getInfoArray(GPU_FREQ_MAX, 0, 0)[0].length() - 3))));
+
+            // Check if enabled or not;
+            if (shell.getInfo(GPU_CONTROL_ACTIVE).equals("1"))
+                checkGpuControl = true;
+            else
+                checkGpuControl = false;
+
+            gpu_control_enable.setChecked(checkGpuControl);
+
         } catch (ArrayIndexOutOfBoundsException e) {
             /*
              * If the folder is missing, disable this feature completely;
@@ -92,7 +102,12 @@ public class GPUFragment extends PreferenceFragment {
             public boolean onPreferenceChange(Preference preference, Object o) {
 
 
-                Toast.makeText(getActivity(), "Enabling/Disabling is currently not supported by kernel.", Toast.LENGTH_LONG).show();
+                String a =  o.toString();
+
+                if (a.equals("true"))
+                    shell.setRootInfo("1", GPU_CONTROL_ACTIVE);
+                else if (a.equals("false"))
+                    shell.setRootInfo("0", GPU_CONTROL_ACTIVE);
 
                 return true;
             };
