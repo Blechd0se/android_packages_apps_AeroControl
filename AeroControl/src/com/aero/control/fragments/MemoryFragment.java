@@ -56,11 +56,19 @@ public class MemoryFragment extends PreferenceFragment {
         // Only show numbers in input field;
         swappiness.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 
+        if (shell.getInfo(CMDLINE_ZACHE).equals("Unavailable"))
+            zcache.setEnabled(false);
+
         // Check if enabled or not;
-        if (shell.getInfo(DYANMIC_FSYNC).equals("1"))
+        if (shell.getInfo(DYANMIC_FSYNC).equals("1")) {
             checkDynFsync = true;
-        else
+        }
+        else if (shell.getInfo(DYANMIC_FSYNC).equals("0")) {
             checkDynFsync = false;
+        }
+        else {
+            dynFsync.setEnabled(false); // If dyn fsync is not supported
+        }
 
         dynFsync.setChecked(checkDynFsync);
 
