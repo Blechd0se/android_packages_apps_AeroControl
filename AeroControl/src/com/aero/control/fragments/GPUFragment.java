@@ -10,7 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.aero.control.R;
-import com.aero.control.shell.shellScripts;
+import com.aero.control.helpers.shellHelper;
 
 /**
  * Created by ac on 16.09.13.
@@ -22,7 +22,7 @@ public class GPUFragment extends PreferenceFragment {
     public static final String GPU_FREQ_CUR = "/proc/gpu/cur_rate";
     public boolean checkGpuControl;
 
-    shellScripts shell = new shellScripts();
+    shellHelper shell = new shellHelper();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -13,7 +13,7 @@ import android.widget.ListView;
 import com.aero.control.R;
 import com.aero.control.adapter.AeroAdapter;
 import com.aero.control.adapter.adapterInit;
-import com.aero.control.shell.shellScripts;
+import com.aero.control.helpers.shellHelper;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -30,7 +30,7 @@ public class AeroFragment extends Fragment {
 
     public ListView listView1;
     public ViewGroup root;
-    public shellScripts shell = new shellScripts();
+    public shellHelper shell = new shellHelper();
     public AeroAdapter adapter;
     public AeroFragment mAeroFragment;
 

@@ -11,7 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.aero.control.R;
-import com.aero.control.shell.shellScripts;
+import com.aero.control.helpers.shellHelper;
 
 /**
  * Created by ac on 03.10.13.
@@ -28,7 +28,7 @@ public class CPUFragment extends PreferenceFragment {
     public ListPreference listPref;
     public PreferenceCategory PrefCat;
 
-    shellScripts shell = new shellScripts();
+    shellHelper shell = new shellHelper();
 
     @Override
     final public void onCreate(Bundle savedInstanceState) {

@@ -15,7 +15,7 @@ import android.text.InputType;
 import android.widget.Toast;
 
 import com.aero.control.R;
-import com.aero.control.shell.shellScripts;
+import com.aero.control.helpers.shellHelper;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -32,7 +32,7 @@ public class MemoryFragment extends PreferenceFragment {
 
     public Handler progressHandler;
 
-    shellScripts shell = new shellScripts();
+    shellHelper shell = new shellHelper();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
