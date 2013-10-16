@@ -39,8 +39,6 @@ public class CPUFragment extends PreferenceFragment {
 
     shellHelper shell = new shellHelper();
 
-
-
     @Override
     final public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +47,6 @@ public class CPUFragment extends PreferenceFragment {
         addPreferencesFromResource(R.layout.cpu_fragment);
 
         final PreferenceScreen root = this.getPreferenceScreen();
-        final String overclockOutput = shell.getRootInfo("cat", CPU_VSEL);
 
         // I don't like the following, can we simplify it?
 
@@ -64,7 +61,8 @@ public class CPUFragment extends PreferenceFragment {
         min_frequency.setDialogIcon(R.drawable.lightning_dark);
 
         final Preference cpu_oc_uc = (Preference) root.findPreference("cpu_oc_uc");
-        if (overclockOutput.equals("Unavailable"))
+
+        if (shell.getInfo(CPU_VSEL).equals("Unavailable"))
             cpu_oc_uc.setEnabled(false);
 
         cpu_oc_uc.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -76,6 +74,8 @@ public class CPUFragment extends PreferenceFragment {
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 View layout = inflater.inflate(R.layout.cpu_oc_uc, null);
 
+
+                final String overclockOutput = shell.getRootInfo("cat", CPU_VSEL);
 
                 // Set up our EditText fields;
                 final EditText value1 = (EditText) layout.findViewById(R.id.value1);
