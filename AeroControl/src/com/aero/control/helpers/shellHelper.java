@@ -335,7 +335,7 @@ public class shellHelper {
         } catch (IOException e) {
             Log.e("Aero", "Do you even root, bro? :/");
         }
-        return "Something went wrong..";
+        return "Unavailable";
     }
 
 

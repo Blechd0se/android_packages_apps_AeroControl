@@ -3,6 +3,8 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="error_detected">Error ?</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -58,7 +60,8 @@
     <string name="pref_cpu_freqmax">Max. Frequency</string>
     <string name="pref_cpu_freqmin">Min. Frequency</string>
     <string name="pref_cpu_governor">Governor Settings</string>
-    <string name="pref_cpu_suspend_freq">Suspend Frequency</string>
+    <string name="perf_live_oc_uc">Live OC/UC</string>
+    <string name="perf_live_oc_uc_sum">Control Frequencies and Voltage in Realtime!</string>
 
     <string name="pref_gov_choose">Governor Settings</string>
     <string name="pref_gov_choose_sum">This will set your favorite governor!</string>

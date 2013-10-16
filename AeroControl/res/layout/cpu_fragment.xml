@@ -2,7 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <PreferenceCategory android:title="@string/pref_cpu_freq">
+    <PreferenceCategory
+        android:title="@string/pref_cpu_freq">
 
         <ListPreference
             android:key="max_frequency"
@@ -13,6 +14,12 @@
             android:key="min_frequency"
             android:title="@string/pref_cpu_freqmin"
             android:summary="@string/pref_cpu_freqmin" />
+
+        <Preference
+            android:key="cpu_oc_uc"
+            android:title="@string/perf_live_oc_uc"
+            android:summary="@string/perf_live_oc_uc_sum"
+            android:inputType="number" />
 
     </PreferenceCategory>
 
