@@ -31,6 +31,7 @@ public class CPUFragment extends PreferenceFragment {
     public static final String CPU_GOV_SET_BASE = "/sys/devices/system/cpu/cpufreq/";
     public static final String CPU_VSEL = "/proc/overclock/mpu_opps";
     public static final String CPU_MAX_RATE = "/proc/overclock/max_rate";
+    public static final String CPU_FREQ_TABLE = "/proc/overclock/freq_table";
 
     public PreferenceCategory PrefCat;
     public ListPreference listPref;
@@ -106,26 +107,63 @@ public class CPUFragment extends PreferenceFragment {
                     .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            // save the current screen;
-                            Object a = 4 + " " + (value1.getText().toString().substring(0, value1.getText().toString().length() - 4) + "000000") + " " + value2.getText();
-                            Object b = 3 + " " + (value3.getText().toString().substring(0, value3.getText().toString().length() - 4) + "000000") + " " + value4.getText();
-                            Object c = 2 + " " + (value5.getText().toString().substring(0, value5.getText().toString().length() - 4) + "000000") + " " + value6.getText();
-                            Object d = 1 + " " + (value7.getText().toString().substring(0, value7.getText().toString().length() - 4) + "000000") + " " + value8.getText();
-                            // Object for max_rate;
+
+                            Toast.makeText(getActivity(), "Saving values, this might take a while..", Toast.LENGTH_SHORT).show();
+
+                            // Objects;
                             Object f = (value1.getText().toString().substring(0, value1.getText().toString().length() - 4) + "000");
+                            Object g = (value3.getText().toString().substring(0, value3.getText().toString().length() - 4) + "000");
+                            Object h = (value5.getText().toString().substring(0, value5.getText().toString().length() - 4) + "000");
+                            Object i = (value7.getText().toString().substring(0, value7.getText().toString().length() - 4) + "000");
 
-                            // Debug info;
-                            Log.e("Aero: ", a.toString());
-                            Log.e("Aero: ", b.toString());
-                            Log.e("Aero: ", c.toString());
-                            Log.e("Aero: ", d.toString());
+                            // Cast objects to integer (frequencies;
+                            int a = Integer.parseInt(f.toString());
+                            int b = Integer.parseInt(g.toString());
+                            int c = Integer.parseInt(h.toString());
+                            int d = Integer.parseInt(i.toString());
 
-                            // Set our values
-                            shell.setRootInfo(a, CPU_VSEL);
-                            shell.setRootInfo(f, CPU_MAX_RATE);
-                            shell.setRootInfo(b, CPU_VSEL);
-                            shell.setRootInfo(c, CPU_VSEL);
-                            shell.setRootInfo(d, CPU_VSEL);
+                            // Cast voltages;
+                            int vsel1 = Integer.parseInt(value2.getText().toString());
+                            int vsel2 = Integer.parseInt(value4.getText().toString());
+                            int vsel3 = Integer.parseInt(value6.getText().toString());
+                            int vsel4 = Integer.parseInt(value8.getText().toString());
+
+                            // Check if there are valid values;
+                            if ( a <= 1500000 && a > b && b > c && c > d
+                                    && vsel1 < 80 && vsel1 > vsel2 && vsel2 > vsel3 && vsel3 > vsel4 && vsel4 >= 15) {
+
+                                if (a > 300000 && b > 300000 && c > 300000 && d >= 300000){
+                                    try {
+                                        // Set our values in mpu_oops
+                                        shell.setRootInfo( 4 + " " +  a + "000" + " " + vsel1, CPU_VSEL); // 1000mhz
+                                        shell.setRootInfo( 3 + " " +  b + "000" + " " + vsel2, CPU_VSEL); // 800 mhz
+                                        shell.setRootInfo( 2 + " " +  c + "000" + " " + vsel3, CPU_VSEL); // 600 mhz
+                                        shell.setRootInfo( 1 + " " +  d + "000" + " " + vsel4, CPU_VSEL); // 300 mhz
+
+
+                                        // Throw on values freq_table
+                                        shell.setRootInfo( 0 + " " +  a, CPU_FREQ_TABLE); // 1000mhz
+                                        shell.setRootInfo( 1 + " " +  b, CPU_FREQ_TABLE); // 800 mhz
+                                        shell.setRootInfo( 2 + " " +  c, CPU_FREQ_TABLE); // 600 mhz
+                                        shell.setRootInfo( 3 + " " +  d, CPU_FREQ_TABLE); // 300 mhz
+
+                                        // Set max frequency;
+                                        shell.setRootInfo(f, CPU_MAX_RATE);
+                                    }
+                                    catch (Exception e) {
+                                        Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
+                                        Log.e("Aero", "An Error occurred while setting values", e);
+                                    }
+                                }
+                                else {
+                                    Toast.makeText(getActivity(), "Can't set values, are they correct?", Toast.LENGTH_SHORT).show();
+                                    Log.e("Aero", "The frequencies you have set are to low!");
+                                }
+                            }
+                            else {
+                                Toast.makeText(getActivity(), "Can't set values, are they correct?", Toast.LENGTH_SHORT).show();
+                                Log.e("Aero", "Cannot apply values");
+                            }
 
 
                             // Left side (cpu frequencies);
@@ -134,20 +172,14 @@ public class CPUFragment extends PreferenceFragment {
                             value5.setText(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[2]);
                             value7.setText(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[3]);
 
-                            // Set voltages;
-                            value2.setText(shell.getRootInfo("cat", CPU_VSEL).substring(42, 44));
-                            value4.setText(shell.getRootInfo("cat", CPU_VSEL).substring(104, 106));
-                            value6.setText(shell.getRootInfo("cat", CPU_VSEL).substring(166, 168));
-                            value8.setText(shell.getRootInfo("cat", CPU_VSEL).substring(228, 230));
+                            // Set voltages with saved ints;
+                            value2.setText(vsel1 + "");
+                            value4.setText(vsel2 + "");
+                            value6.setText(vsel3 + "");
+                            value8.setText(vsel4 + "");
 
-                            // Before we update anything in the UI, sleep a while;
-                            try {
-                                Thread.currentThread().sleep(250);
-                            } catch (InterruptedException e) {
-                                Log.e("Aero",
-                                        "Something interrupted the main Thread, try again.",
-                                        e);
-                            }
+
+                            // Update the two ListPreferences;
                             updateMinFreq();
                             updateMaxFreq();
 
@@ -155,7 +187,7 @@ public class CPUFragment extends PreferenceFragment {
                     })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                          public void onClick(DialogInterface dialog, int id) {
-                                    //LoginDialogFragment.this.getDialog().cancel();
+
                          }
                     });
 
