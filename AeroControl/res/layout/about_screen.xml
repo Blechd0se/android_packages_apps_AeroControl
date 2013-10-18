@@ -2,27 +2,9 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="horizontal">
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <ListView
-        android:id="@+id/listViewImage"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
-        android:id="@+id/imageView"
-        android:scaleType="center" />
-
     <TextView
         android:textSize="18dip"
         android:id="@+id/aboutScreen"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-    </LinearLayout>
-
 </RelativeLayout>

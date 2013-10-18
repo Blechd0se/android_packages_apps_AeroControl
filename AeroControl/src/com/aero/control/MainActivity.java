@@ -1,9 +1,13 @@
 package com.aero.control;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,7 +28,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aero.control.fragments.AboutFragment;
 import com.aero.control.fragments.AeroFragment;
 import com.aero.control.fragments.CPUFragment;
 import com.aero.control.fragments.DefyPartsFragment;
@@ -73,6 +76,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTheme(R.style.RedHolo);
         setContentView(R.layout.activity_main);
 
         mTitle = mDrawerTitle = getTitle();
@@ -183,9 +187,40 @@ public class MainActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.about:
                 Toast.makeText(this, "About is not implemented yet.", Toast.LENGTH_SHORT).show();
-                getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
-                        android.R.animator.fade_out).replace(R.id.content_frame,
-                        new AboutFragment()).commit();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                LayoutInflater inflater = this.getLayoutInflater();
+                View layout = inflater.inflate(R.layout.about_screen, null);
+
+                builder.setTitle("About");
+                builder.setMessage("The joy of living is in the giving"
+                        + "\n \n" + "Hello. Thank you for using this App. My name is" +
+                        "Alexander Christ (Blechd0se) and i have written this App for fun and in my spartime." +
+                        "It's also Open Source, so you can grap the Source Code and modify it as you want."
+                );
+
+
+                builder.setView(layout)
+                        .setPositiveButton(R.string.github, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Uri uri = Uri.parse("https://github.com/Blechd0se/android_packages_apps_AeroControl");
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(R.string.donation, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Uri uri = Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=46VQEKBETN36U");
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(intent);
+                            }
+                        });
+
+                builder.show();
+
+                ;
                 break;
             case R.id.aero_settings:
                 Toast.makeText(this, "Aero Settings are not implemented yet.", Toast.LENGTH_SHORT).show();

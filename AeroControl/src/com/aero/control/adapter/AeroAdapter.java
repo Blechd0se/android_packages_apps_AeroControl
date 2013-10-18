@@ -44,7 +44,7 @@ public class AeroAdapter extends ArrayAdapter<adapterInit> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new Holder();
-            holder.image = (ImageView) row.findViewById(R.id.imageView);
+            holder.image = (ImageView) row.findViewById(R.id.imgIcon);
             holder.header = (TextView) row.findViewById(R.id.header);
             holder.content = (TextView) row.findViewById((R.id.content));
 
