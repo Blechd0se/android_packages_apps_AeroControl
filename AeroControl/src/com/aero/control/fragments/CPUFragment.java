@@ -111,79 +111,72 @@ public class CPUFragment extends PreferenceFragment {
                             Toast.makeText(getActivity(), "Saving values, this might take a while..", Toast.LENGTH_SHORT).show();
 
                             // Objects;
-                            Object f = (value1.getText().toString().substring(0, value1.getText().toString().length() - 4) + "000");
+                            final Object f = (value1.getText().toString().substring(0, value1.getText().toString().length() - 4) + "000");
                             Object g = (value3.getText().toString().substring(0, value3.getText().toString().length() - 4) + "000");
                             Object h = (value5.getText().toString().substring(0, value5.getText().toString().length() - 4) + "000");
                             Object i = (value7.getText().toString().substring(0, value7.getText().toString().length() - 4) + "000");
 
                             // Cast objects to integer (frequencies;
-                            int a = Integer.parseInt(f.toString());
-                            int b = Integer.parseInt(g.toString());
-                            int c = Integer.parseInt(h.toString());
-                            int d = Integer.parseInt(i.toString());
+                            final int a = Integer.parseInt(f.toString());
+                            final int b = Integer.parseInt(g.toString());
+                            final int c = Integer.parseInt(h.toString());
+                            final int d = Integer.parseInt(i.toString());
 
                             // Cast voltages;
-                            int vsel1 = Integer.parseInt(value2.getText().toString());
-                            int vsel2 = Integer.parseInt(value4.getText().toString());
-                            int vsel3 = Integer.parseInt(value6.getText().toString());
-                            int vsel4 = Integer.parseInt(value8.getText().toString());
+                            final int vsel1 = Integer.parseInt(value2.getText().toString());
+                            final int vsel2 = Integer.parseInt(value4.getText().toString());
+                            final int vsel3 = Integer.parseInt(value6.getText().toString());
+                            final int vsel4 = Integer.parseInt(value8.getText().toString());
 
-                            // Check if there are valid values;
-                            if ( a <= 1500000 && a > b && b > c && c > d
-                                    && vsel1 < 80 && vsel1 > vsel2 && vsel2 > vsel3 && vsel3 > vsel4 && vsel4 >= 15) {
+                            Runnable runnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Check if there are valid values;
+                                    if ( a <= 1500000 && a > b && b > c && c > d
+                                            && vsel1 < 80 && vsel1 > vsel2 && vsel2 > vsel3 && vsel3 > vsel4 && vsel4 >= 15) {
 
-                                if (a > 300000 && b > 300000 && c > 300000 && d >= 300000){
-                                    try {
-                                        // Set our values in mpu_oops
-                                        shell.setRootInfo( 4 + " " +  a + "000" + " " + vsel1, CPU_VSEL); // 1000mhz
-                                        shell.setRootInfo( 3 + " " +  b + "000" + " " + vsel2, CPU_VSEL); // 800 mhz
-                                        shell.setRootInfo( 2 + " " +  c + "000" + " " + vsel3, CPU_VSEL); // 600 mhz
-                                        shell.setRootInfo( 1 + " " +  d + "000" + " " + vsel4, CPU_VSEL); // 300 mhz
+                                        if (a > 300000 && b > 300000 && c > 300000 && d >= 300000){
+                                            try {
+
+                                                // Set our values in mpu_oops
+                                                shell.setRootInfo( 4 + " " +  a + "000" + " " + vsel1, CPU_VSEL); // 1000mhz
+                                                shell.setRootInfo( 3 + " " +  b + "000" + " " + vsel2, CPU_VSEL); // 800 mhz
+                                                shell.setRootInfo( 2 + " " +  c + "000" + " " + vsel3, CPU_VSEL); // 600 mhz
+                                                shell.setRootInfo( 1 + " " +  d + "000" + " " + vsel4, CPU_VSEL); // 300 mhz
 
 
-                                        // Throw on values freq_table
-                                        shell.setRootInfo( 0 + " " +  a, CPU_FREQ_TABLE); // 1000mhz
-                                        shell.setRootInfo( 1 + " " +  b, CPU_FREQ_TABLE); // 800 mhz
-                                        shell.setRootInfo( 2 + " " +  c, CPU_FREQ_TABLE); // 600 mhz
-                                        shell.setRootInfo( 3 + " " +  d, CPU_FREQ_TABLE); // 300 mhz
+                                                // Throw on values freq_table
+                                                shell.setRootInfo( 0 + " " +  a, CPU_FREQ_TABLE); // 1000mhz
+                                                shell.setRootInfo( 1 + " " +  b, CPU_FREQ_TABLE); // 800 mhz
+                                                shell.setRootInfo( 2 + " " +  c, CPU_FREQ_TABLE); // 600 mhz
+                                                shell.setRootInfo( 3 + " " +  d, CPU_FREQ_TABLE); // 300 mhz
 
-                                        // Set max frequency;
-                                        shell.setRootInfo(f, CPU_MAX_RATE);
+                                                // Set max frequency;
+                                                shell.setRootInfo(f, CPU_MAX_RATE);
+
+
+                                            }
+                                            catch (Exception e) {
+                                                Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
+                                                Log.e("Aero", "An Error occurred while setting values", e);
+                                            }
+                                        }
+                                        else {
+                                            Toast.makeText(getActivity(), "Can't set values, are they correct?", Toast.LENGTH_SHORT).show();
+                                            Log.e("Aero", "The frequencies you have set are to low!");
+                                        }
                                     }
-                                    catch (Exception e) {
-                                        Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
-                                        Log.e("Aero", "An Error occurred while setting values", e);
+                                    else {
+                                        Toast.makeText(getActivity(), "Can't set values, are they correct?", Toast.LENGTH_SHORT).show();
+                                        Log.e("Aero", "Cannot apply values, they are not in range.");
                                     }
                                 }
-                                else {
-                                    Toast.makeText(getActivity(), "Can't set values, are they correct?", Toast.LENGTH_SHORT).show();
-                                    Log.e("Aero", "The frequencies you have set are to low!");
-                                }
-                            }
-                            else {
-                                Toast.makeText(getActivity(), "Can't set values, are they correct?", Toast.LENGTH_SHORT).show();
-                                Log.e("Aero", "Cannot apply values");
-                            }
-
-
-                            // Left side (cpu frequencies);
-                            value1.setText(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[0]);
-                            value3.setText(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[1]);
-                            value5.setText(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[2]);
-                            value7.setText(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[3]);
-
-                            // Set voltages with saved ints;
-                            value2.setText(vsel1 + "");
-                            value4.setText(vsel2 + "");
-                            value6.setText(vsel3 + "");
-                            value8.setText(vsel4 + "");
-
-
-                            // Update the two ListPreferences;
-                            updateMinFreq();
-                            updateMaxFreq();
-
+                            };
+                            Thread cpuUpdateThread = new Thread(runnable);
+                            cpuUpdateThread.start();
                         }
+
+
                     })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                          public void onClick(DialogInterface dialog, int id) {
@@ -406,12 +399,9 @@ public class CPUFragment extends PreferenceFragment {
                     }
 
                     return true;
-                }
-
-                ;
+                };
             });
-
         }
-    }
 
+    }
 }
