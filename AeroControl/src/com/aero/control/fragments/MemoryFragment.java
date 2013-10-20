@@ -12,6 +12,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.text.InputType;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.aero.control.R;
@@ -104,7 +105,7 @@ public class MemoryFragment extends PreferenceFragment {
 
                         final String b = (String)system[item];
 
-                        update.setTitle("Trimming...");
+                        update.setTitle("Trim");
                         update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                         update.setCancelable(true);
                         update.setMax(100);
@@ -112,44 +113,42 @@ public class MemoryFragment extends PreferenceFragment {
                         update.show();
 
 
-                        Thread background = new Thread (new Runnable() {
+                        Runnable runnable = new Runnable() {
+                            @Override
                             public void run() {
                                 try {
 
-
-                                    while (update.getProgress()<= update.getMax()) {
-                                        // wait 500ms between each update
-                                        //Thread.sleep(500);
+                                    while (update.getProgress()<= 100) {
 
                                         // Set up the root-command;
                                         shell.getRootInfo("fstrim -v", b);
 
-                                        update.setTitle("Successful!");
-
-                                        update.dismiss();
-                                        Thread.interrupted();
+                                        update.setIndeterminate(false);
+                                        update.setProgress(100);
 
                                         progressHandler.sendMessage(progressHandler.obtainMessage());
 
                                     }
 
                                 } catch (Exception e) {
-                                    // if something fails do something smart
+                                    Log.e("Aero", "Either an error occurred or trimming was successful.", e);
                                 }
                             }
-                        });
+                        };
+                        Thread trimThread = new Thread(runnable);
+                        trimThread.start();
 
-                        // start the background thread
-                        background.start();
 
                        // Toast.makeText(getActivity(), "Trimming in progress...", Toast.LENGTH_LONG).show();
                     }
                 }).show();
 
+
                 return true;
             };
 
         });
+
 
         // Start our custom change listener;
         io_scheduler.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
