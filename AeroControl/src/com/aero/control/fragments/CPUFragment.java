@@ -3,6 +3,8 @@ package com.aero.control.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -75,7 +77,6 @@ public class CPUFragment extends PreferenceFragment {
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 View layout = inflater.inflate(R.layout.cpu_oc_uc, null);
 
-
                 final String overclockOutput = shell.getRootInfo("cat", CPU_VSEL);
 
                 // Set up our EditText fields;
@@ -108,13 +109,13 @@ public class CPUFragment extends PreferenceFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
 
-                            Toast.makeText(getActivity(), "Saving values, this might take a while..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Saving values, this might take a while..", Toast.LENGTH_LONG).show();
 
                             // Objects;
                             final Object f = (value1.getText().toString().substring(0, value1.getText().toString().length() - 4) + "000");
                             Object g = (value3.getText().toString().substring(0, value3.getText().toString().length() - 4) + "000");
                             Object h = (value5.getText().toString().substring(0, value5.getText().toString().length() - 4) + "000");
-                            Object i = (value7.getText().toString().substring(0, value7.getText().toString().length() - 4) + "000");
+                            final Object i = (value7.getText().toString().substring(0, value7.getText().toString().length() - 4) + "000");
 
                             // Cast objects to integer (frequencies;
                             final int a = Integer.parseInt(f.toString());
@@ -151,32 +152,40 @@ public class CPUFragment extends PreferenceFragment {
                                                 shell.setRootInfo( 2 + " " +  c, CPU_FREQ_TABLE); // 600 mhz
                                                 shell.setRootInfo( 3 + " " +  d, CPU_FREQ_TABLE); // 300 mhz
 
-                                                // Set max frequency;
+                                                // Set min/max frequency;
                                                 shell.setRootInfo(f, CPU_MAX_RATE);
-
+                                                shell.setRootInfo(i, CPU_MIN_FREQ);
 
                                             }
                                             catch (Exception e) {
-                                                Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
                                                 Log.e("Aero", "An Error occurred while setting values", e);
+                                                Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                         else {
-                                            Toast.makeText(getActivity(), "Can't set values, are they correct?", Toast.LENGTH_SHORT).show();
                                             Log.e("Aero", "The frequencies you have set are to low!");
                                         }
                                     }
                                     else {
-                                        Toast.makeText(getActivity(), "Can't set values, are they correct?", Toast.LENGTH_SHORT).show();
                                         Log.e("Aero", "Cannot apply values, they are not in range.");
+
                                     }
+
                                 }
                             };
-                            Thread cpuUpdateThread = new Thread(runnable);
-                            cpuUpdateThread.start();
+                            try {
+                                Thread cpuUpdateThread = new Thread(runnable);
+                                cpuUpdateThread.start();
+                            } catch (Exception e) {
+                                Log.e("Aero", "Something went completely wrong.", e);
+                            }
+
+                            // Start our background refresher Task;
+                            try {
+                                mRefreshThread.start();
+                            } catch (Exception e) {
+                            }
                         }
-
-
                     })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                          public void onClick(DialogInterface dialog, int id) {
@@ -187,10 +196,10 @@ public class CPUFragment extends PreferenceFragment {
                 builder.setTitle("Live OC/UC").show();
 
 
+
                 return false;
             }
         });
-
 
         // Find our ListPreference (governor_settings);
         listPref = (ListPreference) root.findPreference("set_governor");
@@ -356,6 +365,45 @@ public class CPUFragment extends PreferenceFragment {
             max_frequency.setSummary("Unavailable");
         }
     }
+
+    private class RefreshThread extends Thread {
+
+        private boolean mInterrupt = false;
+
+        public void interrupt() {
+            mInterrupt = true;
+        }
+        @Override
+        public void run() {
+            try {
+                while (!mInterrupt) {
+                    sleep(1000);
+                    mRefreshHandler.sendEmptyMessage(1);
+                }
+            } catch (InterruptedException e) {
+
+            }
+        }
+    };
+
+    private RefreshThread mRefreshThread = new RefreshThread();
+
+    private Handler mRefreshHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            if (msg.what >= 1) {
+                if (isVisible()) {
+                    updateMaxFreq();
+                    updateMinFreq();
+                } else {
+                    // Do nothing
+                }
+
+            }
+        }
+    };
 
     // Make a private class to load all parameters;
     private class handler {

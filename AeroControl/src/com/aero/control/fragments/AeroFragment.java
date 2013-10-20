@@ -51,9 +51,6 @@ public class AeroFragment extends Fragment {
         public void interrupt() {
             mInterrupt = true;
         }
-        public void continueThread() {
-            mInterrupt = false;
-        }
             @Override
             public void run() {
                 try {
