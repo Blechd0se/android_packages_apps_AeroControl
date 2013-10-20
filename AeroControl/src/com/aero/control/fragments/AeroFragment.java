@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,9 @@ import com.aero.control.helpers.shellHelper;
 /**
  * Created by Alexander Christ on 16.09.13.
  * Default Overview Fragment
+ *
+ * TODO: Proper implementation for the UpdateThread
+ *       with onResume() and onPause()
  */
 public class AeroFragment extends Fragment {
 
@@ -72,29 +76,16 @@ public class AeroFragment extends Fragment {
 
                 if (msg.what >= 1) {
 
-                    adapter.notifyDataSetChanged();
 
                     if (isVisible()) {
                         createList();
                     } else {
-                        //
+                        // Do nothing
                     }
 
                 }
             }
         };
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mRefreshThread.interrupt();
-        try {
-            mRefreshThread.join();
-        } catch (InterruptedException e) {
-        }
-    }
-
-
 
     // Override for custom view;
     @Override
