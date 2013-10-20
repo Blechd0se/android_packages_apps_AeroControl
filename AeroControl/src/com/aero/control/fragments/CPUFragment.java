@@ -187,11 +187,42 @@ public class CPUFragment extends PreferenceFragment {
                             }
                         }
                     })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                         public void onClick(DialogInterface dialog, int id) {
 
-                         }
-                    });
+                    .setNeutralButton(R.string.default_values, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                try {
+
+                                    // Set our values in mpu_oops
+                                    shell.setRootInfo( 4 + " " +  "1000000000" + " " + "62", CPU_VSEL); // 1000mhz
+                                    shell.setRootInfo( 3 + " " +  "800000000" + " " + "58", CPU_VSEL); // 800 mhz
+                                    shell.setRootInfo( 2 + " " +  "600000000" + " " + "48", CPU_VSEL); // 600 mhz
+                                    shell.setRootInfo( 1 + " " +  "300000000" + " " + "33", CPU_VSEL); // 300 mhz
+
+
+                                    // Throw on values freq_table
+                                    shell.setRootInfo( 0 + " " +  "1000000", CPU_FREQ_TABLE); // 1000mhz
+                                    shell.setRootInfo( 1 + " " +  "800000", CPU_FREQ_TABLE); // 800 mhz
+                                    shell.setRootInfo( 2 + " " +  "600000", CPU_FREQ_TABLE); // 600 mhz
+                                    shell.setRootInfo( 3 + " " +  "300000", CPU_FREQ_TABLE); // 300 mhz
+
+                                    // Set min/max frequency;
+                                    shell.setRootInfo("1000000", CPU_MAX_RATE);
+                                    shell.setRootInfo("300000", CPU_MIN_FREQ);
+
+                                }
+                                catch (Exception e) {
+                                    Log.e("Aero", "An Error occurred while setting values", e);
+                                    Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        })
+
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
 
                 builder.setTitle("Live OC/UC").show();
 
