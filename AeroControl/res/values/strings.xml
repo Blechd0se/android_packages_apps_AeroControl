@@ -5,8 +5,9 @@
     <string name="error_detected">Error ?</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
-    <string name="github">Github</string>
-    <string name="donation">Donate</string>
+    <string name="github">Github AeroControl</string>
+    <string name="donation_blechdose">Donate to Blechdose</string>
+    <string name="donation_quarx">Donate to Quarx</string>
 
     <!-- Default Navigation Drawer entries -->
 
