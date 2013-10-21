@@ -215,6 +215,12 @@ public class CPUFragment extends PreferenceFragment {
                                     Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
                                 }
 
+                                // Start our background refresher Task;
+                                try {
+                                    mRefreshThread.start();
+                                } catch (Exception e) {
+                                }
+
                             }
                         })
 
