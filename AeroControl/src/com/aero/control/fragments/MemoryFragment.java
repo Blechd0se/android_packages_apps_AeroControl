@@ -11,8 +11,12 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aero.control.R;
@@ -28,6 +32,8 @@ public class MemoryFragment extends PreferenceFragment {
     public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
     public static final String CMDLINE_ZACHE = "/system/bootmenu/2nd-boot/cmdline";
+
+    public boolean showDialog = false;
 
     public boolean checkDynFsync;
 
@@ -76,6 +82,42 @@ public class MemoryFragment extends PreferenceFragment {
         final String fileCMD = shell.getInfo(CMDLINE_ZACHE);
         final boolean zcacheEnabled = fileCMD.length() == 0 ? false : fileCMD.contains("zcache");
         zcache.setChecked(zcacheEnabled);
+
+        // Ensure only devices with this special path are checked;
+        final String fileMount = shell.getRootInfo("mount", "");
+        final boolean fileMountCheck = fileMount.length() == 0 ? false : fileMount.contains("/dev/block/mmcblk1p25");
+
+        if (!showDialog && fileMountCheck) {
+            final String fileJournal = shell.getRootInfo("tune2fs -l", "/dev/block/mmcblk1p25");
+            final boolean fileSystemCheck = fileJournal.length() == 0 ? false : fileJournal.contains("has_journal");
+            if (!fileSystemCheck){
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                // Just reuse aboutScreen, because its Linear and has a TextView
+                View layout = inflater.inflate(R.layout.about_screen, null);
+                TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
+
+                builder.setTitle("Problem detected!");
+                aboutText.setText(Html.fromHtml("Looks like your /data partition doesn't have the 'has_journal' Feature enabled. " +
+                        "Please reboot into recovery and run the following command via adb shell: <br> <br>" +
+                        "<b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>"));
+                aboutText.setTextSize(13);
+
+                builder.setView(layout)
+                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                showDialog = true;
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                showDialog = true;
+                            }
+                        });
+                builder.show();
+            }
+        }
 
         // Find our ListPreference (max_frequency);
         final ListPreference io_scheduler = (ListPreference) root.findPreference("io_scheduler_list");
@@ -207,7 +249,8 @@ public class MemoryFragment extends PreferenceFragment {
                 if (a.equals("true")) {
 
                     // If already on, we can bail out;
-                    if (getState.contains("zcache")) return true;
+                    if (getState.contains("zcache"))
+                        return true;
 
                     getState = getState + " zcache";
 
@@ -215,9 +258,10 @@ public class MemoryFragment extends PreferenceFragment {
                 else if (a.equals("false")) {
 
                     // bail out again, because its already how we want it;
-                    if (!getState.contains("zcache")) return true;
+                    if (!getState.contains("zcache"))
+                        return true;
 
-                    getState = getState.replace("zcache", "");
+                    getState = getState.replace(" zcache", "");
 
                 }
 

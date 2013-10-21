@@ -273,13 +273,15 @@ public class shellHelper {
         try {
 
             rooting = Runtime.getRuntime().exec("su");
-            rooting.getOutputStream();
+            DataOutputStream os = new DataOutputStream(rooting.getOutputStream());
+            os.writeBytes("mount -o remount,rw -t ext3 /dev/block/mmcblk1p21 /system" + "\n");
+            os.flush();
+            os.writeBytes("exit\n");
+            os.flush();
+            rooting.waitFor();
 
-            rooting = Runtime.getRuntime().exec("mount -o remount,rw /system");
-            rooting.getOutputStream();
-
-        } catch (IOException e) {
-            Log.e("Aero", "Do you even root, bro? :/");
+        } catch (Exception e) {
+            Log.e("Aero", "Do you even root, bro? :/", e);
         }
 
     }
@@ -332,8 +334,8 @@ public class shellHelper {
             Log.e("Aero", "Output from su-Operation: " + output);
             return output;
 
-        } catch (IOException e) {
-            Log.e("Aero", "Do you even root, bro? :/");
+        } catch (Exception e) {
+            Log.e("Aero", "Do you even root, bro? :/", e);
         }
         return "Unavailable";
     }
