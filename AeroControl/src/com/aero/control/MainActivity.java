@@ -193,9 +193,9 @@ public class MainActivity extends Activity {
 
                 builder.setTitle("About");
                 aboutText.setText(Html.fromHtml("Hello. Thank you for using this App. My name is " +
-                        "Alexander Christ (Blechd0se) and i have written this App for fun and in my spare time." +
-                        "It's also Open Source, so you can grab the Source Code and modify it as you want." +
-                        "If you want to, you can also donate to Quarx for his awesome work! <br>" +
+                        "Alexander Christ (Blechd0se) and I have written this App for fun and in my spare time. " +
+                        "It's also Open Source, so you can grab the Source Code and modify it as you want. " +
+                        "If you want to, you can either donate to Quarx for his awesome rom or to me. <br>" +
                         "<b>The joy of living is in the giving.</b> <br>"));
 
                 builder.setView(layout)
