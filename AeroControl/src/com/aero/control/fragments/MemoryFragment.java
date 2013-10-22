@@ -142,6 +142,8 @@ public class MemoryFragment extends PreferenceFragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final ProgressDialog update = new ProgressDialog(getActivity());
                 builder.setTitle("Trim Options");
+                builder.setIcon(R.drawable.gear_dark);
+
                 builder.setItems(system, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
 

@@ -192,6 +192,8 @@ public class MainActivity extends Activity {
                 TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 
                 builder.setTitle("About");
+                builder.setIcon(R.drawable.email_dark);
+
                 aboutText.setText(Html.fromHtml("Hello. Thank you for using this App. My name is " +
                         "Alexander Christ (Blechd0se) and I have written this App for fun and in my spare time. " +
                         "It's also Open Source, so you can grab the Source Code and modify it as you want. " +

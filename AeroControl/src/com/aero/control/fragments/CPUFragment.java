@@ -76,6 +76,7 @@ public class CPUFragment extends PreferenceFragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 View layout = inflater.inflate(R.layout.cpu_oc_uc, null);
+                builder.setIcon(R.drawable.lightbulb_dark);
 
                 final String overclockOutput = shell.getRootInfo("cat", CPU_VSEL);
 
@@ -228,7 +229,6 @@ public class CPUFragment extends PreferenceFragment {
 
                     }
                 });
-
                 builder.setTitle("Live OC/UC").show();
 
 
