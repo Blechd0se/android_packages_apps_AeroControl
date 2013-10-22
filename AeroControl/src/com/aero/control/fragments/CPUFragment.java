@@ -139,22 +139,23 @@ public class CPUFragment extends PreferenceFragment {
                                         if (a > 300000 && b > 300000 && c > 300000 && d >= 300000){
                                             try {
 
-                                                // Set our values in mpu_oops
-                                                shell.setRootInfo( 4 + " " +  a + "000" + " " + vsel1, CPU_VSEL); // 1000mhz
-                                                shell.setRootInfo( 3 + " " +  b + "000" + " " + vsel2, CPU_VSEL); // 800 mhz
-                                                shell.setRootInfo( 2 + " " +  c + "000" + " " + vsel3, CPU_VSEL); // 600 mhz
-                                                shell.setRootInfo( 1 + " " +  d + "000" + " " + vsel4, CPU_VSEL); // 300 mhz
 
-
-                                                // Throw on values freq_table
-                                                shell.setRootInfo( 0 + " " +  a, CPU_FREQ_TABLE); // 1000mhz
-                                                shell.setRootInfo( 1 + " " +  b, CPU_FREQ_TABLE); // 800 mhz
-                                                shell.setRootInfo( 2 + " " +  c, CPU_FREQ_TABLE); // 600 mhz
-                                                shell.setRootInfo( 3 + " " +  d, CPU_FREQ_TABLE); // 300 mhz
-
-                                                // Set min/max frequency;
-                                                shell.setRootInfo(f, CPU_MAX_RATE);
-                                                shell.setRootInfo(i, CPU_MIN_FREQ);
+                                                // Save our values in one big string array;
+                                                String[] commands = new String[]
+                                                        {
+                                                              "echo " + "4" + " " +  a + "000" + " " + vsel1 + " > " + CPU_VSEL,
+                                                              "echo " + "3" + " " +  b + "000" + " " + vsel2 + " > " + CPU_VSEL,
+                                                              "echo " + "2" + " " +  c + "000" + " " + vsel3 + " > " + CPU_VSEL,
+                                                              "echo " + "1" + " " +  d + "000" + " " + vsel4 + " > " + CPU_VSEL,
+                                                              "echo " + "0" + " " +  a + " > " + CPU_FREQ_TABLE,
+                                                              "echo " + "1" + " " +  b + " > " + CPU_FREQ_TABLE,
+                                                              "echo " + "2" + " " +  c + " > " + CPU_FREQ_TABLE,
+                                                              "echo " + "3" + " " +  d + " > " + CPU_FREQ_TABLE,
+                                                              "echo " + f + " > " + CPU_MAX_RATE,
+                                                              "echo " + i + " > " + CPU_MIN_FREQ
+                                                        };
+                                                // Throw them all in!
+                                                shell.setRootInfo(commands);
 
                                             }
                                             catch (Exception e) {
@@ -192,22 +193,20 @@ public class CPUFragment extends PreferenceFragment {
                             public void onClick(DialogInterface dialog, int id) {
                                 try {
 
-                                    // Set our values in mpu_oops
-                                    shell.setRootInfo( 4 + " " +  "1000000000" + " " + "62", CPU_VSEL); // 1000mhz
-                                    shell.setRootInfo( 3 + " " +  "800000000" + " " + "58", CPU_VSEL); // 800 mhz
-                                    shell.setRootInfo( 2 + " " +  "600000000" + " " + "48", CPU_VSEL); // 600 mhz
-                                    shell.setRootInfo( 1 + " " +  "300000000" + " " + "33", CPU_VSEL); // 300 mhz
-
-
-                                    // Throw on values freq_table
-                                    shell.setRootInfo( 0 + " " +  "1000000", CPU_FREQ_TABLE); // 1000mhz
-                                    shell.setRootInfo( 1 + " " +  "800000", CPU_FREQ_TABLE); // 800 mhz
-                                    shell.setRootInfo( 2 + " " +  "600000", CPU_FREQ_TABLE); // 600 mhz
-                                    shell.setRootInfo( 3 + " " +  "300000", CPU_FREQ_TABLE); // 300 mhz
-
-                                    // Set min/max frequency;
-                                    shell.setRootInfo("1000000", CPU_MAX_RATE);
-                                    shell.setRootInfo("300000", CPU_MIN_FREQ);
+                                    String[] commands = new String[]
+                                            {
+                                                    "echo " + "4" + " 1000000000" + " 62" + " > " + CPU_VSEL,
+                                                    "echo " + "3" + " 800000000"  + " 58" + " > " + CPU_VSEL,
+                                                    "echo " + "2" + " 600000000"  + " 48" + " > " + CPU_VSEL,
+                                                    "echo " + "1" + " 300000000"  + " 33" + " > " + CPU_VSEL,
+                                                    "echo " + "0" + " 1000000" + " > " + CPU_FREQ_TABLE,
+                                                    "echo " + "1" + " 800000" + " > " + CPU_FREQ_TABLE,
+                                                    "echo " + "2" + " 600000" + " > " + CPU_FREQ_TABLE,
+                                                    "echo " + "3" + " 300000" + " > " + CPU_FREQ_TABLE,
+                                                    "echo " + "1000000" + " > " + CPU_MAX_RATE,
+                                                    "echo " + "300000"  + " > " + CPU_MIN_FREQ
+                                            };
+                                    shell.setRootInfo(commands);
 
                                 }
                                 catch (Exception e) {

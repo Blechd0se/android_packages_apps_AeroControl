@@ -254,6 +254,33 @@ public class shellHelper {
             DataOutputStream dataStream = new DataOutputStream(rooting.getOutputStream());
             // Doing some String-puzzle;
             dataStream.writeBytes("echo \"" + s + "\" " + "> " + content + "\n");
+            dataStream.writeBytes("exit\n");
+            dataStream.flush();
+
+        } catch (IOException e) {
+            Log.e("Aero", "Do you even root, bro? :/");
+        }
+
+    }
+    /**
+     * Generic Method for setting a bunch of commands
+     * Same as setRootInfo but with an array instead of objects
+     *
+     * @param array   => Commands to execute in a array
+     *
+     * @return nothing
+     */
+    public void setRootInfo(String array[]) {
+
+        try {
+
+            Process process = Runtime.getRuntime().exec("su");
+            DataOutputStream dataStream = new DataOutputStream(process.getOutputStream());
+            for (String commands : array) {
+                dataStream.writeBytes(commands + "\n");
+                dataStream.flush();
+            }
+            dataStream.writeBytes("exit\n");
             dataStream.flush();
 
         } catch (IOException e) {
@@ -273,11 +300,11 @@ public class shellHelper {
         try {
 
             rooting = Runtime.getRuntime().exec("su");
-            DataOutputStream os = new DataOutputStream(rooting.getOutputStream());
-            os.writeBytes("mount -o remount,rw -t ext3 /dev/block/mmcblk1p21 /system" + "\n");
-            os.flush();
-            os.writeBytes("exit\n");
-            os.flush();
+            DataOutputStream dataStream = new DataOutputStream(rooting.getOutputStream());
+            dataStream.writeBytes("mount -o remount,rw -t ext3 /dev/block/mmcblk1p21 /system" + "\n");
+            dataStream.flush();
+            dataStream.writeBytes("exit\n");
+            dataStream.flush();
             rooting.waitFor();
 
         } catch (Exception e) {
