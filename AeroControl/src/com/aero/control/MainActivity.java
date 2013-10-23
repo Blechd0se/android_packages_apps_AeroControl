@@ -306,11 +306,11 @@ public class MainActivity extends Activity {
                 Toast.makeText(this, "Defy Parts are not implemented yet. ", Toast.LENGTH_SHORT).show();
                 break;
             case UPDATER:
-                /*
+
                 if (mUpdaterFragement == null) {
                     mUpdaterFragement = new UpdaterFragment();
                 }
-                fragment = mUpdaterFragement;*/
+                fragment = mUpdaterFragement;
                 Toast.makeText(this, "The Updater is not implemented yet. ", Toast.LENGTH_SHORT).show();
                 break;
         }

@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory android:title="@string/pref_updater">
+
+        <Preference
+            android:key="backup_kernel"
+            android:title="@string/pref_backup_kernel"
+            android:summary="@string/pref_backup_kernel_content" />
+
+        <Preference
+            android:key="updater_kernel"
+            android:title="@string/pref_updater_kernel"
+            android:summary="@string/pref_updater_kernel_content" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_restore">
+
+        <Preference
+            android:key="restore_kernel"
+            android:title="@string/pref_restore_kernel"
+            android:summary="@string/pref_restore_kernel_content" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

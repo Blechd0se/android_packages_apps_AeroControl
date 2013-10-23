@@ -94,9 +94,12 @@
     <string name="fstrim_header">Trim Option</string>
     <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
 
+    <!-- IO Scheduler -->
+    <string name="io_scheduler">IO Scheduler</string>
+
     <!-- GPU Fragment -->
-    <string name="pref_gpu_controll_enable">GPU Control</string>
-    <string name="pref_gpu_controll_enable_sum">This will enable the GPU Control driver. It handles overclocking/undervolting as well
+    <string name="pref_gpu_control_enable">GPU Control</string>
+    <string name="pref_gpu_control_enable_sum">This will enable the GPU Control driver. It handles overclocking/undervolting as well
                                             as some basic scheduling for the GPU.</string>
     <string name="pref_gpu_max_freq">Max. Frequency</string>
     <string name="pref_gpu_max_freq_sum">This will set the maximum GPU Frequency. Default is 200 MHz.</string>
@@ -119,7 +122,16 @@
         <item>266666666</item>
     </string-array>
 
-    <!-- IO Scheduler -->
-    <string name="io_scheduler">IO Scheduler</string>
+    <!-- Updater Fragment -->
+    <string name="pref_updater">Kernel Updater and Backup</string>
+    <string name="pref_backup_kernel">Backup your Kernel</string>
+    <string name="pref_backup_kernel_content">This will save a copy of your current kernel.</string>
+
+    <string name="pref_updater_kernel">Update Kernel</string>
+    <string name="pref_updater_kernel_content">This will update your kernel.</string>
+
+    <string name="pref_restore">Restore Backup</string>
+    <string name="pref_restore_kernel">Restore</string>
+    <string name="pref_restore_kernel_content">Restore from a kernel backup.</string>
 
 </resources>

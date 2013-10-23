@@ -2,12 +2,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <PreferenceCategory android:title="@string/pref_gpu_controll_enable">
+    <PreferenceCategory android:title="@string/pref_gpu_control_enable">
 
         <CheckBoxPreference
             android:key="gpu_control_enable"
-            android:title="@string/pref_gpu_controll_enable"
-            android:summary="@string/pref_gpu_controll_enable_sum" />
+            android:title="@string/pref_gpu_control_enable"
+            android:summary="@string/pref_gpu_control_enable_sum" />
 
         <ListPreference
             android:key="gpu_max_freq"
