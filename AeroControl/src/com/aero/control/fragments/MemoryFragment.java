@@ -141,7 +141,7 @@ public class MemoryFragment extends PreferenceFragment {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final ProgressDialog update = new ProgressDialog(getActivity());
-                builder.setTitle("Trim Options");
+                builder.setTitle(R.string.fstrim_header);
                 builder.setIcon(R.drawable.gear_dark);
 
                 builder.setItems(system, new DialogInterface.OnClickListener() {
@@ -149,7 +149,6 @@ public class MemoryFragment extends PreferenceFragment {
 
                         final String b = (String)system[item];
 
-                        update.setTitle("Trim");
                         update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                         update.setCancelable(true);
                         update.setMax(100);
@@ -269,7 +268,7 @@ public class MemoryFragment extends PreferenceFragment {
 
                 // Set current State to path;
                 shell.setRootInfo(getState, CMDLINE_ZACHE);
-                Toast.makeText(getActivity(), "This may require a reboot.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
 
                 return true;
             };

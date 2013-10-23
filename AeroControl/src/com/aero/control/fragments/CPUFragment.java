@@ -229,7 +229,7 @@ public class CPUFragment extends PreferenceFragment {
 
                     }
                 });
-                builder.setTitle("Live OC/UC").show();
+                builder.setTitle(R.string.perf_live_oc_uc).show();
 
 
 
@@ -293,7 +293,7 @@ public class CPUFragment extends PreferenceFragment {
                         root.removePreference(PrefCat);
 
                     PrefCat = new PreferenceCategory(getActivity());
-                    PrefCat.setTitle("Governor Specific Settings");
+                    PrefCat.setTitle(R.string.pref_gov_set);
                     root.addPreference(PrefCat);
 
                     handler h = new handler();

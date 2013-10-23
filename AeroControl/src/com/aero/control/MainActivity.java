@@ -191,7 +191,7 @@ public class MainActivity extends Activity {
                 View layout = inflater.inflate(R.layout.about_screen, null);
                 TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 
-                builder.setTitle("About");
+                builder.setTitle(R.string.about);
                 builder.setIcon(R.drawable.email_dark);
 
                 aboutText.setText(Html.fromHtml("Hello. Thank you for using this App. My name is " +

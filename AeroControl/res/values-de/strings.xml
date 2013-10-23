@@ -1,0 +1,139 @@
+<resources>
+    <string name="app_name">Aero Control</string>
+    <string name="drawer_open">Öffnen</string>
+    <string name="drawer_close">Schließen</string>
+    <string name="error_detected">Fehler ?</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="save">Speichern</string>
+    <string name="github">Github AeroControl</string>
+    <string name="donation_blechdose">Spende an Blechdose</string>
+    <string name="donation_quarx">Spende an Quarx</string>
+    <string name="default_values">Standardwerte</string>
+    <string name="need_reboot">Benötige Reboot.</string>
+
+
+    <!-- Default Navigation Drawer entries -->
+
+    <string name="slider_overview">Überblick</string>
+    <string name="slider_cpu_settings">CPU Leistung</string>
+    <string name="slider_gpu_settings">GPU Kontrolle</string>
+    <string name="slider_memory_settings">Speichereinstellungen</string>
+    <string name="slider_defy_parts">Defy Einstellungen</string>
+    <string name="slider_updater">Updater</string>
+
+    <string-array name="aero_array">
+        <item>@string/slider_overview</item>
+        <item>@string/slider_cpu_settings</item>
+        <item>@string/slider_gpu_settings</item>
+        <item>@string/slider_memory_settings</item>
+        <item>@string/slider_defy_parts</item>
+        <item>@string/slider_updater</item>
+    </string-array>
+
+    <!-- Overview Elements -->
+
+    <string name="kernel_version">Kernel:</string>
+    <string name="current_cpu_speed">CPU Frequenz:</string>
+    <string name="current_gpu_speed">GPU Frequenz:</string>
+    <string name="current_governor">Governor:</string>
+    <string name="current_io_governor">I/O-Scheduler:</string>
+    <string name="available_memory">Verfügbarer RAM:</string>
+
+    <string-array name="overview_array">
+        <item>@string/kernel_version</item>
+        <item>@string/current_cpu_speed</item>
+        <item>@string/current_gpu_speed</item>
+        <item>@string/current_governor</item>
+        <item>@string/available_memory</item>
+    </string-array>
+
+    <!-- Action Overflow Menu -->
+
+    <string name="about">Über</string>
+    <string name="aero_settings">Einstellungen</string>
+
+    <!-- Preference Menu -->
+
+    <string name="pref_appspecific">App spezifisch</string>
+    <string name="pref_setatboot">Beim Hochfahren setzen</string>
+    <string name="pref_setatboot_sum">Achtung: Das setzt die Einstellungen beim Hochfahren.</string>
+    <string name="pref_updatepath">Updatepfad</string>
+    <string name="pref_updatepath_sum">Gewünschter Updatepfad.</string>
+
+    <!-- CPU Fragment -->
+
+    <string name="pref_cpu_freq">Frequenzen</string>
+    <string name="pref_cpu_freqmax">Max. Frequenz</string>
+    <string name="pref_cpu_freqmin">Min. Frequenz</string>
+    <string name="pref_cpu_governor">Governor Einstellungen</string>
+    <string name="perf_live_oc_uc">Echtzeit OC/UC</string>
+    <string name="perf_live_oc_uc_sum">Echtzeiteinstellungen von Spannung und Frequenz</string>
+
+    <string name="pref_gov_choose">Governor Einstellungen</string>
+    <string name="pref_gov_choose_sum">Setzt den gewünschten Governor</string>
+
+    <string name="pref_gov_set">Governor spezfische Einstellungen.</string>
+    <string name="pref_gov_set_sum">Setzt Governor spezfische Einstellungen.</string>
+
+    <!-- Memory Fragment -->
+    <string name="pref_memory_settings">Speichereinstellungen</string>
+
+    <string name="pref_memory_swappiness">Swappiness</string>
+    <string name="pref_memory_swappiness_sum">Swappiness legt fest, wie aggressiv der Kernel Speicherseiten auslagern soll. </string>
+
+    <string name="pref_dynamic_fsync">Dynamisches FSync</string>
+    <string name="pref_dynamic_fsync_sum">Dynamisches FSync aktiviert FSync nur während der Bildschirm aus ist.</string>
+
+    <string name="pref_memory_swap">Swap</string>
+    <string name="pref_memory_swap_sum">Erstellt eine Swap-Partition.</string>
+
+    <string name="pref_memory_zcache">zCache</string>
+    <string name="pref_memory_zcache_sum">Aktiviert zCache.</string>
+
+    <string name="pref_memory_zcache_compression">zCache Kompression</string>
+    <string name="pref_memory_zcache_compression_sum">Einstellung der zCache Kompressions-Methode.</string>
+
+    <string name="fstrim_header">Trim Optionen</string>
+    <string name="fstrim_content">Mit Trim lassen sich Partition trimmen, das kann eine Weile dauern.</string>
+
+    <!-- IO Scheduler -->
+    <string name="io_scheduler">IO Scheduler</string>
+
+    <!-- GPU Fragment -->
+    <string name="pref_gpu_control_enable">GPU Kontrolle</string>
+    <string name="pref_gpu_control_enable_sum">Dieser Haken aktiviert den GPU Kontrolltreiber. Er erlaubt übertakten/untertakten
+                                            sowie einige Basis Algorithmen für die GPU.</string>
+    <string name="pref_gpu_max_freq">Max. Frequenz</string>
+    <string name="pref_gpu_max_freq_sum">Setzt die maximale GPU Frequenz. Standard ist 200 MHz.</string>
+
+    <!-- static GPU Frequencies for now -->
+
+    <string-array name="gpu_frequency_list">
+        <item>100 MHz</item>
+        <item>133 MHz</item>
+        <item>160 MHz</item>
+        <item>200 MHz</item>
+        <item>266 MHz</item>
+    </string-array>
+
+    <string-array name="gpu_frequency_list_values">
+        <item>100000000</item>
+        <item>133333333</item>
+        <item>160000000</item>
+        <item>200000000</item>
+        <item>266666666</item>
+    </string-array>
+
+    <!-- Updater Fragment -->
+    <string name="pref_updater">Kernel Updater und Backup</string>
+    <string name="pref_backup_kernel">Backup vom Kernel</string>
+    <string name="pref_backup_kernel_content">Das macht eine Kopie deines momentanen Kernel.</string>
+
+    <string name="pref_updater_kernel">Update Kernel</string>
+    <string name="pref_updater_kernel_content">Das wird deinen Kernel updaten.</string>
+
+    <string name="pref_restore">Backup Wiederherstellung</string>
+    <string name="pref_restore_kernel">Wiederhersetllung</string>
+    <string name="pref_restore_kernel_content">Stelle aus einem Backup den Kernel wieder her.</string>
+
+</resources>
