@@ -33,7 +33,7 @@ public class MemoryFragment extends PreferenceFragment {
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
     public static final String CMDLINE_ZACHE = "/system/bootmenu/2nd-boot/cmdline";
 
-    public boolean showDialog = false;
+    public boolean showDialog = true;
 
     public boolean checkDynFsync;
 
@@ -82,39 +82,40 @@ public class MemoryFragment extends PreferenceFragment {
         final boolean zcacheEnabled = fileCMD.length() == 0 ? false : fileCMD.contains("zcache");
         zcache.setChecked(zcacheEnabled);
 
+        if (showDialog) {
         // Ensure only devices with this special path are checked;
         final String fileMount = shell.getRootInfo("mount", "");
         final boolean fileMountCheck = fileMount.length() == 0 ? false : fileMount.contains("/dev/block/mmcblk1p25");
+            showDialog = false;
 
-        if (!showDialog && fileMountCheck) {
-            final String fileJournal = shell.getRootInfo("tune2fs -l", "/dev/block/mmcblk1p25");
-            final boolean fileSystemCheck = fileJournal.length() == 0 ? false : fileJournal.contains("has_journal");
-            if (!fileSystemCheck){
+            if (fileMountCheck) {
+                final String fileJournal = shell.getRootInfo("tune2fs -l", "/dev/block/mmcblk1p25");
+                final boolean fileSystemCheck = fileJournal.length() == 0 ? false : fileJournal.contains("has_journal");
+                if (!fileSystemCheck){
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                // Just reuse aboutScreen, because its Linear and has a TextView
-                View layout = inflater.inflate(R.layout.about_screen, null);
-                TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                    // Just reuse aboutScreen, because its Linear and has a TextView
+                    View layout = inflater.inflate(R.layout.about_screen, null);
+                    TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 
-                builder.setTitle("Problem detected!");
-                aboutText.setText(Html.fromHtml("Looks like your /data partition doesn't have the 'has_journal' Feature enabled. " +
-                        "Please reboot into recovery and run the following command via adb shell: <br> <br>" +
-                        "<b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>"));
-                aboutText.setTextSize(13);
+                    builder.setTitle("Problem detected!");
+                    aboutText.setText(Html.fromHtml("Looks like your /data partition doesn't have the 'has_journal' Feature enabled. " +
+                            "Please reboot into recovery and run the following command via adb shell: <br> <br>" +
+                            "<b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>"));
+                    aboutText.setTextSize(13);
 
-                builder.setView(layout)
-                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                showDialog = true;
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                showDialog = true;
-                            }
-                        });
-                builder.show();
+                    builder.setView(layout)
+                            .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                }
+                            });
+                    builder.show();
+                }
             }
         }
 
