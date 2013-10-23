@@ -29,7 +29,7 @@ public class shellHelper {
      * @return String
      */
     public String getKernel() {
-        // Taken from Andriods/CM Gingerbread Branch:
+        // Taken from Androids/CM Gingerbread Branch:
         String procVersionStr;
 
         try {
@@ -134,7 +134,7 @@ public class shellHelper {
     /**
      * This Method returns an Array, useful for the frequency list of the kernel
      *
-     * @param s   => give the a string (from a given path)
+     * @param s   => string used (from a given path)
      * @param flag => set to 1 to convert it with @toMHZ
      * @param flag_io => set to 1 to read the io_schedulers
      *
@@ -146,6 +146,7 @@ public class shellHelper {
         String[] output = null;
         // Just make some gerneric error-code
         String[] error = new String[0];
+        int bropen, brclose;
 
         try {
             // Try to read the given Path, if not available -> throw exception
@@ -155,8 +156,6 @@ public class shellHelper {
                     completeString = reader.readLine().replace("[", "").replace("]", "").split(" ");
                 else if (flag_io == 0)
                     completeString = reader.readLine().split(" ");
-
-
                 output = new String[completeString.length];
                 for (int i = 0; i < output.length; i++) {
                     if (flag == 1)
@@ -175,6 +174,28 @@ public class shellHelper {
                     e);
 
             return error;
+        }
+    }
+
+    /**
+     * Finds a String between two values (for now only used in io_schedulers)
+     *
+     * @param s   => string used (from a given path)
+     *
+     * @return String
+     */
+    public String getInfoString(String s) {
+
+        int open, close;
+        String finalString;
+
+        open = s.indexOf("[");
+        close = s.lastIndexOf("]");
+        if (open >= 0 && close >= 0) {
+            finalString = s.substring(open + 1, close);
+            return finalString;
+        } else {
+            return "Unavailable";
         }
     }
 

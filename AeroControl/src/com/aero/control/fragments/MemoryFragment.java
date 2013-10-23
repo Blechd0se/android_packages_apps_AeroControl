@@ -43,7 +43,6 @@ public class MemoryFragment extends PreferenceFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
 
         // Load the preferences from an XML resource
@@ -124,8 +123,8 @@ public class MemoryFragment extends PreferenceFragment {
         // Just throw in our frequencies;
         io_scheduler.setEntries(shell.getInfoArray(GOV_IO_FILE, 0, 1));
         io_scheduler.setEntryValues(shell.getInfoArray(GOV_IO_FILE, 0, 1));
-        io_scheduler.setValue(shell.getInfoArray(GOV_IO_FILE, 0, 1)[0]);
-        io_scheduler.setSummary(shell.getInfoArray(GOV_IO_FILE, 0, 1)[0]);
+        io_scheduler.setValue(shell.getInfoString(shell.getInfo(GOV_IO_FILE)));
+        io_scheduler.setSummary(shell.getInfoString(shell.getInfo(GOV_IO_FILE)));
         io_scheduler.setDialogIcon(R.drawable.memory_dark);
 
         final Preference fstrim_toggle = root.findPreference("fstrim_toggle");
