@@ -59,6 +59,16 @@
     <string name="pref_setatboot_sum">Achtung: Das setzt die Einstellungen beim Hochfahren.</string>
     <string name="pref_updatepath">Updatepfad</string>
     <string name="pref_updatepath_sum">Gewünschter Updatepfad.</string>
+    <string name="pref_app_theme">App Aussehen</string>
+    <string name="pref_app_theme_sum">Setzt den Style der App fest.</string>
+
+    <!-- About -->
+    <string name="about_dialog">Hallo. Danke, dass Du meine App nutzt. Mein Name
+                        ist Alexander Christ (Blechd0se) und ich habe diese App aus Spaß und in meiner Freizeit geschrieben.
+                        Alles ist Quelloffen, Du kannst Dir also den Quellcode herunterladen und verändern wie Du möchstest.
+                        Wenn Du möchstest, kannst du entweder für Quarx Arbeit an der ROM spenden oder an mich.
+                        <b>The joy of living is in the giving.</b>
+    </string>
 
     <!-- CPU Fragment -->
 
@@ -72,14 +82,14 @@
     <string name="pref_gov_choose">Governor Einstellungen</string>
     <string name="pref_gov_choose_sum">Setzt den gewünschten Governor</string>
 
-    <string name="pref_gov_set">Governor spezfische Einstellungen.</string>
-    <string name="pref_gov_set_sum">Setzt Governor spezfische Einstellungen.</string>
+    <string name="pref_gov_set">Governor spezfische Einstellungen</string>
+    <string name="pref_gov_set_sum">Setzt Governor spezfische Einstellungen</string>
 
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Speichereinstellungen</string>
 
     <string name="pref_memory_swappiness">Swappiness</string>
-    <string name="pref_memory_swappiness_sum">Swappiness legt fest, wie aggressiv der Kernel Speicherseiten auslagern soll. </string>
+    <string name="pref_memory_swappiness_sum">Swappiness legt fest, wie aggressiv der Kernel Speicherseiten in SWAP-Geräte auslagern soll. </string>
 
     <string name="pref_dynamic_fsync">Dynamisches FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamisches FSync aktiviert FSync nur während der Bildschirm aus ist.</string>
@@ -88,7 +98,7 @@
     <string name="pref_memory_swap_sum">Erstellt eine Swap-Partition.</string>
 
     <string name="pref_memory_zcache">zCache</string>
-    <string name="pref_memory_zcache_sum">Aktiviert zCache.</string>
+    <string name="pref_memory_zcache_sum">zCache verwendet die CPU für ein besseres Speicherverwaltung.</string>
 
     <string name="pref_memory_zcache_compression">zCache Kompression</string>
     <string name="pref_memory_zcache_compression_sum">Einstellung der zCache Kompressions-Methode.</string>
@@ -133,7 +143,7 @@
     <string name="pref_updater_kernel_content">Das wird deinen Kernel updaten.</string>
 
     <string name="pref_restore">Backup Wiederherstellung</string>
-    <string name="pref_restore_kernel">Wiederhersetllung</string>
+    <string name="pref_restore_kernel">Wiederherstellung</string>
     <string name="pref_restore_kernel_content">Stelle aus einem Backup den Kernel wieder her.</string>
 
 </resources>

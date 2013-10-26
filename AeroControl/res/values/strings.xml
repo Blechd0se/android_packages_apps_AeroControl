@@ -58,6 +58,16 @@
     <string name="pref_setatboot_sum">Caution: This will set your settings at boot.</string>
     <string name="pref_updatepath">Updatelocation:</string>
     <string name="pref_updatepath_sum">Set your desired update path.</string>
+    <string name="pref_app_theme">App Theme</string>
+    <string name="pref_app_theme_sum">Defines the default app theme.</string>
+
+    <!-- About -->
+    <string name="about_dialog">Hello. Thank you for using this App. My name is
+                        Alexander Christ (Blechd0se) and I have written this App for fun and in my spare time.
+                        Its also Open Source, so you can grab the Source Code and modify it as you want.
+                        If you want to, you can either donate to Quarx for his awesome rom or to me.
+                        <b>The joy of living is in the giving.</b>
+    </string>
 
     <!-- CPU Fragment -->
 
@@ -66,7 +76,7 @@
     <string name="pref_cpu_freqmin">Min. Frequency</string>
     <string name="pref_cpu_governor">Governor Settings</string>
     <string name="perf_live_oc_uc">Live OC/UC</string>
-    <string name="perf_live_oc_uc_sum">Control Frequencies and Voltage in Realtime!</string>
+    <string name="perf_live_oc_uc_sum">Control Frequencies and Voltage in realtime!</string>
 
     <string name="pref_gov_choose">Governor Settings</string>
     <string name="pref_gov_choose_sum">This will set your favorite governor!</string>
@@ -78,7 +88,7 @@
     <string name="pref_memory_settings">Memory Settings</string>
 
     <string name="pref_memory_swappiness">Swappiness</string>
-    <string name="pref_memory_swappiness_sum">Swappiness defines how aggressive the kernel will swap memory pages </string>
+    <string name="pref_memory_swappiness_sum">Swappiness defines how aggressive the kernel will swap memory pages.</string>
 
     <string name="pref_dynamic_fsync">Dynamic FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamic FSync enables fsync only while the screen is off.</string>
@@ -87,7 +97,7 @@
     <string name="pref_memory_swap_sum">Create a swap device.</string>
 
     <string name="pref_memory_zcache">zCache</string>
-    <string name="pref_memory_zcache_sum">Enable zCache</string>
+    <string name="pref_memory_zcache_sum">zCache uses CPU-time for a slightly better memory managment.</string>
 
     <string name="pref_memory_zcache_compression">zCache Compression</string>
     <string name="pref_memory_zcache_compression_sum">Choose the compression method for zCache.</string>

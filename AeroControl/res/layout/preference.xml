@@ -18,8 +18,8 @@
 
         <ListPreference
             android:key="app_theme_list"
-            android:title="App Theme"
-            android:summary="Change the Theme of the App!" />
+            android:title="@string/pref_app_theme"
+            android:summary="@string/pref_app_theme_sum" />
 
     </PreferenceCategory>
 
