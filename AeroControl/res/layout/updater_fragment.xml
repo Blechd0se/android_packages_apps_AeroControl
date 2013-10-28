@@ -18,7 +18,7 @@
 
     <PreferenceCategory android:title="@string/pref_restore">
 
-        <Preference
+        <ListPreference
             android:key="restore_kernel"
             android:title="@string/pref_restore_kernel"
             android:summary="@string/pref_restore_kernel_content" />

@@ -146,4 +146,9 @@
     <string name="pref_restore_kernel">Wiederherstellung</string>
     <string name="pref_restore_kernel_content">Stelle aus einem Backup den Kernel wieder her.</string>
 
+    <string name="last_backup_from">Letztes Backup von </string>
+    <string name="backup_from">Backup von </string>
+    <string name="restore_from_backup">Möchtest Du folgendes Backup wiederherstellen </string>
+    <string name="proceed_backup">Fortfahren mit Backup? Das wird deinen momentanen Kernel sichern.</string>
+
 </resources>
