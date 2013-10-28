@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -105,30 +106,44 @@ public class shellHelper {
     /**
      * Gets all files in a given dictionary
      *
-     * @param s   => path to read the files
+     * @param s    => path to read the files
+     * @param flag => for files or directory
      *
      * @return String[]
      */
-    public String[] getDirInfo(String s) {
+    public String[] getDirInfo(String s, boolean flag) {
 
-        List<String> results = new ArrayList<String>();
-        File[] files = new File(s).listFiles();
+        // Handle case if files are needed;
+        if (flag) {
+            List<String> results = new ArrayList<String>();
+            File[] files = new File(s).listFiles();
 
-        for (File file : files) {
-            if (file.isFile()) {
-                results.add(file.getName());
+            for (File file : files) {
+                if (file.isFile()) {
+                    results.add(file.getName());
+                }
             }
+
+            String[] result = new String[results.size()];
+            for (int i = 0; i < results.size(); i++) {
+                result[i] = results.get(i).toString();
+            }
+            Arrays.sort(result);
+            List<String> sortedList = Arrays.asList(result);
+
+            return result;
+
+        } else {
+            // Handle case if directory is needed;
+            File file = new File (s);
+            String[] result = file.list(new FilenameFilter() {
+                @Override
+                public boolean accept(File file, String s) {
+                    return new File(file, s).isDirectory();
+                }
+            });
+            return result;
         }
-
-        String[] result = new String[results.size()];
-        for (int i = 0; i < results.size(); i++) {
-            result[i] = results.get(i).toString();
-        }
-        Arrays.sort(result);
-        List<String> sortedList = Arrays.asList(result);
-
-        return result;
-
     }
 
     /**

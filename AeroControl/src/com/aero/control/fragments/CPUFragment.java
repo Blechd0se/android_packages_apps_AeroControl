@@ -286,7 +286,7 @@ public class CPUFragment extends PreferenceFragment {
                                 "Something interrupted the main Thread, try again.",
                                 e);
                     }
-                    String completeParamterList[] = shell.getDirInfo(complete_path);
+                    String completeParamterList[] = shell.getDirInfo(complete_path, true);
 
                     // If there are already some entries, kill them all (with fire)
                     if (PrefCat != null)

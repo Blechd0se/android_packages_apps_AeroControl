@@ -7,8 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 
 
 /**
@@ -16,9 +15,6 @@ import java.io.OutputStream;
  * Helper-Class for the Updater Fragment
  */
 public class updateHelpers {
-
-    // Buffer length;
-    private static final int BUFF_LEN = 1024;
 
     /**
      * Method for copying files.
@@ -29,29 +25,30 @@ public class updateHelpers {
      */
     public void copyFile(File original, File copy, String timeStamp) throws IOException {
 
-        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            Log.e("Aero", "No Sdcard found!");
-            return;
+        FileChannel input = null;
+        FileChannel output = null;
 
-        } else {
-            File file = new File(Environment.getExternalStorageDirectory()
-                    +File.separator
-                    +"com.aero.control" //folder name
-                    +File.separator
-                    +timeStamp); //file name
-            file.mkdirs();
+        try {
+            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                Log.e("Aero", "No Sdcard found!");
+                return;
+
+            } else {
+                File file = new File(Environment.getExternalStorageDirectory()
+                        +File.separator
+                        +"com.aero.control" //folder name
+                        +File.separator
+                        +timeStamp); //file name
+                file.mkdirs();
+            }
+
+            input = new FileInputStream(original).getChannel();
+            output = new FileOutputStream(copy).getChannel();
+            output.transferFrom(input, 0, input.size());
+
+        } finally {
+            input.close();
+            output.close();
         }
-
-        InputStream input = new FileInputStream(original);
-        OutputStream output = new FileOutputStream(copy);
-
-        byte[] buffer = new byte[BUFF_LEN];
-        int len;
-        while ((len = input.read(buffer)) > 0) {
-            output.write(buffer, 0, len);
-        }
-
-        input.close();
-        output.close();
     }
 }

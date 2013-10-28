@@ -65,6 +65,8 @@ public class UpdaterFragment extends PreferenceFragment {
         updater_kernel.setEnabled(false);
         restore_kernel.setEnabled(false);
 
+        backup_kernel.setSummary("Last Backup from: " + shell.getDirInfo("/sdcard/com.aero.control/", false)[0]);
+
         backup_kernel.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -79,7 +81,7 @@ public class UpdaterFragment extends PreferenceFragment {
                 aboutText.setText("Proceed with backup? This will backup your current kernel.");
 
                 builder.setView(layout)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
 
@@ -87,14 +89,14 @@ public class UpdaterFragment extends PreferenceFragment {
                                     update.copyFile(IMAGE, BACKUP_PATH , timeStamp);
                                     Toast.makeText(getActivity(), "Backup was successful!", Toast.LENGTH_LONG).show();
 
-                                    backup_kernel.setSummary("Last Backup: " + timeStamp);
+                                    backup_kernel.setSummary("Last Backup from: " + timeStamp);
 
                                 } catch (IOException e) {
                                     Log.e("Aero", "A problem occured while saving a backup", e);
                                 }
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
                                     // Do nothing
