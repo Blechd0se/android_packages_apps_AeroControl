@@ -35,8 +35,9 @@ import java.util.Calendar;
 public class UpdaterFragment extends PreferenceFragment {
 
     public static String timeStamp = new SimpleDateFormat("ddMMyyyy").format(Calendar.getInstance().getTime());
+    public static String zImage = "/system/bootmenu/2nd-boot/zImage";
     public static File BACKUP_PATH = new File ("/sdcard/com.aero.control/" + timeStamp + "/zImage");
-    public static File IMAGE = new File ("/system/bootmenu/2nd-boot/zImage");
+    public static File IMAGE = new File (zImage);
 
     updateHelpers update = new updateHelpers();
     shellHelper shell = new shellHelper();
@@ -66,10 +67,25 @@ public class UpdaterFragment extends PreferenceFragment {
         updater_kernel.setEnabled(false);
         //restore_kernel.setEnabled(false);
 
-        backup_kernel.setSummary(getText(R.string.last_backup_from)+ " " + shell.getDirInfo("/sdcard/com.aero.control/", false)[0]);
+        // If device doesn't have this kernel path;
+        //if (shell.getInfo(zImage).equals("Unavailable"))
+            //backup_kernel.setEnabled(false);
+
+        //if (shell.getInfo(zImage).equals("Unavailable"))
+            //restore_kernel.setEnabled(false);
+
+        // Fresh Start, no backup found;
+        try {
+            backup_kernel.setSummary(getText(R.string.last_backup_from)+ " " + shell.getDirInfo("/sdcard/com.aero.control/", false)[0]);
+            restore_kernel.setEnabled(true);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            backup_kernel.setSummary(getText(R.string.last_backup_from)+ " " + getText(R.string.unavailable));
+            restore_kernel.setEnabled(false);
+        }
 
         restore_kernel.setEntries(shell.getDirInfo("/sdcard/com.aero.control/", false));
         restore_kernel.setEntryValues(shell.getDirInfo("/sdcard/com.aero.control/", false));
+        restore_kernel.setDialogIcon(R.drawable.restore_dark);
 
         restore_kernel.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -95,8 +111,8 @@ public class UpdaterFragment extends PreferenceFragment {
                                 // Delete old zImage first, then copy backup;
                                 String[] commands = new String[]
                                         {
-                                                "rm -f " + "/system/bootmenu/2nd-boot/zImage",
-                                                "cp " + "/sdcard/com.aero.control/" + s + "/zImage" + " /system/bootmenu/2nd-boot/zImage",
+                                                "rm -f " + zImage,
+                                                "cp " + "/sdcard/com.aero.control/" + s + "/zImage" + " " + zImage,
                                         };
 
                                 shell.setRootInfo(commands);
@@ -129,6 +145,7 @@ public class UpdaterFragment extends PreferenceFragment {
                 TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 
                 builder.setTitle("Backup");
+                builder.setIcon(R.drawable.backup_dark);
 
                 aboutText.setText(R.string.proceed_backup);
 
@@ -141,10 +158,11 @@ public class UpdaterFragment extends PreferenceFragment {
                                     update.copyFile(IMAGE, BACKUP_PATH, false);
                                     Toast.makeText(getActivity(), "Backup was successful!", Toast.LENGTH_LONG).show();
 
-                                    backup_kernel.setSummary(R.string.last_backup_from + timeStamp);
+                                    backup_kernel.setSummary(getText(R.string.last_backup_from) + " " + timeStamp);
+                                    restore_kernel.setEnabled(true);
 
                                 } catch (IOException e) {
-                                    Log.e("Aero", "A problem occured while saving a backup", e);
+                                    Log.e("Aero", "A problem occured while saving a backup.", e);
                                 }
                             }
                         })

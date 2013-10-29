@@ -10,6 +10,7 @@
     <string name="donation_quarx">Donate to Quarx</string>
     <string name="default_values">Default Values</string>
     <string name="need_reboot">This may require a reboot.</string>
+    <string name="unavailable">Unavailable</string>
 
     <!-- Default Navigation Drawer entries -->
 

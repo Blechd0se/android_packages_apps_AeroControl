@@ -2,6 +2,7 @@ package com.aero.control.helpers;
 
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,9 +52,14 @@ public class updateHelpers {
                 output.transferFrom(input, 0, input.size());
 
             } finally {
-                input.close();
-                output.close();
-            }
+                // Handle error case on different devices;
+                if(input == null || output == null) {
+                    Log.e("Aero", "Could not copy files or something went wrong.");
+                } else {
+                    input.close();
+                    output.close();
+                }
+        }
         } else {
             input = new FileInputStream(original).getChannel();
             output = new FileOutputStream(copy).getChannel();

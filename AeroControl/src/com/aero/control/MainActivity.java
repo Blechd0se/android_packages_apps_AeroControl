@@ -307,7 +307,6 @@ public class MainActivity extends Activity {
                     mUpdaterFragement = new UpdaterFragment();
                 }
                 fragment = mUpdaterFragement;
-                Toast.makeText(this, "The Updater is not implemented yet. ", Toast.LENGTH_SHORT).show();
                 break;
         }
 
