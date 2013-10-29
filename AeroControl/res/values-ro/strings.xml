@@ -1,0 +1,154 @@
+<resources>
+    <string name="app_name">Aero Control</string>
+    <string name="drawer_open">Deschideți sertarul de navigare</string>
+    <string name="drawer_close">Închideți sertarul de navigare</string>
+    <string name="error_detected">Eroare ?</string>
+    <string name="cancel">Anulează</string>
+    <string name="save">Salvează</string>
+    <string name="github">Github AeroControl</string>
+    <string name="donation_blechdose">Donează pentru Blechdose</string>
+    <string name="donation_quarx">Donează pentru Quarx</string>
+    <string name="default_values">Valori implicite</string>
+    <string name="need_reboot">Acest lucru va necesita o repornire.</string>
+
+    <!-- Default Navigation Drawer entries -->
+
+    <string name="slider_overview">Prezentare generală</string>
+    <string name="slider_cpu_settings">Performanță CPU</string>
+    <string name="slider_gpu_settings">Control GPU</string>
+    <string name="slider_memory_settings">Tuning memorie</string>
+    <string name="slider_defy_parts">Setări dispozitiv</string>
+    <string name="slider_updater">Actualizator</string>
+
+    <string-array name="aero_array">
+        <item>@string/slider_overview</item>
+        <item>@string/slider_cpu_settings</item>
+        <item>@string/slider_gpu_settings</item>
+        <item>@string/slider_memory_settings</item>
+        <item>@string/slider_defy_parts</item>
+        <item>@string/slider_updater</item>
+    </string-array>
+
+    <!-- Overview Elements -->
+
+    <string name="kernel_version">Nucleu:</string>
+    <string name="current_cpu_speed">Frecvență CPU:</string>
+    <string name="current_gpu_speed">Frecvență GPU</string>
+    <string name="current_governor">Manager:</string>
+    <string name="current_io_governor">Manager Intrare/Ieșire:</string>
+    <string name="available_memory">Memeorie totală:</string>
+
+    <string-array name="overview_array">
+        <item>@string/kernel_version</item>
+        <item>@string/current_cpu_speed</item>
+        <item>@string/current_gpu_speed</item>
+        <item>@string/current_governor</item>
+        <item>@string/available_memory</item>
+    </string-array>
+
+    <!-- Action Overflow Menu -->
+
+    <string name="about">Despre program</string>
+    <string name="aero_settings">Setări</string>
+
+    <!-- Preference Menu -->
+
+    <string name="pref_appspecific">Specifice aplicației </string>
+    <string name="pref_setatboot">Stabilește setările la pornire</string>
+    <string name="pref_setatboot_sum">Atenție: Aceast lucru va stabili setările la pornirea sistemului.</string>
+    <string name="pref_updatepath">Locație de actualizare:</string>
+    <string name="pref_updatepath_sum">Setați locația pentru actualizările dorite.</string>
+    <string name="pref_app_theme">Teme pentru aplicație</string>
+    <string name="pref_app_theme_sum">Definește tema implicită pentru aplicație.</string>
+
+    <!-- About -->
+    <string name="about_dialog">Bună ziua. Vă mulțumesc pentru utilizarea acestei aplicații. Numele meu este
+                        Alexander Christ (Blechd0se) și am scris această aplicație pentru distracție în timpul meu liber.
+                        De asemenea este Sursă Deschisă, așa că puteți să luați Codul Sursă și să-l modificați după cum doriți.
+                        Dacă doriți, puteți dona, fie lui Quarx pentru ROM-ul său minunat sau pentru mine.
+                        <b>The joy of living is in the giving.</b>
+                        <b>Plăcerea de a trăi se află în a dărui.</b>
+    </string>
+
+    <!-- CPU Fragment -->
+
+    <string name="pref_cpu_freq">Frecvențe</string>
+    <string name="pref_cpu_freqmax">Frecvență Maximă</string>
+    <string name="pref_cpu_freqmin">Frecvență Minimă</string>
+    <string name="pref_cpu_governor">Setare manager</string>
+    <string name="perf_live_oc_uc">OC/UC în timp real</string>
+    <string name="perf_live_oc_uc_sum">Controlează Frecvețele și Tensiunile în timp real!</string>
+
+    <string name="pref_gov_choose">Setări manager</string>
+    <string name="pref_gov_choose_sum">Aceasta va seta managerul favorit!</string>
+
+    <string name="pref_gov_set">Setări specifice managerului</string>
+    <string name="pref_gov_set_sum">Stabiliți setarile specifice managerului aici.</string>
+
+    <!-- Memory Fragment -->
+    <string name="pref_memory_settings">Setări Memorie</string>
+
+    <string name="pref_memory_swappiness">Swappiness</string>
+    <string name="pref_memory_swappiness_sum">Swappiness definește cât de agresiv nucleul va folosi partiția swap.</string>
+
+    <string name="pref_dynamic_fsync">FSync dinanic</string>
+    <string name="pref_dynamic_fsync_sum">FSync dinamic este activ numai atunci când ecranul este oprit.</string>
+
+    <string name="pref_memory_swap">Swap</string>
+    <string name="pref_memory_swap_sum">Creați un dispozitiv swap.</string>
+
+    <string name="pref_memory_zcache">zCache</string>
+    <string name="pref_memory_zcache_sum">zCache folosește timpul procesorului pentru o gestionare puțin mai bună a memoriei.</string>
+
+    <string name="pref_memory_zcache_compression">Compresia zCache</string>
+    <string name="pref_memory_zcache_compression_sum">Alegeți metoda de compresie pentru zCache.</string>
+
+    <string name="fstrim_header">Opțiuni Trim</string>
+    <string name="fstrim_content">Utilizați Trim pe diverse partiții ale sistemului dvs! Aceast lucru ar putea dura câteva minute.</string>
+
+    <!-- IO Scheduler -->
+    <string name="io_scheduler">Manager Intrare/Ieșire</string>
+
+    <!-- GPU Fragment -->
+    <string name="pref_gpu_control_enable">Control GPU</string>
+    <string name="pref_gpu_control_enable_sum">Aceast lucru va permite un control al driverului GPU. Se ocupă de frecvențe și tensiuni cât
+                                            și un manager de bază pentru GPU.</string>
+    <string name="pref_gpu_max_freq">Frecvență maximă</string>
+    <string name="pref_gpu_max_freq_sum">Acest lucru va seta Frecvența maximă pentru GPU. Implicită este 200 MHz.</string>
+
+    <!-- static GPU Frequencies for now -->
+
+    <string-array name="gpu_frequency_list">
+        <item>100 MHz</item>
+        <item>133 MHz</item>
+        <item>160 MHz</item>
+        <item>200 MHz</item>
+        <item>266 MHz</item>
+    </string-array>
+
+    <string-array name="gpu_frequency_list_values">
+        <item>100000000</item>
+        <item>133333333</item>
+        <item>160000000</item>
+        <item>200000000</item>
+        <item>266666666</item>
+    </string-array>
+
+    <!-- Updater Fragment -->
+    <string name="pref_updater">Actualizare Nucleu și copie de siguranță</string>
+    <string name="pref_backup_kernel">Copie de siguranță Nucleu</string>
+    <string name="pref_backup_kernel_content">Aceast lucru va salva o copie a nucleului curent.</string>
+
+    <string name="pref_updater_kernel">Actualizare Nucleu</string>
+    <string name="pref_updater_kernel_content">Acest lucru va actualiza nucleul.</string>
+
+    <string name="pref_restore">Restaurare Copie de siguranță</string>
+    <string name="pref_restore_kernel">Restaurare</string>
+    <string name="pref_restore_kernel_content">Restaurarea unei copii de siguranță a nucleului.</string>
+
+    <string name="last_backup_from">Ultima copie de siguranță din </string>
+    <string name="backup_from">Copie de siguranță de la </string>
+    <string name="restore_from_backup">Doriți să restaurați copia de siguranță din </string>
+    <string name="proceed_backup">Continuați? Acest lucru va face o copie de siguranță la nucleul curent.</string>
+
+</resources>
