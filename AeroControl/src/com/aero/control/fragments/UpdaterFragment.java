@@ -68,11 +68,11 @@ public class UpdaterFragment extends PreferenceFragment {
         //restore_kernel.setEnabled(false);
 
         // If device doesn't have this kernel path;
-        //if (shell.getInfo(zImage).equals("Unavailable"))
-            //backup_kernel.setEnabled(false);
+        if (shell.getInfo(zImage).equals("Unavailable"))
+            backup_kernel.setEnabled(false);
 
-        //if (shell.getInfo(zImage).equals("Unavailable"))
-            //restore_kernel.setEnabled(false);
+        if (shell.getInfo(zImage).equals("Unavailable"))
+            restore_kernel.setEnabled(false);
 
         // Fresh Start, no backup found;
         try {
