@@ -1,0 +1,153 @@
+<resources>
+    <string name="app_name">Aero Control</string>
+    <string name="drawer_open">Abrir cajón de navegación</string>
+    <string name="drawer_close">Cerrar cajón de navegación</string>
+    <string name="error_detected">Error ?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Guardar</string>
+    <string name="github">Github AeroControl</string>
+    <string name="donation_blechdose">Donar a Blechdose</string>
+    <string name="donation_quarx">Donar a Quarx</string>
+    <string name="default_values">Valores por Defecto</string>
+    <string name="need_reboot">Puede requerir un reinicio.</string>
+
+    <!-- Default Navigation Drawer entries -->
+
+    <string name="slider_overview">Vista General</string>
+    <string name="slider_cpu_settings">Rendimiento de la CPU</string>
+    <string name="slider_gpu_settings">Control de la GPU</string>
+    <string name="slider_memory_settings">Manejo de Memoria</string>
+    <string name="slider_defy_parts">Defy Parts</string>
+    <string name="slider_updater">Actualizador</string>
+
+    <string-array name="aero_array">
+        <item>@string/slider_overview</item>
+        <item>@string/slider_cpu_settings</item>
+        <item>@string/slider_gpu_settings</item>
+        <item>@string/slider_memory_settings</item>
+        <item>@string/slider_defy_parts</item>
+        <item>@string/slider_updater</item>
+    </string-array>
+
+    <!-- Overview Elements -->
+
+    <string name="kernel_version">Núcleo:</string>
+    <string name="current_cpu_speed">Frecuencia de la CPU:</string>
+    <string name="current_gpu_speed">Frecuencia de la GPU:</string>
+    <string name="current_governor">Patrones de CPU:</string>
+    <string name="current_io_governor">Planificador de E/S:</string>
+    <string name="available_memory">Memoria Total:</string>
+
+    <string-array name="overview_array">
+        <item>@string/kernel_version</item>
+        <item>@string/current_cpu_speed</item>
+        <item>@string/current_gpu_speed</item>
+        <item>@string/current_governor</item>
+        <item>@string/available_memory</item>
+    </string-array>
+
+    <!-- Action Overflow Menu -->
+
+    <string name="about">Acerca de</string>
+    <string name="aero_settings">Ajustes</string>
+
+    <!-- Preference Menu -->
+
+    <string name="pref_appspecific">Específico de la Aplicación</string>
+    <string name="pref_setatboot">Establecer al iniciar</string>
+    <string name="pref_setatboot_sum">Precauci�n: Esto fijar� los valores al iniciar.</string>
+    <string name="pref_updatepath">Ubicaci�n de actualizaciones:</string>
+    <string name="pref_updatepath_sum">Coloque su ubicaci�n de actualizaciones preferida.</string>
+    <string name="pref_app_theme">Tema de la Aplicaci�n</string>
+    <string name="pref_app_theme_sum">Define el tema por defecto para la Aplicaci�n.</string>
+
+    <!-- About -->
+    <string name="about_dialog">Hola. Gracias por usar �sta aplicaci�n. Mi nombre es
+                        Alexander Christ (Blechd0se) y he escrito esta aplicaci�n por diversi�n y en mi tiempo libre.
+                        Es adem�s de C�digo Abierto, as� que puede tomar el C�digo Fuente y modificarlo como quiera.
+                        Si lo desea, puede adem�s hacer una donaci�n a Quarx por su asombrosa ROM o a m�.
+                        <b>El goce de la vida est� en dar.</b>
+    </string>
+
+    <!-- CPU Fragment -->
+
+    <string name="pref_cpu_freq">Frecuencias</string>
+    <string name="pref_cpu_freqmax">Frecuencia Max.</string>
+    <string name="pref_cpu_freqmin">Frecuencia Min.</string>
+    <string name="pref_cpu_governor">Ajustes de Patrones de CPU</string>
+    <string name="perf_live_oc_uc">OC/UC en Vivo</string>
+    <string name="perf_live_oc_uc_sum">Controle las Frecuencias y el Voltaje en tiempo real!</string>
+
+    <string name="pref_gov_choose">Ajustes de Patrones de CPU</string>
+    <string name="pref_gov_choose_sum">Esto modificar� sus Patrones de CPU preferidos!</string>
+
+    <string name="pref_gov_set">Ajustes espec�ficos de Patrones de CPU</string>
+    <string name="pref_gov_set_sum">Ajuste los valores espec�ficos del Patrones de CPU aqu�.</string>
+
+    <!-- Memory Fragment -->
+    <string name="pref_memory_settings">Ajustes de Memoria</string>
+
+    <string name="pref_memory_swappiness">Swappiness</string>
+    <string name="pref_memory_swappiness_sum">El Swappiness define qu� tan agresivamente el n�cleo intercambiar� p�ginas de memoria.</string>
+
+    <string name="pref_dynamic_fsync">FSync Din�mico</string>
+    <string name="pref_dynamic_fsync_sum">FSync Din�mico habilita fsync s�lo cuando la panatlla est� apagada.</string>
+
+    <string name="pref_memory_swap">Espacio de Intercambio</string>
+    <string name="pref_memory_swap_sum">Crear un dispositivo de Espacio de Intercambio (swap).</string>
+
+    <string name="pref_memory_zcache">zCache</string>
+    <string name="pref_memory_zcache_sum">zCache utiliza ciclos de CPU para mejorar ligeramente el manejo de memoria.</string>
+
+    <string name="pref_memory_zcache_compression">Compresi�n del zCache</string>
+    <string name="pref_memory_zcache_compression_sum">Elija el m�todo de compresi�n para el zCache.</string>
+
+    <string name="fstrim_header">Opci�n de Trim</string>
+    <string name="fstrim_content">Ejecutar Trim en varias partes de su sistema! Esto podr�a demorar un poco.</string>
+
+    <!-- IO Scheduler -->
+    <string name="io_scheduler">Planificador de E/S</string>
+
+    <!-- GPU Fragment -->
+    <string name="pref_gpu_control_enable">Control de la GPU</string>
+    <string name="pref_gpu_control_enable_sum">Habilita el driver de Control de la GPU. Maneja frecuencias y voltajes
+                                            as� como planificaci�n b�sica de la GPU.</string>
+    <string name="pref_gpu_max_freq">Frecuencia Max.</string>
+    <string name="pref_gpu_max_freq_sum">Modifica la Frequencia m�xima de la GPU. El valor por defecto es 200 MHz.</string>
+
+    <!-- static GPU Frequencies for now -->
+
+    <string-array name="gpu_frequency_list">
+        <item>100 MHz</item>
+        <item>133 MHz</item>
+        <item>160 MHz</item>
+        <item>200 MHz</item>
+        <item>266 MHz</item>
+    </string-array>
+
+    <string-array name="gpu_frequency_list_values">
+        <item>100000000</item>
+        <item>133333333</item>
+        <item>160000000</item>
+        <item>200000000</item>
+        <item>266666666</item>
+    </string-array>
+
+    <!-- Updater Fragment -->
+    <string name="pref_updater">Actualizaci�n y respaldo del n�cleo</string>
+    <string name="pref_backup_kernel">Respaldar el n�cleo</string>
+    <string name="pref_backup_kernel_content">Guarda una copia de su n�cleo actual.</string>
+
+    <string name="pref_updater_kernel">Actualizar el n�cleo</string>
+    <string name="pref_updater_kernel_content">Actualiza el n�cleo.</string>
+
+    <string name="pref_restore">Restaurar el n�cleo</string>
+    <string name="pref_restore_kernel">Restaurar</string>
+    <string name="pref_restore_kernel_content">Restaurar el n�cleo desde un respaldo.</string>
+
+    <string name="last_backup_from">Ultimo respaldo </string>
+    <string name="backup_from">Respaldo de </string>
+    <string name="restore_from_backup">Desea restaurar el respaldo de </string>
+    <string name="proceed_backup">Proceder con el respaldo? Esto respaldar� su n�cleo actual.</string>
+
+</resources>
