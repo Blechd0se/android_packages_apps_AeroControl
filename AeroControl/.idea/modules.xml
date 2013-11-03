@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AeroControl.iml" filepath="$PROJECT_DIR$/AeroControl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/showcase/showcase.iml" filepath="$PROJECT_DIR$/library/showcase/showcase.iml" />
     </modules>
   </component>
 </project>
