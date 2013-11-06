@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,12 @@ import com.aero.control.R;
 import com.aero.control.adapter.AeroAdapter;
 import com.aero.control.adapter.adapterInit;
 import com.aero.control.helpers.shellHelper;
+import com.espian.showcaseview.ShowcaseView;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -37,6 +44,8 @@ public class AeroFragment extends Fragment {
     public shellHelper shell = new shellHelper();
     public AeroAdapter adapter;
     public AeroFragment mAeroFragment;
+    private ShowcaseView.ConfigOptions mConfigOptions;
+    private ShowcaseView mShowCase;
 
     public Fragment newInstance(Context context) {
         mAeroFragment = new AeroFragment();
@@ -55,7 +64,7 @@ public class AeroFragment extends Fragment {
             public void run() {
                 try {
                     while (!mInterrupt) {
-                        sleep(1000);
+                        sleep(10000);
                         mRefreshHandler.sendEmptyMessage(1);
                     }
                 } catch (InterruptedException e) {
@@ -89,7 +98,6 @@ public class AeroFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = (ViewGroup) inflater.inflate(R.layout.overviewlist_item, null);
 
-
         /*
          * Start the refresh Thread at startup;
          * Current Problem; Thread won't start again after FragmentSwitch
@@ -106,6 +114,33 @@ public class AeroFragment extends Fragment {
 
 
         return root;
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+        // Prepare Showcase;
+        mConfigOptions = new ShowcaseView.ConfigOptions();
+        mConfigOptions.hideOnClickOutside = false;
+        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
+
+        // Set up our file;
+        String FILENAME = "firstrun";
+        int output = 0;
+        byte[] buffer = new byte[1024];
+
+        try {
+            FileInputStream fis = getActivity().openFileInput(FILENAME);
+            output = fis.read(buffer);
+            fis.close();
+        } catch (IOException e) {
+            Log.e("Aero", "Couldn't open File... " + output);
+        }
+
+        // Only show showcase once;
+        if (output == 0)
+            DrawFirstStart(R.string.showcase_aero_fragment, R.string.showcase_aero_fragment_sum);
+
     }
 
     public void createList() {
@@ -130,5 +165,24 @@ public class AeroFragment extends Fragment {
         listView1.setAdapter(adapter);
 
     }
+
+    public void DrawFirstStart(int header, int content) {
+
+        String FILENAME = "firstrun";
+        String string = "1";
+
+        try {
+            FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            fos.write(string.getBytes());
+            fos.close();
+        }
+        catch (IOException e) {
+            Log.e("Aero", "Could not save file. ", e);
+        }
+
+        //mDrawerLayout.openDrawer(mDrawerLayout)
+        mShowCase = ShowcaseView.insertShowcaseView(100, 175, getActivity(), header, content, mConfigOptions);
+    }
+
 
 }

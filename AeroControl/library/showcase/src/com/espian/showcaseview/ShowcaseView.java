@@ -50,12 +50,12 @@ public class ShowcaseView extends RelativeLayout
     public static final int ITEM_ACTION_OVERFLOW = 6;
 
     protected static final String PREFS_SHOWCASE_INTERNAL = "showcase_internal";
-    public static final int INNER_CIRCLE_RADIUS = 94;
+    public static final int INNER_CIRCLE_RADIUS = 80;
 
     private float showcaseX = -1;
     private float showcaseY = -1;
     private float showcaseRadius = -1;
-    private float metricScale = 1.0f;
+    private float metricScale = 0f;
     private float legacyShowcaseX = -1;
     private float legacyShowcaseY = -1;
     private boolean isRedundant = false;
