@@ -64,7 +64,7 @@ public class AeroFragment extends Fragment {
             public void run() {
                 try {
                     while (!mInterrupt) {
-                        sleep(10000);
+                        sleep(1000);
                         mRefreshHandler.sendEmptyMessage(1);
                     }
                 } catch (InterruptedException e) {
