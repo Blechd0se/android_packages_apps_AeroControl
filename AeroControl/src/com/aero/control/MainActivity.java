@@ -38,6 +38,7 @@ import com.aero.control.fragments.UpdaterFragment;
 import com.aero.control.lists.generatingLists;
 import com.aero.control.lists.generatingLists.PreferenceItem;
 import com.aero.control.prefs.PrefsFragment;
+import com.espian.showcaseview.ShowcaseView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

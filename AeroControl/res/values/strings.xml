@@ -151,4 +151,11 @@
     <string name="restore_from_backup">Do you want to restore the backup from </string>
     <string name="proceed_backup">Proceed with backup? This will backup your current kernel.</string>
 
+    <!-- Showcase Strings -->
+    <string name="showcase_aero_fragment">Welcome to Aero Control!</string>
+    <string name="showcase_aero_fragment_sum">Swipe from the left to the right to show the navigation drawer.
+                                                The page you are currently looking at is the main overview panel.
+                                                There is a small summary of some kernel settings. They are live, you
+                                                don\'t have to refresh anything!</string>
+
 </resources>
