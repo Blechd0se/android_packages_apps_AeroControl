@@ -136,8 +136,7 @@ public class MemoryFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                final CharSequence[] system = {"/data", "/cache"};
-
+                final CharSequence[] system = {"/system", "/data", "/cache"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 final ProgressDialog update = new ProgressDialog(getActivity());
@@ -149,11 +148,13 @@ public class MemoryFragment extends PreferenceFragment {
 
                         final String b = (String)system[item];
 
+
                         update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                         update.setCancelable(true);
                         update.setMax(100);
                         update.setIndeterminate(true);
                         update.show();
+                        shell.remountSystem();
 
 
                         Runnable runnable = new Runnable() {
@@ -181,8 +182,6 @@ public class MemoryFragment extends PreferenceFragment {
                         Thread trimThread = new Thread(runnable);
                         trimThread.start();
 
-
-                       // Toast.makeText(getActivity(), "Trimming in progress...", Toast.LENGTH_LONG).show();
                     }
                 }).show();
 
