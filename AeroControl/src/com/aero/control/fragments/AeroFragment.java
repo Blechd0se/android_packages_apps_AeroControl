@@ -44,8 +44,8 @@ public class AeroFragment extends Fragment {
     public shellHelper shell = new shellHelper();
     public AeroAdapter adapter;
     public AeroFragment mAeroFragment;
-    private ShowcaseView.ConfigOptions mConfigOptions;
-    private ShowcaseView mShowCase;
+    public ShowcaseView.ConfigOptions mConfigOptions;
+    public ShowcaseView mShowCase;
 
     public Fragment newInstance(Context context) {
         mAeroFragment = new AeroFragment();
