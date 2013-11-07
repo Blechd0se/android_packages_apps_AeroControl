@@ -110,6 +110,7 @@ public class AeroFragment extends Fragment {
 
         // Generate our main ListView;
         createList();
+        setPermissions();
 
 
 
@@ -184,5 +185,17 @@ public class AeroFragment extends Fragment {
         mShowCase = ShowcaseView.insertShowcaseView(100, 175, getActivity(), header, content, mConfigOptions);
     }
 
+    public void setPermissions() {
+
+
+        String[] commands = new String[]
+                {
+                        "chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
+                        "chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+                        "chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",
+                };
+        shell.setRootInfo(commands);
+
+    }
 
 }
