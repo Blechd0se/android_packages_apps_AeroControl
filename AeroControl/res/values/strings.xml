@@ -158,4 +158,9 @@
                                                 There is a small summary of some kernel settings. They are live, you
                                                 don\'t have to refresh anything!</string>
 
+    <string name="showcase_memory_fragment_trim">Trim Options</string>
+    <string name="showcase_memory_fragment_trim_sum">In order to maintain the device performance, you can trim
+                                                    several parts of you Operating System. This can take a while,
+                                                    especially when you stored lots of data.</string>
+
 </resources>

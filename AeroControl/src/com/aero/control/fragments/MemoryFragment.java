@@ -2,6 +2,7 @@ package com.aero.control.fragments;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,11 @@ import android.widget.Toast;
 
 import com.aero.control.R;
 import com.aero.control.helpers.shellHelper;
+import com.espian.showcaseview.ShowcaseView;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -32,6 +38,9 @@ public class MemoryFragment extends PreferenceFragment {
     public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
     public static final String CMDLINE_ZACHE = "/system/bootmenu/2nd-boot/cmdline";
+
+    public ShowcaseView.ConfigOptions mConfigOptions;
+    public ShowcaseView mShowCase;
 
     public boolean showDialog = true;
 
@@ -272,7 +281,52 @@ public class MemoryFragment extends PreferenceFragment {
                 return true;
             };
         });
+    }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+        // Prepare Showcase;
+        mConfigOptions = new ShowcaseView.ConfigOptions();
+        mConfigOptions.hideOnClickOutside = false;
+        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
+
+        // Set up our file;
+        String FILENAME = "firstrun_trim";
+        int output = 0;
+        byte[] buffer = new byte[1024];
+
+        try {
+            FileInputStream fis = getActivity().openFileInput(FILENAME);
+            output = fis.read(buffer);
+            fis.close();
+        } catch (IOException e) {
+            Log.e("Aero", "Couldn't open File... " + output);
+        }
+
+        // Only show showcase once;
+        if (output == 0)
+            DrawFirstStart(R.string.showcase_memory_fragment_trim, R.string.showcase_memory_fragment_trim_sum);
+
+    }
+
+    public void DrawFirstStart(int header, int content) {
+
+        String FILENAME = "firstrun_trim";
+        String string = "1";
+
+        try {
+            FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            fos.write(string.getBytes());
+            fos.close();
+        }
+        catch (IOException e) {
+            Log.e("Aero", "Could not save file. ", e);
+        }
+
+        //mDrawerLayout.openDrawer(mDrawerLayout)
+        mShowCase = ShowcaseView.insertShowcaseView(130, 600, getActivity(), header, content, mConfigOptions);
     }
 
 }
