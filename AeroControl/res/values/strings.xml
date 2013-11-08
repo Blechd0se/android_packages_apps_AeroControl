@@ -106,6 +106,13 @@
     <string name="fstrim_header">Trim Option</string>
     <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
 
+    <string name="has_journal_dialog_header">Problem detected</string>
+
+    <string name="has_journal_dialog">Looks like your /data partition doesn\'t have the <b>has_journal</b> Feature enabled.
+                            Please reboot into recovery and run the following command via adb shell: <br /> <br />
+                            <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+    </string>
+
     <!-- IO Scheduler -->
     <string name="io_scheduler">IO Scheduler</string>
 

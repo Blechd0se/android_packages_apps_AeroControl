@@ -108,10 +108,8 @@ public class MemoryFragment extends PreferenceFragment {
                     View layout = inflater.inflate(R.layout.about_screen, null);
                     TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 
-                    builder.setTitle("Problem detected!");
-                    aboutText.setText(Html.fromHtml("Looks like your /data partition doesn't have the 'has_journal' Feature enabled. " +
-                            "Please reboot into recovery and run the following command via adb shell: <br> <br>" +
-                            "<b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>"));
+                    builder.setTitle(R.string.has_journal_dialog_header);
+                    aboutText.setText(getText(R.string.has_journal_dialog));
                     aboutText.setTextSize(13);
 
                     builder.setView(layout)
