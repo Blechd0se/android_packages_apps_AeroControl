@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name">Aero Control</string>
-    <string name="drawer_open">Otwórz szufladę nawigacji</string>
-    <string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_open">Otwórz panel nawigacji</string>
+    <string name="drawer_close">Zamknij panel nawigacjir</string>
     <string name="error_detected">Błąd ?</string>
     <string name="cancel">Anuluj</string>
     <string name="save">Zapisz</string>
     <string name="github">Github AeroControl</string>
     <string name="donation_blechdose">Wesprzyj Blechdose</string>
-    <string name="donation_quarx">Wspomóż Quarxa</string>
+    <string name="donation_quarx">Wesprzyj Quarxa</string>
     <string name="default_values">Wartości domyślne</string>
     <string name="need_reboot">Może wymagać ponownego uruchomienia.</string>
+    <string name="unavailable">Niedostępne</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -18,7 +19,7 @@
     <string name="slider_gpu_settings">Kontrola GPU</string>
     <string name="slider_memory_settings">Tuning pamięci</string>
     <string name="slider_defy_parts">Ustawienia urządzenia</string>
-    <string name="slider_updater">Updater</string>
+    <string name="slider_updater">Aktualizacja</string>
 
     <string-array name="aero_array">
         <item>@string/slider_overview</item>
@@ -35,7 +36,7 @@
     <string name="current_cpu_speed">Częstotliwość CPU:</string>
     <string name="current_gpu_speed">Częstotliwość GPU:</string>
     <string name="current_governor">Zarządca:</string>
-    <string name="current_io_governor">Zarządca Wejścia/Wyjścia:</string>
+    <string name="current_io_governor">Zarządca wejścia/wyjścia:</string>
     <string name="available_memory">Całkowita pamięć</string>
 
     <string-array name="overview_array">
@@ -53,33 +54,33 @@
 
     <!-- Preference Menu -->
 
-    <string name="pref_appspecific">Specyficzne aplikacji</string>
+    <string name="pref_appspecific">Specyficzne programu</string>
     <string name="pref_setatboot">Ustaw przy starcie systemu</string>
-    <string name="pref_setatboot_sum">Uwaga: ta opcja ustawi twoje ustawienia przy starcie systemu.</string>
+    <string name="pref_setatboot_sum">Uwaga: ta opcja zastosuje twoje ustawienia przy starcie systemu.</string>
     <string name="pref_updatepath">Lokalizacja aktualizacji:</string>
     <string name="pref_updatepath_sum">Ustaw swoją lokalizację aktualizacji.</string>
-    <string name="pref_app_theme">Motyw aplikacji</string>
-    <string name="pref_app_theme_sum">Ustawia domyślny motyw aplikacji.</string>
+    <string name="pref_app_theme">Motyw programu</string>
+    <string name="pref_app_theme_sum">Ustawia domyślny motyw programu.</string>
 
     <!-- About -->
-    <string name="about_dialog">Witam. Dziękuję za używanie tej aplikacji. Nazywam się
-                        Alexander Christ (Blechd0se) i napisałem tą aplikację dla rozrywki w swoim wolnym czasie. 
+    <string name="about_dialog">Witam. Dziękuję za używanie tego programu. Nazywam się
+                        Alexander Christ (Blechd0se) i napisałem ten program dla rozrywki w moim wolnym czasie. 
                         Jest ona otwartoźródłowa, więc możesz pobrać jej kod źródłowy i zmodyfikować ją według własnego pomysłu.
                         Jeśli chcesz, możesz wesprzeć Quarxa za jego świetny rom lub mnie.
                         <b>The joy of living is in the giving.</b>
-			<b>W wolnym tłumaczeniu: Przyjemność z życia jest w obdarowywaniu.</b>
+			<b>tłum. Przyjemność z życia jest w obdarowywaniu.</b>
     </string>
 
     <!-- CPU Fragment -->
 
     <string name="pref_cpu_freq">Częstotliwości</string>
-    <string name="pref_cpu_freqmax">Max. Częstotliwość</string>
-    <string name="pref_cpu_freqmin">Min. Częstotliwość</string>
+    <string name="pref_cpu_freqmax">Max. częstotliwość</string>
+    <string name="pref_cpu_freqmin">Min. częstotliwość</string>
     <string name="pref_cpu_governor">Ustawienia zarządcy</string>
     <string name="perf_live_oc_uc">Bezpośredni OC/UC</string>
     <string name="perf_live_oc_uc_sum">Kontroluj częstotliwości i napięcie w czasie rzeczywistym!</string>
 
-    <string name="pref_gov_choose">Ustawienia zarządcy</string>
+    <string name="pref_gov_choose">Ustawienia zarządcy procesora</string>
     <string name="pref_gov_choose_sum">Ta opcja pozwoli ustawić domyślnego zarządcę!</string>
 
     <string name="pref_gov_set">Specyficzne ustawienia zarządcy</string>
@@ -89,7 +90,7 @@
     <string name="pref_memory_settings">Ustawienia pamięci</string>
 
     <string name="pref_memory_swappiness">Swappiness</string>
-    <string name="pref_memory_swappiness_sum">Swappiness ustala jak agresywnie jądro (kernel) będzie używać partycji swap.</string>
+    <string name="pref_memory_swappiness_sum">Swappiness ustala jak agresywnie jądro (kernel) będzie używać partycji wymiany (swap).</string>
 
     <string name="pref_dynamic_fsync">Dynamiczny FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamiczny FSync uaktywnia fsync tylko kiedy ekran jest wyłączony.</string>
@@ -98,7 +99,7 @@
     <string name="pref_memory_swap_sum">Utwórz urządzenie swap.</string>
 
     <string name="pref_memory_zcache">zCache</string>
-    <string name="pref_memory_zcache_sum">zCache używa czas procesora dla delikatnie lepszego zarządzania pamięcią.</string>
+    <string name="pref_memory_zcache_sum">zCache używa czasu procesora dla delikatnie lepszego zarządzania pamięcią.</string>
 
     <string name="pref_memory_zcache_compression">Kompresja zCache</string>
     <string name="pref_memory_zcache_compression_sum">Wybierz metodę kompresji dla zCache.</string>
@@ -107,13 +108,13 @@
     <string name="fstrim_content">Użyj Trim na kilku partycjach na twoim systemie! To może chwilę potrwać.</string>
 
     <!-- IO Scheduler -->
-    <string name="io_scheduler">Zarządca Wejścia/Wyjścia</string>
+    <string name="io_scheduler">Zarządca wejścia/wyjścia</string>
 
     <!-- GPU Fragment -->
     <string name="pref_gpu_control_enable">Kontrola GPU</string>
     <string name="pref_gpu_control_enable_sum">Ta opcja uaktywnia sterownik kontroli GPU. Obsługuje on przetaktowywanie/kontrolę napięcia oraz podstawowe funkcje zarządzania GPU.</string>
-    <string name="pref_gpu_max_freq">Max. Częstotliwość</string>
-    <string name="pref_gpu_max_freq_sum">Ustawi maksymalną częstotliwość. Wartość domyślna to 200 MHz.</string>
+    <string name="pref_gpu_max_freq">Max. częstotliwość</string>
+    <string name="pref_gpu_max_freq_sum">Zmienia maksymalną częstotliwość. Wartość domyślna to 200 MHz.</string>
 
     <!-- static GPU Frequencies for now -->
 
@@ -141,7 +142,7 @@
     <string name="pref_updater_kernel">Zaktualizuj kernel</string>
     <string name="pref_updater_kernel_content">Zaktualizuje twój kernel.</string>
 
-    <string name="pref_restore">Przywróć kernel</string>
+    <string name="pref_restore">Przywróć kopię zapasową</string>
     <string name="pref_restore_kernel">Przywróć</string>
     <string name="pref_restore_kernel_content">Przywróć z kopii zapasowej kernela.</string>
 
@@ -149,5 +150,17 @@
     <string name="backup_from">Kopia zapasowa z </string>
     <string name="restore_from_backup">Czy chcesz przywrócic kopię zapasową z </string>
     <string name="proceed_backup">Kontynuować z kopią zapasową? Zostanie wykonana kopia zapasowa twojego kernela.</string>
+    
+    <!-- Showcase Strings -->
+    <string name="showcase_aero_fragment">Witaj w Aero Control!</string>
+    <string name="showcase_aero_fragment_sum">Przesuń palcem od lewej do prawej aby wyświetlić szufladę nawigacji.
+                                                Strona, którą właśnie przeglądasz to panel ogólnego przeglądu. 
+                                                Znajduje się w niej małe podsumowanie niektórych ustawień kernela. Są one aktualizowane w czasie rzeczywistym
+                                                więc nie musisz niczego odświeżać!</string>
+
+    <string name="showcase_memory_fragment_trim">Opcje Trim</string>
+    <string name="showcase_memory_fragment_trim_sum">Aby utrzymać wydajność urządzenia, możesz wykonać polecenie trim na
+                                                    kilku częściach twojego systemu operacyjnego. Może to chwilę potrwać,
+                                                    zwłaszcza jeśli przechowujesz dużą ilość danych.</string>
 
 </resources>
