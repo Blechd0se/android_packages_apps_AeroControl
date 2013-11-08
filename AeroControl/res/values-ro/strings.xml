@@ -10,6 +10,7 @@
     <string name="donation_quarx">Donează pentru Quarx</string>
     <string name="default_values">Valori implicite</string>
     <string name="need_reboot">Acest lucru va necesita o repornire.</string>
+    <string name="unavailable">Indisponibil</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -34,9 +35,9 @@
     <string name="kernel_version">Nucleu:</string>
     <string name="current_cpu_speed">Frecvență CPU:</string>
     <string name="current_gpu_speed">Frecvență GPU</string>
-    <string name="current_governor">Manager:</string>
+    <string name="current_governor">Manager CPU:</string>
     <string name="current_io_governor">Manager Intrare/Ieșire:</string>
-    <string name="available_memory">Memeorie totală:</string>
+    <string name="available_memory">Memorie totală:</string>
 
     <string-array name="overview_array">
         <item>@string/kernel_version</item>
@@ -66,7 +67,6 @@
                         Alexander Christ (Blechd0se) și am scris această aplicație pentru distracție în timpul meu liber.
                         De asemenea este Sursă Deschisă, așa că puteți să luați Codul Sursă și să-l modificați după cum doriți.
                         Dacă doriți, puteți dona, fie lui Quarx pentru ROM-ul său minunat sau pentru mine.
-                        <b>The joy of living is in the giving.</b>
                         <b>Plăcerea de a trăi se află în a dărui.</b>
     </string>
 
@@ -75,15 +75,15 @@
     <string name="pref_cpu_freq">Frecvențe</string>
     <string name="pref_cpu_freqmax">Frecvență Maximă</string>
     <string name="pref_cpu_freqmin">Frecvență Minimă</string>
-    <string name="pref_cpu_governor">Setare manager</string>
+    <string name="pref_cpu_governor">Setare manager CPU</string>
     <string name="perf_live_oc_uc">OC/UC în timp real</string>
     <string name="perf_live_oc_uc_sum">Controlează Frecvețele și Tensiunile în timp real!</string>
 
-    <string name="pref_gov_choose">Setări manager</string>
-    <string name="pref_gov_choose_sum">Aceasta va seta managerul favorit!</string>
+    <string name="pref_gov_choose">Setări manager CPU</string>
+    <string name="pref_gov_choose_sum">Aceasta va seta managerul favorit pentru CPU!</string>
 
-    <string name="pref_gov_set">Setări specifice managerului</string>
-    <string name="pref_gov_set_sum">Stabiliți setarile specifice managerului aici.</string>
+    <string name="pref_gov_set">Setări specifice managerului pentru CPU</string>
+    <string name="pref_gov_set_sum">Stabiliți setarile specifice managerului pentru CPU aici.</string>
 
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Setări Memorie</string>
@@ -91,7 +91,7 @@
     <string name="pref_memory_swappiness">Swappiness</string>
     <string name="pref_memory_swappiness_sum">Swappiness definește cât de agresiv nucleul va folosi partiția swap.</string>
 
-    <string name="pref_dynamic_fsync">FSync dinanic</string>
+    <string name="pref_dynamic_fsync">FSync dinamic</string>
     <string name="pref_dynamic_fsync_sum">FSync dinamic este activ numai atunci când ecranul este oprit.</string>
 
     <string name="pref_memory_swap">Swap</string>
@@ -105,6 +105,13 @@
 
     <string name="fstrim_header">Opțiuni Trim</string>
     <string name="fstrim_content">Utilizați Trim pe diverse partiții ale sistemului dvs! Aceast lucru ar putea dura câteva minute.</string>
+
+    <string name="has_journal_dialog_header">A fost detectată o problemă</string>
+
+    <string name="has_journal_dialog">Se pare că partitia /data partition nu are activată caracteristica <b>has_journal</b>.
+                            Vă rugăm să reporniți sistemul în recovery și rulați următoarea comandă prin adb shell: <br /> <br />
+                            <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+    </string>
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">Manager Intrare/Ieșire</string>
@@ -150,5 +157,17 @@
     <string name="backup_from">Copie de siguranță de la </string>
     <string name="restore_from_backup">Doriți să restaurați copia de siguranță din </string>
     <string name="proceed_backup">Continuați? Acest lucru va face o copie de siguranță la nucleul curent.</string>
+
+    <!-- Showcase Strings -->
+    <string name="showcase_aero_fragment">Bunvenit în Aero Control!</string>
+    <string name="showcase_aero_fragment_sum">Trageți de la stânga spre dreapta pentru a afișa sertarul de navigare.
+                                                Pagina pe care o vizualizați în acet moment este pagina de prezentare generală.
+                                                Există un mic rezumat pentru unele setări ale nucleului. Sunt în timp real,
+                                                nu trebuie să reîmprospătați nimic!</string>
+
+    <string name="showcase_memory_fragment_trim">Opțiuni Trim</string>
+    <string name="showcase_memory_fragment_trim_sum">Pentru a menține performanța dispozitivului, puteți utiliza Trim
+                                                    pe diverse partiții ale sistemului dvs. de operare. Acest lucru poate
+                                                    dura un anumit timp, mai ales dacă sunt stocate o mulțime date.</string>
 
 </resources>
