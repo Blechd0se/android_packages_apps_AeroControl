@@ -1,0 +1,157 @@
+<resources>
+    <string name="app_name">Aero Control</string>
+    <string name="drawer_open">打开导航抽屉</string>
+    <string name="drawer_close">关闭导航抽屉</string>
+    <string name="error_detected">出错了？</string>
+    <string name="cancel">取消</string>
+    <string name="save">保存</string>
+    <string name="github">Github AeroControl</string>
+    <string name="donation_blechdose">捐助 Blechdose</string>
+    <string name="donation_quarx">捐助 Quarx</string>
+    <string name="default_values">默认值</string>
+    <string name="need_reboot">需要重新启动</string>
+    <string name="unavailable">不可用</string>
+
+    <!-- Default Navigation Drawer entries -->
+
+    <string name="slider_overview">概览</string>
+    <string name="slider_cpu_settings">CPU 性能</string>
+    <string name="slider_gpu_settings">GPU 控制</string>
+    <string name="slider_memory_settings">内存设置调节</string>
+    <string name="slider_defy_parts">Defy Parts</string>
+    <string name="slider_updater">更新器</string>
+
+    <string-array name="aero_array">
+        <item>@string/slider_overview</item>
+        <item>@string/slider_cpu_settings</item>
+        <item>@string/slider_gpu_settings</item>
+        <item>@string/slider_memory_settings</item>
+        <item>@string/slider_defy_parts</item>
+        <item>@string/slider_updater</item>
+    </string-array>
+
+    <!-- Overview Elements -->
+
+    <string name="kernel_version">内核:</string>
+    <string name="current_cpu_speed">CPU 频率:</string>
+    <string name="current_gpu_speed">GPU 频率:</string>
+    <string name="current_governor">调速器:</string>
+    <string name="current_io_governor">I/O 调度器:</string>
+    <string name="available_memory">总内存:</string>
+
+    <string-array name="overview_array">
+        <item>@string/kernel_version</item>
+        <item>@string/current_cpu_speed</item>
+        <item>@string/current_gpu_speed</item>
+        <item>@string/current_governor</item>
+        <item>@string/available_memory</item>
+    </string-array>
+
+    <!-- Action Overflow Menu -->
+
+    <string name="about">关于</string>
+    <string name="aero_settings">设置</string>
+
+    <!-- Preference Menu -->
+
+    <string name="pref_appspecific">应用相关</string>
+    <string name="pref_setatboot">启动时设置</string>
+    <string name="pref_setatboot_sum">注意：这将使得系统启动时即采用你的设置</string>
+    <string name="pref_updatepath">更新路径:</string>
+    <string name="pref_updatepath_sum">设置更新路径</string>
+    <string name="pref_app_theme">应用主题</string>
+    <string name="pref_app_theme_sum">设定默认的应用主题</string>
+
+    <!-- About -->
+    <string name="about_dialog">你好！感谢你使用此应用。我是 Alexander Christ (Blechd0se)，这是我闲暇时间里的随兴之作。它是开源的，因此你能下载源代码并随意修改。如果乐意的话，你可以给 Quarx (为了他了不起的 ROM) 或我一些捐助。
+                        <b>生命之乐趣在于给予。</b>
+    </string>
+
+    <!-- CPU Fragment -->
+
+    <string name="pref_cpu_freq">频率</string>
+    <string name="pref_cpu_freqmax">最大频率</string>
+    <string name="pref_cpu_freqmin">最小频率</string>
+    <string name="pref_cpu_governor">调速器设置</string>
+    <string name="perf_live_oc_uc">实时超频降频</string>
+    <string name="perf_live_oc_uc_sum">实时地控制频率和电压！</string>
+
+    <string name="pref_gov_choose">调速器</string>
+    <string name="pref_gov_choose_sum">选择你最爱的调速器！</string>
+
+    <string name="pref_gov_set">特定调速器设置</string>
+    <string name="pref_gov_set_sum">在这里设定特定调速器的设置</string>
+
+    <!-- Memory Fragment -->
+    <string name="pref_memory_settings">内存设置</string>
+
+    <string name="pref_memory_swappiness">Swappiness</string>
+    <string name="pref_memory_swappiness_sum">Swappiness 决定内核交换内存页的积极程度</string>
+
+    <string name="pref_dynamic_fsync">动态 FSync</string>
+    <string name="pref_dynamic_fsync_sum">动态 FSync 使 fsync 只在屏幕关闭时启用</string>
+
+    <string name="pref_memory_swap">Swap</string>
+    <string name="pref_memory_swap_sum">创建一个 Swap 设备</string>
+
+    <string name="pref_memory_zcache">zCache</string>
+    <string name="pref_memory_zcache_sum">zCache 以 CPU 时间为代价换取稍好的内存管理</string>
+
+    <string name="pref_memory_zcache_compression">zCache 压缩</string>
+    <string name="pref_memory_zcache_compression_sum">选择 zCache 的压缩方式</string>
+
+    <string name="fstrim_header">Trim 选项</string>
+    <string name="fstrim_content">对系统的一些部分进行 Trim！需要一定的时间</string>
+
+    <!-- IO Scheduler -->
+    <string name="io_scheduler">I/O 调度器</string>
+
+    <!-- GPU Fragment -->
+    <string name="pref_gpu_control_enable">GPU 控制</string>
+    <string name="pref_gpu_control_enable_sum">这将启用 GPU 控制驱动，它掌控超频降频及基本的 GPU 调度</string>
+    <string name="pref_gpu_max_freq">最大频率</string>
+    <string name="pref_gpu_max_freq_sum">最大频率设置，默认 200 MHz</string>
+
+    <!-- static GPU Frequencies for now -->
+
+    <string-array name="gpu_frequency_list">
+        <item>100 MHz</item>
+        <item>133 MHz</item>
+        <item>160 MHz</item>
+        <item>200 MHz</item>
+        <item>266 MHz</item>
+    </string-array>
+
+    <string-array name="gpu_frequency_list_values">
+        <item>100000000</item>
+        <item>133333333</item>
+        <item>160000000</item>
+        <item>200000000</item>
+        <item>266666666</item>
+    </string-array>
+
+    <!-- Updater Fragment -->
+    <string name="pref_updater">内核升级及备份</string>
+    <string name="pref_backup_kernel">备份内核</string>
+    <string name="pref_backup_kernel_content">这将保存当前内核的副本</string>
+
+    <string name="pref_updater_kernel">升级内核</string>
+    <string name="pref_updater_kernel_content">可以为你升级内核</string>
+
+    <string name="pref_restore">还原备份</string>
+    <string name="pref_restore_kernel">还原</string>
+    <string name="pref_restore_kernel_content">从内核备份还原</string>
+
+    <string name="last_backup_from">最近备份于 </string>
+    <string name="backup_from">备份于 </string>
+    <string name="restore_from_backup">确定要还原自 </string>
+    <string name="proceed_backup">确定备份？这将会备份当前内核。</string>
+
+    <!-- Showcase Strings -->
+    <string name="showcase_aero_fragment">欢迎来到 Aero Control！</string>
+    <string name="showcase_aero_fragment_sum">从屏幕左端向右滑动可以打开导航抽屉。你现在看到的是概览面板。这里显示了一些内核设置的概况。它们都是实时的，不需要刷新！</string>
+
+    <string name="showcase_memory_fragment_trim">Trim 选项</string>
+    <string name="showcase_memory_fragment_trim_sum">要保持设备性能，你可以对操作系统的一些部分进行 Trim。这需要一定的时间，特别是存有大量数据的情况。</string>
+
+</resources>
