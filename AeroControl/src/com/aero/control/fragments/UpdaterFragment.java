@@ -78,7 +78,7 @@ public class UpdaterFragment extends PreferenceFragment {
         try {
             backup_kernel.setSummary(getText(R.string.last_backup_from)+ " " + shell.getDirInfo("/sdcard/com.aero.control/", false)[0]);
             restore_kernel.setEnabled(true);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (NullPointerException e) {
             backup_kernel.setSummary(getText(R.string.last_backup_from)+ " " + getText(R.string.unavailable));
             restore_kernel.setEnabled(false);
         }
@@ -159,6 +159,11 @@ public class UpdaterFragment extends PreferenceFragment {
                                     Toast.makeText(getActivity(), "Backup was successful!", Toast.LENGTH_LONG).show();
 
                                     backup_kernel.setSummary(getText(R.string.last_backup_from) + " " + timeStamp);
+
+                                    // Prepare the UI, otherwise it would throw a Exception;
+                                    restore_kernel.setEntries(shell.getDirInfo("/sdcard/com.aero.control/", false));
+                                    restore_kernel.setEntryValues(shell.getDirInfo("/sdcard/com.aero.control/", false));
+
                                     restore_kernel.setEnabled(true);
 
                                 } catch (IOException e) {
