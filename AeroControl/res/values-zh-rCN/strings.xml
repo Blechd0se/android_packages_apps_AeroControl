@@ -102,6 +102,12 @@
 
     <string name="fstrim_header">Trim 选项</string>
     <string name="fstrim_content">对系统的一些部分进行 Trim！需要一定的时间</string>
+    
+    <string name="has_journal_dialog_header">发现问题</string>
+    
+    <string name="has_journal_dialog">你的 /data 分区似乎没有启用 <b>has_journal</b> 功能。请重启到 recovery 并通过 adb shell 运行如下命令：<br /> <br />
+                         <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+    </string>
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">I/O 调度器</string>
@@ -131,12 +137,12 @@
     </string-array>
 
     <!-- Updater Fragment -->
-    <string name="pref_updater">内核升级及备份</string>
+    <string name="pref_updater">内核更新及备份</string>
     <string name="pref_backup_kernel">备份内核</string>
     <string name="pref_backup_kernel_content">这将保存当前内核的副本</string>
 
-    <string name="pref_updater_kernel">升级内核</string>
-    <string name="pref_updater_kernel_content">可以为你升级内核</string>
+    <string name="pref_updater_kernel">更新内核</string>
+    <string name="pref_updater_kernel_content">可以为你更新内核</string>
 
     <string name="pref_restore">还原备份</string>
     <string name="pref_restore_kernel">还原</string>
