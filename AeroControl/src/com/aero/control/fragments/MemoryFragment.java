@@ -38,6 +38,8 @@ public class MemoryFragment extends PreferenceFragment {
     public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
     public static final String CMDLINE_ZACHE = "/system/bootmenu/2nd-boot/cmdline";
+    public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
+    public static final String MIN_FREE = "/proc/sys/vm/extra_free_kbytes";
 
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
@@ -65,14 +67,25 @@ public class MemoryFragment extends PreferenceFragment {
         final EditTextPreference swappiness = (EditTextPreference)root.findPreference("swappiness");
         final CheckBoxPreference dynFsync = (CheckBoxPreference)root.findPreference("dynFsync");
         final CheckBoxPreference zcache = (CheckBoxPreference)root.findPreference("zcache");
+        final CheckBoxPreference writeback_control = (CheckBoxPreference)root.findPreference("writeback");
+        final EditTextPreference min_free_ram = (EditTextPreference)root.findPreference("min_free");
 
         // Swappiness:
         swappiness.setText(shell.getInfo(SWAPPNIESS_FILE));
         // Only show numbers in input field;
         swappiness.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 
+        // Min free ram:
+        min_free_ram.setText(shell.getInfo(MIN_FREE));
+        // Only show numbers in input field;
+        min_free_ram.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+
         if (shell.getInfo(CMDLINE_ZACHE).equals("Unavailable"))
             zcache.setEnabled(false);
+
+        if (shell.getInfo(MIN_FREE).equals("Unavailable"))
+            min_free_ram.setEnabled(false);
+
 
         // Check if enabled or not;
         if (shell.getInfo(DYANMIC_FSYNC).equals("1")) {
@@ -90,6 +103,31 @@ public class MemoryFragment extends PreferenceFragment {
         final String fileCMD = shell.getInfo(CMDLINE_ZACHE);
         final boolean zcacheEnabled = fileCMD.length() == 0 ? false : fileCMD.contains("zcache");
         zcache.setChecked(zcacheEnabled);
+
+
+        if (shell.getInfo(WRITEBACK).equals("Unavailable"))
+            writeback_control.setEnabled(false);
+
+        final String kernel_version = shell.getKernel();
+        final boolean kernel_decider = kernel_version.length() == 0 ? false : kernel_version.contains("3.0.8");
+        writeback_control.setChecked(kernel_decider);
+
+
+        writeback_control.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+
+
+                String a =  o.toString();
+
+                if (a.equals("true"))
+                    shell.setRootInfo("1", WRITEBACK);
+                else if (a.equals("false"))
+                    shell.setRootInfo("0", WRITEBACK);
+
+                return true;
+            };
+        });
 
         if (showDialog) {
         // Ensure only devices with this special path are checked;
@@ -222,6 +260,20 @@ public class MemoryFragment extends PreferenceFragment {
 
                 shell.setRootInfo(a, SWAPPNIESS_FILE);
                 swappiness.setText(shell.getInfo(SWAPPNIESS_FILE));
+
+                return true;
+            };
+        });
+
+        min_free_ram.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+
+                String a = (String) o;
+
+
+                shell.setRootInfo(a, MIN_FREE);
+                swappiness.setText(shell.getInfo(MIN_FREE));
 
                 return true;
             };
