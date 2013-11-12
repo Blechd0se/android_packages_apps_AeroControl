@@ -14,6 +14,10 @@
             android:title="@string/pref_gpu_max_freq"
             android:summary="@string/pref_gpu_max_freq_sum" />
 
+        <ListPreference
+            android:key="display_control"
+            android:title="Color Control"
+            android:summary="Adjust your display color." />
     </PreferenceCategory>
 
 </PreferenceScreen>

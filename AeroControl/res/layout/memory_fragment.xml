@@ -22,10 +22,22 @@
             android:summary="@string/pref_memory_swappiness_sum"
             android:dialogTitle="Swappiness" />
 
+        <CheckBoxPreference
+            android:key="writeback"
+            android:title="Writeback Control"
+            android:summary="Enable writeback control here."
+            android:dialogTitle="Writeback Control" />
+
         <Preference
             android:key="fstrim_toggle"
             android:title="@string/fstrim_header"
             android:summary="@string/fstrim_content" />
+
+        <EditTextPreference
+            android:key="min_free"
+            android:title="Amount of free RAM"
+            android:summary="Set the minimum amount of free ram"
+            android:dialogTitle="Min free RAM" />
 
     </PreferenceCategory>
 

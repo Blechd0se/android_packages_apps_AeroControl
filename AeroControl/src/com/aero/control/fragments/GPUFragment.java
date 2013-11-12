@@ -20,6 +20,7 @@ public class GPUFragment extends PreferenceFragment {
     public static final String GPU_FREQ_MAX = "/sys/kernel/gpu_control/max_freq";
     public static final String GPU_CONTROL_ACTIVE = "/sys/kernel/gpu_control/gpu_control_active";
     public static final String GPU_FREQ_CUR = "/proc/gpu/cur_rate";
+    public static final String DISPLAY_COLOR ="/sys/class/misc/display_control/display_brightness_value";
     public boolean checkGpuControl;
 
     shellHelper shell = new shellHelper();
@@ -38,6 +39,16 @@ public class GPUFragment extends PreferenceFragment {
         final ListPreference gpu_control_frequencies = (ListPreference)root.findPreference("gpu_max_freq");
         // Set our gpu control flag;
         final CheckBoxPreference gpu_control_enable = (CheckBoxPreference)root.findPreference("gpu_control_enable");
+        final ListPreference display_control = (ListPreference)root.findPreference("display_control");
+
+
+        if (shell.getInfo(DISPLAY_COLOR).equals("Unavailable"))
+            display_control.setEnabled(false);
+
+        CharSequence[] display_entries = {"Defy Red Colors", "Defy Green Colors", "Energy saver"};
+        CharSequence[] display_values = {"31", "9", "0"};
+        display_control.setEntries(display_entries);
+        display_control.setEntryValues(display_values);
 
         // Just throw in our frequencies;
         gpu_control_frequencies.setEntries(R.array.gpu_frequency_list);
@@ -111,6 +122,26 @@ public class GPUFragment extends PreferenceFragment {
 
                 return true;
             };
+        });
+
+        display_control.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+
+                String a = (String) o;
+
+                // Get Permissions first, then execute;
+                String[] commands = new String[]
+                        {
+                                "chmod 0664 " + DISPLAY_COLOR,
+                                "echo " + a + " > " + DISPLAY_COLOR,
+                        };
+                shell.setRootInfo(commands);
+
+                Toast.makeText(getActivity(), "Turn your display off/on :)", Toast.LENGTH_LONG).show();
+
+                return true;
+            }
         });
     }
 }
