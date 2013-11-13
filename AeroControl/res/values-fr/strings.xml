@@ -54,17 +54,17 @@
 
 	<!-- Preference Menu -->
 
-	<string name="pref_appspecific">Propres à l'application </string>
+	<string name="pref_appspecific">Propres à l\'application </string>
 	<string name="pref_setatboot">Appliquer au démarrage</string>
 	<string name="pref_setatboot_sum">Attention: Les paramètres seront appliqués au démarrage.</string>
-	<string name="pref_updatepath">Changer l'emplacement</string>
+	<string name="pref_updatepath">Changer l\'emplacement</string>
 	<string name="pref_updatepath_sum">Choisissez votre répertoire de mise à jour.</string>
-	<string name="pref_app_theme">Thème de l'application</string>
-	<string name="pref_app_theme_sum">Choisissez le thème de l'application.</string>
+	<string name="pref_app_theme">Thème de l\'application</string>
+	<string name="pref_app_theme_sum">Choisissez le thème de l\'application.</string>
 
 	<!-- About -->
-	<string name="about_dialog">Bonjour, merci d'utiliser cette application. Je m'appelle 
-						Alexander Christ (Blechd0se). J'ai devellopé cette application pour m'amuser sur mon temps libre.
+	<string name="about_dialog">Bonjour, merci d\'utiliser cette application. Je m\'appelle 
+						Alexander Christ (Blechd0se). J\'ai devellopé cette application pour m\'amuser sur mon temps libre.
 						Cette application est Open Source, vous pouvez donc télécharger le code source et la modifier comme bon vous semble.
 						Si vous le voulez, vous pouvez donner à Quarx pour son super travail ou bien à moi même.
 						<b>The joy of living is in the giving.</b>
@@ -93,7 +93,7 @@
 	<string name="pref_memory_swappiness_sum">Définit la valeur pour laquel le kernel utilise le swap.</string>
 
 	<string name="pref_dynamic_fsync">FSync Dynamique</string>
-	<string name="pref_dynamic_fsync_sum">Active fsync uniquement quand l'écran est éteint.</string>
+	<string name="pref_dynamic_fsync_sum">Active fsync uniquement quand l\'écran est éteint.</string>
 
 	<string name="pref_memory_swap">Swap</string>
 	<string name="pref_memory_swap_sum">Créer une partition swap.</string>
@@ -105,7 +105,7 @@
 	<string name="pref_memory_zcache_compression_sum">Choisissez une méthode de compression pour zCache.</string>
 
 	<string name="fstrim_header">Outil Trim</string>
-	<string name="fstrim_content">Trim différentes partitions de l'appareil! Cette opération peut prendre un certain temps.</string>
+	<string name="fstrim_content">Trim différentes partitions de l\'appareil! Cette opération peut prendre un certain temps.</string>
 
 	<!-- IO Scheduler -->
 	<string name="io_scheduler">IO Scheduler</string>
@@ -145,7 +145,7 @@
 
 	<string name="pref_restore">Restaurer une sauvegarde</string>
 	<string name="pref_restore_kernel">Restaurer</string>
-	<string name="pref_restore_kernel_content">Restaurer à partir de la sauvegarde d'un kernel.</string>
+	<string name="pref_restore_kernel_content">Restaurer à partir de la sauvegarde d\'un kernel.</string>
 
 	<string name="last_backup_from">Dernière sauvegarde : </string>
 	<string name="backup_from">Sauvegardé le </string>
@@ -156,12 +156,12 @@
 
 	<string name="showcase_aero_fragment">Bienvenu sur Aero Control!</string>
 	<string name="showcase_aero_fragment_sum">Glissez de la gauche vers la droite pour afficher le drawer de navigation.
-												La page où vous êtes est le panel d'information.
+												La page où vous êtes est le panel d\'information.
 												Vous y retrouverez un résumé de certains réglages du kernel. Ils sont en direct,
-												vous n'avez pas besoin de l'actualiser.</string>
+												vous n\'avez pas besoin de l\'actualiser.</string>
 
 	<string name="showcase_memory_fragment_trim">Outil Trim</string>
-	<string name="showcase_memory_fragment_trim_sum">Afin de maintenir les performances de l'appareil, vous pouvez trimer
+	<string name="showcase_memory_fragment_trim_sum">Afin de maintenir les performances de l\'appareil, vous pouvez trimer
 													certaines parties du système. Cette opération peut être particulièrement
 													longue si vous avez stocké beaucoup de données.</string>
 </resources>
