@@ -103,8 +103,14 @@
     <string name="pref_memory_zcache_compression">zCache Compression</string>
     <string name="pref_memory_zcache_compression_sum">Choose the compression method for zCache.</string>
 
+    <string name="pref_dynamic_writeback">Writeback Control</string>
+    <string name="pref_dynamic_writeback_sum">Enable or Disable the writeback control here.</string>
+
     <string name="fstrim_header">Trim Option</string>
     <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
+
+    <string name="pref_min_free_ram">Amount of free RAM</string>
+    <string name="pref_min_free_ram_sum">Set the amount of true free ram here.</string>
 
     <string name="has_journal_dialog_header">Problem detected</string>
 
@@ -122,6 +128,12 @@
                                             as some basic scheduling for the GPU.</string>
     <string name="pref_gpu_max_freq">Max. Frequency</string>
     <string name="pref_gpu_max_freq_sum">This will set the maximum GPU Frequency. Default is 200 MHz.</string>
+
+    <string name="pref_display_color">Display Color</string>
+    <string name="pref_display_color_sum">Adjust the display color here.</string>
+    <string name="defy_red_colors">Defy Red Colors</string>
+    <string name="defy_green_colors">Defy Green Colors</string>
+    <string name="defy_energy_saver">Energy Saver</string>
 
     <!-- static GPU Frequencies for now -->
 

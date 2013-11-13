@@ -45,7 +45,12 @@ public class GPUFragment extends PreferenceFragment {
         if (shell.getInfo(DISPLAY_COLOR).equals("Unavailable"))
             display_control.setEnabled(false);
 
-        CharSequence[] display_entries = {"Defy Red Colors", "Defy Green Colors", "Energy saver"};
+        // Get our strings;
+        CharSequence[] display_entries = {
+                getText(R.string.defy_red_colors),
+                getText(R.string.defy_green_colors),
+                getText(R.string.defy_energy_saver)
+        };
         CharSequence[] display_values = {"31", "9", "0"};
         display_control.setEntries(display_entries);
         display_control.setEntryValues(display_values);

@@ -16,8 +16,8 @@
 
         <ListPreference
             android:key="display_control"
-            android:title="Color Control"
-            android:summary="Adjust your display color." />
+            android:title="@string/pref_display_color"
+            android:summary="@string/pref_display_color_sum" />
     </PreferenceCategory>
 
 </PreferenceScreen>
