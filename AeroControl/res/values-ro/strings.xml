@@ -83,7 +83,7 @@
     <string name="pref_gov_choose_sum">Aceasta va seta managerul favorit pentru CPU!</string>
 
     <string name="pref_gov_set">Setări specifice managerului pentru CPU</string>
-    <string name="pref_gov_set_sum">Stabiliți setarile specifice managerului pentru CPU aici.</string>
+    <string name="pref_gov_set_sum">Aici stabiliți setarile specifice managerului pentru CPU.</string>
 
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Setări Memorie</string>
@@ -103,8 +103,14 @@
     <string name="pref_memory_zcache_compression">Compresia zCache</string>
     <string name="pref_memory_zcache_compression_sum">Alegeți metoda de compresie pentru zCache.</string>
 
+    <string name="pref_dynamic_writeback">Control Writeback</string>
+    <string name="pref_dynamic_writeback_sum">Activează sau dezactivează controlul Writeback aici.</string>
+
     <string name="fstrim_header">Opțiuni Trim</string>
     <string name="fstrim_content">Utilizați Trim pe diverse partiții ale sistemului dvs! Aceast lucru ar putea dura câteva minute.</string>
+
+    <string name="pref_min_free_ram">Cantitatea de RAM liberă</string>
+    <string name="pref_min_free_ram_sum">Aici setați cantitatea reală de RAM liberă.</string>
 
     <string name="has_journal_dialog_header">A fost detectată o problemă</string>
 
@@ -122,6 +128,12 @@
                                             și un manager de bază pentru GPU.</string>
     <string name="pref_gpu_max_freq">Frecvență maximă</string>
     <string name="pref_gpu_max_freq_sum">Acest lucru va seta Frecvența maximă pentru GPU. Implicită este 200 MHz.</string>
+
+    <string name="pref_display_color">Culoare Afișaj</string>
+    <string name="pref_display_color_sum">Aici reglați cularea afișajului.</string>
+    <string name="defy_red_colors">Culoare Defy Red</string>
+    <string name="defy_green_colors">Culoare Defy Green</string>
+    <string name="defy_energy_saver">Economizor Energie</string>
 
     <!-- static GPU Frequencies for now -->
 
