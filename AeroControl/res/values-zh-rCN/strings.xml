@@ -99,14 +99,20 @@
 
     <string name="pref_memory_zcache_compression">zCache 压缩</string>
     <string name="pref_memory_zcache_compression_sum">选择 zCache 的压缩方式</string>
+    
+    <string name="pref_dynamic_writeback">Writeback 控制</string>
+    <string name="pref_dynamic_writeback_sum">启用或者禁用 writeback 控制</string>
 
     <string name="fstrim_header">Trim 选项</string>
     <string name="fstrim_content">对系统的一些部分进行 Trim！需要一定的时间</string>
-    
+
+    <string name="pref_min_free_ram">可用 RAM 大小</string>
+    <string name="pref_min_free_ram_sum">在此设置真正可用的 RAM 的大小</string>
+
     <string name="has_journal_dialog_header">发现问题</string>
     
     <string name="has_journal_dialog">你的 /data 分区似乎没有启用 <b>has_journal</b> 功能。请重启到 recovery 并通过 adb shell 运行如下命令：<br /> <br />
-                         <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+                        <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
     </string>
 
     <!-- IO Scheduler -->
@@ -117,6 +123,12 @@
     <string name="pref_gpu_control_enable_sum">这将启用 GPU 控制驱动，它掌控超频降频及基本的 GPU 调度</string>
     <string name="pref_gpu_max_freq">最大频率</string>
     <string name="pref_gpu_max_freq_sum">最大频率设置，默认 200 MHz</string>
+
+    <string name="pref_display_color">显示屏颜色</string>
+    <string name="pref_display_color_sum">在此调节显示屏颜色</string>
+    <string name="defy_red_colors">Defy 红色</string>
+    <string name="defy_green_colors">Defy 绿色</string>
+    <string name="defy_energy_saver">节能</string>
 
     <!-- static GPU Frequencies for now -->
 
