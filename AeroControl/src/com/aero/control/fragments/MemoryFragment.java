@@ -12,7 +12,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +46,7 @@ public class MemoryFragment extends PreferenceFragment {
     public boolean showDialog = true;
 
     public boolean checkDynFsync;
+    public boolean checkDynWriteback;
 
     public Handler progressHandler;
 
@@ -104,13 +104,17 @@ public class MemoryFragment extends PreferenceFragment {
         final boolean zcacheEnabled = fileCMD.length() == 0 ? false : fileCMD.contains("zcache");
         zcache.setChecked(zcacheEnabled);
 
-
-        if (shell.getInfo(WRITEBACK).equals("Unavailable"))
-            writeback_control.setEnabled(false);
-
-        final String kernel_version = shell.getKernel();
-        final boolean kernel_decider = kernel_version.length() == 0 ? false : kernel_version.contains("3.0.8");
-        writeback_control.setChecked(kernel_decider);
+        // Check if enabled or not;
+        if (shell.getInfo(WRITEBACK).equals("1")) {
+            checkDynWriteback = true;
+        }
+        else if (shell.getInfo(WRITEBACK).equals("0")) {
+            checkDynWriteback = false;
+        }
+        else {
+            writeback_control.setEnabled(false); // If dyn writeback is not supported
+        }
+        writeback_control.setChecked(checkDynWriteback);
 
 
         writeback_control.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
