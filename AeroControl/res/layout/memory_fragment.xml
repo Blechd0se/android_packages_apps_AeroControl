@@ -24,9 +24,9 @@
 
         <CheckBoxPreference
             android:key="writeback"
-            android:title="Writeback Control"
-            android:summary="Enable writeback control here."
-            android:dialogTitle="Writeback Control" />
+            android:title="@string/pref_dynamic_writeback"
+            android:summary="@string/pref_dynamic_writeback_sum"
+            android:dialogTitle="@string/pref_dynamic_writeback" />
 
         <Preference
             android:key="fstrim_toggle"
@@ -35,9 +35,9 @@
 
         <EditTextPreference
             android:key="min_free"
-            android:title="Amount of free RAM"
-            android:summary="Set the minimum amount of free ram"
-            android:dialogTitle="Min free RAM" />
+            android:title="@string/pref_min_free_ram"
+            android:summary="@string/pref_min_free_ram_sum"
+            android:dialogTitle="@string/pref_min_free_ram" />
 
     </PreferenceCategory>
 
