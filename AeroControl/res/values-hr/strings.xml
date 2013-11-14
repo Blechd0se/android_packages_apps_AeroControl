@@ -88,6 +88,8 @@
     <string name="has_journal_dialog">Izgleda da Vaša /data particija nema omogućenu <b>has_journal</b> značajku.
                             Molimo Vas reboot-ajte u recovery i pokrenite sljedeću naredbu preko adb shell: <br /> <br />
                             <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+    </string>
+
 
     <!-- IO Scheduler -->
     
