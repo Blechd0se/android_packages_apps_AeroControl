@@ -179,7 +179,6 @@ public class AeroFragment extends Fragment {
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        mDrawerLayout.openDrawer(mDrawerLayout)
         mShowCase = ShowcaseView.insertShowcaseView(100, 175, getActivity(), header, content, mConfigOptions);
     }
 

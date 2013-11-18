@@ -12,19 +12,26 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 
 
+/*
+ * TODO: - Add UC/OC Support
+ *
+ *
+ */
+
 public class bootService extends Service
 {
     public static final String CURRENT_GOV_AVAILABLE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
     public static final String CPU_MAX_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
     public static final String CPU_MIN_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
 
+
     public static final String GPU_FREQ_MAX = "/sys/kernel/gpu_control/max_freq";
     public static final String GPU_CONTROL_ACTIVE = "/sys/kernel/gpu_control/gpu_control_active";
+    public static final String DISPLAY_COLOR = "/sys/class/misc/display_control/display_brightness_value";
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
-    public static final String CMDLINE_ZCACHE = "/system/bootmenu/2nd-boot/cmdline";
     public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
     public static final String MIN_FREE = "/proc/sys/vm/extra_free_kbytes";
 
@@ -36,11 +43,11 @@ public class bootService extends Service
 
     public static final String PREF_GPU_FREQ_MAX = "gpu_max_freq";
     public static final String PREF_GPU_CONTROL_ACTIVE = "gpu_control_enable";
+    public static final String PREF_DISPLAY_COLOR = "display_control";
 
     public static final String PREF_GOV_IO_FILE = "io_scheduler";
     public static final String PREF_SWAPPINESS_FILE = "swappiness";
     public static final String PREF_DYANMIC_FSYNC = "dynFsync";
-    public static final String PREF_CMDLINE_ZCACHE = "zcache";
     public static final String PREF_WRITEBACK = "writeback";
     public static final String PREF_MIN_FREE = "min_free";
 
@@ -98,6 +105,7 @@ public class bootService extends Service
 
     	// GET GPU VALUES FROM PREFERENCES
     	String gpu_max = prefs.getString(PREF_GPU_FREQ_MAX, null);
+        String display_color = prefs.getString(PREF_DISPLAY_COLOR, null);
     	Boolean gpu_enb = prefs.getBoolean(PREF_GPU_CONTROL_ACTIVE, false);
 
     	// ADD GPU COMMANDS TO THE ARRAY
@@ -105,14 +113,16 @@ public class bootService extends Service
     	{
     		al.add("echo " + gpu_max + " > " + GPU_FREQ_MAX);
     	}
-    	al.add("echo " + (gpu_enb ? "1" : "0") + " > " + GPU_FREQ_MAX);
+    	al.add("echo " + (gpu_enb ? "1" : "0") + " > " + GPU_CONTROL_ACTIVE);
+        if (display_color != null)
+        {
+            al.add("echo " + display_color + " > " + DISPLAY_COLOR);
+        }
 
     	// GET MEM VALUES FROM PREFERENCES
     	String mem_ios = prefs.getString(PREF_GOV_IO_FILE, null);
     	String mem_swp = prefs.getString(PREF_SWAPPINESS_FILE, null);
     	Boolean mem_dfs = prefs.getBoolean(PREF_DYANMIC_FSYNC, false);
-    	Boolean mem_zch = prefs.getBoolean(PREF_CMDLINE_ZCACHE, false);
-        String zcontent = shell.getInfo(CMDLINE_ZCACHE);
     	Boolean mem_wrb = prefs.getBoolean(PREF_WRITEBACK, false);
         String mem_min = prefs.getString(PREF_MIN_FREE, null);
 
@@ -123,17 +133,10 @@ public class bootService extends Service
     	}
     	if (mem_swp != null)
     	{
-    		al.add("echo " + mem_swp + " > " + GPU_FREQ_MAX);
+    		al.add("echo " + mem_swp + " > " + SWAPPNIESS_FILE);
     	}
     	al.add("echo " + (mem_dfs ? "1" : "0") + " > " + DYANMIC_FSYNC);
-        if (mem_zch && !zcontent.contains("zcache"))
-        {
-        	al.add("echo " + "\"" + zcontent + " zcache" + "\"" + " > " + CMDLINE_ZCACHE);
-        }
-        if (!mem_zch && zcontent.contains("zcache"))
-        {
-        	al.add("echo " + "\"" + zcontent.replace(" zcache", "") + "\"" + " > " + GPU_FREQ_MAX);
-        }
+
     	al.add("echo " + (mem_wrb ? "1" : "0") + " > " + WRITEBACK);
     	if (mem_min != null)
     	{
