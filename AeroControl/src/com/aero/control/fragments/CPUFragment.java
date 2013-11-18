@@ -1,7 +1,11 @@
 package com.aero.control.fragments;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +13,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.text.InputType;
 import android.util.Log;
@@ -158,6 +163,12 @@ public class CPUFragment extends PreferenceFragment {
                                                 // Throw them all in!
                                                 shell.setRootInfo(commands);
 
+                                                //** store preferences
+                                                //** note that this time we put to preferences commands instead of single values,
+                                                //** rebuild the commands in the bootService would have been a little expensive
+                                                SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences( getActivity().getBaseContext() );
+                                                preference.edit().putStringSet("cpu_commands", new HashSet<String>(Arrays.asList(commands))).commit();
+
                                             }
                                             catch (Exception e) {
                                                 Log.e("Aero", "An Error occurred while setting values", e);
@@ -208,6 +219,12 @@ public class CPUFragment extends PreferenceFragment {
                                                     "echo " + "300000"  + " > " + CPU_MIN_FREQ
                                             };
                                     shell.setRootInfo(commands);
+
+                                    //** store preferences
+                                    //** note that this time we put to preferences commands instead of single values,
+                                    //** rebuild the commands in the bootService would have been a little expensive
+                                    SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences( getActivity().getBaseContext() );
+                                    preference.edit().putStringSet("cpu_commands", new HashSet<String>(Arrays.asList(commands))).commit();
 
                                 }
                                 catch (Exception e) {
@@ -280,7 +297,7 @@ public class CPUFragment extends PreferenceFragment {
                      * and therefore we sleep for a short interval;
                      */
                     try {
-                        Thread.currentThread().sleep(250);
+                        Thread.sleep(250);
                     } catch (InterruptedException e) {
                         Log.e("Aero",
                                 "Something interrupted the main Thread, try again.",
@@ -315,6 +332,11 @@ public class CPUFragment extends PreferenceFragment {
                     // To clean up the UI;
                     if (PrefCat != null)
                         root.removePreference(PrefCat);
+
+                    //** store preferences
+                    preference.getEditor().commit();
+
+                    return true;
                 }
                 return true;
             }
@@ -344,11 +366,11 @@ public class CPUFragment extends PreferenceFragment {
                     max_frequency.setSummary(oldValue);
                 }
 
+                //** store preferences
+                preference.getEditor().commit();
 
                 return true;
-            }
-
-            ;
+            };
         });
 
         min_frequency.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -368,14 +390,16 @@ public class CPUFragment extends PreferenceFragment {
                     min_frequency.setSummary(oldValue);
                 }
 
-                return true;
-            }
+                //** store preferences
+                preference.getEditor().commit();
 
-            ;
+                return true;
+            };
         });
 
 
     }
+
     public void updateMinFreq() {
         // Just throw in our frequencies;
         min_frequency.setEntries(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
@@ -387,6 +411,10 @@ public class CPUFragment extends PreferenceFragment {
             min_frequency.setValue("Unavailable");
             min_frequency.setSummary("Unavailable");
         }
+
+        //** store preferences
+        min_frequency.getEditor().commit();
+
     }
 
     public void updateMaxFreq() {
@@ -400,6 +428,10 @@ public class CPUFragment extends PreferenceFragment {
             max_frequency.setValue("Unavailable");
             max_frequency.setSummary("Unavailable");
         }
+
+        //** store preferences
+        max_frequency.getEditor().commit();
+
     }
 
     private class RefreshThread extends Thread {

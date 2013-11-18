@@ -5,8 +5,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.view.ContextThemeWrapper;
-import android.widget.Toast;
 
 import com.aero.control.R;
 
@@ -40,7 +38,6 @@ public class PrefsFragment extends PreferenceFragment {
 
                 String a = (String) o;
 
-
                 // Somehow set the style here....;
                 if (a.equals("red")) {
                     getActivity().setTheme(R.style.RedHolo);
@@ -50,8 +47,6 @@ public class PrefsFragment extends PreferenceFragment {
                     getActivity().setTheme(android.R.style.Theme_Holo_Light);
                     root.setLayoutResource(android.R.style.Theme_Holo_Light);
                 }
-
-
 
                 return true;
             };

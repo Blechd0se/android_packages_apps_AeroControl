@@ -4,18 +4,15 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -34,9 +32,11 @@ import java.util.Calendar;
  */
 public class UpdaterFragment extends PreferenceFragment {
 
-    public static String timeStamp = new SimpleDateFormat("ddMMyyyy").format(Calendar.getInstance().getTime());
+    private static String sdpath = Environment.getExternalStorageDirectory().getPath();
+
+    public static String timeStamp = new SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
     public static String zImage = "/system/bootmenu/2nd-boot/zImage";
-    public static File BACKUP_PATH = new File ("/sdcard/com.aero.control/" + timeStamp + "/zImage");
+    public static File BACKUP_PATH = new File(sdpath + "/com.aero.control/" + timeStamp + "/zImage");
     public static File IMAGE = new File (zImage);
 
     updateHelpers update = new updateHelpers();
@@ -76,15 +76,15 @@ public class UpdaterFragment extends PreferenceFragment {
 
         // Fresh Start, no backup found;
         try {
-            backup_kernel.setSummary(getText(R.string.last_backup_from)+ " " + shell.getDirInfo("/sdcard/com.aero.control/", false)[0]);
+            backup_kernel.setSummary(getText(R.string.last_backup_from)+ " " + shell.getDirInfo(sdpath + "/com.aero.control/", false)[0]);
             restore_kernel.setEnabled(true);
         } catch (NullPointerException e) {
             backup_kernel.setSummary(getText(R.string.last_backup_from)+ " " + getText(R.string.unavailable));
             restore_kernel.setEnabled(false);
         }
 
-        restore_kernel.setEntries(shell.getDirInfo("/sdcard/com.aero.control/", false));
-        restore_kernel.setEntryValues(shell.getDirInfo("/sdcard/com.aero.control/", false));
+        restore_kernel.setEntries(shell.getDirInfo(sdpath + File.separator + "/com.aero.control/", false));
+        restore_kernel.setEntryValues(shell.getDirInfo(sdpath + "/com.aero.control/", false));
         restore_kernel.setDialogIcon(R.drawable.restore_dark);
 
         restore_kernel.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -161,8 +161,8 @@ public class UpdaterFragment extends PreferenceFragment {
                                     backup_kernel.setSummary(getText(R.string.last_backup_from) + " " + timeStamp);
 
                                     // Prepare the UI, otherwise it would throw a Exception;
-                                    restore_kernel.setEntries(shell.getDirInfo("/sdcard/com.aero.control/", false));
-                                    restore_kernel.setEntryValues(shell.getDirInfo("/sdcard/com.aero.control/", false));
+                                    restore_kernel.setEntries(shell.getDirInfo(sdpath + "/com.aero.control/", false));
+                                    restore_kernel.setEntryValues(shell.getDirInfo(sdpath + "/com.aero.control/", false));
 
                                     restore_kernel.setEnabled(true);
 

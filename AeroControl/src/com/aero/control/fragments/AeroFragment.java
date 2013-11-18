@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,6 @@ import com.espian.showcaseview.ShowcaseView;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -181,7 +179,7 @@ public class AeroFragment extends Fragment {
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        //mDrawerLayout.openDrawer(mDrawerLayout)
+        mDrawerLayout.openDrawer(mDrawerLayout)
         mShowCase = ShowcaseView.insertShowcaseView(100, 175, getActivity(), header, content, mConfigOptions);
     }
 

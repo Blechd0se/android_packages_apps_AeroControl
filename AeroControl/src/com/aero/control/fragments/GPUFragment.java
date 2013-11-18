@@ -100,7 +100,7 @@ public class GPUFragment extends PreferenceFragment {
 
                 // Sleep the thread again for UI delay;
                 try {
-                    Thread.currentThread().sleep(250);
+					Thread.sleep(250);
                 } catch (InterruptedException e) {
                     Log.e("Aero",
                           "Something interrupted the main Thread, try again.",
@@ -108,6 +108,9 @@ public class GPUFragment extends PreferenceFragment {
                 }
 
                 gpu_control_frequencies.setSummary(shell.toMHz((a.substring(0, a.length() - 3))));
+
+                //** store preferences
+                preference.getEditor().commit();
 
                 return true;
             };
@@ -124,6 +127,9 @@ public class GPUFragment extends PreferenceFragment {
                     shell.setRootInfo("1", GPU_CONTROL_ACTIVE);
                 else if (a.equals("false"))
                     shell.setRootInfo("0", GPU_CONTROL_ACTIVE);
+
+                //** store preferences
+                preference.getEditor().commit();
 
                 return true;
             };

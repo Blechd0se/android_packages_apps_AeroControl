@@ -13,17 +13,25 @@ public class GovernorTextPreference extends EditTextPreference {
 
     public GovernorTextPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        this.context = context;
+        this.setContext(context);
     }
 
     public GovernorTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
+        this.setContext(context);
     }
 
     public GovernorTextPreference(Context context) {
         super(context);
-        this.context = context;
+        this.setContext(context);
     }
+
+	public Context getContext() {
+		return context;
+	}
+
+	public void setContext(Context context) {
+		this.context = context;
+	}
 
 }

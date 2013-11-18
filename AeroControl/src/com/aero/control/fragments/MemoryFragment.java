@@ -129,6 +129,9 @@ public class MemoryFragment extends PreferenceFragment {
                 else if (a.equals("false"))
                     shell.setRootInfo("0", WRITEBACK);
 
+                //** store preferences
+                preference.getEditor().commit();
+
                 return true;
             };
         });
@@ -251,6 +254,9 @@ public class MemoryFragment extends PreferenceFragment {
                 shell.setRootInfo(a, GOV_IO_FILE);
                 io_scheduler.setSummary(a);
 
+                //** store preferences
+                preference.getEditor().commit();
+
                 return true;
             };
         });
@@ -265,6 +271,9 @@ public class MemoryFragment extends PreferenceFragment {
                 shell.setRootInfo(a, SWAPPNIESS_FILE);
                 swappiness.setText(shell.getInfo(SWAPPNIESS_FILE));
 
+                //** store preferences
+                preference.getEditor().commit();
+
                 return true;
             };
         });
@@ -278,6 +287,9 @@ public class MemoryFragment extends PreferenceFragment {
 
                 shell.setRootInfo(a, MIN_FREE);
                 swappiness.setText(shell.getInfo(MIN_FREE));
+
+                //** store preferences
+                preference.getEditor().commit();
 
                 return true;
             };
@@ -294,6 +306,9 @@ public class MemoryFragment extends PreferenceFragment {
                     shell.setRootInfo("1", DYANMIC_FSYNC);
                 else if (a.equals("false"))
                     shell.setRootInfo("0", DYANMIC_FSYNC);
+
+                //** store preferences
+                preference.getEditor().commit();
 
                 return true;
             };
@@ -331,6 +346,9 @@ public class MemoryFragment extends PreferenceFragment {
                 // Set current State to path;
                 shell.setRootInfo(getState, CMDLINE_ZACHE);
                 Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
+
+                //** store preferences
+                preference.getEditor().commit();
 
                 return true;
             };
@@ -379,7 +397,7 @@ public class MemoryFragment extends PreferenceFragment {
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        //mDrawerLayout.openDrawer(mDrawerLayout)
+        mDrawerLayout.openDrawer(mDrawerLayout)
         mShowCase = ShowcaseView.insertShowcaseView(130, 600, getActivity(), header, content, mConfigOptions);
     }
 

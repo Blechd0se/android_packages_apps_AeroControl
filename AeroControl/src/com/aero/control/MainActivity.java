@@ -14,7 +14,6 @@ import android.os.Looper;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,7 +37,6 @@ import com.aero.control.fragments.UpdaterFragment;
 import com.aero.control.lists.generatingLists;
 import com.aero.control.lists.generatingLists.PreferenceItem;
 import com.aero.control.prefs.PrefsFragment;
-import com.espian.showcaseview.ShowcaseView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -229,7 +227,7 @@ public class MainActivity extends Activity {
                 ;
                 break;
             case R.id.aero_settings:
-                Toast.makeText(this, "Aero Settings are not implemented yet.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Update location and App Theme are not implemented yet.", Toast.LENGTH_SHORT).show();
                 getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
                         android.R.animator.fade_out).replace(R.id.content_frame,
                         new PrefsFragment()).commit();
