@@ -55,18 +55,18 @@
 
     <string name="pref_appspecific">Específico de la Aplicación</string>
     <string name="pref_setatboot">Establecer al iniciar</string>
-    <string name="pref_setatboot_sum">Precauci�n: Esto fijar� los valores al iniciar.</string>
-    <string name="pref_updatepath">Ubicaci�n de actualizaciones:</string>
-    <string name="pref_updatepath_sum">Coloque su ubicaci�n de actualizaciones preferida.</string>
-    <string name="pref_app_theme">Tema de la Aplicaci�n</string>
-    <string name="pref_app_theme_sum">Define el tema por defecto para la Aplicaci�n.</string>
+    <string name="pref_setatboot_sum">Precaución: Esto fijará los valores al iniciar.</string>
+    <string name="pref_updatepath">Ubicación de actualizaciones:</string>
+    <string name="pref_updatepath_sum">Coloque su ubicación de actualizaciones preferida.</string>
+    <string name="pref_app_theme">Tema de la Aplicación</string>
+    <string name="pref_app_theme_sum">Define el tema por defecto para la Aplicación.</string>
 
     <!-- About -->
-    <string name="about_dialog">Hola. Gracias por usar �sta aplicaci�n. Mi nombre es
-                        Alexander Christ (Blechd0se) y he escrito esta aplicaci�n por diversi�n y en mi tiempo libre.
-                        Es adem�s de C�digo Abierto, as� que puede tomar el C�digo Fuente y modificarlo como quiera.
-                        Si lo desea, puede adem�s hacer una donaci�n a Quarx por su asombrosa ROM o a m�.
-                        <b>El goce de la vida est� en dar.</b>
+    <string name="about_dialog">Hola. Gracias por usar ésta aplicación. Mi nombre es
+                        Alexander Christ (Blechd0se) y he escrito esta aplicación por diversión y en mi tiempo libre.
+                        Es además de Código Abierto, así que puede tomar el Código Fuente y modificarlo como quiera.
+                        Si lo desea, puede además hacer una donación a Quarx por su asombrosa ROM o a mí.
+                        <b>El goce de la vida está en dar.</b>
     </string>
 
     <!-- CPU Fragment -->
@@ -79,19 +79,19 @@
     <string name="perf_live_oc_uc_sum">Controle las Frecuencias y el Voltaje en tiempo real!</string>
 
     <string name="pref_gov_choose">Ajustes de Patrones de CPU</string>
-    <string name="pref_gov_choose_sum">Esto modificar� sus Patrones de CPU preferidos!</string>
+    <string name="pref_gov_choose_sum">Esto modificará sus Patrones de CPU preferidos!</string>
 
-    <string name="pref_gov_set">Ajustes espec�ficos de Patrones de CPU</string>
-    <string name="pref_gov_set_sum">Ajuste los valores espec�ficos del Patrones de CPU aqu�.</string>
+    <string name="pref_gov_set">Ajustes específicos de Patrones de CPU</string>
+    <string name="pref_gov_set_sum">Ajuste los valores específicos del Patrones de CPU aquí.</string>
 
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Ajustes de Memoria</string>
 
     <string name="pref_memory_swappiness">Swappiness</string>
-    <string name="pref_memory_swappiness_sum">El Swappiness define qu� tan agresivamente el n�cleo intercambiar� p�ginas de memoria.</string>
+    <string name="pref_memory_swappiness_sum">El Swappiness define qué tan agresivamente el núcleo intercambiará páginas de memoria.</string>
 
-    <string name="pref_dynamic_fsync">FSync Din�mico</string>
-    <string name="pref_dynamic_fsync_sum">FSync Din�mico habilita fsync s�lo cuando la panatlla est� apagada.</string>
+    <string name="pref_dynamic_fsync">FSync Dinámico</string>
+    <string name="pref_dynamic_fsync_sum">FSync Dinámico habilita fsync sólo cuando la panatlla está apagada.</string>
 
     <string name="pref_memory_swap">Espacio de Intercambio</string>
     <string name="pref_memory_swap_sum">Crear un dispositivo de Espacio de Intercambio (swap).</string>
@@ -99,11 +99,11 @@
     <string name="pref_memory_zcache">zCache</string>
     <string name="pref_memory_zcache_sum">zCache utiliza ciclos de CPU para mejorar ligeramente el manejo de memoria.</string>
 
-    <string name="pref_memory_zcache_compression">Compresi�n del zCache</string>
-    <string name="pref_memory_zcache_compression_sum">Elija el m�todo de compresi�n para el zCache.</string>
+    <string name="pref_memory_zcache_compression">Compresión del zCache</string>
+    <string name="pref_memory_zcache_compression_sum">Elija el método de compresión para el zCache.</string>
 
-    <string name="fstrim_header">Opci�n de Trim</string>
-    <string name="fstrim_content">Ejecutar Trim en varias partes de su sistema! Esto podr�a demorar un poco.</string>
+    <string name="fstrim_header">Opción de Trim</string>
+    <string name="fstrim_content">Ejecutar Trim en varias partes de su sistema! Esto podría demorar un poco.</string>
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">Planificador de E/S</string>
@@ -111,9 +111,9 @@
     <!-- GPU Fragment -->
     <string name="pref_gpu_control_enable">Control de la GPU</string>
     <string name="pref_gpu_control_enable_sum">Habilita el driver de Control de la GPU. Maneja frecuencias y voltajes
-                                            as� como planificaci�n b�sica de la GPU.</string>
+                                            así como planificación básica de la GPU.</string>
     <string name="pref_gpu_max_freq">Frecuencia Max.</string>
-    <string name="pref_gpu_max_freq_sum">Modifica la Frequencia m�xima de la GPU. El valor por defecto es 200 MHz.</string>
+    <string name="pref_gpu_max_freq_sum">Modifica la Frequencia máxima de la GPU. El valor por defecto es 200 MHz.</string>
 
     <!-- static GPU Frequencies for now -->
 
@@ -134,20 +134,20 @@
     </string-array>
 
     <!-- Updater Fragment -->
-    <string name="pref_updater">Actualizaci�n y respaldo del n�cleo</string>
-    <string name="pref_backup_kernel">Respaldar el n�cleo</string>
-    <string name="pref_backup_kernel_content">Guarda una copia de su n�cleo actual.</string>
+    <string name="pref_updater">Actualización y respaldo del núcleo</string>
+    <string name="pref_backup_kernel">Respaldar el núcleo</string>
+    <string name="pref_backup_kernel_content">Guarda una copia de su núcleo actual.</string>
 
-    <string name="pref_updater_kernel">Actualizar el n�cleo</string>
-    <string name="pref_updater_kernel_content">Actualiza el n�cleo.</string>
+    <string name="pref_updater_kernel">Actualizar el núcleo</string>
+    <string name="pref_updater_kernel_content">Actualiza el núcleo.</string>
 
-    <string name="pref_restore">Restaurar el n�cleo</string>
+    <string name="pref_restore">Restaurar el núcleo</string>
     <string name="pref_restore_kernel">Restaurar</string>
-    <string name="pref_restore_kernel_content">Restaurar el n�cleo desde un respaldo.</string>
+    <string name="pref_restore_kernel_content">Restaurar el núcleo desde un respaldo.</string>
 
     <string name="last_backup_from">Ultimo respaldo </string>
     <string name="backup_from">Respaldo de </string>
     <string name="restore_from_backup">Desea restaurar el respaldo de </string>
-    <string name="proceed_backup">Proceder con el respaldo? Esto respaldar� su n�cleo actual.</string>
+    <string name="proceed_backup">Proceder con el respaldo? Esto respaldará su núcleo actual.</string>
 
 </resources>
