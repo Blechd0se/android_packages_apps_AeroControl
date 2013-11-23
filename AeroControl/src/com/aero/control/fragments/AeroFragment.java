@@ -44,6 +44,7 @@ public class AeroFragment extends Fragment {
     public AeroFragment mAeroFragment;
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
+    public boolean mVisible = true;
 
     public Fragment newInstance(Context context) {
         mAeroFragment = new AeroFragment();
@@ -81,8 +82,9 @@ public class AeroFragment extends Fragment {
                 if (msg.what >= 1) {
 
 
-                    if (isVisible()) {
+                    if (isVisible() && mVisible) {
                         createList();
+                        mVisible = true;
                     } else {
                         // Do nothing
                     }
@@ -90,6 +92,20 @@ public class AeroFragment extends Fragment {
                 }
             }
         };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mVisible = false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mVisible = true;
+    }
 
     // Override for custom view;
     @Override

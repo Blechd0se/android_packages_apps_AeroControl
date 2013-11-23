@@ -44,6 +44,7 @@ public class CPUFragment extends PreferenceFragment {
     public ListPreference listPref;
     public ListPreference min_frequency;
     public ListPreference max_frequency;
+    public boolean mVisible = true;
 
     shellHelper shell = new shellHelper();
 
@@ -119,8 +120,8 @@ public class CPUFragment extends PreferenceFragment {
 
                             // Objects;
                             final Object f = (value1.getText().toString().substring(0, value1.getText().toString().length() - 4) + "000");
-                            Object g = (value3.getText().toString().substring(0, value3.getText().toString().length() - 4) + "000");
-                            Object h = (value5.getText().toString().substring(0, value5.getText().toString().length() - 4) + "000");
+                            final Object g = (value3.getText().toString().substring(0, value3.getText().toString().length() - 4) + "000");
+                            final Object h = (value5.getText().toString().substring(0, value5.getText().toString().length() - 4) + "000");
                             final Object i = (value7.getText().toString().substring(0, value7.getText().toString().length() - 4) + "000");
 
                             // Cast objects to integer (frequencies;
@@ -196,7 +197,8 @@ public class CPUFragment extends PreferenceFragment {
                             // Start our background refresher Task;
                             try {
                                 mRefreshThread.start();
-                            } catch (Exception e) {
+                            } catch (NullPointerException e) {
+                                Log.e("Aero", "Couldn't start Refresher Thread.", e);
                             }
                         }
                     })
@@ -400,6 +402,20 @@ public class CPUFragment extends PreferenceFragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mVisible = false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mVisible = true;
+    }
+
     public void updateMinFreq() {
         // Just throw in our frequencies;
         min_frequency.setEntries(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
@@ -462,9 +478,10 @@ public class CPUFragment extends PreferenceFragment {
         public void handleMessage(Message msg) {
 
             if (msg.what >= 1) {
-                if (isVisible()) {
+                if (isVisible() && mVisible) {
                     updateMaxFreq();
                     updateMinFreq();
+                    mVisible = true;
                 } else {
                     // Do nothing
                 }
