@@ -264,6 +264,7 @@ public class MainActivity extends Activity {
 
         // update the main content by replacing fragments
         Fragment fragment = null;
+        String current_fragment = null;
 
 
         // Switch to show different fragments;
@@ -273,24 +274,28 @@ public class MainActivity extends Activity {
                     mAeroFragment = new AeroFragment();
                 }
                 fragment = mAeroFragment;
+                current_fragment = "AeroFragment";
                 break;
             case CPU:
                 if (mCPUFragement == null) {
                     mCPUFragement = new CPUFragment();
                 }
                 fragment = mCPUFragement;
+                current_fragment = "CPUFragment";
                 break;
             case GPU:
                 if (mGPUFragement == null) {
                     mGPUFragement = new GPUFragment();
                 }
                 fragment = mGPUFragement;
+                current_fragment = "GPUFragment";
                 break;
             case MEMORY:
                 if (mMemoryFragment == null) {
                     mMemoryFragment = new MemoryFragment();
                 }
                 fragment = mMemoryFragment;
+                current_fragment = "MemoryFragment";
                 break;
             case DEFYPARTS:
                 /*
@@ -351,7 +356,8 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
-                        android.R.animator.fade_out).replace(R.id.content_frame, fragment).commit();
+                        android.R.animator.fade_out).replace(R.id.content_frame, fragment).addToBackStack(null).commit();
+
             }
         },250);
     }
