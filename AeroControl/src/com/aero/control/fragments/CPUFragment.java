@@ -265,6 +265,10 @@ public class CPUFragment extends PreferenceFragment {
         listPref.setSummary(shell.getInfo(CURRENT_GOV_AVAILABLE));
         listPref.setDialogIcon(R.drawable.cpu_dark);
 
+        // If there are already some entries, kill them all (with fire)
+        if (PrefCat != null)
+            root.removePreference(PrefCat);
+
 
         //different listener for each element
         listPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -282,15 +286,6 @@ public class CPUFragment extends PreferenceFragment {
 
                 shell.setRootInfo(o, CURRENT_GOV_AVAILABLE);
 
-                // Check if it really sticks;
-                if(shell.checkPath(shell.getInfo(CURRENT_GOV_AVAILABLE), a)) {
-                    listPref.setSummary(a);
-                } else {
-                    Toast.makeText(getActivity(), "Couldn't set governor."   + " Old value; " +
-                            shell.getInfo(CURRENT_GOV_AVAILABLE) + " New Value; " + a, Toast.LENGTH_LONG).show();
-                    listPref.setSummary(shell.getInfo(CURRENT_GOV_AVAILABLE));
-                }
-
                 String complete_path = CPU_GOV_SET_BASE + a;
 
                 try {
@@ -299,12 +294,14 @@ public class CPUFragment extends PreferenceFragment {
                      * and therefore we sleep for a short interval;
                      */
                     try {
-                        Thread.sleep(250);
+                        Thread.sleep(350);
                     } catch (InterruptedException e) {
                         Log.e("Aero",
                                 "Something interrupted the main Thread, try again.",
                                 e);
                     }
+                    listPref.setSummary(shell.getInfo(CURRENT_GOV_AVAILABLE));
+
                     String completeParamterList[] = shell.getDirInfo(complete_path, true);
 
                     // If there are already some entries, kill them all (with fire)
@@ -530,6 +527,9 @@ public class CPUFragment extends PreferenceFragment {
                                 shell.getInfo(parameterPath) + " New Value; " + a, Toast.LENGTH_LONG).show();
                         prefload.setSummary(oldValue);
                     }
+
+                    //** store preferences
+                    preference.getEditor().commit();
 
                     return true;
                 };
