@@ -20,6 +20,8 @@ import com.espian.showcaseview.ShowcaseView;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -33,7 +35,6 @@ public class AeroFragment extends Fragment {
     // Values to read from;
     public static final String GOV_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
-    public static final String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq";
     public static final String GPU_FREQ = "/proc/gpu/cur_rate";
     private static final String FILENAME_PROC_MEMINFO = "/proc/meminfo";
 
@@ -158,6 +159,34 @@ public class AeroFragment extends Fragment {
 
     }
 
+
+    // Get all frequencies for all cores;
+    public String getFreqPerCore() {
+        final String SCALE_CUR_FILE = "/sys/devices/system/cpu/";
+        final String SCALE_PATH_NAME = "/cpufreq/scaling_cur_freq";
+        String complete_path, tmp;
+        String freq_string =  "";
+
+        String[] baseDir = shell.getDirInfo(SCALE_CUR_FILE, false);
+
+        for (String b : baseDir) {
+            tmp = b;
+
+            // Using regular expression to find cpu[i] dirs
+            String regex = "\\d+";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(tmp);
+
+            if (matcher.find()) {
+                complete_path = SCALE_CUR_FILE + tmp + SCALE_PATH_NAME;
+                freq_string = freq_string + " " + shell.toMHz(shell.getInfo(complete_path));
+            }
+        }
+        freq_string = freq_string.replace("Unavailable", " Offline ");
+
+        return freq_string;
+    }
+
     public void createList() {
 
         // Default Overview Menu
@@ -167,7 +196,7 @@ public class AeroFragment extends Fragment {
                         new adapterInit(0, getString(R.string.kernel_version), shell.getKernel()),
                         new adapterInit(0, getString(R.string.current_governor), shell.getInfo(GOV_FILE)),
                         new adapterInit(0, getString(R.string.current_io_governor), shell.getInfo(GOV_IO_FILE)),
-                        new adapterInit(0, getString(R.string.current_cpu_speed), shell.toMHz(shell.getInfo(SCALE_CUR_FILE))),
+                        new adapterInit(0, getString(R.string.current_cpu_speed), getFreqPerCore()),
                         new adapterInit(0, getString(R.string.current_gpu_speed), shell.toMHz((shell.getInfo(GPU_FREQ).substring(0, shell.getInfo(GPU_FREQ).length() - 3)))),
                         new adapterInit(0, getString(R.string.available_memory), shell.getMemory(FILENAME_PROC_MEMINFO))
                 };
