@@ -20,8 +20,6 @@ import com.espian.showcaseview.ShowcaseView;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -161,25 +159,15 @@ public class AeroFragment extends Fragment {
 
     // Get all frequencies for all cores;
     public String getFreqPerCore() {
-        final String SCALE_CUR_FILE = "/sys/devices/system/cpu/";
+        final String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu";
         final String SCALE_PATH_NAME = "/cpufreq/scaling_cur_freq";
-        String complete_path, tmp;
+        String complete_path;
         String freq_string =  "";
+        int i = Runtime.getRuntime().availableProcessors();
 
-        String[] baseDir = shell.getDirInfo(SCALE_CUR_FILE, false);
-
-        for (String b : baseDir) {
-            tmp = b;
-
-            // Using regular expression to find cpu[i] dirs
-            String regex = "\\d+";
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(tmp);
-
-            if (matcher.find()) {
-                complete_path = SCALE_CUR_FILE + tmp + SCALE_PATH_NAME;
-                freq_string = freq_string + " " + shell.toMHz(shell.getInfo(complete_path));
-            }
+        for (int k = 0; k < i; k++) {
+            complete_path = SCALE_CUR_FILE + k + SCALE_PATH_NAME;
+            freq_string = freq_string + " " + shell.toMHz(shell.getInfo(complete_path));
         }
         freq_string = freq_string.replace("Unavailable", " Offline ");
 
