@@ -13,9 +13,8 @@ import android.preference.PreferenceManager;
 
 
 /*
- * TODO: - Add UC/OC Support
- *
- *
+ * TODO: - Add OC/UC Support
+ *       - Make generic for governor parameters
  */
 
 public class bootService extends Service
@@ -72,7 +71,7 @@ public class bootService extends Service
 
 
     @Override
-    public void onStart(Intent intent, int startid)
+    public int onStartCommand(Intent intent, int flags, int startId)
     {
         // service started
 
@@ -86,20 +85,19 @@ public class bootService extends Service
     	HashSet<String> cpu_cmd = (HashSet<String>) prefs.getStringSet(PREF_CPU_COMMANDS, null);
 
     	// ADD CPU COMMANDS TO THE ARRAY
-    	if (cpu_max != null)
-    	{
+    	if (cpu_max != null) {
     		al.add("echo " + cpu_max.substring(0, cpu_max.length()-4) + "000" + " > " + CPU_MAX_FREQ);
     	}
-    	if (cpu_min != null)
-    	{
+
+    	if (cpu_min != null) {
     		al.add("echo " + cpu_min.substring(0, cpu_min.length()-4) + "000" + " > " + CPU_MIN_FREQ);
     	}
-    	if (cpu_gov != null)
-    	{
+
+    	if (cpu_gov != null) {
     		al.add("echo " + cpu_gov + " > " + CURRENT_GOV_AVAILABLE);
     	}
-    	if (cpu_cmd != null)
-    	{
+
+    	if (cpu_cmd != null) {
     		for (String cmd : cpu_cmd) { al.add(cmd); }
     	}
 
@@ -109,13 +107,13 @@ public class bootService extends Service
     	Boolean gpu_enb = prefs.getBoolean(PREF_GPU_CONTROL_ACTIVE, false);
 
     	// ADD GPU COMMANDS TO THE ARRAY
-    	if (gpu_max != null)
-    	{
+    	if (gpu_max != null) {
     		al.add("echo " + gpu_max + " > " + GPU_FREQ_MAX);
     	}
+
     	al.add("echo " + (gpu_enb ? "1" : "0") + " > " + GPU_CONTROL_ACTIVE);
-        if (display_color != null)
-        {
+
+        if (display_color != null) {
             al.add("echo " + display_color + " > " + DISPLAY_COLOR);
         }
 
@@ -127,24 +125,26 @@ public class bootService extends Service
         String mem_min = prefs.getString(PREF_MIN_FREE, null);
 
         // ADD MEM COMMANDS TO THE ARRAY
-    	if (mem_ios != null)
-    	{
+    	if (mem_ios != null) {
     		al.add("echo " + mem_ios + " > " + GOV_IO_FILE);
     	}
-    	if (mem_swp != null)
-    	{
+
+    	if (mem_swp != null) {
     		al.add("echo " + mem_swp + " > " + SWAPPNIESS_FILE);
     	}
+
     	al.add("echo " + (mem_dfs ? "1" : "0") + " > " + DYANMIC_FSYNC);
 
     	al.add("echo " + (mem_wrb ? "1" : "0") + " > " + WRITEBACK);
-    	if (mem_min != null)
-    	{
+
+    	if (mem_min != null) {
     		al.add("echo " + mem_min + " > " + MIN_FREE);
     	}
 
     	// EXECUTE ALL THE COMMANDS COLLECTED
         String[] commands = al.toArray(new String[0]);
     	shell.setRootInfo(commands);
+
+        return START_NOT_STICKY;
     }
 }
