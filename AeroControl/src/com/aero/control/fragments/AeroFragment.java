@@ -27,8 +27,6 @@ import java.util.regex.Matcher;
  * Created by Alexander Christ on 16.09.13.
  * Default Overview Fragment
  *
- * TODO: Proper implementation for the UpdateThread
- *       with onResume() and onPause()
  */
 public class AeroFragment extends Fragment {
 
@@ -120,6 +118,7 @@ public class AeroFragment extends Fragment {
 
         try {
             mRefreshThread.start();
+            mRefreshThread.setPriority(Thread.MIN_PRIORITY);
         } catch (Exception e) {
         }
 

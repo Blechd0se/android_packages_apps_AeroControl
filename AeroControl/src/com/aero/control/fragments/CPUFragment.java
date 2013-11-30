@@ -197,6 +197,7 @@ public class CPUFragment extends PreferenceFragment {
                             // Start our background refresher Task;
                             try {
                                 mRefreshThread.start();
+                                mRefreshThread.setPriority(Thread.MIN_PRIORITY);
                             } catch (NullPointerException e) {
                                 Log.e("Aero", "Couldn't start Refresher Thread.", e);
                             }
@@ -237,6 +238,7 @@ public class CPUFragment extends PreferenceFragment {
                                 // Start our background refresher Task;
                                 try {
                                     mRefreshThread.start();
+                                    mRefreshThread.setPriority(Thread.MIN_PRIORITY);
                                 } catch (Exception e) {
                                 }
 
