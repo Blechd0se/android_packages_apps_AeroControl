@@ -16,17 +16,23 @@
             android:summary="@string/pref_memory_zcache_sum"
             android:dialogTitle="@string/pref_memory_zcache" />
 
-        <EditTextPreference
-            android:key="swappiness"
-            android:title="@string/pref_memory_swappiness"
-            android:summary="@string/pref_memory_swappiness_sum"
-            android:dialogTitle="Swappiness" />
-
         <CheckBoxPreference
             android:key="writeback"
             android:title="@string/pref_dynamic_writeback"
             android:summary="@string/pref_dynamic_writeback_sum"
             android:dialogTitle="@string/pref_dynamic_writeback" />
+
+        <CheckBoxPreference
+            android:key="low_mem"
+            android:title="@string/pref_low_mem_option"
+            android:summary="@string/pref_low_mem_option_sum"
+            android:dialogTitle="@string/pref_low_mem_option" />
+
+        <EditTextPreference
+            android:key="swappiness"
+            android:title="@string/pref_memory_swappiness"
+            android:summary="@string/pref_memory_swappiness_sum"
+            android:dialogTitle="Swappiness" />
 
         <Preference
             android:key="fstrim_toggle"

@@ -106,6 +106,9 @@
     <string name="pref_dynamic_writeback">Writeback Control</string>
     <string name="pref_dynamic_writeback_sum">Enable or Disable the writeback control here.</string>
 
+    <string name="pref_low_mem_option">Low Memory Option</string>
+    <string name="pref_low_mem_option_sum">Enable or Disable the low memory option here. This might help on devices with 4.4+ (Kitkat).</string>
+
     <string name="fstrim_header">Trim Option</string>
     <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
 

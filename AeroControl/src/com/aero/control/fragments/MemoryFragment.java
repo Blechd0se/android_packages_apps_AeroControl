@@ -23,8 +23,11 @@ import com.aero.control.R;
 import com.aero.control.helpers.shellHelper;
 import com.espian.showcaseview.ShowcaseView;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -39,6 +42,7 @@ public class MemoryFragment extends PreferenceFragment {
     public static final String CMDLINE_ZACHE = "/system/bootmenu/2nd-boot/cmdline";
     public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
     public static final String MIN_FREE = "/proc/sys/vm/extra_free_kbytes";
+    public static final String LOW_MEM = "/system/build.prop";
 
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
@@ -69,6 +73,7 @@ public class MemoryFragment extends PreferenceFragment {
         final CheckBoxPreference zcache = (CheckBoxPreference)root.findPreference("zcache");
         final CheckBoxPreference writeback_control = (CheckBoxPreference)root.findPreference("writeback");
         final EditTextPreference min_free_ram = (EditTextPreference)root.findPreference("min_free");
+        final CheckBoxPreference low_mem = (CheckBoxPreference)root.findPreference("low_mem");
 
         // Swappiness:
         swappiness.setText(shell.getInfo(SWAPPNIESS_FILE));
@@ -116,6 +121,63 @@ public class MemoryFragment extends PreferenceFragment {
         }
         writeback_control.setChecked(checkDynWriteback);
 
+
+        low_mem.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+
+                String getState = null;
+                String a =  o.toString();
+
+                shell.remountSystem();
+
+
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(LOW_MEM));
+                    try {
+                        StringBuilder sb = new StringBuilder();
+                        String line = br.readLine();
+
+                        while (line != null) {
+                            sb.append(line);
+                            sb.append('\n');
+                            line = br.readLine();
+                        }
+                        getState = sb.toString();
+
+                        if (a.equals("true")) {
+
+                            // If already on, we can bail out;
+                            if (getState.contains("ro.config.low_ram=true"))
+                                return true;
+
+                            getState = getState.replace("ro.config.low_ram=false", "ro.config.low_ram=true");
+
+                        }
+                        else if (a.equals("false")) {
+
+                            // bail out again, because its already how we want it;
+                            if (getState.contains("ro.config.low_ram=false"))
+                                return true;
+
+                            getState = getState.replace("ro.config.low_ram=true", "ro.config.low_ram=false");
+
+                        }
+
+                    } catch (IOException e) {
+
+                    }
+                } catch (FileNotFoundException e) {
+
+                }
+
+                // Set current State to path;
+                shell.setRootInfo(getState, LOW_MEM);
+                Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
+
+                return true;
+            };
+        });
 
         writeback_control.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -346,9 +408,6 @@ public class MemoryFragment extends PreferenceFragment {
                 // Set current State to path;
                 shell.setRootInfo(getState, CMDLINE_ZACHE);
                 Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
-
-                //** store preferences
-                preference.getEditor().commit();
 
                 return true;
             };
