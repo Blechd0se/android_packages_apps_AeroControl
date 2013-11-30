@@ -19,9 +19,10 @@ import android.preference.PreferenceManager;
 
 public class bootService extends Service
 {
-    public static final String CURRENT_GOV_AVAILABLE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
-    public static final String CPU_MAX_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
-    public static final String CPU_MIN_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
+    public static final String CPU_BASE_PATH = "/sys/devices/system/cpu/cpu";
+    public static final String CURRENT_GOV_AVAILABLE = "/cpufreq/scaling_governor";
+    public static final String CPU_MAX_FREQ = "/cpufreq/scaling_max_freq";
+    public static final String CPU_MIN_FREQ = "/cpufreq/scaling_min_freq";
 
 
     public static final String GPU_FREQ_MAX = "/sys/kernel/gpu_control/max_freq";
@@ -52,6 +53,7 @@ public class bootService extends Service
 
 
     private SharedPreferences prefs;
+    public final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
 
     private shellHelper shell = new shellHelper();
@@ -85,17 +87,19 @@ public class bootService extends Service
     	HashSet<String> cpu_cmd = (HashSet<String>) prefs.getStringSet(PREF_CPU_COMMANDS, null);
 
     	// ADD CPU COMMANDS TO THE ARRAY
-    	if (cpu_max != null) {
-    		al.add("echo " + cpu_max.substring(0, cpu_max.length()-4) + "000" + " > " + CPU_MAX_FREQ);
-    	}
+        for (int k = 0; k < mNumCpus; k++) {
+            if (cpu_max != null) {
+                al.add("echo " + cpu_max.substring(0, cpu_max.length()-4) + "000" + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
+            }
 
-    	if (cpu_min != null) {
-    		al.add("echo " + cpu_min.substring(0, cpu_min.length()-4) + "000" + " > " + CPU_MIN_FREQ);
-    	}
+            if (cpu_min != null) {
+                al.add("echo " + cpu_min.substring(0, cpu_min.length()-4) + "000" + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
+            }
 
-    	if (cpu_gov != null) {
-    		al.add("echo " + cpu_gov + " > " + CURRENT_GOV_AVAILABLE);
-    	}
+            if (cpu_gov != null) {
+                al.add("echo " + cpu_gov + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
+            }
+        }
 
     	if (cpu_cmd != null) {
     		for (String cmd : cpu_cmd) { al.add(cmd); }

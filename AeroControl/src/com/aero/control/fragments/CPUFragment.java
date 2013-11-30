@@ -1,5 +1,6 @@
 package com.aero.control.fragments;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -27,14 +28,19 @@ import com.aero.control.helpers.shellHelper;
 
 /**
  * Created by ac on 03.10.13.
+ *
+ * TODO: Simplify those static strings
+ *
  */
 public class CPUFragment extends PreferenceFragment {
 
+
+    public static final String CPU_BASE_PATH = "/sys/devices/system/cpu/cpu";
     public static final String CPU_AVAILABLE_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies";
     public static final String ALL_GOV_AVAILABLE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors";
-    public static final String CURRENT_GOV_AVAILABLE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
-    public static final String CPU_MAX_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
-    public static final String CPU_MIN_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
+    public static final String CURRENT_GOV_AVAILABLE = "/cpufreq/scaling_governor";
+    public static final String CPU_MAX_FREQ = "/cpufreq/scaling_max_freq";
+    public static final String CPU_MIN_FREQ = "/cpufreq/scaling_min_freq";
     public static final String CPU_GOV_SET_BASE = "/sys/devices/system/cpu/cpufreq/";
     public static final String CPU_VSEL = "/proc/overclock/mpu_opps";
     public static final String CPU_MAX_RATE = "/proc/overclock/max_rate";
@@ -45,6 +51,8 @@ public class CPUFragment extends PreferenceFragment {
     public ListPreference min_frequency;
     public ListPreference max_frequency;
     public boolean mVisible = true;
+
+    public final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
     shellHelper shell = new shellHelper();
 
@@ -263,8 +271,8 @@ public class CPUFragment extends PreferenceFragment {
         // Just throw in our frequencies;
         listPref.setEntries(shell.getInfoArray(ALL_GOV_AVAILABLE, 0, 0));
         listPref.setEntryValues(shell.getInfoArray(ALL_GOV_AVAILABLE, 0, 0));
-        listPref.setValue(shell.getInfo(CURRENT_GOV_AVAILABLE));
-        listPref.setSummary(shell.getInfo(CURRENT_GOV_AVAILABLE));
+        listPref.setValue(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
+        listPref.setSummary(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
         listPref.setDialogIcon(R.drawable.cpu_dark);
 
         // If there are already some entries, kill them all (with fire)
@@ -285,24 +293,28 @@ public class CPUFragment extends PreferenceFragment {
                  * value _before_ the value actually was changed.
                  */
                 String a = (String) o;
+                ArrayList<String> array = new ArrayList<String>();
 
-                shell.setRootInfo(o, CURRENT_GOV_AVAILABLE);
+                // Change governor for each available CPU;
+                for (int k = 0; k < mNumCpus; k++) {
+                    array.add("echo " + a + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
+                }
+                String[] commands = array.toArray(new String[0]);
+                shell.setRootInfo(commands);
 
                 String complete_path = CPU_GOV_SET_BASE + a;
 
                 try {
-                    /*
-                     * Probably the kernel takes a while to update the dictionaries
-                     * and therefore we sleep for a short interval;
-                     */
+                        /*
+                         * Probably the kernel takes a while to update the dictionaries
+                         * and therefore we sleep for a short interval;
+                         */
                     try {
                         Thread.sleep(350);
                     } catch (InterruptedException e) {
-                        Log.e("Aero",
-                                "Something interrupted the main Thread, try again.",
-                                e);
+                        Log.e("Aero", "Something interrupted the main Thread, try again.", e);
                     }
-                    listPref.setSummary(shell.getInfo(CURRENT_GOV_AVAILABLE));
+                    listPref.setSummary(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
 
                     String completeParamterList[] = shell.getDirInfo(complete_path, true);
 
@@ -317,24 +329,22 @@ public class CPUFragment extends PreferenceFragment {
                     handler h = new handler();
 
                     for (String b : completeParamterList)
-                        h.generateSettings(completeParamterList, complete_path);
+                    h.generateSettings(completeParamterList, complete_path);
 
                     // Probably the wrong place, should be in getDirInfo ?
                 } catch (NullPointerException e) {
                     Toast.makeText(getActivity(), "Looks like there are no parameter for this governor?", Toast.LENGTH_LONG).show();
-                    Log.e("Aero",
-                            "There isn't any folder i can check. Does this governor has parameters?",
-                            e);
+                    Log.e("Aero", "There isn't any folder i can check. Does this governor has parameters?", e);
 
                     // Should restore old values if something goes wrong;
-                    listPref.setSummary(shell.getInfo(CURRENT_GOV_AVAILABLE));
-                    listPref.setValue(shell.getInfo(CURRENT_GOV_AVAILABLE));
+                    listPref.setSummary(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
+                    listPref.setValue(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
 
                     // To clean up the UI;
                     if (PrefCat != null)
                         root.removePreference(PrefCat);
 
-                    //** store preferences
+                    // store preferences
                     preference.getEditor().commit();
 
                     return true;
@@ -357,19 +367,21 @@ public class CPUFragment extends PreferenceFragment {
                 String a = (String) o;
                 CharSequence oldValue = max_frequency.getSummary();
 
-                shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_MAX_FREQ);
+                for (int k = 0; k < mNumCpus; k++) {
 
-                if (shell.checkPath(shell.getInfo(CPU_MAX_FREQ), a)) {
-                    max_frequency.setSummary(shell.toMHz((a.substring(0, a.length() - 4) + "000")));
-                } else {
-                    Toast.makeText(getActivity(), "Couldn't set max frequency." + " Old value; " +
-                            shell.getInfo(CPU_MAX_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
-                    max_frequency.setSummary(oldValue);
+                    shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_BASE_PATH + k + CPU_MAX_FREQ);
+
+                    if (shell.checkPath(shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ), a)) {
+                        max_frequency.setSummary(shell.toMHz((a.substring(0, a.length() - 4) + "000")));
+                    } else {
+                        Toast.makeText(getActivity(), "Couldn't set max frequency." + " Old value; " +
+                                shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
+                        max_frequency.setSummary(oldValue);
+                    }
+
+                    //** store preferences
+                    preference.getEditor().commit();
                 }
-
-                //** store preferences
-                preference.getEditor().commit();
-
                 return true;
             };
         });
@@ -381,19 +393,21 @@ public class CPUFragment extends PreferenceFragment {
                 String a = (String) o;
                 CharSequence oldValue = min_frequency.getSummary();
 
-                shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_MIN_FREQ);
+                for (int k = 0; k < mNumCpus; k++) {
 
-                if (shell.checkPath(shell.getInfo(CPU_MIN_FREQ), a)) {
-                    min_frequency.setSummary(shell.toMHz((a.substring(0, a.length() - 4) + "000")));
-                } else {
-                    Toast.makeText(getActivity(), "Couldn't set min frequency."  + " Old value; " +
-                            shell.getInfo(CPU_MIN_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
-                    min_frequency.setSummary(oldValue);
+                    shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_BASE_PATH + k + CPU_MIN_FREQ);
+
+                    if (shell.checkPath(shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ), a)) {
+                        min_frequency.setSummary(shell.toMHz((a.substring(0, a.length() - 4) + "000")));
+                    } else {
+                        Toast.makeText(getActivity(), "Couldn't set min frequency."  + " Old value; " +
+                                shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
+                        min_frequency.setSummary(oldValue);
+                    }
+
+                    //** store preferences
+                    preference.getEditor().commit();
                 }
-
-                //** store preferences
-                preference.getEditor().commit();
-
                 return true;
             };
         });
@@ -420,8 +434,8 @@ public class CPUFragment extends PreferenceFragment {
         min_frequency.setEntries(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
         min_frequency.setEntryValues(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
         try {
-            min_frequency.setValue(shell.getInfoArray(CPU_MIN_FREQ, 1, 0)[0]);
-            min_frequency.setSummary(shell.getInfoArray(CPU_MIN_FREQ, 1, 0)[0]);
+            min_frequency.setValue(shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
+            min_frequency.setSummary(shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
             min_frequency.setValue("Unavailable");
             min_frequency.setSummary("Unavailable");
@@ -437,8 +451,8 @@ public class CPUFragment extends PreferenceFragment {
         max_frequency.setEntries(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
         max_frequency.setEntryValues(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
         try {
-            max_frequency.setValue(shell.getInfoArray(CPU_MAX_FREQ, 1, 0)[0]);
-            max_frequency.setSummary(shell.getInfoArray(CPU_MAX_FREQ, 1, 0)[0]);
+            max_frequency.setValue(shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 1, 0)[0]);
+            max_frequency.setSummary(shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 1, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
             max_frequency.setValue("Unavailable");
             max_frequency.setSummary("Unavailable");
