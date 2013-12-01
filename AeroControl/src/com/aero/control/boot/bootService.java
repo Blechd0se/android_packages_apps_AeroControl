@@ -51,7 +51,6 @@ public class bootService extends Service
     public static final String PREF_WRITEBACK = "writeback";
     public static final String PREF_MIN_FREE = "min_free";
 
-
     private SharedPreferences prefs;
     public final int mNumCpus = Runtime.getRuntime().availableProcessors();
 

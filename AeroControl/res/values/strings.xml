@@ -11,6 +11,7 @@
     <string name="default_values">Default Values</string>
     <string name="need_reboot">This may require a reboot.</string>
     <string name="unavailable">Unavailable</string>
+    <string name="got_it">Got it</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -121,6 +122,11 @@
                             Please reboot into recovery and run the following command via adb shell: <br /> <br />
                             <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
     </string>
+
+    <string name="reboot_notifier_header">Oops, this shouldn\'t happen</string>
+    <string name="reboot_notifier">Looks like the kernel crashed. Be sure to check
+                    out \n<b>/proc/last_kmsg </b> \nand send this file to your favorite developer. Seriously, send it! \n
+                    We apologize for any inconvenience!</string>
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">IO Scheduler</string>

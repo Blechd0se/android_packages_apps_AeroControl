@@ -220,7 +220,7 @@ public class MemoryFragment extends PreferenceFragment {
                     aboutText.setTextSize(13);
 
                     builder.setView(layout)
-                            .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                 }
                             })
