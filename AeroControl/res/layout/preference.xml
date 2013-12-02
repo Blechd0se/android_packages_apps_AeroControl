@@ -11,10 +11,10 @@
             android:summary="@string/pref_setatboot_sum" />
 
         <EditTextPreference
-            android:key="edittext_preference"
+            android:key="update_location"
             android:title="@string/pref_updatepath"
             android:summary="@string/pref_updatepath_sum"
-            android:dialogTitle="Lorum ipsorum" />
+            android:dialogTitle="Lorum ipsum" />
 
         <ListPreference
             android:key="app_theme_list"

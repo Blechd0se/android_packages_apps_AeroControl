@@ -1,6 +1,7 @@
 package com.aero.control.prefs;
 
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -28,9 +29,12 @@ public class PrefsFragment extends PreferenceFragment {
                 "red", "light"
         };
 
+        EditTextPreference updateLocation = (EditTextPreference)root.findPreference("update_location");
+        updateLocation.setEnabled(false);
         ListPreference appTheme = (ListPreference)root.findPreference("app_theme_list");
         appTheme.setEntries(data);
         appTheme.setEntryValues(data);
+        appTheme.setEnabled(false);
 
         appTheme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override

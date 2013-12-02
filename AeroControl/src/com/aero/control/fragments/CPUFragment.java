@@ -310,7 +310,7 @@ public class CPUFragment extends PreferenceFragment {
                          * and therefore we sleep for a short interval;
                          */
                     try {
-                        Thread.sleep(350);
+                        Thread.sleep(850);
                     } catch (InterruptedException e) {
                         Log.e("Aero", "Something interrupted the main Thread, try again.", e);
                     }
