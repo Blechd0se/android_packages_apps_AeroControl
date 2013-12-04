@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 
 /*
@@ -20,6 +21,7 @@ import android.preference.PreferenceManager;
 public class bootService extends Service
 {
     public static final String CPU_BASE_PATH = "/sys/devices/system/cpu/cpu";
+    public static final String CPU_GOV_BASE = "/sys/devices/system/cpu/cpufreq/";
     public static final String CURRENT_GOV_AVAILABLE = "/cpufreq/scaling_governor";
     public static final String CPU_MAX_FREQ = "/cpufreq/scaling_max_freq";
     public static final String CPU_MIN_FREQ = "/cpufreq/scaling_min_freq";
@@ -96,7 +98,14 @@ public class bootService extends Service
             }
 
             if (cpu_gov != null) {
-                al.add("echo " + cpu_gov + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
+
+                /*
+                 * Needs to be executed first, otherwise we would get a NullPointer
+                 * For safety reasons we sleep this thread later
+                 */
+
+                String[] a = { "echo " + cpu_gov + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE };
+                shell.setRootInfo(a);
             }
         }
 
@@ -143,6 +152,32 @@ public class bootService extends Service
     	if (mem_min != null) {
     		al.add("echo " + mem_min + " > " + MIN_FREE);
     	}
+
+        try {
+
+            try {
+                Thread.sleep(850);
+            } catch (InterruptedException e) {
+                Log.e("Aero", "Something interrupted the main Thread, try again.", e);
+            }
+
+            final String completeGovernorSettingList[] = shell.getDirInfo(CPU_GOV_BASE + cpu_gov, true);
+
+            /* Governor Specific Settings at boot */
+            int index = 0;
+
+            for (String b : completeGovernorSettingList) {
+
+                final String governorSetting = prefs.getString(CPU_GOV_BASE + cpu_gov + "/" + completeGovernorSettingList[index], null);
+
+                if (governorSetting != null)
+                    al.add("echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + completeGovernorSettingList[index]);
+
+                index++;
+            }
+        } catch (NullPointerException e) {
+            Log.e("Aero", "This shouldn't happen.. Maybe a race condition. " + e);
+        }
 
     	// EXECUTE ALL THE COMMANDS COLLECTED
         String[] commands = al.toArray(new String[0]);

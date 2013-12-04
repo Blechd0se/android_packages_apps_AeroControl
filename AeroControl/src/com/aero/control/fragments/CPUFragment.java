@@ -329,7 +329,7 @@ public class CPUFragment extends PreferenceFragment {
                     handler h = new handler();
 
                     for (String b : completeParamterList)
-                    h.generateSettings(completeParamterList, complete_path);
+                        h.generateSettings(completeParamterList, complete_path);
 
                     // Probably the wrong place, should be in getDirInfo ?
                 } catch (NullPointerException e) {
@@ -544,8 +544,10 @@ public class CPUFragment extends PreferenceFragment {
                         prefload.setSummary(oldValue);
                     }
 
-                    //** store preferences
-                    preference.getEditor().commit();
+                    // Store our custom preferences if available;
+                    SharedPreferences preferences = getPreferenceManager().getSharedPreferences();
+                    preferences.edit().putString(parameterPath, o.toString()).commit();
+
 
                     return true;
                 };
