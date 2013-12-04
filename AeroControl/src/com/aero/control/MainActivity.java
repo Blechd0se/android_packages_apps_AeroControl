@@ -94,9 +94,6 @@ public class MainActivity extends Activity {
         // Set up lists;
         generatingLists content = new generatingLists();
 
-        // A bit hacky, force action overflow;
-        getOverflowMenu();
-
         mAdapter = new ItemAdapter(this, R.layout.activity_main, content.ITEMS);
         mDrawerList.setAdapter(mAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -189,48 +186,6 @@ public class MainActivity extends Activity {
         Fragment fragment = null;
 
         switch (item.getItemId()) {
-            case R.id.about:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                LayoutInflater inflater = this.getLayoutInflater();
-                View layout = inflater.inflate(R.layout.about_screen, null);
-                TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
-
-                builder.setTitle(R.string.about);
-                builder.setIcon(R.drawable.email_dark);
-
-                aboutText.setText(getText(R.string.about_dialog));
-
-                builder.setView(layout)
-                        .setPositiveButton(R.string.github, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                Uri uri = Uri.parse("https://github.com/Blechd0se/android_packages_apps_AeroControl");
-                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(R.string.donation_blechdose, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                Uri uri = Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=46VQEKBETN36U");
-                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                startActivity(intent);
-                            }
-                        })
-                        .setNeutralButton(R.string.donation_quarx, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
-                            Uri uri = Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=quarx%40yandex%2eru&lc=DE&no_note=0&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest");
-                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(intent);
-                             }
-                        });
-
-                builder.show();
-
-                ;
-                break;
             case R.id.aero_settings:
                 Toast.makeText(this, "Update location and App Theme are not implemented yet.", Toast.LENGTH_SHORT).show();
 
@@ -254,19 +209,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void getOverflowMenu() {
-
-        try {
-            ViewConfiguration config = ViewConfiguration.get(this);
-            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
-            if (menuKeyField != null) {
-                menuKeyField.setAccessible(true);
-                menuKeyField.setBoolean(config, false);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private void selectItem(int position) {
 

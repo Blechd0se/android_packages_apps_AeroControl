@@ -83,6 +83,11 @@ public class UpdaterFragment extends PreferenceFragment {
             restore_kernel.setEnabled(false);
         }
 
+        backup_kernel.setIcon(R.drawable.ic_action_copy);
+        updater_kernel.setIcon(R.drawable.ic_action_download);
+        restore_kernel.setIcon(R.drawable.ic_action_time);
+
+
         restore_kernel.setEntries(shell.getDirInfo(sdpath + File.separator + "/com.aero.control/", false));
         restore_kernel.setEntryValues(shell.getDirInfo(sdpath + "/com.aero.control/", false));
         restore_kernel.setDialogIcon(R.drawable.restore_dark);
