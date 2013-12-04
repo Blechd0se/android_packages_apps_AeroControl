@@ -3,6 +3,8 @@ package com.aero.control;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,7 +38,7 @@ import com.aero.control.fragments.MemoryFragment;
 import com.aero.control.fragments.UpdaterFragment;
 import com.aero.control.lists.generatingLists;
 import com.aero.control.lists.generatingLists.PreferenceItem;
-import com.aero.control.prefs.PrefsFragment;
+import com.aero.control.prefs.PrefsActivity;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -69,6 +71,9 @@ public class MainActivity extends Activity {
     private DefyPartsFragment mDefyPartsFragment;
     private MemoryFragment mMemoryFragment;
     private UpdaterFragment mUpdaterFragement;
+
+    private int mBackCounter = 0;
+    private long mLastPressed = 0;
 
     final Handler mHandler = new Handler(Looper.getMainLooper());
 
@@ -228,9 +233,14 @@ public class MainActivity extends Activity {
                 break;
             case R.id.aero_settings:
                 Toast.makeText(this, "Update location and App Theme are not implemented yet.", Toast.LENGTH_SHORT).show();
-                getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
-                        android.R.animator.fade_out).replace(R.id.content_frame,
-                        new PrefsFragment()).commit();
+
+
+                Intent trIntent = new Intent("android.intent.action.PREFS");
+                trIntent.setClass(getBaseContext(), PrefsActivity.class);
+                trIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getBaseContext().startActivity(trIntent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -349,15 +359,32 @@ public class MainActivity extends Activity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public void onBackPressed() {
+
+        mBackCounter++;
+
+        Toast.makeText(this, R.string.back_for_close, Toast.LENGTH_SHORT).show();
+
+        if (getFragmentManager().getBackStackEntryCount() == 1)
+            return;
+
+        if (mBackCounter == 2)
+            finish();
+    }
+
     public void switchContent(final Fragment fragment) {
 
         // Reduce the navigation drawer delay for a smoother UI;
         mHandler.postDelayed(new Runnable()  {
             @Override
             public void run() {
-                getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
-                        android.R.animator.fade_out).replace(R.id.content_frame, fragment).addToBackStack(null).commit();
 
+                getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
+                        android.R.animator.fade_out).replace(R.id.content_frame, fragment).commit();
+
+                // Reset our BackCounter
+                mBackCounter = 0;
             }
         },250);
     }

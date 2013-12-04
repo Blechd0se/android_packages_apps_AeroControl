@@ -12,6 +12,7 @@
     <string name="need_reboot">This may require a reboot.</string>
     <string name="unavailable">Unavailable</string>
     <string name="got_it">Got it</string>
+    <string name="back_for_close">Press Back again to close the App.</string>
 
     <!-- Default Navigation Drawer entries -->
 

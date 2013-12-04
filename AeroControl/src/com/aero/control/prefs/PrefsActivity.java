@@ -4,15 +4,18 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 
 import com.aero.control.R;
 
 /**
- * Created by root on 21.09.13.
+ * Created by Alexander Christ on 21.09.13.
  */
-public class PrefsFragment extends PreferenceFragment {
+public class PrefsActivity extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,9 @@ public class PrefsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.layout.preference);
 
         // Get name;
-        getActivity().setTitle(R.string.aero_settings);
+        this.setTitle(R.string.aero_settings);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         final PreferenceScreen root = this.getPreferenceScreen();
         String[] data = {
@@ -44,18 +49,28 @@ public class PrefsFragment extends PreferenceFragment {
 
                 // Somehow set the style here....;
                 if (a.equals("red")) {
-                    getActivity().setTheme(R.style.RedHolo);
+                    //this.setTheme(R.style.RedHolo);
                     root.setLayoutResource(R.style.RedHolo);
                 }
                 else if (a.equals("light")) {
-                    getActivity().setTheme(android.R.style.Theme_Holo_Light);
+                    //getActivity().setTheme(android.R.style.Theme_Holo_Light);
                     root.setLayoutResource(android.R.style.Theme_Holo_Light);
                 }
 
                 return true;
             };
         });
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }
