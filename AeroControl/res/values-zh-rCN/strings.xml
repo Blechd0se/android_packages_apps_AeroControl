@@ -121,9 +121,9 @@
                         <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
     </string>
 
-    <string name="reboot_notifier_header">哎呀，不该这样的</string>
-    <string name="reboot_notifier">内核似乎崩溃了。请务必查看\n<b>/proc/last_kmsg </b> \n并将其发送给您钟爱的开发者，说真的，发吧！\n
-                    很抱歉为您带来不便。</string>
+    <string name="reboot_notifier_header">哎呀，不应该出现这种情况的</string>
+    <string name="reboot_notifier">内核似乎崩溃了。请务必查看\n<b>/proc/last_kmsg </b> \n并将其发送给你钟爱的开发者，说真的，发吧！\n
+                    很抱歉为你带来不便。</string>
                     
     <!-- IO Scheduler -->
     <string name="io_scheduler">I/O 调度器</string>
