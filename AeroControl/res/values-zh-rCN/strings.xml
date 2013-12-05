@@ -11,6 +11,7 @@
     <string name="default_values">默认值</string>
     <string name="need_reboot">需要重新启动</string>
     <string name="unavailable">不可用</string>
+    <string name="got_it">知道了！</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -102,6 +103,11 @@
     
     <string name="pref_dynamic_writeback">Writeback 控制</string>
     <string name="pref_dynamic_writeback_sum">启用或者禁用 writeback 控制</string>
+    
+    <string name="pref_low_mem_option">低内存选项</string>
+    <string name="pref_low_mem_option_sum">启用或禁用低内存选项，或许会对 4.4+ (Kitkat) 的设备有所帮助</string>
+
+
 
     <string name="fstrim_header">Trim 选项</string>
     <string name="fstrim_content">对系统的一些部分进行 Trim！需要一定的时间</string>
@@ -115,6 +121,10 @@
                         <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
     </string>
 
+    <string name="reboot_notifier_header">哎呀，不应该出现这种情况的</string>
+    <string name="reboot_notifier">内核似乎崩溃了。请务必查看\n<b>/proc/last_kmsg </b> \n并将其发送给你钟爱的开发者，说真的，发吧！\n
+                    很抱歉为你带来不便。</string>
+                    
     <!-- IO Scheduler -->
     <string name="io_scheduler">I/O 调度器</string>
 
