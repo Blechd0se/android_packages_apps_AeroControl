@@ -137,14 +137,14 @@
     <!-- Updater Fragment -->
     <string name="pref_updater">Kernel Updater and Backup</string>
     <string name="pref_backup_kernel">Backup your Kernel</string>
-    <string name="pref_backup_kernel_content">This will save a copy of your current kernel.</string>
+    <string name="pref_backup_kernel_sum">This will save a copy of your current kernel.</string>
 
     <string name="pref_updater_kernel">Update Kernel</string>
-    <string name="pref_updater_kernel_content">This will update your kernel.</string>
+    <string name="pref_updater_kernel_sum">This will update your kernel.</string>
 
     <string name="pref_restore">Restore Backup</string>
     <string name="pref_restore_kernel">Restore</string>
-    <string name="pref_restore_kernel_content">Restore from a kernel backup.</string>
+    <string name="pref_restore_kernel_sum">Restore from a kernel backup.</string>
 
     <string name="last_backup_from">Last Backup from </string>
     <string name="backup_from">Backup from </string>
@@ -162,5 +162,17 @@
     <string name="showcase_memory_fragment_trim_sum">In order to maintain the device performance, you can trim
                                                     several parts of your Operating System. This can take a while,
                                                     especially when you stored lots of data.</string>
+
+    <!-- Defy Parts -->
+    <string name="pref_general_settings_defy">General Settings</string>
+    <string name="pref_charging_led">Charging LED Color</string>
+    <string name="pref_charging_led_sum">Color of your LED while charging</string>
+
+    <string name="pref_button_brightness">Button Brightness</string>
+    <string name="pref_button_brightness_sum">Change the button brightness here.</string>
+
+    <string name="pref_multitouch">Multitouch-Points</string>
+    <string name="pref_multitouch_sum">Number of multitouch points.</string>
+
 
 </resources>

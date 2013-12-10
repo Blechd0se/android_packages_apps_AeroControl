@@ -2,22 +2,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <PreferenceCategory android:title="@string/pref_gpu_control_enable">
-
-        <CheckBoxPreference
-            android:key="gpu_control_enable"
-            android:title="@string/pref_gpu_control_enable"
-            android:summary="@string/pref_gpu_control_enable_sum" />
+    <PreferenceCategory android:title="@string/pref_general_settings_defy">
 
         <ListPreference
-            android:key="gpu_max_freq"
-            android:title="@string/pref_gpu_max_freq"
-            android:summary="@string/pref_gpu_max_freq_sum" />
+            android:key="led_charging"
+            android:title="@string/pref_charging_led"
+            android:summary="@string/pref_charging_led_sum"/>
+
+        <EditTextPreference
+            android:key="button_brightness"
+            android:title="@string/pref_button_brightness"
+            android:summary="@string/pref_button_brightness_sum"
+            android:inputType="number"/>
 
         <ListPreference
-            android:key="display_control"
-            android:title="@string/pref_display_color"
-            android:summary="@string/pref_display_color_sum" />
+            android:key="multi_touch"
+            android:title="@string/pref_multitouch"
+            android:summary="@string/pref_multitouch_sum" />
     </PreferenceCategory>
 
 </PreferenceScreen>

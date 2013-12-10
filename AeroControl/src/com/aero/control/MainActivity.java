@@ -240,12 +240,10 @@ public class MainActivity extends Activity {
                 fragment = mMemoryFragment;
                 break;
             case DEFYPARTS:
-
-                /*
                 if (mDefyPartsFragment == null) {
                     mDefyPartsFragment = new DefyPartsFragment();
                 }
-                fragment = mDefyPartsFragment; */
+                fragment = mDefyPartsFragment;
                 break;
             case UPDATER:
 
