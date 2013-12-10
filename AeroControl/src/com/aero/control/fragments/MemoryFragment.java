@@ -348,7 +348,7 @@ public class MemoryFragment extends PreferenceFragment {
 
 
                 shell.setRootInfo(a, MIN_FREE);
-                swappiness.setText(shell.getInfo(MIN_FREE));
+                min_free_ram.setText(shell.getInfo(MIN_FREE));
 
                 //** store preferences
                 preference.getEditor().commit();

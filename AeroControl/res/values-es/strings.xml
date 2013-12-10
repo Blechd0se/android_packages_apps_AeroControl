@@ -21,16 +21,6 @@
     <string name="slider_updater">Actualizador</string>
     <string name="slider_profile">Profiles</string>
 
-    <string-array name="aero_array">
-        <item>@string/slider_overview</item>
-        <item>@string/slider_cpu_settings</item>
-        <item>@string/slider_gpu_settings</item>
-        <item>@string/slider_memory_settings</item>
-        <item>@string/slider_defy_parts</item>
-        <item>@string/slider_updater</item>
-        <item>@string/slider_profile</item>
-    </string-array>
-
     <!-- Overview Elements -->
 
     <string name="kernel_version">Núcleo:</string>
@@ -39,14 +29,6 @@
     <string name="current_governor">Patrones de CPU:</string>
     <string name="current_io_governor">Planificador de E/S:</string>
     <string name="available_memory">Memoria Total:</string>
-
-    <string-array name="overview_array">
-        <item>@string/kernel_version</item>
-        <item>@string/current_cpu_speed</item>
-        <item>@string/current_gpu_speed</item>
-        <item>@string/current_governor</item>
-        <item>@string/available_memory</item>
-    </string-array>
 
     <!-- Action Overflow Menu -->
 
@@ -116,24 +98,6 @@
                                             así como planificación básica de la GPU.</string>
     <string name="pref_gpu_max_freq">Frecuencia Max.</string>
     <string name="pref_gpu_max_freq_sum">Modifica la Frequencia máxima de la GPU. El valor por defecto es 200 MHz.</string>
-
-    <!-- static GPU Frequencies for now -->
-
-    <string-array name="gpu_frequency_list">
-        <item>100 MHz</item>
-        <item>133 MHz</item>
-        <item>160 MHz</item>
-        <item>200 MHz</item>
-        <item>266 MHz</item>
-    </string-array>
-
-    <string-array name="gpu_frequency_list_values">
-        <item>100000000</item>
-        <item>133333333</item>
-        <item>160000000</item>
-        <item>200000000</item>
-        <item>266666666</item>
-    </string-array>
 
     <!-- Updater Fragment -->
     <string name="pref_updater">Actualización y respaldo del núcleo</string>

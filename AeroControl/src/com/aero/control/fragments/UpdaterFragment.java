@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.aero.control.R;
 import com.aero.control.helpers.shellHelper;
-import com.aero.control.helpers.updateHelpers;
+import com.aero.control.helpers.updateHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class UpdaterFragment extends PreferenceFragment {
     public static File BACKUP_PATH = new File(sdpath + "/com.aero.control/" + timeStamp + "/zImage");
     public static File IMAGE = new File (zImage);
 
-    updateHelpers update = new updateHelpers();
+    updateHelper update = new updateHelper();
     shellHelper shell = new shellHelper();
 
     public static Fragment newInstance(Context context) {
