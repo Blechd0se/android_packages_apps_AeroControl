@@ -23,6 +23,7 @@ public class generatingLists {
         addItem(new PreferenceItem(R.string.slider_memory_settings, R.drawable.memory));
         addItem(new PreferenceItem(R.string.slider_defy_parts, R.drawable.gear));
         addItem(new PreferenceItem(R.string.slider_updater, R.drawable.update));
+        addItem(new PreferenceItem(R.string.slider_profile, R.drawable.profile));
     }
 
     public static class PreferenceItem {

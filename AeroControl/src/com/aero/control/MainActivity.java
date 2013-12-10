@@ -1,15 +1,10 @@
 package com.aero.control;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,12 +29,12 @@ import com.aero.control.fragments.CPUFragment;
 import com.aero.control.fragments.DefyPartsFragment;
 import com.aero.control.fragments.GPUFragment;
 import com.aero.control.fragments.MemoryFragment;
+import com.aero.control.fragments.ProfileFragment;
 import com.aero.control.fragments.UpdaterFragment;
 import com.aero.control.lists.generatingLists;
 import com.aero.control.lists.generatingLists.PreferenceItem;
 import com.aero.control.prefs.PrefsActivity;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
@@ -63,6 +57,7 @@ public class MainActivity extends Activity {
     private static final int MEMORY = 3;
     private static final int DEFYPARTS = 4;
     private static final int UPDATER = 5;
+    private static final int PROFILE = 6;
 
     // Fragments;
     private AeroFragment mAeroFragment;
@@ -71,9 +66,9 @@ public class MainActivity extends Activity {
     private DefyPartsFragment mDefyPartsFragment;
     private MemoryFragment mMemoryFragment;
     private UpdaterFragment mUpdaterFragement;
+    private ProfileFragment mProfileFragment;
 
     private int mBackCounter = 0;
-    private long mLastPressed = 0;
 
     final Handler mHandler = new Handler(Looper.getMainLooper());
 
@@ -216,7 +211,6 @@ public class MainActivity extends Activity {
 
         // update the main content by replacing fragments
         Fragment fragment = null;
-        String current_fragment = null;
 
 
         // Switch to show different fragments;
@@ -226,36 +220,32 @@ public class MainActivity extends Activity {
                     mAeroFragment = new AeroFragment();
                 }
                 fragment = mAeroFragment;
-                current_fragment = "AeroFragment";
                 break;
             case CPU:
                 if (mCPUFragement == null) {
                     mCPUFragement = new CPUFragment();
                 }
                 fragment = mCPUFragement;
-                current_fragment = "CPUFragment";
                 break;
             case GPU:
                 if (mGPUFragement == null) {
                     mGPUFragement = new GPUFragment();
                 }
                 fragment = mGPUFragement;
-                current_fragment = "GPUFragment";
                 break;
             case MEMORY:
                 if (mMemoryFragment == null) {
                     mMemoryFragment = new MemoryFragment();
                 }
                 fragment = mMemoryFragment;
-                current_fragment = "MemoryFragment";
                 break;
             case DEFYPARTS:
+
                 /*
                 if (mDefyPartsFragment == null) {
                     mDefyPartsFragment = new DefyPartsFragment();
                 }
                 fragment = mDefyPartsFragment; */
-                Toast.makeText(this, "Defy Parts are not implemented yet. ", Toast.LENGTH_SHORT).show();
                 break;
             case UPDATER:
 
@@ -263,6 +253,13 @@ public class MainActivity extends Activity {
                     mUpdaterFragement = new UpdaterFragment();
                 }
                 fragment = mUpdaterFragement;
+                break;
+            case PROFILE:
+
+                if (mProfileFragment == null) {
+                    mProfileFragment = new ProfileFragment();
+                }
+                fragment = mProfileFragment;
                 break;
         }
 

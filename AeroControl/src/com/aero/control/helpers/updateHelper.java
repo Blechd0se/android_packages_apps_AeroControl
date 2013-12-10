@@ -17,7 +17,7 @@ import java.util.Calendar;
  * Created by Alexander Christ on 26.10.13.
  * Helper-Class for the Updater Fragment
  */
-public class updateHelpers {
+public class updateHelper {
 
     public static String timeStamp = new SimpleDateFormat("ddMMyyyy").format(Calendar.getInstance().getTime());
 

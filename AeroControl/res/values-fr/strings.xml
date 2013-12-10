@@ -20,6 +20,7 @@
 	<string name="slider_memory_settings">Paramètres de la mémoire</string>
 	<string name="slider_defy_parts">Defy Parts</string>
 	<string name="slider_updater">Updater</string>
+    <string name="slider_profile">Profiles</string>
 
 	<string-array name="aero_array">
 		<item>@string/slider_overview</item>
@@ -28,6 +29,7 @@
 		<item>@string/slider_memory_settings</item>
 		<item>@string/slider_defy_parts</item>
 		<item>@string/slider_updater</item>
+        <item>@string/slider_profile</item>
 	</string-array>
 
 	<!-- Overview Elements -->
