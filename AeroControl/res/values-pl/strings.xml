@@ -11,6 +11,13 @@
     <string name="default_values">Wartości domyślne</string>
     <string name="need_reboot">Może wymagać ponownego uruchomienia.</string>
     <string name="unavailable">Niedostępne</string>
+    <string name="got_it">Rozumiem</string>
+    <string name="back_for_close">Naciśnij wstecz jeszcze raz aby zamknąć program.</string>
+    <string name="define_a_name">Wybierz nazwę dla tego profilu.</string>
+    <string name="add_a_name">Nazwa profilu</string>
+    <string name="add">Dodaj</string>
+    <string name="nothing_added_yet">Ups! Nie dodałeś jeszcze żadnego profilu.</string>
+
 
     <!-- Default Navigation Drawer entries -->
 
@@ -20,7 +27,8 @@
     <string name="slider_memory_settings">Tuning pamięci</string>
     <string name="slider_defy_parts">Ustawienia urządzenia</string>
     <string name="slider_updater">Aktualizacja</string>
-
+	<string name="slider_profile">Profile</string>
+	
     <!-- Overview Elements -->
 
     <string name="kernel_version">Kernel:</string>
@@ -51,7 +59,6 @@
                         Jest ona otwartoźródłowa, więc możesz pobrać jej kod źródłowy i zmodyfikować ją według własnego pomysłu.
                         Jeśli chcesz, możesz wesprzeć Quarxa za jego świetny rom lub mnie.
                         <b>The joy of living is in the giving.</b>
-			<b>tłum. Przyjemność z życia jest w obdarowywaniu.</b>
     </string>
 
     <!-- CPU Fragment -->
@@ -87,8 +94,28 @@
     <string name="pref_memory_zcache_compression">Kompresja zCache</string>
     <string name="pref_memory_zcache_compression_sum">Wybierz metodę kompresji dla zCache.</string>
 
+	<string name="pref_dynamic_writeback">Kontrola pamięci podręcznej z buforowaniem zapisu (write-back)</string>
+    <string name="pref_dynamic_writeback_sum">Uaktywnij lub wyłącz pamięć cache z buforowaniem zapisu tutaj.</string>
+    
+    <string name="pref_low_mem_option">Opcja "Mała ilość pamięci RAM"</string>
+    <string name="pref_low_mem_option_sum">Włącz lub wyłącz tą opcję tutaj. Może ona być pomocna dla urządzeń małą ilością pamięci ram i androidem 4.4+ (KitKat).</string>
+    
     <string name="fstrim_header">Opcje Trim</string>
     <string name="fstrim_content">Użyj Trim na kilku partycjach na twoim systemie! To może chwilę potrwać.</string>
+
+    <string name="pref_min_free_ram">Ilość pamięci RAM</string>
+    <string name="pref_min_free_ram_sum">Ustaw prawdziwą wolną ilość pamięci ram tutaj.</string>
+
+    <string name="has_journal_dialog_header">Wykryto problem</string>
+
+    <string name="has_journal_dialog">Wygląda na to, że partycja /data na twoim urządzeniu nie ma uaktywnionej opcji <b>has_journal</b>.
+                            Proszę uruchomić ponownie urządzenie w trybie recovery i uruchomić następujące polecenie przez adb shell: <br /> <br />
+                            <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+    </string>
+
+    <string name="reboot_notifier_header">Ups, to nie powinno się zdarzyć</string>
+    <string name="reboot_notifier">Wygląda na to, że kernel uległ awarii. Sprawdź\n<b>/proc/last_kmsg </b> \n i wyślij ten plik do twojego 						ulubionego developera. Poważnie, wyślij go! \n
+                    Przepraszamy za jakiekolwiek niedogodności!</string>
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">Zarządca wejścia/wyjścia</string>
@@ -98,6 +125,13 @@
     <string name="pref_gpu_control_enable_sum">Ta opcja uaktywnia sterownik kontroli GPU. Obsługuje on przetaktowywanie/kontrolę napięcia oraz podstawowe funkcje zarządzania GPU.</string>
     <string name="pref_gpu_max_freq">Max. częstotliwość</string>
     <string name="pref_gpu_max_freq_sum">Zmienia maksymalną częstotliwość. Wartość domyślna to 200 MHz.</string>
+    
+    <string name="pref_display_color">Kolory wyświetlacza</string>
+    <string name="pref_display_color_sum">Dostosuj kolory wyświetlacza tutaj.</string>
+    <string name="defy_red_colors">Czerwony kolor Defy</string>
+    <string name="defy_green_colors">Zielony kolor Defy</string>
+    <string name="defy_energy_saver">Tryb oszczędności baterii</string>
+
 
     <!-- Updater Fragment -->
     <string name="pref_updater">Aktualizacja kernela i kopia zapasowa</string>
@@ -120,12 +154,24 @@
     <string name="showcase_aero_fragment">Witaj w Aero Control!</string>
     <string name="showcase_aero_fragment_sum">Przesuń palcem od lewej do prawej aby wyświetlić szufladę nawigacji.
                                                 Strona, którą właśnie przeglądasz to panel ogólnego przeglądu. 
-                                                Znajduje się w niej małe podsumowanie niektórych ustawień kernela. Są one aktualizowane w czasie rzeczywistym
+                                                Znajduje się w niej małe podsumowanie niektórych ustawień kernela. Są one aktualizowane w 													czasie rzeczywistym
                                                 więc nie musisz niczego odświeżać!</string>
 
     <string name="showcase_memory_fragment_trim">Opcje Trim</string>
     <string name="showcase_memory_fragment_trim_sum">Aby utrzymać wydajność urządzenia, możesz wykonać polecenie trim na
                                                     kilku częściach twojego systemu operacyjnego. Może to chwilę potrwać,
                                                     zwłaszcza jeśli przechowujesz dużą ilość danych.</string>
+                                                    
+    <!-- Defy Parts -->
+    <string name="pref_general_settings_defy">Ustawienia ogólne</string>
+    <string name="pref_charging_led">Kolor diody ładowania</string>
+    <string name="pref_charging_led_sum">Kolor twojej diody podczas ładowania</string>
+
+    <string name="pref_button_brightness">Jasność przycisków</string>
+    <string name="pref_button_brightness_sum">Zmień jasność podświetlenia przycisków tutaj.</string>
+
+    <string name="pref_multitouch">Multidotyk</string>
+    <string name="pref_multitouch_sum">Ilość punktów dotyku na twoim wyświetlaczu.</string>
+
 
 </resources>
