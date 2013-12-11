@@ -52,7 +52,7 @@ public class MemoryFragment extends PreferenceFragment {
     public boolean checkDynFsync;
     public boolean checkDynWriteback;
 
-    public Handler progressHandler;
+    public Handler progressHandler = new Handler();
 
     shellHelper shell = new shellHelper();
 
@@ -262,7 +262,6 @@ public class MemoryFragment extends PreferenceFragment {
 
                         final String b = (String)system[item];
 
-
                         update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                         update.setCancelable(true);
                         update.setMax(100);
@@ -270,13 +269,12 @@ public class MemoryFragment extends PreferenceFragment {
                         update.show();
                         shell.remountSystem();
 
-
                         Runnable runnable = new Runnable() {
                             @Override
                             public void run() {
                                 try {
 
-                                    while (update.getProgress()<= 100) {
+                                    while (update.getProgress()< 100) {
 
                                         // Set up the root-command;
                                         shell.getRootInfo("fstrim -v", b);
@@ -289,7 +287,7 @@ public class MemoryFragment extends PreferenceFragment {
                                     }
 
                                 } catch (Exception e) {
-                                    Log.e("Aero", "Either an error occurred or trimming was successful.", e);
+                                    Log.e("Aero", "An error occurred while trimming.", e);
                                 }
                             }
                         };
