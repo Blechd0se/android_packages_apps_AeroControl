@@ -8,12 +8,15 @@
     android:gravity="center">
 
 
-    <TextView android:id="@android:id/text1"
-        style="?android:textAppearanceMedium"
+    <TextView android:id="@+id/profile_text"
+        style="?android:textAppearanceLarge"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:paddingLeft="?android:listPreferredItemPaddingLeft" />
+        android:paddingLeft="?android:listPreferredItemPaddingLeft"
+        android:focusable="true"
+        android:onClick="onClick"
+        android:clickable="true"/>
 
     <ImageButton android:id="@+id/delete_button"
         android:layout_width="48dp"

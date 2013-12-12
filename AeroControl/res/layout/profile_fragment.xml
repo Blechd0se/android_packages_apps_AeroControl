@@ -4,11 +4,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container"
-            android:showDividers="middle"
-            android:divider="?android:dividerHorizontal"
-            android:animateLayoutChanges="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+    android:showDividers="middle"
+    android:divider="?android:dividerHorizontal"
+    android:animateLayoutChanges="true"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
 
     <TextView android:id="@android:id/empty"

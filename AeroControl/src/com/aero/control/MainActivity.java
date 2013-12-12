@@ -119,7 +119,7 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            selectItem(6);
         } else {
             selectItem(savedInstanceState.getInt(SELECTED_ITEM));
         }
