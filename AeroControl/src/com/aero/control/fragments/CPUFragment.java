@@ -218,19 +218,20 @@ public class CPUFragment extends PreferenceFragment {
                         public void onClick(DialogInterface dialog, int id) {
                             try {
 
-                                String[] commands = new String[]
-                                        {
-                                                "echo " + "4" + " 1000000000" + " 62" + " > " + CPU_VSEL,
-                                                "echo " + "3" + " 800000000" + " 58" + " > " + CPU_VSEL,
-                                                "echo " + "2" + " 600000000" + " 48" + " > " + CPU_VSEL,
-                                                "echo " + "1" + " 300000000" + " 33" + " > " + CPU_VSEL,
-                                                "echo " + "0" + " 1000000" + " > " + CPU_FREQ_TABLE,
-                                                "echo " + "1" + " 800000" + " > " + CPU_FREQ_TABLE,
-                                                "echo " + "2" + " 600000" + " > " + CPU_FREQ_TABLE,
-                                                "echo " + "3" + " 300000" + " > " + CPU_FREQ_TABLE,
-                                                "echo " + "1000000" + " > " + CPU_MAX_RATE,
-                                                "echo " + "300000" + " > " + CPU_MIN_FREQ
-                                        };
+                                // Set our max vsel after we changed the max freq
+                                cpu_list.add("echo " + "62" + " > " + CPU_VSEL_MAX);
+                                cpu_list.add("echo " + "4" + " 1000000000" + " 62" + " > " + CPU_VSEL);
+                                cpu_list.add("echo " + "3" + " 800000000" + " 58" + " > " + CPU_VSEL);
+                                cpu_list.add("echo " + "2" + " 600000000" + " 48" + " > " + CPU_VSEL);
+                                cpu_list.add("echo " + "1" + " 300000000" + " 33" + " > " + CPU_VSEL);
+                                cpu_list.add("echo " + "0" + " 1000000" + " > " + CPU_FREQ_TABLE);
+                                cpu_list.add("echo " + "1" + " 800000" + " > " + CPU_FREQ_TABLE);
+                                cpu_list.add("echo " + "2" + " 600000" + " > " + CPU_FREQ_TABLE);
+                                cpu_list.add("echo " + "3" + " 300000" + " > " + CPU_FREQ_TABLE);
+                                cpu_list.add("echo " + "1000000" + " > " + CPU_MAX_RATE);
+                                cpu_list.add("echo " + "300000" + " > " + CPU_MIN_FREQ);
+
+                                String[] commands = cpu_list.toArray(new String[0]);
                                 shell.setRootInfo(commands);
 
                                 //** store preferences
