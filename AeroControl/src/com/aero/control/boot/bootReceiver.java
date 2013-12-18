@@ -6,14 +6,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.aero.control.helpers.shellHelper;
+import java.io.File;
 
 
 public class bootReceiver extends BroadcastReceiver 
 {
     public static final String LAST_KMSG = "/proc/last_kmsg";
     private SharedPreferences prefs;
-    private shellHelper shell = new shellHelper();
 
 
     public void onReceive(Context context, Intent intent) 
@@ -25,8 +24,10 @@ public class bootReceiver extends BroadcastReceiver
         	context.startService(i);
         }
 
+        File last_kmsg = new File (LAST_KMSG);
+
         // Kernel panic receiver:
-        if (!shell.getRootInfo("cat", LAST_KMSG).equals("Unavailable")) {
+        if (last_kmsg.exists()) {
             Intent trIntent = new Intent("android.intent.action.BOOT");
             trIntent.setClass(context, com.aero.control.boot.RebootActivity.class);
             trIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

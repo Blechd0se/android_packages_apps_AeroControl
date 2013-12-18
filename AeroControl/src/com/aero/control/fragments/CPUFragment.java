@@ -43,6 +43,7 @@ public class CPUFragment extends PreferenceFragment {
     public static final String CPU_MIN_FREQ = "/cpufreq/scaling_min_freq";
     public static final String CPU_GOV_SET_BASE = "/sys/devices/system/cpu/cpufreq/";
     public static final String CPU_VSEL = "/proc/overclock/mpu_opps";
+    public static final String CPU_VSEL_MAX = "/proc/overclock/max_vsel";
     public static final String CPU_MAX_RATE = "/proc/overclock/max_rate";
     public static final String CPU_FREQ_TABLE = "/proc/overclock/freq_table";
 
@@ -92,6 +93,9 @@ public class CPUFragment extends PreferenceFragment {
                 View layout = inflater.inflate(R.layout.cpu_oc_uc, null);
                 builder.setIcon(R.drawable.lightbulb_dark);
 
+
+                // Our cpu values list;
+                final ArrayList<String> cpu_list = new ArrayList<String>();
                 final String overclockOutput = shell.getRootInfo("cat", CPU_VSEL);
 
                 // Set up our EditText fields;
@@ -124,8 +128,6 @@ public class CPUFragment extends PreferenceFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
 
-                            Toast.makeText(getActivity(), "Saving values, this might take a while..", Toast.LENGTH_LONG).show();
-
                             // Objects;
                             final Object f = (value1.getText().toString().substring(0, value1.getText().toString().length() - 4) + "000");
                             final Object g = (value3.getText().toString().substring(0, value3.getText().toString().length() - 4) + "000");
@@ -148,47 +150,44 @@ public class CPUFragment extends PreferenceFragment {
                                 @Override
                                 public void run() {
                                     // Check if there are valid values;
-                                    if ( a <= 1500000 && a > b && b > c && c > d
+                                    if (a <= 1500000 && a > b && b > c && c > d
                                             && vsel1 < 80 && vsel1 > vsel2 && vsel2 > vsel3 && vsel3 > vsel4 && vsel4 >= 15) {
 
-                                        if (a > 300000 && b > 300000 && c > 300000 && d >= 300000){
+                                        if (a > 300000 && b > 300000 && c > 300000 && d >= 300000) {
                                             try {
 
+                                                // Set our max vsel after we changed the max freq
+                                                cpu_list.add("echo " + vsel1 + " > " + CPU_VSEL_MAX);
+                                                cpu_list.add("echo " + "4" + " " + a + "000" + " " + vsel1 + " > " + CPU_VSEL);
+                                                cpu_list.add("echo " + "3" + " " + b + "000" + " " + vsel2 + " > " + CPU_VSEL);
+                                                cpu_list.add("echo " + "2" + " " + c + "000" + " " + vsel3 + " > " + CPU_VSEL);
+                                                cpu_list.add("echo " + "1" + " " + d + "000" + " " + vsel4 + " > " + CPU_VSEL);
+                                                cpu_list.add("echo " + "0" + " " + a + " > " + CPU_FREQ_TABLE);
+                                                cpu_list.add("echo " + "1" + " " + b + " > " + CPU_FREQ_TABLE);
+                                                cpu_list.add("echo " + "2" + " " + c + " > " + CPU_FREQ_TABLE);
+                                                cpu_list.add("echo " + "3" + " " + d + " > " + CPU_FREQ_TABLE);
+                                                cpu_list.add("echo " + f + " > " + CPU_MAX_RATE);
+                                                cpu_list.add("echo " + i + " > " + CPU_BASE_PATH + 0 + CPU_MIN_FREQ);
 
-                                                // Save our values in one big string array;
-                                                String[] commands = new String[]
-                                                        {
-                                                              "echo " + "4" + " " +  a + "000" + " " + vsel1 + " > " + CPU_VSEL,
-                                                              "echo " + "3" + " " +  b + "000" + " " + vsel2 + " > " + CPU_VSEL,
-                                                              "echo " + "2" + " " +  c + "000" + " " + vsel3 + " > " + CPU_VSEL,
-                                                              "echo " + "1" + " " +  d + "000" + " " + vsel4 + " > " + CPU_VSEL,
-                                                              "echo " + "0" + " " +  a + " > " + CPU_FREQ_TABLE,
-                                                              "echo " + "1" + " " +  b + " > " + CPU_FREQ_TABLE,
-                                                              "echo " + "2" + " " +  c + " > " + CPU_FREQ_TABLE,
-                                                              "echo " + "3" + " " +  d + " > " + CPU_FREQ_TABLE,
-                                                              "echo " + f + " > " + CPU_MAX_RATE,
-                                                              "echo " + i + " > " + CPU_MIN_FREQ
-                                                        };
+                                                String[] commands = cpu_list.toArray(new String[0]);
+
                                                 // Throw them all in!
                                                 shell.setRootInfo(commands);
 
                                                 //** store preferences
                                                 //** note that this time we put to preferences commands instead of single values,
                                                 //** rebuild the commands in the bootService would have been a little expensive
-                                                SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences( getActivity().getBaseContext() );
+                                                SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
                                                 preference.edit().putStringSet("cpu_commands", new HashSet<String>(Arrays.asList(commands))).commit();
 
-                                            }
-                                            catch (Exception e) {
+                                            } catch (Exception e) {
                                                 Log.e("Aero", "An Error occurred while setting values", e);
                                                 Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
                                             }
-                                        }
-                                        else {
+                                        } else {
                                             Log.e("Aero", "The frequencies you have set are to low!");
                                         }
-                                    }
-                                    else {
+                                    } else {
                                         Log.e("Aero", "Cannot apply values, they are not in range.");
 
                                     }
@@ -204,8 +203,11 @@ public class CPUFragment extends PreferenceFragment {
 
                             // Start our background refresher Task;
                             try {
-                                mRefreshThread.start();
-                                mRefreshThread.setPriority(Thread.MIN_PRIORITY);
+                                // Only start if not already alive
+                                if (!mRefreshThread.isAlive()) {
+                                    mRefreshThread.start();
+                                    mRefreshThread.setPriority(Thread.MIN_PRIORITY);
+                                }
                             } catch (NullPointerException e) {
                                 Log.e("Aero", "Couldn't start Refresher Thread.", e);
                             }
@@ -213,51 +215,50 @@ public class CPUFragment extends PreferenceFragment {
                     })
 
                     .setNeutralButton(R.string.default_values, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                try {
+                        public void onClick(DialogInterface dialog, int id) {
+                            try {
 
-                                    String[] commands = new String[]
-                                            {
-                                                    "echo " + "4" + " 1000000000" + " 62" + " > " + CPU_VSEL,
-                                                    "echo " + "3" + " 800000000"  + " 58" + " > " + CPU_VSEL,
-                                                    "echo " + "2" + " 600000000"  + " 48" + " > " + CPU_VSEL,
-                                                    "echo " + "1" + " 300000000"  + " 33" + " > " + CPU_VSEL,
-                                                    "echo " + "0" + " 1000000" + " > " + CPU_FREQ_TABLE,
-                                                    "echo " + "1" + " 800000" + " > " + CPU_FREQ_TABLE,
-                                                    "echo " + "2" + " 600000" + " > " + CPU_FREQ_TABLE,
-                                                    "echo " + "3" + " 300000" + " > " + CPU_FREQ_TABLE,
-                                                    "echo " + "1000000" + " > " + CPU_MAX_RATE,
-                                                    "echo " + "300000"  + " > " + CPU_MIN_FREQ
-                                            };
-                                    shell.setRootInfo(commands);
+                                String[] commands = new String[]
+                                        {
+                                                "echo " + "4" + " 1000000000" + " 62" + " > " + CPU_VSEL,
+                                                "echo " + "3" + " 800000000" + " 58" + " > " + CPU_VSEL,
+                                                "echo " + "2" + " 600000000" + " 48" + " > " + CPU_VSEL,
+                                                "echo " + "1" + " 300000000" + " 33" + " > " + CPU_VSEL,
+                                                "echo " + "0" + " 1000000" + " > " + CPU_FREQ_TABLE,
+                                                "echo " + "1" + " 800000" + " > " + CPU_FREQ_TABLE,
+                                                "echo " + "2" + " 600000" + " > " + CPU_FREQ_TABLE,
+                                                "echo " + "3" + " 300000" + " > " + CPU_FREQ_TABLE,
+                                                "echo " + "1000000" + " > " + CPU_MAX_RATE,
+                                                "echo " + "300000" + " > " + CPU_MIN_FREQ
+                                        };
+                                shell.setRootInfo(commands);
 
-                                    //** store preferences
-                                    //** note that this time we put to preferences commands instead of single values,
-                                    //** rebuild the commands in the bootService would have been a little expensive
-                                    SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences( getActivity().getBaseContext() );
-                                    preference.edit().putStringSet("cpu_commands", new HashSet<String>(Arrays.asList(commands))).commit();
+                                //** store preferences
+                                //** note that this time we put to preferences commands instead of single values,
+                                //** rebuild the commands in the bootService would have been a little expensive
+                                SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+                                preference.edit().putStringSet("cpu_commands", new HashSet<String>(Arrays.asList(commands))).commit();
 
-                                }
-                                catch (Exception e) {
-                                    Log.e("Aero", "An Error occurred while setting values", e);
-                                    Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
-                                }
-
-                                // Start our background refresher Task;
-                                try {
-                                    mRefreshThread.start();
-                                    mRefreshThread.setPriority(Thread.MIN_PRIORITY);
-                                } catch (Exception e) {
-                                }
-
+                            } catch (Exception e) {
+                                Log.e("Aero", "An Error occurred while setting values", e);
+                                Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
                             }
-                        })
+
+                            // Start our background refresher Task;
+                            try {
+                                mRefreshThread.start();
+                                mRefreshThread.setPriority(Thread.MIN_PRIORITY);
+                            } catch (Exception e) {
+                            }
+
+                        }
+                    })
 
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                        public void onClick(DialogInterface dialog, int id) {
 
-                    }
-                });
+                        }
+                    });
                 builder.setTitle(R.string.perf_live_oc_uc).show();
 
 
@@ -297,6 +298,8 @@ public class CPUFragment extends PreferenceFragment {
 
                 // Change governor for each available CPU;
                 for (int k = 0; k < mNumCpus; k++) {
+                    // To ensure we get proper permissions, change the governor to performance first;
+                    array.add("echo " + "performance" + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
                     array.add("echo " + a + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
                 }
                 String[] commands = array.toArray(new String[0]);
@@ -433,6 +436,7 @@ public class CPUFragment extends PreferenceFragment {
         // Just throw in our frequencies;
         min_frequency.setEntries(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
         min_frequency.setEntryValues(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
+        min_frequency.setSummary(null);
         try {
             min_frequency.setValue(shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
             min_frequency.setSummary(shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
@@ -523,6 +527,11 @@ public class CPUFragment extends PreferenceFragment {
             prefload.setText(shell.getInfo(parameterPath));
             prefload.setDialogTitle(parameter[index]);
 
+            if (prefload.getSummary().equals("Unavailable")) {
+                prefload.setEnabled(false);
+                prefload.setSummary("This value can't be changed.");
+            }
+
             PrefCat.addPreference(prefload);
             index++;
 
@@ -543,11 +552,10 @@ public class CPUFragment extends PreferenceFragment {
                                 shell.getInfo(parameterPath) + " New Value; " + a, Toast.LENGTH_LONG).show();
                         prefload.setSummary(oldValue);
                     }
-
+                    
                     // Store our custom preferences if available;
                     SharedPreferences preferences = getPreferenceManager().getSharedPreferences();
                     preferences.edit().putString(parameterPath, o.toString()).commit();
-
 
                     return true;
                 };

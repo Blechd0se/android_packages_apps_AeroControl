@@ -110,7 +110,9 @@ public class bootService extends Service
         }
 
     	if (cpu_cmd != null) {
-    		for (String cmd : cpu_cmd) { al.add(cmd); }
+    		for (String cmd : cpu_cmd) {
+                al.add(cmd);
+            }
     	}
 
     	// GET GPU VALUES FROM PREFERENCES
