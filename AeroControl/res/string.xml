@@ -1,0 +1,178 @@
+<resources>
+    <string name="app_name">Aero Control</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="error_detected">Error ?</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="github">Github AeroControl</string>
+    <string name="donation_blechdose">Donate to Blechdose</string>
+    <string name="donation_quarx">Donate to Quarx</string>
+    <string name="default_values">Default Values</string>
+    <string name="need_reboot">This may require a reboot.</string>
+    <string name="unavailable">Unavailable</string>
+    <string name="got_it">Got it</string>
+    <string name="back_for_close">Press Back again to close the App.</string>
+    <string name="define_a_name">Define a name for this profile.</string>
+    <string name="add_a_name">Profile name</string>
+    <string name="add">Add</string>
+    <string name="nothing_added_yet">Whoop! You haven\'t added any profiles yet.</string>
+
+    <!-- Default Navigation Drawer entries -->
+
+    <string name="slider_overview">Overview</string>
+    <string name="slider_cpu_settings">CPU Performance</string>
+    <string name="slider_gpu_settings">GPU Control</string>
+    <string name="slider_memory_settings">Memory Tuning</string>
+    <string name="slider_defy_parts">Defy Parts</string>
+    <string name="slider_updater">Updater</string>
+    <string name="slider_profile">Profiles</string>
+
+    <!-- Overview Elements -->
+
+    <string name="kernel_version">Kernel:</string>
+    <string name="current_cpu_speed">CPU Frequency:</string>
+    <string name="current_gpu_speed">GPU Frequency:</string>
+    <string name="current_governor">Governor:</string>
+    <string name="current_io_governor">I/O-Scheduler:</string>
+    <string name="available_memory">Total Memory:</string>
+
+    <!-- Action Overflow Menu -->
+
+    <string name="about">About</string>
+    <string name="aero_settings">Settings</string>
+
+    <!-- Preference Menu -->
+
+    <string name="pref_appspecific">App specific </string>
+    <string name="pref_setatboot">Set at Boot</string>
+    <string name="pref_setatboot_sum">Caution: This will set your settings at boot.</string>
+    <string name="pref_updatepath">Updatelocation:</string>
+    <string name="pref_updatepath_sum">Set your desired update path.</string>
+    <string name="pref_app_theme">App Theme</string>
+    <string name="pref_app_theme_sum">Defines the default app theme.</string>
+
+    <!-- About -->
+    <string name="about_dialog">Hello. Thank you for using this App. My name is
+                        Alexander Christ (Blechd0se) and I have written this App for fun and in my spare time.
+                        Its also Open Source, so you can grab the Source Code and modify it as you want.
+                        If you want to, you can either donate to Quarx for his awesome rom or to me.
+                        <b>The joy of living is in the giving.</b>
+    </string>
+
+    <!-- CPU Fragment -->
+
+    <string name="pref_cpu_freq">Frequencies</string>
+    <string name="pref_cpu_freqmax">Max. Frequency</string>
+    <string name="pref_cpu_freqmin">Min. Frequency</string>
+    <string name="pref_cpu_governor">Governor Settings</string>
+    <string name="perf_live_oc_uc">Live OC/UC</string>
+    <string name="perf_live_oc_uc_sum">Control Frequencies and Voltage in realtime!</string>
+
+    <string name="pref_gov_choose">Governor Settings</string>
+    <string name="pref_gov_choose_sum">This will set your favorite governor!</string>
+
+    <string name="pref_gov_set">Governor Specific Settings</string>
+    <string name="pref_gov_set_sum">Set the governor Specific settings here.</string>
+
+    <!-- Memory Fragment -->
+    <string name="pref_memory_settings">Memory Settings</string>
+
+    <string name="pref_memory_swappiness">Swappiness</string>
+    <string name="pref_memory_swappiness_sum">Swappiness defines how aggressive the kernel will swap memory pages.</string>
+
+    <string name="pref_dynamic_fsync">Dynamic FSync</string>
+    <string name="pref_dynamic_fsync_sum">Dynamic FSync enables fsync only while the screen is off.</string>
+
+    <string name="pref_memory_swap">Swap</string>
+    <string name="pref_memory_swap_sum">Create a swap device.</string>
+
+    <string name="pref_memory_zcache">zCache</string>
+    <string name="pref_memory_zcache_sum">zCache uses CPU-time for a slightly better memory managment.</string>
+
+    <string name="pref_memory_zcache_compression">zCache Compression</string>
+    <string name="pref_memory_zcache_compression_sum">Choose the compression method for zCache.</string>
+
+    <string name="pref_dynamic_writeback">Writeback Control</string>
+    <string name="pref_dynamic_writeback_sum">Enable or Disable the writeback control here.</string>
+
+    <string name="pref_low_mem_option">Low Memory Option</string>
+    <string name="pref_low_mem_option_sum">Enable or Disable the low memory option here. This might help on devices with 4.4+ (Kitkat).</string>
+
+    <string name="fstrim_header">Trim Option</string>
+    <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
+
+    <string name="pref_min_free_ram">Amount of free RAM</string>
+    <string name="pref_min_free_ram_sum">Set the amount of true free ram here.</string>
+
+    <string name="has_journal_dialog_header">Problem detected</string>
+
+    <string name="has_journal_dialog">Looks like your /data partition doesn\'t have the <b>has_journal</b> Feature enabled.
+                            Please reboot into recovery and run the following command via adb shell: <br /> <br />
+                            <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+    </string>
+
+    <string name="reboot_notifier_header">Oops, this shouldn\'t happen</string>
+    <string name="reboot_notifier">Looks like the kernel crashed. Be sure to check
+                    out \n<b>/proc/last_kmsg </b> \nand send this file to your favorite developer. Seriously, send it! \n
+                    We apologize for any inconvenience!</string>
+
+    <!-- IO Scheduler -->
+    <string name="io_scheduler">IO Scheduler</string>
+
+    <!-- GPU Fragment -->
+    <string name="pref_gpu_control_enable">GPU Control</string>
+    <string name="pref_gpu_control_enable_sum">This will enable the GPU Control driver. It handles overclocking/undervolting as well
+                                            as some basic scheduling for the GPU.</string>
+    <string name="pref_gpu_max_freq">Max. Frequency</string>
+    <string name="pref_gpu_max_freq_sum">This will set the maximum GPU Frequency. Default is 200 MHz.</string>
+
+    <string name="pref_display_color">Display Color</string>
+    <string name="pref_display_color_sum">Adjust the display color here.</string>
+    <string name="defy_red_colors">Defy Red Colors</string>
+    <string name="defy_green_colors">Defy Green Colors</string>
+    <string name="defy_energy_saver">Energy Saver</string>
+
+
+    <!-- Updater Fragment -->
+    <string name="pref_updater">Kernel Updater and Backup</string>
+    <string name="pref_backup_kernel">Backup your Kernel</string>
+    <string name="pref_backup_kernel_sum">This will save a copy of your current kernel.</string>
+
+    <string name="pref_updater_kernel">Update Kernel</string>
+    <string name="pref_updater_kernel_sum">This will update your kernel.</string>
+
+    <string name="pref_restore">Restore Backup</string>
+    <string name="pref_restore_kernel">Restore</string>
+    <string name="pref_restore_kernel_sum">Restore from a kernel backup.</string>
+
+    <string name="last_backup_from">Last Backup from </string>
+    <string name="backup_from">Backup from </string>
+    <string name="restore_from_backup">Do you want to restore the backup from </string>
+    <string name="proceed_backup">Proceed with backup? This will backup your current kernel.</string>
+
+    <!-- Showcase Strings -->
+    <string name="showcase_aero_fragment">Welcome to Aero Control!</string>
+    <string name="showcase_aero_fragment_sum">Swipe from the left to the right to show the navigation drawer.
+                                                The page you are currently looking at is the main overview panel.
+                                                There is a small summary of some kernel settings. They are live, you
+                                                don\'t have to refresh anything!</string>
+
+    <string name="showcase_memory_fragment_trim">Trim Options</string>
+    <string name="showcase_memory_fragment_trim_sum">In order to maintain the device performance, you can trim
+                                                    several parts of your Operating System. This can take a while,
+                                                    especially when you stored lots of data.</string>
+
+    <!-- Defy Parts -->
+    <string name="pref_general_settings_defy">General Settings</string>
+    <string name="pref_charging_led">Charging LED Color</string>
+    <string name="pref_charging_led_sum">Color of your LED while charging</string>
+
+    <string name="pref_button_brightness">Button Brightness</string>
+    <string name="pref_button_brightness_sum">Change the button brightness here.</string>
+
+    <string name="pref_multitouch">Multitouch-Points</string>
+    <string name="pref_multitouch_sum">Number of multitouch points.</string>
+
+
+</resources>
