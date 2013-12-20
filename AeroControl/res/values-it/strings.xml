@@ -1,0 +1,179 @@
+<resources>
+    <string name="app_name">Aero Control</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="error_detected">Errore ?</string>
+    <string name="cancel">Annulla</string>
+    <string name="save">Salva</string>
+    <string name="github">Github AeroControl</string>
+    <string name="donation_blechdose">Dona a Blechdose</string>
+    <string name="donation_quarx">Dona a Quarx</string>
+    <string name="default_values">Default Values</string>
+    <string name="need_reboot">Potrebbe richiedere un riavvio.</string>
+    <string name="unavailable"Non disponibile</string>
+    <string name="got_it">Got it</string>
+    <string name="back_for_close">Premi indietro un altra volta per uscire.</string>
+    <string name="define_a_name">Define a name for this profile.</string>
+    <string name="add_a_name">Nome del profilo</string>
+    <string name="add">Aggiungi</string>
+    <string name="nothing_added_yet">Ooops! Non hai ancora aggiunto un profilo.</string>
+
+    <!-- Default Navigation Drawer entries -->
+
+    <string name="slider_overview">Panoramica</string>
+    <string name="slider_cpu_settings">Prestazioni CPU</string>
+    <string name="slider_gpu_settings">Controllo GPU</string>
+    <string name="slider_memory_settings">Messa a punto memoria</string>
+    <string name="slider_defy_parts">Defy Parts</string>
+    <string name="slider_updater">Aggiornamenti</string>
+    <string name="slider_profile">Profili</string>
+
+    <!-- Overview Elements -->
+
+    <string name="kernel_version">Kernel:</string>
+    <string name="current_cpu_speed">Frequenza CPU:</string>
+    <string name="current_gpu_speed">Frequenza GPU:</string>
+    <string name="current_governor">Governor:</string>
+    <string name="current_io_governor">I/O-Scheduler:</string>
+    <string name="available_memory">Memoria totale:</string>
+
+    <!-- Action Overflow Menu -->
+
+    <string name="about">Info</string>
+    <string name="aero_settings">Impostazioni</string>
+
+    <!-- Preference Menu -->
+
+    <string name="pref_appspecific">Specifiche</string>
+    <string name="pref_setatboot">Imposta all'avvio</string>
+    <string name="pref_setatboot_sum">Attenzione: Applicherà le tue impostazioni all'avvio</string>
+    <string name="pref_updatepath">Posizione dell'update:</string>
+    <string name="pref_updatepath_sum">Applica la destinazione dell'update.</string>
+    <string name="pref_app_theme">Tema</string>
+    <string name="pref_app_theme_sum">Seleziona il tema dell'applicazione.</string>
+
+    <!-- About -->
+    <string name="about_dialog">Ciao. Grazie per aver installato quest'app. Il mio nome è Alexander
+                                Christ (Blechd0se) ed ho scritto quest'app nel mio tempo libero per
+                                divertimento. Inoltre è Open Source, quindi puoi prendere il
+                                codice sorgente e modificarlo a tuo piacimento. Se vuoi puoi anche
+                                donare a Quarx per la sua fantastica rom o a me.
+                                <b>The joy of living is in the giving.</b>
+    </string>
+
+    <!-- CPU Fragment -->
+
+    <string name="pref_cpu_freq">Frequenze</string>
+    <string name="pref_cpu_freqmax">Max. Frequenza</string>
+    <string name="pref_cpu_freqmin">Min. Frequenza</string>
+    <string name="pref_cpu_governor">Impostazioni</string>
+    <string name="perf_live_oc_uc">Live OC/UC</string>
+    <string name="perf_live_oc_uc_sum">Controlla Frequenze e Voltaggi in tempo reale!</string>
+
+    <string name="pref_gov_choose">Impostazioni Governor</string>
+    <string name="pref_gov_choose_sum">Imposterà il tuo governor preferito!</string>
+
+    <string name="pref_gov_set">Impostazioni governor</string>
+    <string name="pref_gov_set_sum">Imposta le specifiche del governor.</string>
+
+    <!-- Memory Fragment -->
+    <string name="pref_memory_settings">Impostazioni Memoria</string>
+
+    <string name="pref_memory_swappiness">Swappiness</string>
+    <string name="pref_memory_swappiness_sum">Swappiness imposta quanto aggressivamente il kernel farà lo swap delle memory pages.</string>
+
+    <string name="pref_dynamic_fsync">Dynamic FSync</string>
+    <string name="pref_dynamic_fsync_sum">Dynamic FSync abilita il fsync solo quando lo schermo è spento.</string>
+
+    <string name="pref_memory_swap">Swap</string>
+    <string name="pref_memory_swap_sum">Crea un dispositivo swap.</string>
+
+    <string name="pref_memory_zcache">zCache</string>
+    <string name="pref_memory_zcache_sum">zCache usa il CPU-time per una miglior gestione della memoria.</string>
+
+    <string name="pref_memory_zcache_compression">zCache Compression</string>
+    <string name="pref_memory_zcache_compression_sum">Sceglie il metodo di compressione per zCache.</string>
+
+    <string name="pref_dynamic_writeback">Controllo Writeback</string>
+    <string name="pref_dynamic_writeback_sum">Abilita o Disabilita il controllo del writeback.</string>
+
+    <string name="pref_low_mem_option">Opzione scarsa memoria</string>
+    <string name="pref_low_mem_option_sum">Abilita o Disabilita l'opzione di scarsa memoria. Potrebbe aiutare su dispositivi con 4.4+ (Kitkat).</string>
+
+    <string name="fstrim_header">Trim Option</string>
+    <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
+
+    <string name="pref_min_free_ram">Quantità di RAM libera</string>
+    <string name="pref_min_free_ram_sum">Imposta il quantitativo di ram libera.</string>
+
+    <string name="has_journal_dialog_header">Problema rilevato</string>
+
+    <string name="has_journal_dialog">Sembra che la tua partizione /data non abbia la funzione <b>has_journal</b> 
+                                      abilitata. Riavvia in recovery e avvia il seguente comando via adb shell: 
+                                      <br /> <br /> <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+    </string>
+
+    <string name="reboot_notifier_header">Oops, questo non dovrebbe accadere</string>
+    <string name="reboot_notifier">Sembra che il kernel si sia improvvisamente interrotto. Assicurati di controllare 
+                                   \n<b>/proc/last_kmsg </b> \nand ed invia questo file al tuo sviluppatore preferito.
+                                   Seriamente, invialo! \nCi scusiamo per il disagio!</string>
+                    
+    <!-- IO Scheduler -->
+    <string name="io_scheduler">IO Scheduler</string>
+
+    <!-- GPU Fragment -->
+    <string name="pref_gpu_control_enable">Controllo GPU</string>
+    <string name="pref_gpu_control_enable_sum">Abilita il driver per il controllo della GPU. Gestisce anche il overclocking/undervolting.
+                                            e alcune programmazioni basiche per la GPU.</string>
+    <string name="pref_gpu_max_freq">Frequenza Max.</string>
+    <string name="pref_gpu_max_freq_sum">Imposterà la massima frequenza della GPU. La predefinita è di 200 Mhz.</string>
+
+    <string name="pref_display_color">Colore del display</string>
+    <string name="pref_display_color_sum">Imposta il colore del display.</string>
+    <string name="defy_red_colors">Colori rossi</string>
+    <string name="defy_green_colors">Colori verdi</string>
+    <string name="defy_energy_saver">Risparmio energia</string>
+
+
+    <!-- Updater Fragment -->
+    <string name="pref_updater">Backup e aggiornamento del Kernel</string>
+    <string name="pref_backup_kernel">Esegue il backup del Kernel</string>
+    <string name="pref_backup_kernel_sum">Salverà una copia del Kernel attuale.</string>
+
+    <string name="pref_updater_kernel">Aggiorna Kernel</string>
+    <string name="pref_updater_kernel_sum">Aggiornerà il Kernel.</string>
+
+    <string name="pref_restore">Ripristina Backup</string>
+    <string name="pref_restore_kernel">Ripristina</string>
+    <string name="pref_restore_kernel_sum">Ripristina un backup precedente del Kernel.</string>
+
+    <string name="last_backup_from">Ultimo bakcup da </string>
+    <string name="backup_from">Backup da </string>
+    <string name="restore_from_backup">Desideri ripristinare questo backup da </string>
+    <string name="proceed_backup">Procedere con il backup? Eseguirà un backup del Kernel</string>
+
+    <!-- Showcase Strings -->
+    <string name="showcase_aero_fragment">Benvenuto in Aero Control!</string>
+    <string name="showcase_aero_fragment_sum">Swipe da sinistra verso destra per vedere il drawer delle notifiche.
+                                                La pagina che vedi è il pannello della panoramica.
+                                                C'è un piccolo riassunto delle impostazioni del kernel.
+                                                Sono in tempo reale, quindi non è necessario fare un refresh!</string>
+
+    <string name="showcase_memory_fragment_trim">Opzioni Trim</string>
+    <string name="showcase_memory_fragment_trim_sum">Per mantenere le performance del dispositivo, puoi tagliare delle parti del tuo
+                                                      Sistema Operativo. Potrebbe richiedere del tempo, specialmente
+                                                      quando sono depositati molti dati.</string>
+
+    <!-- Defy Parts -->
+    <string name="pref_general_settings_defy">Impostazioni Generali</string>
+    <string name="pref_charging_led">Colore del LED in ricarica</string>
+    <string name="pref_charging_led_sum">Colore del LED durante la ricarica del dispositivo</string>
+
+    <string name="pref_button_brightness">Luminosità tasti</string>
+    <string name="pref_button_brightness_sum">Imposta la luminosità dei tasti.</string>
+
+    <string name="pref_multitouch">Punti MultiTouch</string>
+    <string name="pref_multitouch_sum">Imposta il numero dei punti multi-touch.</string>
+
+
+</resources>
