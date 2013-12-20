@@ -1,19 +1,19 @@
 <resources>
     <string name="app_name">Aero Control</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
+    <string name="drawer_open">Apri drawer di navigazione</string>
+    <string name="drawer_close">Chiudi drawer di navigazioner</string>
     <string name="error_detected">Errore ?</string>
     <string name="cancel">Annulla</string>
     <string name="save">Salva</string>
     <string name="github">Github AeroControl</string>
     <string name="donation_blechdose">Dona a Blechdose</string>
     <string name="donation_quarx">Dona a Quarx</string>
-    <string name="default_values">Default Values</string>
+    <string name="default_values">Valori predefiniti</string>
     <string name="need_reboot">Potrebbe richiedere un riavvio.</string>
     <string name="unavailable"Non disponibile</string>
     <string name="got_it">Got it</string>
     <string name="back_for_close">Premi indietro un altra volta per uscire.</string>
-    <string name="define_a_name">Define a name for this profile.</string>
+    <string name="define_a_name">Scegli un nome per questo profilo</string>
     <string name="add_a_name">Nome del profilo</string>
     <string name="add">Aggiungi</string>
     <string name="nothing_added_yet">Ooops! Non hai ancora aggiunto un profilo.</string>
@@ -23,7 +23,7 @@
     <string name="slider_overview">Panoramica</string>
     <string name="slider_cpu_settings">Prestazioni CPU</string>
     <string name="slider_gpu_settings">Controllo GPU</string>
-    <string name="slider_memory_settings">Messa a punto memoria</string>
+    <string name="slider_memory_settings">Messa a punto Memoria</string>
     <string name="slider_defy_parts">Defy Parts</string>
     <string name="slider_updater">Aggiornamenti</string>
     <string name="slider_profile">Profili</string>
@@ -46,7 +46,7 @@
 
     <string name="pref_appspecific">Specifiche</string>
     <string name="pref_setatboot">Imposta all'avvio</string>
-    <string name="pref_setatboot_sum">Attenzione: Applicherà le tue impostazioni all'avvio</string>
+    <string name="pref_setatboot_sum">Attenzione: Applicherà le impostazioni all'avvio</string>
     <string name="pref_updatepath">Posizione dell'update:</string>
     <string name="pref_updatepath_sum">Applica la destinazione dell'update.</string>
     <string name="pref_app_theme">Tema</string>
@@ -80,7 +80,8 @@
     <string name="pref_memory_settings">Impostazioni Memoria</string>
 
     <string name="pref_memory_swappiness">Swappiness</string>
-    <string name="pref_memory_swappiness_sum">Swappiness imposta quanto aggressivamente il kernel farà lo swap delle memory pages.</string>
+    <string name="pref_memory_swappiness_sum">Swappiness imposta quanto aggressivamente
+                                                il kernel farà lo swap delle memory pages.</string>
 
     <string name="pref_dynamic_fsync">Dynamic FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamic FSync abilita il fsync solo quando lo schermo è spento.</string>
@@ -100,8 +101,8 @@
     <string name="pref_low_mem_option">Opzione scarsa memoria</string>
     <string name="pref_low_mem_option_sum">Abilita o Disabilita l'opzione di scarsa memoria. Potrebbe aiutare su dispositivi con 4.4+ (Kitkat).</string>
 
-    <string name="fstrim_header">Trim Option</string>
-    <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
+    <string name="fstrim_header">Opzione Trim</string>
+    <string name="fstrim_content">Taglia delle parti del tuo sistema! Potrebbe richiedere del tempo.</string>
 
     <string name="pref_min_free_ram">Quantità di RAM libera</string>
     <string name="pref_min_free_ram_sum">Imposta il quantitativo di ram libera.</string>
@@ -116,7 +117,8 @@
     <string name="reboot_notifier_header">Oops, questo non dovrebbe accadere</string>
     <string name="reboot_notifier">Sembra che il kernel si sia improvvisamente interrotto. Assicurati di controllare 
                                    \n<b>/proc/last_kmsg </b> \nand ed invia questo file al tuo sviluppatore preferito.
-                                   Seriamente, invialo! \nCi scusiamo per il disagio!</string>
+                                   Seriamente, invialo! \n
+                                   Ci scusiamo per il disagio!</string>
                     
     <!-- IO Scheduler -->
     <string name="io_scheduler">IO Scheduler</string>
@@ -137,7 +139,7 @@
 
     <!-- Updater Fragment -->
     <string name="pref_updater">Backup e aggiornamento del Kernel</string>
-    <string name="pref_backup_kernel">Esegue il backup del Kernel</string>
+    <string name="pref_backup_kernel">Esegui il backup del Kernel</string>
     <string name="pref_backup_kernel_sum">Salverà una copia del Kernel attuale.</string>
 
     <string name="pref_updater_kernel">Aggiorna Kernel</string>
@@ -154,7 +156,7 @@
 
     <!-- Showcase Strings -->
     <string name="showcase_aero_fragment">Benvenuto in Aero Control!</string>
-    <string name="showcase_aero_fragment_sum">Swipe da sinistra verso destra per vedere il drawer delle notifiche.
+    <string name="showcase_aero_fragment_sum">Fai uno Swipe da sinistra verso destra per vedere il drawer delle notifiche.
                                                 La pagina che vedi è il pannello della panoramica.
                                                 C'è un piccolo riassunto delle impostazioni del kernel.
                                                 Sono in tempo reale, quindi non è necessario fare un refresh!</string>
