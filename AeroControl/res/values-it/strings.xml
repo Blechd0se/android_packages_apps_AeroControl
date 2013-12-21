@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Aero Control</string>
     <string name="drawer_open">Apri drawer di navigazione</string>
-    <string name="drawer_close">Chiudi drawer di navigazioner</string>
+    <string name="drawer_close">Chiudi drawer di navigazione</string>
     <string name="error_detected">Errore ?</string>
     <string name="cancel">Annulla</string>
     <string name="save">Salva</string>
@@ -10,7 +10,7 @@
     <string name="donation_quarx">Dona a Quarx</string>
     <string name="default_values">Valori predefiniti</string>
     <string name="need_reboot">Potrebbe richiedere un riavvio.</string>
-    <string name="unavailable"Non disponibile</string>
+    <string name="unavailable">Non disponibile</string>
     <string name="got_it">Got it</string>
     <string name="back_for_close">Premi indietro un altra volta per uscire.</string>
     <string name="define_a_name">Scegli un nome per questo profilo</string>
