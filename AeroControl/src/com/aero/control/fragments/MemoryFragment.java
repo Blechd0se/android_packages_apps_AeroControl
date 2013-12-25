@@ -292,7 +292,8 @@ public class MemoryFragment extends PreferenceFragment {
                             }
                         };
                         Thread trimThread = new Thread(runnable);
-                        trimThread.start();
+                        if (!trimThread.isAlive())
+                            trimThread.start();
 
                     }
                 }).show();
