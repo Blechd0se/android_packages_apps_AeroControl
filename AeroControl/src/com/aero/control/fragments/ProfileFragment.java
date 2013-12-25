@@ -5,11 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.renderscript.Sampler;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,10 +18,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.aero.control.R;
+import com.aero.control.helpers.shellHelper;
 
 import java.io.File;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by Alexander Christ on 10.10.13.
@@ -38,6 +35,8 @@ public class ProfileFragment extends PreferenceFragment {
 
     private ViewGroup mContainerView;
     private SharedPreferences prefs;
+    private final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
+    shellHelper shell = new shellHelper();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +48,8 @@ public class ProfileFragment extends PreferenceFragment {
 
         mContainerView = (ViewGroup)v.findViewById(R.id.container);
 
+        // Load all available profiles;
+        loadProfiles();
 
         // Load default profiles;
         addDefaultProfiles(new EditText(getActivity()));
@@ -56,15 +57,34 @@ public class ProfileFragment extends PreferenceFragment {
         return mContainerView;
     }
 
-    public void addDefaultProfiles(EditText editText) {
+    /*
+     * Can be used later to create default profiles, placeholder for now
+     */
+    private void addDefaultProfiles(EditText editText) {
 
-        File prefFile = new File ("/data/data/" + getActivity().getPackageName() + "/shared_prefs/" + "performance.xml");
+        // If the profile doesn't exist, create it;
+        File prefFile = new File (sharedPrefsPath + "performance.xml");
         if(prefFile.exists()) {
             Log.e("Aero", "Performance Profile exists already!");
         } else {
-            Log.e("Aero", "Performance Profile doesn't exist!");
             editText.setText("performance");
-            addProfile(editText.getText().toString());
+            addProfile(editText.getText().toString(), true);
+        }
+    }
+
+    private void loadProfiles() {
+
+        String[] completeProfiles = shell.getDirInfo(sharedPrefsPath, true);
+
+        for (String s : completeProfiles) {
+
+            // Don't take default xml;
+            if (!(s.equals("com.aero.control_preferences.xml") || s.equals("showcase_internal.xml"))) {
+                // Just for the looks;
+                s = s.replace(".xml", "");
+                addProfile(s, false);
+                mContainerView.findViewById(android.R.id.empty).setVisibility(View.GONE);
+            }
         }
 
     }
@@ -101,7 +121,7 @@ public class ProfileFragment extends PreferenceFragment {
                     public void onClick(DialogInterface dialog, int which) {
 
                         // Add content;
-                        addProfile(editText.getText().toString());
+                        addProfile(editText.getText().toString(), true);
 
                     }
                 })
@@ -112,21 +132,24 @@ public class ProfileFragment extends PreferenceFragment {
     }
 
     // Adds the object to our "list", s = Name
-    private void addProfile(String s) {
+    private void addProfile(String s, boolean flag) {
 
         // Create custom SharedPreference for profile
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        SharedPreferences newProfile = getActivity().getSharedPreferences(s, Context.MODE_PRIVATE);
+        final SharedPreferences AeroProfile = getActivity().getSharedPreferences(s, Context.MODE_PRIVATE);
 
-        // This will save the current profile as a preference;
-        saveProfile(newProfile);
+        // Flag if we add a profile to the list which already exists as a file;
+        if (flag) {
+            // This will save the current profile as a preference;
+            saveProfile(AeroProfile);
+        }
 
         // Instantiate a new "row" view.
         final ViewGroup childView = (ViewGroup) LayoutInflater.from(getActivity()).inflate(
                 R.layout.profiles_list, mContainerView, false);
 
         // Create TextView, with Content and Listeners;
-        TextView txtView = (TextView)childView.findViewById(R.id.profile_text);
+        final TextView txtView = (TextView)childView.findViewById(R.id.profile_text);
         txtView.setText(s);
         createListener(txtView);
 
@@ -135,7 +158,8 @@ public class ProfileFragment extends PreferenceFragment {
             @Override
             public void onClick(View view) {
 
-                mContainerView.removeView(childView);
+                if (deleteProfile(txtView.getText().toString()))
+                    mContainerView.removeView(childView);
 
                 // If there are no rows remaining, show the empty view.
                 if (mContainerView.getChildCount() == 1) {
@@ -148,10 +172,37 @@ public class ProfileFragment extends PreferenceFragment {
 
     }
 
-    private void saveProfile(SharedPreferences newProfile) {
+    private boolean deleteProfile(String ProfileName) {
+
+        // Delete the file, not just clear the pref;
+        String[] cmd = new String[] {
+                "rm " + "\"" + sharedPrefsPath + ProfileName + ".xml" + "\""
+        };
+
+        shell.setRootInfo(cmd);
+
+        try {
+            Thread.sleep(350);
+        } catch (InterruptedException e) {
+            Log.e("Aero", "Something interrupted the main Thread, try again.", e);
+        }
+
+        // Check if file is gone;
+        File prefFile = new File (sharedPrefsPath + ProfileName + ".xml");
+        Log.e("Aero", "Profilename: " + ProfileName + prefFile.toString());
+
+        if(prefFile.exists()) {
+            Log.e("Aero", "Whoop, it still exists, something went wrong");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void saveProfile(SharedPreferences AeroProfile) {
 
 
-        SharedPreferences.Editor editor = newProfile.edit();
+        SharedPreferences.Editor editor = AeroProfile.edit();
 
         // Get all our preferences;
         Map<String,?> allKeys = prefs.getAll();
@@ -178,7 +229,7 @@ public class ProfileFragment extends PreferenceFragment {
      * Create a onClick Listener for each profile;
      */
 
-    public void createListener(final TextView txtView) {
+    private void createListener(final TextView txtView) {
 
         // Change something else?
         txtView.setOnClickListener(new View.OnClickListener() {
