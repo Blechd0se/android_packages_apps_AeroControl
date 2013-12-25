@@ -45,16 +45,16 @@
     <!-- Preference Menu -->
 
     <string name="pref_appspecific">Specifiche</string>
-    <string name="pref_setatboot">Imposta all'avvio</string>
-    <string name="pref_setatboot_sum">Attenzione: Applicherà le impostazioni all'avvio</string>
-    <string name="pref_updatepath">Posizione dell'update:</string>
-    <string name="pref_updatepath_sum">Applica la destinazione dell'update.</string>
+    <string name="pref_setatboot">Imposta all\'avvio</string>
+    <string name="pref_setatboot_sum">Attenzione: Applicherà le impostazioni all\'avvio</string>
+    <string name="pref_updatepath">Posizione dell\'update:</string>
+    <string name="pref_updatepath_sum">Applica la destinazione dell\'update.</string>
     <string name="pref_app_theme">Tema</string>
-    <string name="pref_app_theme_sum">Seleziona il tema dell'applicazione.</string>
+    <string name="pref_app_theme_sum">Seleziona il tema dell\'applicazione.</string>
 
     <!-- About -->
-    <string name="about_dialog">Ciao. Grazie per aver installato quest'app. Il mio nome è Alexander
-                                Christ (Blechd0se) ed ho scritto quest'app nel mio tempo libero per
+    <string name="about_dialog">Ciao. Grazie per aver installato quest\'app. Il mio nome è Alexander
+                                Christ (Blechd0se) ed ho scritto quest\'app nel mio tempo libero per
                                 divertimento. Inoltre è Open Source, quindi puoi prendere il
                                 codice sorgente e modificarlo a tuo piacimento. Se vuoi puoi anche
                                 donare a Quarx per la sua fantastica rom o a me.
@@ -99,7 +99,7 @@
     <string name="pref_dynamic_writeback_sum">Abilita o Disabilita il controllo del writeback.</string>
 
     <string name="pref_low_mem_option">Opzione scarsa memoria</string>
-    <string name="pref_low_mem_option_sum">Abilita o Disabilita l'opzione di scarsa memoria. Potrebbe aiutare su dispositivi con 4.4+ (Kitkat).</string>
+    <string name="pref_low_mem_option_sum">Abilita o Disabilita l\'opzione di scarsa memoria. Potrebbe aiutare su dispositivi con 4.4+ (Kitkat).</string>
 
     <string name="fstrim_header">Opzione Trim</string>
     <string name="fstrim_content">Taglia delle parti del tuo sistema! Potrebbe richiedere del tempo.</string>
@@ -158,7 +158,7 @@
     <string name="showcase_aero_fragment">Benvenuto in Aero Control!</string>
     <string name="showcase_aero_fragment_sum">Fai uno Swipe da sinistra verso destra per vedere il drawer delle notifiche.
                                                 La pagina che vedi è il pannello della panoramica.
-                                                C'è un piccolo riassunto delle impostazioni del kernel.
+                                                C\'è un piccolo riassunto delle impostazioni del kernel.
                                                 Sono in tempo reale, quindi non è necessario fare un refresh!</string>
 
     <string name="showcase_memory_fragment_trim">Opzioni Trim</string>
