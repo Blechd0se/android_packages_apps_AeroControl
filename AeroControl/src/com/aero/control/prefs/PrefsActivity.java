@@ -49,6 +49,7 @@ public class PrefsActivity extends PreferenceActivity {
 
         EditTextPreference updateLocation = (EditTextPreference)root.findPreference("update_location");
         CheckBoxPreference checkbox_preference = (CheckBoxPreference)root.findPreference("checkbox_preference");
+        CheckBoxPreference reboot_checker = (CheckBoxPreference)root.findPreference("reboot_checker");
         ListPreference appTheme = (ListPreference)root.findPreference("app_theme_list");
         Preference about = (Preference)root.findPreference("about");
 
@@ -56,6 +57,7 @@ public class PrefsActivity extends PreferenceActivity {
         updateLocation.setIcon(R.drawable.ic_action_settings);
 
         checkbox_preference.setIcon(R.drawable.ic_action_warning);
+        reboot_checker.setIcon(R.drawable.ic_action_phone);
 
         appTheme.setEntries(data);
         appTheme.setEntryValues(data);
@@ -89,7 +91,7 @@ public class PrefsActivity extends PreferenceActivity {
             public boolean onPreferenceClick(Preference preference) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                LayoutInflater inflater = (LayoutInflater)getLayoutInflater();
+                LayoutInflater inflater = getLayoutInflater();
                 View layout = inflater.inflate(R.layout.about_screen, null);
                 TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 

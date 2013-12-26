@@ -10,6 +10,11 @@
             android:title="@string/pref_setatboot"
             android:summary="@string/pref_setatboot_sum" />
 
+        <CheckBoxPreference
+            android:key="reboot_checker"
+            android:title="@string/pref_rebootcheck"
+            android:summary="@string/pref_rebootcheck_sum" />
+
         <EditTextPreference
             android:key="update_location"
             android:title="@string/pref_updatepath"

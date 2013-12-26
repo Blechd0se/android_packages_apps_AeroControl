@@ -25,13 +25,16 @@ public class bootReceiver extends BroadcastReceiver
         }
 
         File last_kmsg = new File (LAST_KMSG);
+        Boolean rebootChecker = prefs.getBoolean("reboot_checker", false);
 
         // Kernel panic receiver:
-        if (last_kmsg.exists()) {
-            Intent trIntent = new Intent("android.intent.action.BOOT");
-            trIntent.setClass(context, com.aero.control.boot.RebootActivity.class);
-            trIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(trIntent);
+        if (rebootChecker) {
+            if (last_kmsg.exists()) {
+                Intent trIntent = new Intent("android.intent.action.BOOT");
+                trIntent.setClass(context, com.aero.control.boot.RebootActivity.class);
+                trIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(trIntent);
+            }
         }
     }
 }

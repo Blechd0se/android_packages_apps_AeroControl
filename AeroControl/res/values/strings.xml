@@ -48,6 +48,8 @@
     <string name="pref_appspecific">App specific </string>
     <string name="pref_setatboot">Set at Boot</string>
     <string name="pref_setatboot_sum">Caution: This will set your settings at boot.</string>
+    <string name="pref_rebootcheck">Random Reboot Checker</string>
+    <string name="pref_rebootcheck_sum">It will inform you if your device had a sudden reboot.</string>
     <string name="pref_updatepath">Updatelocation:</string>
     <string name="pref_updatepath_sum">Set your desired update path.</string>
     <string name="pref_app_theme">App Theme</string>
