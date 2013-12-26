@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         // Check if system has root;
-        if (!rootCheck.isDeviceRooted())
+        if (rootCheck.isDeviceRooted())
             showRootDialog();
 
         mTitle = mDrawerTitle = getTitle();
@@ -331,6 +331,7 @@ public class MainActivity extends Activity {
         builder.setIcon(R.drawable.ic_action_warning);
 
         aboutText.setText(getText(R.string.root_required));
+        builder.setCancelable(false);
 
         builder.setView(layout)
                 .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
