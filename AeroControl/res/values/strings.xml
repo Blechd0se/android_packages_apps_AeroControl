@@ -17,6 +17,7 @@
     <string name="add_a_name">Profile name</string>
     <string name="add">Add</string>
     <string name="nothing_added_yet">Whoop! You haven\'t added any profiles yet.</string>
+    <string name="not_rooted">No Root?</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -59,6 +60,10 @@
                         If you want to, you can either donate to Quarx for his awesome rom or to me.
                         <b>The joy of living is in the giving.</b>
     </string>
+
+    <!-- Root Check -->
+    <string name="root_required">It looks like your device is not rooted. This app won\'t work correctly without root.
+                                If you think this is a mistake, please let me know!</string>
 
     <!-- CPU Fragment -->
 

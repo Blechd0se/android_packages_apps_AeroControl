@@ -1,10 +1,13 @@
 package com.aero.control;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,6 +34,7 @@ import com.aero.control.fragments.GPUFragment;
 import com.aero.control.fragments.MemoryFragment;
 import com.aero.control.fragments.ProfileFragment;
 import com.aero.control.fragments.UpdaterFragment;
+import com.aero.control.helpers.rootHelper;
 import com.aero.control.lists.generatingLists;
 import com.aero.control.lists.generatingLists.PreferenceItem;
 import com.aero.control.prefs.PrefsActivity;
@@ -72,11 +76,17 @@ public class MainActivity extends Activity {
 
     final Handler mHandler = new Handler(Looper.getMainLooper());
 
+    rootHelper rootCheck = new rootHelper();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Check if system has root;
+        if (!rootCheck.isDeviceRooted())
+            showRootDialog();
 
         mTitle = mDrawerTitle = getTitle();
         mAeroTitle = getResources().getStringArray(R.array.aero_array);
@@ -119,7 +129,7 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
-            selectItem(6);
+            selectItem(0);
         } else {
             selectItem(savedInstanceState.getInt(SELECTED_ITEM));
         }
@@ -308,6 +318,28 @@ public class MainActivity extends Activity {
 
         if (mBackCounter == 2)
             finish();
+    }
+
+    public void showRootDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.about_screen, null);
+        TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
+
+        builder.setTitle(R.string.not_rooted);
+        builder.setIcon(R.drawable.ic_action_warning);
+
+        aboutText.setText(getText(R.string.root_required));
+
+        builder.setView(layout)
+                .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+        builder.show();
     }
 
     public void switchContent(final Fragment fragment) {
