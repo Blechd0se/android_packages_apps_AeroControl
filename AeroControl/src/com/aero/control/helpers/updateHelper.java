@@ -20,6 +20,7 @@ import java.util.Calendar;
 public class updateHelper {
 
     public static String timeStamp = new SimpleDateFormat("ddMMyyyy").format(Calendar.getInstance().getTime());
+    private String LOG_TAG = updateHelper.class.getName();
 
     /**
      * Method for copying files.
@@ -35,7 +36,7 @@ public class updateHelper {
         if (!rest) {
             try {
                 if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-                    Log.e("Aero", "No Sdcard found!");
+                    Log.e(LOG_TAG, "No Sdcard found!");
                     return;
 
                 } else {
@@ -54,7 +55,7 @@ public class updateHelper {
             } finally {
                 // Handle error case on different devices;
                 if(input == null || output == null) {
-                    Log.e("Aero", "Could not copy files or something went wrong.");
+                    Log.e(LOG_TAG, "Could not copy files or something went wrong.");
                 } else {
                     input.close();
                     output.close();

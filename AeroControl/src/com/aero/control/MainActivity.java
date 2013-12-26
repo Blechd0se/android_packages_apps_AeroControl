@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         // Check if system has root;
-        if (rootCheck.isDeviceRooted())
+        if (!rootCheck.isDeviceRooted())
             showRootDialog();
 
         mTitle = mDrawerTitle = getTitle();

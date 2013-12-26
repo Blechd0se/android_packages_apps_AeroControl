@@ -23,6 +23,7 @@ public class shellHelper {
 
     // Buffer length;
     private static final int BUFF_LEN = 1024;
+    private String LOG_TAG = shellHelper.class.getName();
 
     /**
      * Gets the current Kernel Version + some useful information
@@ -55,10 +56,10 @@ public class shellHelper {
             Matcher m = p.matcher(procVersionStr);
 
             if (!m.matches()) {
-                Log.e("Aero", "Regex did not match on /proc/version: " + procVersionStr);
+                Log.e(LOG_TAG, "Regex did not match on /proc/version: " + procVersionStr);
                 return "Unavailable";
             } else if (m.groupCount() < 4) {
-                Log.e("Aero", "Regex match on /proc/version only returned " + m.groupCount()
+                Log.e(LOG_TAG, "Regex match on /proc/version only returned " + m.groupCount()
                         + " groups");
                 return "Unavailable";
             } else {
@@ -67,7 +68,7 @@ public class shellHelper {
                         .append(m.group(4))).toString();
             }
         } catch (IOException e) {
-            Log.e("Aero",
+            Log.e(LOG_TAG,
                     "IO Exception when getting kernel version for Device Info screen",
                     e);
 
@@ -95,7 +96,7 @@ public class shellHelper {
             }
             return info;
         } catch (IOException e) {
-            Log.e("Aero",
+            Log.e(LOG_TAG,
                     "IO Exception when trying to get information.",
                     e);
 
@@ -184,7 +185,7 @@ public class shellHelper {
 
             return output;
         } catch (IOException e) {
-            Log.e("Aero",
+            Log.e(LOG_TAG,
                     "IO Exception when trying to get information with an Array.",
                     e);
 
@@ -226,7 +227,7 @@ public class shellHelper {
             return new StringBuilder().append(Integer.valueOf(mhzString) / 1000).append(" MHz")
                     .toString();
         } catch (Exception e) {
-            Log.e("Aero",
+            Log.e(LOG_TAG,
                     "Tried to add something to a non existing string.",
                     e);
             return "Unavailable";
@@ -259,7 +260,7 @@ public class shellHelper {
                 }
             }
         } catch (IOException e) {
-            Log.e("Aero",
+            Log.e(LOG_TAG,
                     "Yep, i can't read your memory stats :( .",
                     e);
             return "Unavailable";
@@ -294,7 +295,7 @@ public class shellHelper {
             dataStream.flush();
 
         } catch (IOException e) {
-            Log.e("Aero", "Do you even root, bro? :/");
+            Log.e(LOG_TAG, "Do you even root, bro? :/");
         }
 
     }
@@ -320,7 +321,7 @@ public class shellHelper {
             dataStream.flush();
 
         } catch (IOException e) {
-            Log.e("Aero", "Do you even root, bro? :/");
+            Log.e(LOG_TAG, "Do you even root, bro? :/");
         }
 
     }
@@ -344,7 +345,7 @@ public class shellHelper {
             rooting.waitFor();
 
         } catch (Exception e) {
-            Log.e("Aero", "Do you even root, bro? :/", e);
+            Log.e(LOG_TAG, "Do you even root, bro? :/", e);
         }
 
     }
@@ -394,11 +395,11 @@ public class shellHelper {
                     break;
                 }
             }
-            Log.e("Aero", "Output from su-Operation: " + output);
+            Log.e(LOG_TAG, "Output from su-Operation: " + output);
             return output;
 
         } catch (Exception e) {
-            Log.e("Aero", "Do you even root, bro? :/", e);
+            Log.e(LOG_TAG, "Do you even root, bro? :/", e);
         }
         return "Unavailable";
     }
