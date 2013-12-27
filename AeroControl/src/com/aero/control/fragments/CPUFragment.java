@@ -47,6 +47,7 @@ public class CPUFragment extends PreferenceFragment {
     public static final String CPU_MAX_RATE = "/proc/overclock/max_rate";
     public static final String CPU_FREQ_TABLE = "/proc/overclock/freq_table";
 
+    public PreferenceScreen root;
     public PreferenceCategory PrefCat;
     public ListPreference listPref;
     public ListPreference min_frequency;
@@ -64,7 +65,7 @@ public class CPUFragment extends PreferenceFragment {
         // We have to load the xml layout first;
         addPreferencesFromResource(R.layout.cpu_fragment);
 
-        final PreferenceScreen root = this.getPreferenceScreen();
+        root = this.getPreferenceScreen();
 
         // I don't like the following, can we simplify it?
 
@@ -428,6 +429,9 @@ public class CPUFragment extends PreferenceFragment {
         super.onPause();
 
         mVisible = false;
+        // To clean up the UI;
+        if (PrefCat != null)
+            root.removePreference(PrefCat);
     }
 
     @Override
