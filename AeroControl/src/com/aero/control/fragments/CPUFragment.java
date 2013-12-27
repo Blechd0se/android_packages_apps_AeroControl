@@ -19,6 +19,9 @@ import android.preference.PreferenceScreen;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -61,6 +64,7 @@ public class CPUFragment extends PreferenceFragment {
     @Override
     final public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         // We have to load the xml layout first;
         addPreferencesFromResource(R.layout.cpu_fragment);
@@ -302,62 +306,27 @@ public class CPUFragment extends PreferenceFragment {
                 String a = (String) o;
                 ArrayList<String> array = new ArrayList<String>();
 
+                // If there are already some entries, kill them all (with fire)
+                if (PrefCat != null)
+                    root.removePreference(PrefCat);
+
                 // Change governor for each available CPU;
-                for (int k = 0; k < mNumCpus; k++) {
-                    // To ensure we get proper permissions, change the governor to performance first;
-                    array.add("echo " + "performance" + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
-                    array.add("echo " + a + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
-                }
-                String[] commands = array.toArray(new String[0]);
-                shell.setRootInfo(commands);
+                setGovernor(a);
 
-                String complete_path = CPU_GOV_SET_BASE + a;
-
-                try {
                         /*
                          * Probably the kernel takes a while to update the dictionaries
                          * and therefore we sleep for a short interval;
                          */
-                    try {
-                        Thread.sleep(850);
-                    } catch (InterruptedException e) {
-                        Log.e("Aero", "Something interrupted the main Thread, try again.", e);
-                    }
-                    listPref.setSummary(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
-
-                    String completeParamterList[] = shell.getDirInfo(complete_path, true);
-
-                    // If there are already some entries, kill them all (with fire)
-                    if (PrefCat != null)
-                        root.removePreference(PrefCat);
-
-                    PrefCat = new PreferenceCategory(getActivity());
-                    PrefCat.setTitle(R.string.pref_gov_set);
-                    root.addPreference(PrefCat);
-
-                    handler h = new handler();
-
-                    for (String b : completeParamterList)
-                        h.generateSettings(completeParamterList, complete_path);
-
-                    // Probably the wrong place, should be in getDirInfo ?
-                } catch (NullPointerException e) {
-                    Toast.makeText(getActivity(), "Looks like there are no parameter for this governor?", Toast.LENGTH_LONG).show();
-                    Log.e("Aero", "There isn't any folder i can check. Does this governor has parameters?", e);
-
-                    // Should restore old values if something goes wrong;
-                    listPref.setSummary(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
-                    listPref.setValue(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
-
-                    // To clean up the UI;
-                    if (PrefCat != null)
-                        root.removePreference(PrefCat);
-
-                    // store preferences
-                    preference.getEditor().commit();
-
-                    return true;
+                try {
+                    Thread.sleep(350);
+                } catch (InterruptedException e) {
+                    Log.e("Aero", "Something interrupted the main Thread, try again.", e);
                 }
+                listPref.setSummary(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
+
+                // store preferences
+                preference.getEditor().commit();
+
                 return true;
             }
 
@@ -424,6 +393,68 @@ public class CPUFragment extends PreferenceFragment {
 
     }
 
+    // Create our options menu;
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.cpu_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_governor_settings:
+
+                String complete_path = CPU_GOV_SET_BASE + listPref.getValue();
+
+                setGovernor("performance");
+
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+
+                }
+
+                setGovernor(listPref.getValue());
+
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+
+                }
+
+                try {
+
+                    String completeParamterList[] = shell.getDirInfo(complete_path, true);
+
+                    // If there are already some entries, kill them all (with fire)
+                    if (PrefCat != null)
+                        root.removePreference(PrefCat);
+
+                    PrefCat = new PreferenceCategory(getActivity());
+                    PrefCat.setTitle(R.string.pref_gov_set);
+                    root.addPreference(PrefCat);
+
+                    handler h = new handler();
+
+                    for (String b : completeParamterList)
+                        h.generateSettings(completeParamterList, complete_path);
+
+                    // Probably the wrong place, should be in getDirInfo ?
+                } catch (NullPointerException e) {
+                    Toast.makeText(getActivity(), "Looks like there are no parameter for this governor?", Toast.LENGTH_LONG).show();
+                    Log.e("Aero", "There isn't any folder i can check. Does this governor has parameters?", e);
+
+                    return true;
+                }
+
+
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -439,6 +470,22 @@ public class CPUFragment extends PreferenceFragment {
         super.onResume();
 
         mVisible = true;
+    }
+
+    public void setGovernor(String s) {
+
+        ArrayList<String> array = new ArrayList<String>();
+
+        // Change governor for each available CPU;
+        for (int k = 0; k < mNumCpus; k++) {
+            // To ensure we get proper permissions, change the governor to performance first;
+            array.add("echo " + "performance" + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
+            array.add("echo " + s + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
+        }
+        String[] commands = array.toArray(new String[0]);
+
+        shell.setRootInfo(commands);
+
     }
 
     public void updateMinFreq() {
