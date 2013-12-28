@@ -96,7 +96,7 @@ public class GPUFragment extends PreferenceFragment {
                  */
                 String a = (String) o;
 
-                shell.setRootInfo(o, GPU_FREQ_MAX);
+                shell.setRootInfo(a, GPU_FREQ_MAX);
 
                 // Sleep the thread again for UI delay;
                 try {

@@ -277,11 +277,7 @@ public class shellHelper {
      *
      * @return nothing
      */
-    public void setRootInfo(Object command, String content) {
-
-        // Casting object to string;
-        // This is probably deprecated, remove and change Parameter to string...
-        String s = (String) command;
+    public void setRootInfo(String command, String content) {
 
         Process rooting;
         try {
@@ -290,7 +286,7 @@ public class shellHelper {
 
             DataOutputStream dataStream = new DataOutputStream(rooting.getOutputStream());
             // Doing some String-puzzle;
-            dataStream.writeBytes("echo \"" + s + "\" " + "> " + content + "\n");
+            dataStream.writeBytes("echo \"" + command + "\" " + "> " + content + "\n");
             dataStream.writeBytes("exit\n");
             dataStream.flush();
 
