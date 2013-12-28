@@ -1,25 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?android:listPreferredItemHeightSmall"
+    android:layout_height="?android:listPreferredItemHeight"
     android:orientation="horizontal"
     android:showDividers="middle"
     android:divider="?android:dividerVertical"
     android:dividerPadding="8dp"
-    android:gravity="center">
+    android:gravity="left">
 
 
     <TextView android:id="@+id/profile_text"
         style="?android:textAppearanceLarge"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:paddingLeft="?android:listPreferredItemPaddingLeft"
+        android:layout_height="match_parent"
         android:focusable="true"
         android:onClick="onClick"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:paddingTop="5pt"
+        android:background="?android:selectableItemBackground" />
 
     <ImageButton android:id="@+id/delete_button"
-        android:layout_width="48dp"
+        android:layout_width="64dp"
         android:layout_height="match_parent"
         android:src="@drawable/ic_action_discard"
         android:background="?android:selectableItemBackground"
