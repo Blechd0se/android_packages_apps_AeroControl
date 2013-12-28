@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_governor_settings"
+        android:title="@string/pref_cpu_governor"
+        android:icon="@drawable/ic_action_phone"
+        android:showAsAction="ifRoom" />
+
+</menu>
