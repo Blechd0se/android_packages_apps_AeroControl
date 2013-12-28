@@ -55,7 +55,7 @@ public class ProfileFragment extends PreferenceFragment {
         loadProfiles();
 
         // Load default profiles;
-        addDefaultProfiles(new EditText(getActivity()));
+        //addDefaultProfiles(new EditText(getActivity()));
 
         return mContainerView;
     }
@@ -160,7 +160,7 @@ public class ProfileFragment extends PreferenceFragment {
         // Flag if we add a profile to the list which already exists as a file;
         if (flag) {
             // This will save the current profile as a preference;
-            saveProfile(AeroProfile);
+            saveNewProfile(AeroProfile);
         }
 
         // Instantiate a new "row" view.
@@ -218,16 +218,31 @@ public class ProfileFragment extends PreferenceFragment {
         }
     }
 
-    private void saveProfile(SharedPreferences AeroProfile) {
-
+    private void saveNewProfile(SharedPreferences AeroProfile) {
         // Just to be save, loading default again;
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = AeroProfile.edit();
 
-        editor.clear();
-
         // Get all our preferences;
         Map<String,?> allKeys = prefs.getAll();
+
+        saveProfile(allKeys, editor);
+
+    }
+
+    private void applyProfile(SharedPreferences AeroProfile) {
+
+        // Just to be save, loading default again;
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+
+        // Get all our preferences;
+        Map<String,?> allKeys = AeroProfile.getAll();
+
+        saveProfile(allKeys, editor);
+    }
+
+    private void saveProfile(Map<String,?> allKeys, SharedPreferences.Editor editor) {
+
 
         for(Map.Entry<String, ?> entry : allKeys.entrySet()) {
 
@@ -248,8 +263,6 @@ public class ProfileFragment extends PreferenceFragment {
                     tmp = true;
                 else
                     tmp = false;
-
-                Log.e(LOG_TAG, "Output: " + entry.getKey().toString() + " = " + entry.getValue().toString() + " real: " + tmp);
 
                 editor.putBoolean(key, tmp);
 
@@ -273,7 +286,6 @@ public class ProfileFragment extends PreferenceFragment {
         txtView.setText(newName);
 
     }
-
 
     /*
      * Create a onClick Listener for each profile;
@@ -317,7 +329,10 @@ public class ProfileFragment extends PreferenceFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                // Do stuff
+                                deleteProfile("com.aero.control_preferences");
+                                SharedPreferences AeroProfile = getActivity().getSharedPreferences(txtView.getText().toString(), Context.MODE_PRIVATE);
+                                applyProfile(AeroProfile);
+
                             }
                         })
                         .setNegativeButton(R.string.cancel, null)
