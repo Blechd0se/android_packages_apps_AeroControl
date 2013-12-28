@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.aero.control.R;
 import com.aero.control.helpers.shellHelper;
 
+import java.io.File;
+
 /**
  * Created by ac on 16.09.13.
  */
@@ -76,7 +78,6 @@ public class GPUFragment extends PreferenceFragment {
             /*
              * If the folder is missing, disable this feature completely;
              */
-            gpu_control_frequencies.setValue("Unavailable");
             gpu_control_frequencies.setSummary("Unavailable");
             gpu_control_frequencies.setEnabled(false);
             gpu_control_enable.setEnabled(false);

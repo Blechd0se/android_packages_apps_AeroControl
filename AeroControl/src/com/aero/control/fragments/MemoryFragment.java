@@ -24,6 +24,7 @@ import com.aero.control.helpers.shellHelper;
 import com.espian.showcaseview.ShowcaseView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -80,16 +81,17 @@ public class MemoryFragment extends PreferenceFragment {
         // Only show numbers in input field;
         swappiness.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        // Min free ram:
-        min_free_ram.setText(shell.getInfo(MIN_FREE));
         // Only show numbers in input field;
         min_free_ram.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 
         if (shell.getInfo(CMDLINE_ZACHE).equals("Unavailable"))
             zcache.setEnabled(false);
 
+        // Min free ram:
         if (shell.getInfo(MIN_FREE).equals("Unavailable"))
             min_free_ram.setEnabled(false);
+        else
+            min_free_ram.setText(shell.getInfo(MIN_FREE));
 
 
         // Check if enabled or not;
@@ -344,7 +346,6 @@ public class MemoryFragment extends PreferenceFragment {
             public boolean onPreferenceChange(Preference preference, Object o) {
 
                 String a = (String) o;
-
 
                 shell.setRootInfo(a, MIN_FREE);
                 min_free_ram.setText(shell.getInfo(MIN_FREE));
