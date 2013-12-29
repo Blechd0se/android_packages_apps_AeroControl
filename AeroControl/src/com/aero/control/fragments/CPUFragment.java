@@ -424,8 +424,14 @@ public class CPUFragment extends PreferenceFragment {
 
                 String complete_path = CPU_GOV_SET_BASE + listPref.getValue();
 
+                /*
+                 * Before we can get governor specific parameters,
+                 * we need permissions first. Since we don't want to use "su"
+                 * here, we change the current governor shortly to performance.
+                 */
+
                 if (!(Build.MODEL.equals("MB526") ||
-                        Build.MODEL.equals("MB526"))) {
+                        Build.MODEL.equals("MB525"))) {
 
                     setGovernor("performance");
 
