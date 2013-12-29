@@ -7,6 +7,7 @@ import java.util.HashSet;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -423,20 +424,24 @@ public class CPUFragment extends PreferenceFragment {
 
                 String complete_path = CPU_GOV_SET_BASE + listPref.getValue();
 
-                setGovernor("performance");
+                if (!(Build.MODEL.equals("MB526") ||
+                        Build.MODEL.equals("MB526"))) {
 
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
+                    setGovernor("performance");
 
-                }
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
 
-                setGovernor(listPref.getValue());
+                    }
 
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
+                    setGovernor(listPref.getValue());
 
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+
+                    }
                 }
 
                 try {
