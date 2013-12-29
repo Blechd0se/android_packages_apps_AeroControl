@@ -44,6 +44,7 @@ public class ProfileFragment extends PreferenceFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
@@ -55,7 +56,7 @@ public class ProfileFragment extends PreferenceFragment {
         loadProfiles();
 
         // Load default profiles;
-        //addDefaultProfiles(new EditText(getActivity()));
+        addDefaultProfiles(new EditText(getActivity()));
 
         return mContainerView;
     }
@@ -95,8 +96,24 @@ public class ProfileFragment extends PreferenceFragment {
     // Create our options menu;
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String a = prefs.getString("app_theme", null);
+
+        if (a == null)
+            a = "";
+
+        if (a.equals("red"))
+            inflater.inflate(R.menu.profiles_menu, menu);
+        else if (a.equals("light"))
+            inflater.inflate(R.menu.profiles_menu, menu);
+        else if (a.equals("dark"))
+            inflater.inflate(R.menu.profiles_menu_light, menu);
+        else
+            inflater.inflate(R.menu.profiles_menu, menu);
+
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.profiles_menu, menu);
+
     }
 
     @Override

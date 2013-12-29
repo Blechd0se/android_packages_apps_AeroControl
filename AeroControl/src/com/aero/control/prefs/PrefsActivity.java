@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -12,6 +13,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
@@ -27,9 +29,25 @@ import com.aero.control.R;
 public class PrefsActivity extends PreferenceActivity {
 
     static Context context;
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String a = prefs.getString("app_theme", null);
+
+        if (a == null)
+            a = "";
+
+        if (a.equals("red"))
+            setTheme(R.style.RedHolo);
+        else if (a.equals("light"))
+            setTheme(android.R.style.Theme_Holo_Light);
+        else if (a.equals("dark"))
+            setTheme(android.R.style.Theme_Holo_Light_DarkActionBar);
+        else
+            setTheme(R.style.RedHolo);
+
         super.onCreate(savedInstanceState);
 
         // Load the preferences from an XML resource
@@ -44,13 +62,13 @@ public class PrefsActivity extends PreferenceActivity {
 
         final PreferenceScreen root = this.getPreferenceScreen();
         String[] data = {
-                "red", "light"
+                "red", "light", "dark"
         };
 
         EditTextPreference updateLocation = (EditTextPreference)root.findPreference("update_location");
         CheckBoxPreference checkbox_preference = (CheckBoxPreference)root.findPreference("checkbox_preference");
         CheckBoxPreference reboot_checker = (CheckBoxPreference)root.findPreference("reboot_checker");
-        ListPreference appTheme = (ListPreference)root.findPreference("app_theme_list");
+        ListPreference appTheme = (ListPreference)root.findPreference("app_theme");
         Preference about = (Preference)root.findPreference("about");
 
         updateLocation.setEnabled(false);
@@ -59,9 +77,9 @@ public class PrefsActivity extends PreferenceActivity {
         checkbox_preference.setIcon(R.drawable.ic_action_warning);
         reboot_checker.setIcon(R.drawable.ic_action_phone);
 
-        appTheme.setEntries(data);
+        appTheme.setEntries(R.array.app_themes);
         appTheme.setEntryValues(data);
-        appTheme.setEnabled(false);
+        appTheme.setEnabled(true);
         appTheme.setIcon(R.drawable.ic_action_event);
 
         about.setIcon(R.drawable.ic_action_about);
@@ -70,17 +88,8 @@ public class PrefsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
 
-                String a = (String) o;
-
-                // Somehow set the style here....;
-                if (a.equals("red")) {
-                    //this.setTheme(R.style.RedHolo);
-                    root.setLayoutResource(R.style.RedHolo);
-                }
-                else if (a.equals("light")) {
-                    //getActivity().setTheme(android.R.style.Theme_Holo_Light);
-                    root.setLayoutResource(android.R.style.Theme_Holo_Light);
-                }
+                //** store preferences
+                preference.getEditor().commit();
 
                 return true;
             };

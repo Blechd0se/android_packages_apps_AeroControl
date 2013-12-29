@@ -56,6 +56,10 @@
     <string name="pref_app_theme">App Theme</string>
     <string name="pref_app_theme_sum">Defines the default app theme.</string>
 
+    <string name="app_theme_red">Red - Light Holo with red accent</string>
+    <string name="app_theme_light">Light - Light Holo with blue accent</string>
+    <string name="app_theme_dark">Dark - Light Holo with blue accent and black action bar</string>
+
     <!-- About -->
     <string name="about_dialog">Hello. Thank you for using this App. My name is
                         Alexander Christ (Blechd0se) and I have written this App for fun and in my spare time.

@@ -22,7 +22,7 @@
             android:dialogTitle="Lorum ipsum" />
 
         <ListPreference
-            android:key="app_theme_list"
+            android:key="app_theme"
             android:title="@string/pref_app_theme"
             android:summary="@string/pref_app_theme_sum" />
         <Preference

@@ -56,4 +56,11 @@
         <item>10</item>
     </string-array>
 
+    <!-- App Theme -->
+    <string-array name="app_themes">
+        <item>@string/app_theme_red</item>
+        <item>@string/app_theme_light</item>
+        <item>@string/app_theme_dark</item>
+    </string-array>
+
 </resources>

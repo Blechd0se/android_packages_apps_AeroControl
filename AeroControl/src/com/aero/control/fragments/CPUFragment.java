@@ -56,6 +56,7 @@ public class CPUFragment extends PreferenceFragment {
     public ListPreference min_frequency;
     public ListPreference max_frequency;
     public boolean mVisible = true;
+    private SharedPreferences prefs;
 
     public final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
@@ -396,8 +397,23 @@ public class CPUFragment extends PreferenceFragment {
     // Create our options menu;
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String a = prefs.getString("app_theme", null);
+
+        if (a == null)
+            a = "";
+
+        if (a.equals("red"))
+            inflater.inflate(R.menu.cpu_menu, menu);
+        else if (a.equals("light"))
+            inflater.inflate(R.menu.cpu_menu, menu);
+        else if (a.equals("dark"))
+            inflater.inflate(R.menu.cpu_menu_light, menu);
+        else
+            inflater.inflate(R.menu.cpu_menu, menu);
+
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.cpu_menu, menu);
     }
 
     @Override
@@ -410,7 +426,7 @@ public class CPUFragment extends PreferenceFragment {
                 setGovernor("performance");
 
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
 
                 }
@@ -418,7 +434,7 @@ public class CPUFragment extends PreferenceFragment {
                 setGovernor(listPref.getValue());
 
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
 
                 }

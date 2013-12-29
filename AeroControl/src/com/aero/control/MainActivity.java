@@ -6,11 +6,13 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -72,6 +74,8 @@ public class MainActivity extends Activity {
     private UpdaterFragment mUpdaterFragement;
     private ProfileFragment mProfileFragment;
 
+    private SharedPreferences prefs;
+
     private int mBackCounter = 0;
 
     final Handler mHandler = new Handler(Looper.getMainLooper());
@@ -81,6 +85,23 @@ public class MainActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String a = prefs.getString("app_theme", null);
+
+        if (a == null)
+            a = "";
+
+        if (a.equals("red"))
+            setTheme(R.style.RedHolo);
+        else if (a.equals("light"))
+            setTheme(android.R.style.Theme_Holo_Light);
+        else if (a.equals("dark"))
+            setTheme(android.R.style.Theme_Holo_Light_DarkActionBar);
+        else
+            setTheme(R.style.RedHolo);
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -176,7 +197,21 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String a = prefs.getString("app_theme", null);
+
+        if (a == null)
+            a = "";
+
+        if (a.equals("red"))
+            inflater.inflate(R.menu.main, menu);
+        else if (a.equals("light"))
+            inflater.inflate(R.menu.main, menu);
+        else if (a.equals("dark"))
+            inflater.inflate(R.menu.main_light, menu);
+        else
+            inflater.inflate(R.menu.main, menu);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -192,7 +227,7 @@ public class MainActivity extends Activity {
 
         switch (item.getItemId()) {
             case R.id.aero_settings:
-                Toast.makeText(this, "Update location and App Theme are not implemented yet.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Update location is not implemented yet.", Toast.LENGTH_SHORT).show();
 
 
                 Intent trIntent = new Intent("android.intent.action.PREFS");
