@@ -226,7 +226,7 @@ public class shellHelper {
         try {
             return new StringBuilder().append(Integer.valueOf(mhzString) / 1000).append(" MHz")
                     .toString();
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             Log.e(LOG_TAG,
                     "Tried to add something to a non existing string.",
                     e);
@@ -394,7 +394,7 @@ public class shellHelper {
             Log.e(LOG_TAG, "Output from su-Operation: " + output);
             return output;
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.e(LOG_TAG, "Do you even root, bro? :/", e);
         }
         return "Unavailable";
