@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -337,6 +338,8 @@ public class ProfileFragment extends PreferenceFragment {
 
                 }
 
+                profileText.setVerticalScrollBarEnabled(true);
+                profileText.setMovementMethod(new ScrollingMovementMethod());
                 profileText.setPadding(20, 20, 20, 20);
 
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
