@@ -11,6 +11,14 @@
     <string name="default_values">Početne vrijednosti</string>
     <string name="need_reboot">Može zahtijevati ponovno pokretanje.</string>
     <string name="unavailable">Nedostupno</string>
+    <string name="got_it">Razumijem</string>
+    <string name="back_for_close">Pritisnite Back ponovno da bi zatvorili aplikaciju.</string>
+    <string name="define_a_name">Odredite ime za ovaj profil.</string>
+    <string name="add_a_name">Ime profila</string>
+    <string name="add">Dodaj</string>
+    <string name="nothing_added_yet">Whoop! Niste dodali još ni jedan profil.</string>
+    <string name="not_rooted">Nema Root pristupa?</string>
+    <string name="apply">Primjeni</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -20,7 +28,7 @@
     <string name="slider_memory_settings">Ugađanje memorije</string>
     <string name="slider_defy_parts">Defy Parts</string>
     <string name="slider_updater">Ažuriranja</string>
-    <string name="slider_profile">Profiles</string>
+    <string name="slider_profile">Profili</string>
 
     <!-- Overview Elements -->
 
@@ -46,6 +54,9 @@
     <string name="pref_app_theme">Tema</string>
     <string name="pref_app_theme_sum">Određuje zadanu temu aplikacije.</string>
 
+    <string name="app_theme_red">Crveno - Svijetla Holo-tema sa crvenim naglaskom</string>
+    <string name="app_theme_light">Svijetlo - Svijetla Holo-tema sa plavim naglaskom</string>
+    <string name="app_theme_dark">Tamno - Svijetla Holo-tema sa plavim naglaskom i crnom akcijskom trakom</string>
     <!-- About -->
     
     <string name="about_dialog">Pozdrav. Hvala što koristite ovu aplikaciju. Moje ime je
@@ -54,6 +65,11 @@
                         Ako želite možete ili donirati Quarx-u za njegov strašan rom ili meni.
                         <b>Radost življenja je u davanju.</b>
     </string>
+
+    <!-- Root Check -->
+    
+    <string name="root_required">Ćini se da Vaš uređaj nije rootan. Bez root-a ova aplikacija neće ispravno raditi.
+                                Ako mislite da je ovo greška, molim Vas da me obavijestite!</string>
 
     <!-- CPU Fragment -->
 
@@ -83,7 +99,6 @@
     <string name="pref_memory_zcache_compression_sum">Odaberite način kompresije za zCache.</string>
     <string name="pref_dynamic_writeback">Writeback Kontrola</string>
     <string name="pref_dynamic_writeback_sum">Ovdje omogućite ili onemogućite writeback kontrolu.</string>
-
     <string name="pref_low_mem_option">Opcija niske memorije</string>
     <string name="pref_low_mem_option_sum">Ovdje omogućite ili onemogućite opciju niske memorije. Moglo bi biti od pomoći na uređajima s 4.4+ (Kitkat).</string>
     <string name="fstrim_header">Trim Opcija</string>
@@ -100,6 +115,7 @@
     <string name="reboot_notifier">Izgleda da je došlo do rušenja jezgre. Svakako provjerite
                     \n<b>/proc/last_kmsg </b> \nand pošaljite ovu datoteku svom omiljenom razvojnom programeru. Ozbiljno, pošaljite je! \n
                     Ispričavamo se zbog neugodnosti!</string>
+
     <!-- IO Scheduler -->
     
     <string name="io_scheduler">IO Scheduler</string>
@@ -133,6 +149,7 @@
     <string name="proceed_backup">Nastavi s backupom? Ovo će napraviti prićuvnu kopiju Vašu trenutnu jezgru.</string>
     
      <!-- Showcase Strings -->
+
     <string name="showcase_aero_fragment">Dobrodošli u Aero Control!</string>
     <string name="showcase_aero_fragment_sum">Povucite s lijeva na desno kako bi se prikazala navigacijska traka.
                                                 Stranica koju trenutno gledate je glavni pregledni zaslon.
@@ -144,4 +161,30 @@
                                                      na nekoliko dijelova Vašeg operativnog sustava. To može potrajati neko vrijeme,
                                                      pogotovo kada imate spremljeno mnogo podataka.</string>
 
+    <string name="showcase_cpu_fragment_governor">CPU Governor</string>
+    <string name="showcase_cpu_fragment_governor_sum">Kliknite na ovaj simbol da biste dobili puni pristup upravljanju governora! Možete podesiti
+                                                svaki parametar za svaki dostupni governor da bi poboljšali performanse.</string>
+
+    <!-- Defy Parts -->
+    
+     <string name="pref_general_settings_defy">Opće postavke</string>
+     <string name="pref_charging_led">LED boja punjenja</string>
+     <string name="pref_charging_led_sum">Boja Vaše LED prilikom punjenja</string>
+
++    <string name="pref_button_brightness">Svjetlina tipki</string>
+     <string name="pref_button_brightness_sum">Ovdje promjenite svjetlinu tipki.</string>
+
++    <string name="pref_multitouch">Multitouch-Točke</string>
+     <string name="pref_multitouch_sum">Broj multitouch točaka.</string> 
+
+    <string name="pref_charge_led_mode_white">Bijela LED</string>
+    <string name="pref_charge_led_mode_rgb">Miješana LED (crvena/zelena)</string>
+    <string name="pref_charge_led_mode_off">Ugašena</string>
+
+    <!-- Profile Fragment -->
+    
+    <string name="pref_profile_enter_name">Morate unijeti ime.</string>
+    <string name="pref_profile_name_exists">Ovo ime već postoji.</string>
+    <string name="pref_profile_change_name">Postavite drugo ime</string>
+    <string name="pref_profile_change_name_sum">Promijenite ime Vašeg profila.</string>
 </resources>
