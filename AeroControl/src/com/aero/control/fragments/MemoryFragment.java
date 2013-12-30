@@ -44,6 +44,7 @@ public class MemoryFragment extends PreferenceFragment {
     public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
     public static final String MIN_FREE = "/proc/sys/vm/extra_free_kbytes";
     public static final String LOW_MEM = "/system/build.prop";
+    public static final String FILENAME = "firstrun_trim";
 
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
@@ -424,7 +425,6 @@ public class MemoryFragment extends PreferenceFragment {
         mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
 
         // Set up our file;
-        String FILENAME = "firstrun_trim";
         int output = 0;
         byte[] buffer = new byte[1024];
 
@@ -444,7 +444,6 @@ public class MemoryFragment extends PreferenceFragment {
 
     public void DrawFirstStart(int header, int content) {
 
-        String FILENAME = "firstrun_trim";
         String string = "1";
 
         try {
@@ -456,7 +455,7 @@ public class MemoryFragment extends PreferenceFragment {
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        mShowCase = ShowcaseView.insertShowcaseView(130, 600, getActivity(), header, content, mConfigOptions);
+        mShowCase = ShowcaseView.insertShowcaseView(150, 600, getActivity(), header, content, mConfigOptions);
     }
 
 }

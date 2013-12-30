@@ -1,10 +1,15 @@
 package com.aero.control.fragments;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -29,6 +34,7 @@ import android.widget.Toast;
 
 import com.aero.control.R;
 import com.aero.control.helpers.shellHelper;
+import com.espian.showcaseview.ShowcaseView;
 
 /**
  * Created by ac on 03.10.13.
@@ -50,6 +56,7 @@ public class CPUFragment extends PreferenceFragment {
     public static final String CPU_VSEL_MAX = "/proc/overclock/max_vsel";
     public static final String CPU_MAX_RATE = "/proc/overclock/max_rate";
     public static final String CPU_FREQ_TABLE = "/proc/overclock/freq_table";
+    public static final String FILENAME = "firstrun_cpu";
 
     public PreferenceScreen root;
     public PreferenceCategory PrefCat;
@@ -58,6 +65,8 @@ public class CPUFragment extends PreferenceFragment {
     public ListPreference max_frequency;
     public boolean mVisible = true;
     private SharedPreferences prefs;
+    public ShowcaseView.ConfigOptions mConfigOptions;
+    public ShowcaseView mShowCase;
 
     public final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
@@ -548,6 +557,49 @@ public class CPUFragment extends PreferenceFragment {
         //** store preferences
         max_frequency.getEditor().commit();
 
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+        // Prepare Showcase;
+        mConfigOptions = new ShowcaseView.ConfigOptions();
+        mConfigOptions.hideOnClickOutside = false;
+        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
+
+        // Set up our file;
+        int output = 0;
+        byte[] buffer = new byte[1024];
+
+        try {
+            FileInputStream fis = getActivity().openFileInput(FILENAME);
+            output = fis.read(buffer);
+            fis.close();
+        } catch (IOException e) {
+            Log.e("Aero", "Couldn't open File... " + output);
+        }
+
+        // Only show showcase once;
+        if (output == 0)
+            DrawFirstStart(R.string.showcase_cpu_fragment_governor, R.string.showcase_cpu_fragment_governor_sum);
+
+    }
+
+    public void DrawFirstStart(int header, int content) {
+
+        String string = "1";
+
+        try {
+            FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            fos.write(string.getBytes());
+            fos.close();
+        }
+        catch (IOException e) {
+            Log.e("Aero", "Could not save file. ", e);
+        }
+
+        mShowCase = ShowcaseView.insertShowcaseViewWithType(ShowcaseView.ITEM_ACTION_ITEM , R.id.action_governor_settings, getActivity(), header, content, mConfigOptions);
     }
 
     private class RefreshThread extends Thread {

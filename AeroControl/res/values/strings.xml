@@ -175,6 +175,10 @@
                                                     several parts of your Operating System. This can take a while,
                                                     especially when you stored lots of data.</string>
 
+    <string name="showcase_cpu_fragment_governor">CPU Governor</string>
+    <string name="showcase_cpu_fragment_governor_sum">Click this symbol to get the full access of governor control! You can tweak
+                                                every parameter for every governor out there to gain performance.</string>
+
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">General Settings</string>
     <string name="pref_charging_led">Charging LED Color</string>

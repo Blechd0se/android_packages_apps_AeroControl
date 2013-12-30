@@ -176,6 +176,11 @@
                                                     Teile deines Systems mit dem trim-Kommando trimmen. Das könnte ein wenig dauern,
                                                     besonders wenn Du viele Daten hast.</string>
 
+    <string name="showcase_cpu_fragment_governor">CPU Governor</string>
+    <string name="showcase_cpu_fragment_governor_sum">Klicke dieses Symbol um vollen Zugang zu den CPU Governor Parametern zu erhalten!
+                                                    Du kannst jeden Parameter eines beliebigen Governors ändern um noch ein bisschen mehr Leistung
+                                                    zu erhalten.</string>
+
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">Allgemeine Einstellungen</string>
     <string name="pref_charging_led">Lade-LED Farbe</string>
