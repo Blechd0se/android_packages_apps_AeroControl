@@ -115,7 +115,7 @@
     <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
 
     <string name="pref_min_free_ram">Amount of free RAM</string>
-    <string name="pref_min_free_ram_sum">Set the amount of true free ram here.</string>
+    <string name="pref_min_free_ram_sum">Set the amount of true free ram here (in kb).</string>
 
     <string name="has_journal_dialog_header">Problem detected</string>
 

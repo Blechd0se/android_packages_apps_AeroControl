@@ -10,6 +10,15 @@
     <string name="donation_quarx">Spende an Quarx</string>
     <string name="default_values">Standardwerte</string>
     <string name="need_reboot">Benötige Reboot.</string>
+    <string name="unavailable">Nicht verfügbar</string>
+    <string name="got_it">Verstanden</string>
+    <string name="back_for_close">PDrücke noch einmal Zurück um die App zu schließen.</string>
+    <string name="define_a_name">Definiere Deinen Profilnamen.</string>
+    <string name="add_a_name">Profilname</string>
+    <string name="add">Hinzufügen</string>
+    <string name="nothing_added_yet">Whoop! Du hast bis jetzt keine Profile hinzugefügt.</string>
+    <string name="not_rooted">Kein Rootzugriff?</string>
+    <string name="apply">Anwenden</string>
 
 
     <!-- Default Navigation Drawer entries -->
@@ -41,10 +50,16 @@
     <string name="pref_appspecific">App spezifisch</string>
     <string name="pref_setatboot">Beim Hochfahren setzen</string>
     <string name="pref_setatboot_sum">Achtung: Das setzt die Einstellungen beim Hochfahren.</string>
+    <string name="pref_rebootcheck">Random Reboot Checker</string>
+    <string name="pref_rebootcheck_sum">Wird dich informieren, wenn Du einen zufälligen Reboot hattest.</string>
     <string name="pref_updatepath">Updatepfad</string>
     <string name="pref_updatepath_sum">Gewünschter Updatepfad.</string>
     <string name="pref_app_theme">App Aussehen</string>
     <string name="pref_app_theme_sum">Setzt den Style der App fest.</string>
+
+    <string name="app_theme_red">Rot - Light Holo mit rotem Akzent</string>
+    <string name="app_theme_light">Light - Light Holo mit blauem Akzent</string>
+    <string name="app_theme_dark">Dark - Light Holo mit blauem Akzent und dunkler Actionbar</string>
 
     <!-- About -->
     <string name="about_dialog">Hallo. Danke, dass Du meine App nutzt. Mein Name
@@ -53,6 +68,10 @@
                         Wenn Du möchstest, kannst du entweder für Quarx Arbeit an der ROM spenden oder an mich.
                         <b>The joy of living is in the giving.</b>
     </string>
+
+    <!-- Root Check -->
+    <string name="root_required">Sieht so aus als wäre dein Gerät nicht gerootet. Diese App wird ohne Root nicht korrekt funktionieren.
+                                Wenn Du meinst, dass dies ein Fehler ist, sende mir eine Email!</string>
 
     <!-- CPU Fragment -->
 
@@ -87,8 +106,29 @@
     <string name="pref_memory_zcache_compression">zCache Kompression</string>
     <string name="pref_memory_zcache_compression_sum">Einstellung der zCache Kompressions-Methode.</string>
 
+    <string name="pref_dynamic_writeback">Writeback Kontrolle</string>
+    <string name="pref_dynamic_writeback_sum">Der writeback-Deamon wird nur arbeiten, während der Bildschrim ausgeschalten ist.</string>
+
+    <string name="pref_low_mem_option">Low Memory Option</string>
+    <string name="pref_low_mem_option_sum">Low Memory optimiert das System auf Geräten mit wenig Arbeitsspeicher. Hierfür brauchst Du 4.4+ (Kitkat).</string>
+
     <string name="fstrim_header">Trim Optionen</string>
     <string name="fstrim_content">Mit Trim lassen sich Partition trimmen, das kann eine Weile dauern.</string>
+
+    <string name="pref_min_free_ram">Menge an freiem RAM</string>
+    <string name="pref_min_free_ram_sum">Setze hier die absolute Minimalgrenze an freiem RAM (in KBs).</string>
+
+    <string name="has_journal_dialog_header">Problem gefunden</string>
+
+    <string name="has_journal_dialog">Sieht so aus als hätte Deine /data Partition das <b>has_journal</b> Feature nicht aktiviert.
+                            Bitte boote in die Recovery und führe folgendes Kommando via adb shell aus: <br /> <br />
+                            <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+    </string>
+
+    <string name="reboot_notifier_header">Oops, das war nicht beabsichtigt</string>
+    <string name="reboot_notifier">Sieht so aus als wäre dein Kernel gecrasht. Schau Dir bitte folgende Datei an
+                    \n<b>/proc/last_kmsg </b> \nund sende sie deinem Lieblingsentwickler. Nein wirklich, tu das! \n
+                    Wir entschuldigen uns fpr die Unanehmlichkeiten!</string>
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">IO Scheduler</string>
@@ -99,6 +139,12 @@
                                             sowie einige Basis Algorithmen für die GPU.</string>
     <string name="pref_gpu_max_freq">Max. Frequenz</string>
     <string name="pref_gpu_max_freq_sum">Setzt die maximale GPU Frequenz. Standard ist 200 MHz.</string>
+
+    <string name="pref_display_color">Bildschirmfarben</string>
+    <string name="pref_display_color_sum">Stelle die Bildschirmfarben hier ein.</string>
+    <string name="defy_red_colors">Defy Rot Farbprofil</string>
+    <string name="defy_green_colors">Defy Grün Farbprofil</string>
+    <string name="defy_energy_saver">Energiesparer</string>
 
     <!-- Updater Fragment -->
     <string name="pref_updater">Kernel Updater und Backup</string>
@@ -116,5 +162,39 @@
     <string name="backup_from">Backup von </string>
     <string name="restore_from_backup">Möchtest Du folgendes Backup wiederherstellen </string>
     <string name="proceed_backup">Fortfahren mit Backup? Das wird deinen momentanen Kernel sichern.</string>
+
+
+    <!-- Showcase Strings -->
+    <string name="showcase_aero_fragment">Willkommen bei Aero Control!</string>
+    <string name="showcase_aero_fragment_sum">Swipe von links nach rechts um zum Menu zu gelangen.
+                                                Die Seite, die Du momentan siehst ist die Übersichtsseite.
+                                                Dort gibt es eine kleine Zusammenfassung über dein System. Diese aktualsieren
+                                                sich selbstständig, Du musst nirgends klicken!</string>
+
+    <string name="showcase_memory_fragment_trim">Trim Optionen</string>
+    <string name="showcase_memory_fragment_trim_sum">Um die Performance deines Gerätes dauerhaft aufrecht zu erhalten, kannst Du verschiedene
+                                                    Teile deines Systems mit dem trim-Kommando trimmen. Das könnte ein wenig dauern,
+                                                    besonders wenn Du viele Daten hast.</string>
+
+    <!-- Defy Parts -->
+    <string name="pref_general_settings_defy">Allgemeine Einstellungen</string>
+    <string name="pref_charging_led">Lade-LED Farbe</string>
+    <string name="pref_charging_led_sum">Farbe der LED während des Ladens</string>
+
+    <string name="pref_button_brightness">Tasten-Helligkeit</string>
+    <string name="pref_button_brightness_sum">Helligkeit deiner Softtasten.</string>
+
+    <string name="pref_multitouch">Multitouch-Punkte</string>
+    <string name="pref_multitouch_sum">Anzahl der gleichzeitig registrierten Multitouch-Punkte.</string>
+
+    <string name="pref_charge_led_mode_white">Weiße LED</string>
+    <string name="pref_charge_led_mode_rgb">Gemischte LED (rot/grün)</string>
+    <string name="pref_charge_led_mode_off">Aus</string>
+
+    <!-- Profile Fragment -->
+    <string name="pref_profile_enter_name">Du musst einen Namen eingeben.</string>
+    <string name="pref_profile_name_exists">Dieser name existiert bereits.</string>
+    <string name="pref_profile_change_name">Ändere den Namen</string>
+    <string name="pref_profile_change_name_sum">Ändere den Namen deines Profils.</string>
 
 </resources>
