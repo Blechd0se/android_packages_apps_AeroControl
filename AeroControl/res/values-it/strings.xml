@@ -17,6 +17,8 @@
     <string name="add_a_name">Nome del profilo</string>
     <string name="add">Aggiungi</string>
     <string name="nothing_added_yet">Ooops! Non hai ancora aggiunto un profilo.</string>
+    <string name="not_rooted">No Root?</string>
+    <string name="apply">Applica</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -47,10 +49,16 @@
     <string name="pref_appspecific">Specifiche</string>
     <string name="pref_setatboot">Imposta all\'avvio</string>
     <string name="pref_setatboot_sum">Attenzione: Applicherà le impostazioni all\'avvio</string>
+    <string name="pref_rebootcheck">Controllo riavvii improvvisi</string>
+    <string name="pref_rebootcheck_sum">Ti informerà in caso di riavvii improvvisi.</string>
     <string name="pref_updatepath">Posizione dell\'update:</string>
     <string name="pref_updatepath_sum">Applica la destinazione dell\'update.</string>
     <string name="pref_app_theme">Tema</string>
     <string name="pref_app_theme_sum">Seleziona il tema dell\'applicazione.</string>
+
+    <string name="app_theme_red">Rosso - Tema Holo chiaro con i dettagli rossi</string>
+    <string name="app_theme_light">Chiaro - Tema Holo chiaro con i dettagli blu</string>
+    <string name="app_theme_dark">Scuro - Tema Holo chiaro con i dettagli blu e la barra superiore nera</string>
 
     <!-- About -->
     <string name="about_dialog">Ciao. Grazie per aver installato quest\'app. Il mio nome è Alexander
@@ -60,6 +68,11 @@
                                 donare a Quarx per la sua fantastica rom o a me.
                                 <b>The joy of living is in the giving.</b>
     </string>
+
+    <!-- Root Check -->
+    <string name="root_required">Sembra che il tuo dispositivo non sia rootato. Questa applicazione non 
+                                funzionerà correttamente senza root. Se pensi che sia un errore, segnalamelo!</string>
+
 
     <!-- CPU Fragment -->
 
@@ -105,7 +118,7 @@
     <string name="fstrim_content">Taglia delle parti del tuo sistema! Potrebbe richiedere del tempo.</string>
 
     <string name="pref_min_free_ram">Quantità di RAM libera</string>
-    <string name="pref_min_free_ram_sum">Imposta il quantitativo di ram libera.</string>
+    <string name="pref_min_free_ram_sum">Imposta il quantitativo di ram libera (in kb).</string>
 
     <string name="has_journal_dialog_header">Problema rilevato</string>
 
@@ -166,6 +179,10 @@
                                                       Sistema Operativo. Potrebbe richiedere del tempo, specialmente
                                                       quando sono depositati molti dati.</string>
 
+    <string name="showcase_cpu_fragment_governor">Governor CPU</string>
+    <string name="showcase_cpu_fragment_governor_sum">Premi questo tasto per avere il pieno controllo del governor! Puoi 
+                                                    cambiare ogni parametro di ogni governor per migliori performance.</string>
+
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">Impostazioni Generali</string>
     <string name="pref_charging_led">Colore del LED in ricarica</string>
@@ -177,5 +194,14 @@
     <string name="pref_multitouch">Punti MultiTouch</string>
     <string name="pref_multitouch_sum">Imposta il numero dei punti multi-touch.</string>
 
+    <string name="pref_charge_led_mode_white">LED bianco</string>
+    <string name="pref_charge_led_mode_rgb">LED misto (rosso/verde)</string>
+    <string name="pref_charge_led_mode_off">Spento</string>
+
+    <!-- Profile Fragment -->
+    <string name="pref_profile_enter_name">Devi inserire un nome.</string>
+    <string name="pref_profile_name_exists">Questo nome esiste già.</string>
+    <string name="pref_profile_change_name">Imposta un\'altro nome</string>
+    <string name="pref_profile_change_name_sum">Cambia il nome del profilo.</string>
 
 </resources>
