@@ -23,7 +23,11 @@ public class GPUFragment extends PreferenceFragment {
     public static final String GPU_CONTROL_ACTIVE = "/sys/kernel/gpu_control/gpu_control_active";
     public static final String GPU_FREQ_CUR = "/proc/gpu/cur_rate";
     public static final String DISPLAY_COLOR ="/sys/class/misc/display_control/display_brightness_value";
+    public static final String GPU_FREQ_NEXUS4 = "/sys/class/kgsl/kgsl-3d0/max_gpuclk";
+    public static final String GPU_FREQ_NEXUS4_VALUES = "/sys/class/kgsl/kgsl-3d0/gpu_available_frequencies";
     public boolean checkGpuControl;
+
+    public String gpu_file;
 
     shellHelper shell = new shellHelper();
 
@@ -43,6 +47,17 @@ public class GPUFragment extends PreferenceFragment {
         final CheckBoxPreference gpu_control_enable = (CheckBoxPreference)root.findPreference("gpu_control_enable");
         final ListPreference display_control = (ListPreference)root.findPreference("display_control");
 
+        if(!(new File(GPU_CONTROL_ACTIVE).exists()))
+                gpu_control_enable.setEnabled(false);
+
+        if (!(new File(GPU_FREQ_MAX).exists() || new File(GPU_FREQ_NEXUS4).exists()))
+            gpu_control_frequencies.setEnabled(false);
+
+        // Check for nexus;
+        if (new File(GPU_FREQ_NEXUS4).exists())
+            gpu_file = GPU_FREQ_NEXUS4;
+        else
+            gpu_file = GPU_FREQ_MAX;
 
         if (shell.getInfo(DISPLAY_COLOR).equals("Unavailable"))
             display_control.setEnabled(false);
@@ -58,13 +73,18 @@ public class GPUFragment extends PreferenceFragment {
         display_control.setEntryValues(display_values);
 
         // Just throw in our frequencies;
-        gpu_control_frequencies.setEntries(R.array.gpu_frequency_list);
-        gpu_control_frequencies.setEntryValues(R.array.gpu_frequency_list_values);
+        if (gpu_file.equals(GPU_FREQ_NEXUS4)) {
+            gpu_control_frequencies.setEntries(shell.getInfoArray(GPU_FREQ_NEXUS4_VALUES, 0, 0));
+            gpu_control_frequencies.setEntryValues(shell.getInfoArray(GPU_FREQ_NEXUS4_VALUES, 0, 0));
+        } else {
+            gpu_control_frequencies.setEntries(R.array.gpu_frequency_list);
+            gpu_control_frequencies.setEntryValues(R.array.gpu_frequency_list_values);
+        }
 
         try  {
-            gpu_control_frequencies.setValue(shell.getInfoArray(GPU_FREQ_MAX, 1, 0)[0]);
-            gpu_control_frequencies.setSummary(shell.toMHz((shell.getInfoArray(GPU_FREQ_MAX, 0, 0)[0].substring(0,
-                    shell.getInfoArray(GPU_FREQ_MAX, 0, 0)[0].length() - 3))));
+            gpu_control_frequencies.setValue(shell.getInfoArray(gpu_file, 0, 0)[0]);
+            gpu_control_frequencies.setSummary(shell.toMHz((shell.getInfoArray(gpu_file, 0, 0)[0].substring(0,
+                    shell.getInfoArray(gpu_file, 0, 0)[0].length() - 3))));
 
             // Check if enabled or not;
             if (shell.getInfo(GPU_CONTROL_ACTIVE).equals("1"))
@@ -97,7 +117,9 @@ public class GPUFragment extends PreferenceFragment {
                  */
                 String a = (String) o;
 
-                shell.setRootInfo(a, GPU_FREQ_MAX);
+                Log.e("Aero", "output: " + a);
+
+                shell.setRootInfo(a, gpu_file);
 
                 // Sleep the thread again for UI delay;
                 try {

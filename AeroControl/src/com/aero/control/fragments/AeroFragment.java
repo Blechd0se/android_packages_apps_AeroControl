@@ -17,6 +17,7 @@ import com.aero.control.adapter.adapterInit;
 import com.aero.control.helpers.shellHelper;
 import com.espian.showcaseview.ShowcaseView;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class AeroFragment extends Fragment {
     public static final String GOV_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String GPU_FREQ = "/proc/gpu/cur_rate";
+    public static final String GPU_FREQ_NEXUS4 = "/sys/class/kgsl/kgsl-3d0/gpuclk";
     private static final String FILENAME_PROC_MEMINFO = "/proc/meminfo";
 
     public ListView listView1;
@@ -42,6 +44,8 @@ public class AeroFragment extends Fragment {
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
     public boolean mVisible = true;
+
+    public String gpu_file;
 
     public Fragment newInstance(Context context) {
         mAeroFragment = new AeroFragment();
@@ -114,6 +118,12 @@ public class AeroFragment extends Fragment {
          * Current Problem; Thread won't start again after FragmentSwitch
          */
 
+        File gpu = new File(GPU_FREQ_NEXUS4);
+        if (gpu.exists())
+            gpu_file = GPU_FREQ_NEXUS4;
+        else
+            gpu_file = GPU_FREQ;
+
         try {
             mRefreshThread.start();
             mRefreshThread.setPriority(Thread.MIN_PRIORITY);
@@ -184,7 +194,7 @@ public class AeroFragment extends Fragment {
                         new adapterInit(0, getString(R.string.current_governor), shell.getInfo(GOV_FILE)),
                         new adapterInit(0, getString(R.string.current_io_governor), shell.getInfo(GOV_IO_FILE)),
                         new adapterInit(0, getString(R.string.current_cpu_speed), getFreqPerCore()),
-                        new adapterInit(0, getString(R.string.current_gpu_speed), shell.toMHz((shell.getInfo(GPU_FREQ).substring(0, shell.getInfo(GPU_FREQ).length() - 3)))),
+                        new adapterInit(0, getString(R.string.current_gpu_speed), shell.toMHz((shell.getInfo(gpu_file).substring(0, shell.getInfo(gpu_file).length() - 3)))),
                         new adapterInit(0, getString(R.string.available_memory), shell.getMemory(FILENAME_PROC_MEMINFO))
                 };
 
