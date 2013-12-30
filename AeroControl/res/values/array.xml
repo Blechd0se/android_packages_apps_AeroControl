@@ -41,7 +41,14 @@
 
 
     <!-- Defy Parts -->
+
     <string-array name="charge_led_mode_entries">
+        <item>@string/pref_charge_led_mode_white</item>
+        <item>@string/pref_charge_led_mode_rgb</item>
+        <item>@string/pref_charge_led_mode_off</item>
+    </string-array>
+
+    <string-array name="charge_led_mode_values" translatable="false">
         <item>white</item>
         <item>rgb</item>
         <item>off</item>

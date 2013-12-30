@@ -186,6 +186,9 @@
     <string name="pref_multitouch">Multitouch-Points</string>
     <string name="pref_multitouch_sum">Number of multitouch points.</string>
 
+    <string name="pref_charge_led_mode_white">White LED</string>
+    <string name="pref_charge_led_mode_rgb">Mixed LED (red/green)</string>
+    <string name="pref_charge_led_mode_off">Off</string>
 
     <!-- Profile Fragment -->
     <string name="pref_profile_enter_name">You have to enter a name.</string>
