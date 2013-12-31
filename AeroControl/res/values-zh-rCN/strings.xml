@@ -12,6 +12,13 @@
     <string name="need_reboot">需要重新启动</string>
     <string name="unavailable">不可用</string>
     <string name="got_it">知道了！</string>
+    <string name="back_for_close">再次按下返回键可退出</string>
+    <string name="define_a_name">为该方案命名</string>
+    <string name="add_a_name">配置方案名称</string>
+    <string name="add">添加</string>
+    <string name="nothing_added_yet">你还没有添加任何配置方案</string>
+    <string name="not_rooted">没有 Root？</string>
+    <string name="apply">应用</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -21,7 +28,7 @@
     <string name="slider_memory_settings">内存设置调节</string>
     <string name="slider_defy_parts">Defy Parts</string>
     <string name="slider_updater">更新器</string>
-    <string name="slider_profile">Profiles</string>
+    <string name="slider_profile">配置方案</string>
 
     <!-- Overview Elements -->
 
@@ -42,15 +49,24 @@
     <string name="pref_appspecific">应用相关</string>
     <string name="pref_setatboot">启动时设置</string>
     <string name="pref_setatboot_sum">注意：这将使得系统启动时即采用你的设置</string>
+    <string name="pref_rebootcheck">意外重启监测</string>
+    <string name="pref_rebootcheck_sum">如果你的设备意外重启，它将会通知你</string>
     <string name="pref_updatepath">更新路径:</string>
     <string name="pref_updatepath_sum">设置更新路径</string>
     <string name="pref_app_theme">应用主题</string>
     <string name="pref_app_theme_sum">设定默认的应用主题</string>
 
+    <string name="app_theme_red">红 - Holo 亮色主题，红色高亮</string>
+    <string name="app_theme_light">亮 - Holo 亮色主题，红色高亮</string>
+    <string name="app_theme_dark">暗 - Holo 亮色主题，红色高亮，黑色操作栏</string>
+
     <!-- About -->
     <string name="about_dialog">你好！感谢你使用此应用。我是 Alexander Christ (Blechd0se)，这是我闲暇时间里的随兴之作。它是开源的，因此你能下载源代码并随意修改。如果乐意的话，你可以给 Quarx (为了他了不起的 ROM) 或我一些捐助。
                         <b>生命之乐趣在于给予。</b>
     </string>
+
+    <!-- Root Check -->
+    <string name="root_required">你的设备似乎没有取得 root 权限，而此应用需要 root 权限才能正常运行。如果你认为判断有误，烦请告知。</string>
 
     <!-- CPU Fragment -->
 
@@ -96,8 +112,8 @@
     <string name="fstrim_header">Trim 选项</string>
     <string name="fstrim_content">对系统的一些部分进行 Trim！需要一定的时间</string>
 
-    <string name="pref_min_free_ram">可用 RAM 大小</string>
-    <string name="pref_min_free_ram_sum">在此设置真正可用的 RAM 的大小</string>
+    <string name="pref_min_free_ram">空余 RAM 大小</string>
+    <string name="pref_min_free_ram_sum">在此设置真正空余的 RAM 的大小(以kb为单位)</string>
 
     <string name="has_journal_dialog_header">发现问题</string>
     
@@ -127,14 +143,14 @@
     <!-- Updater Fragment -->
     <string name="pref_updater">内核更新及备份</string>
     <string name="pref_backup_kernel">备份内核</string>
-    <string name="pref_backup_kernel_content">这将保存当前内核的副本</string>
+    <string name="pref_backup_kernel_sum">这将保存当前内核的副本</string>
 
     <string name="pref_updater_kernel">更新内核</string>
-    <string name="pref_updater_kernel_content">可以为你更新内核</string>
+    <string name="pref_updater_kernel_sum">可以为你更新内核</string>
 
     <string name="pref_restore">还原备份</string>
     <string name="pref_restore_kernel">还原</string>
-    <string name="pref_restore_kernel_content">从内核备份还原</string>
+    <string name="pref_restore_kernel_sum">从内核备份还原</string>
 
     <string name="last_backup_from">最近备份于 </string>
     <string name="backup_from">备份于 </string>
@@ -148,4 +164,29 @@
     <string name="showcase_memory_fragment_trim">Trim 选项</string>
     <string name="showcase_memory_fragment_trim_sum">要保持设备性能，你可以对操作系统的一些部分进行 Trim。这需要一定的时间，特别是存有大量数据的情况。</string>
 
+    <string name="showcase_cpu_fragment_governor">CPU 调速器</string>
+    <string name="showcase_cpu_fragment_governor_sum">点击这个符号来开启完整的调速器设置！你可以调节每一个调速器的每一个参数来增加性能</string>
+
+    <!-- Defy Parts -->
+    <string name="pref_general_settings_defy">一般设置</string>
+    <string name="pref_charging_led">充电 LED 颜色</string>
+    <string name="pref_charging_led_sum">设置充电时的 LED 指示灯颜色</string>
+
+    <string name="pref_button_brightness">按键亮度</string>
+    <string name="pref_button_brightness_sum">在此更改按键亮度</string>
+
+    <string name="pref_multitouch">多点触控</string>
+    <string name="pref_multitouch_sum">多点触控支持的点数</string>
+
+    <string name="pref_charge_led_mode_white">白色 LED</string>
+    <string name="pref_charge_led_mode_rgb">混合颜色 LED (红/绿)</string>
+    <string name="pref_charge_led_mode_off">关闭</string>
+    
+
+    <!-- Profile Fragment -->
+    <string name="pref_profile_enter_name">你得输入一个名称</string>
+    <string name="pref_profile_name_exists">该名称已存在</string>
+    <string name="pref_profile_change_name">更名</string>
+    <string name="pref_profile_change_name_sum">为你的配置方案更名</string>
+    
 </resources>
