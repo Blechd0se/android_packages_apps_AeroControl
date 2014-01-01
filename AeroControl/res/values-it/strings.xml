@@ -63,8 +63,8 @@
     <!-- About -->
     <string name="about_dialog">Ciao. Grazie per aver installato quest\'app. Il mio nome è Alexander
                                 Christ (Blechd0se) ed ho scritto quest\'app nel mio tempo libero per
-                                divertimento. Inoltre è Open Source, quindi puoi prendere il
-                                codice sorgente e modificarlo a tuo piacimento. Se vuoi puoi anche
+                                divertimento. É Open Source, quindi puoi prendere il
+                                codice sorgente e modificarlo a tuo piacimento. Inoltre se vuoi puoi anche
                                 donare a Quarx per la sua fantastica rom o a me.
                                 <b>The joy of living is in the giving.</b>
     </string>
@@ -77,7 +77,7 @@
     <!-- CPU Fragment -->
 
     <string name="pref_cpu_freq">Frequenze</string>
-    <string name="pref_cpu_freqmax">Max. Frequenza</string>
+    <string name="pref_cpu_freqmax">Mass. Frequenza</string>
     <string name="pref_cpu_freqmin">Min. Frequenza</string>
     <string name="pref_cpu_governor">Impostazioni</string>
     <string name="perf_live_oc_uc">Live OC/UC</string>
@@ -140,7 +140,7 @@
     <string name="pref_gpu_control_enable">Controllo GPU</string>
     <string name="pref_gpu_control_enable_sum">Abilita il driver per il controllo della GPU. Gestisce anche il overclocking/undervolting.
                                             e alcune programmazioni basiche per la GPU.</string>
-    <string name="pref_gpu_max_freq">Frequenza Max.</string>
+    <string name="pref_gpu_max_freq">Frequenza Mass.</string>
     <string name="pref_gpu_max_freq_sum">Imposterà la massima frequenza della GPU. La predefinita è di 200 Mhz.</string>
 
     <string name="pref_display_color">Colore del display</string>
