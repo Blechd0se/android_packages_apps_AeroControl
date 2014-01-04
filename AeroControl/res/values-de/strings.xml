@@ -128,7 +128,7 @@
     <string name="reboot_notifier_header">Oops, das war nicht beabsichtigt</string>
     <string name="reboot_notifier">Sieht so aus als wäre dein Kernel gecrasht. Schau Dir bitte folgende Datei an
                     \n<b>/proc/last_kmsg </b> \nund sende sie deinem Lieblingsentwickler. Nein wirklich, tu das! \n
-                    Wir entschuldigen uns fpr die Unanehmlichkeiten!</string>
+                    Wir entschuldigen uns für die Unanehmlichkeiten!</string>
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">IO Scheduler</string>

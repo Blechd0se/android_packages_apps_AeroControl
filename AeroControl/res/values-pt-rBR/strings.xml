@@ -12,7 +12,7 @@
     <string name="need_reboot">Isso pode requerer um reinício.</string>
     <string name="unavailable">Indisponível</string>
     <string name="got_it">Pronto</string>
-    <string name="back_for_close">Aperte 'voltar' novamente para fechar o aplicativo.</string>
+    <string name="back_for_close">Aperte \'voltar\' novamente para fechar o aplicativo.</string>
     <string name="define_a_name">Defina um nome para este perfil.</string>
     <string name="add_a_name">Nome do perfil</string>
     <string name="add">Adicionar</string>
