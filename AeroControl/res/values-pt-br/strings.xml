@@ -1,0 +1,201 @@
+<resources>
+    <string name="app_name">Aero Control</string>
+    <string name="drawer_open">Abrir gaveta de navegação</string>
+    <string name="drawer_close">Fechar gaveta de navegação</string>
+    <string name="error_detected">Erro ?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Salvar</string>
+    <string name="github">Github AeroControl</string>
+    <string name="donation_blechdose">Contribua com Blechdose</string>
+    <string name="donation_quarx">Contribua com Quarx</string>
+    <string name="default_values">Valores padrão</string>
+    <string name="need_reboot">Isso pode requerer um reinício.</string>
+    <string name="unavailable">Indisponível</string>
+    <string name="got_it">Pronto</string>
+    <string name="back_for_close">Aperte 'voltar' novamente para fechar o aplicativo.</string>
+    <string name="define_a_name">Defina um nome para este perfil.</string>
+    <string name="add_a_name">Nome do perfil</string>
+    <string name="add">Adicionar</string>
+    <string name="nothing_added_yet">Ops! Você ainda não adicionou nenhum perfil.</string>
+    <string name="not_rooted">Sem Root?</string>
+    <string name="apply">Aplicar</string>
+
+    <!-- Default Navigation Drawer entries -->
+
+    <string name="slider_overview">Visão Geral</string>
+    <string name="slider_cpu_settings">Performance da CPU</string>
+    <string name="slider_gpu_settings">Controle da GPU</string>
+    <string name="slider_memory_settings">Gerenciamento de Memória</string>
+    <string name="slider_defy_parts">Defy Parts</string>
+    <string name="slider_updater">Atualizações</string>
+    <string name="slider_profile">Perfis</string>
+
+    <!-- Overview Elements -->
+
+    <string name="kernel_version">Kernel:</string>
+    <string name="current_cpu_speed">Frequência da CPU:</string>
+    <string name="current_gpu_speed">Frequência da GPU:</string>
+    <string name="current_governor">Gerenciador:</string>
+    <string name="current_io_governor">Designador de tarefas:</string>
+    <string name="available_memory">Memória total:</string>
+
+    <!-- Action Overflow Menu -->
+
+    <string name="about">Sobre</string>
+    <string name="aero_settings">Configurações</string>
+
+    <!-- Preference Menu -->
+
+    <string name="pref_appspecific">App specific </string>
+    <string name="pref_setatboot">Aplicar no Boot</string>
+    <string name="pref_setatboot_sum">Cuidado: Suas configurações serão aplicadas no Boot.</string>
+    <string name="pref_rebootcheck">Verificador de reinicializações aleatórias</string>
+    <string name="pref_rebootcheck_sum">Isso vai informá-lo caso seu dispositivo reinicie sozinho.</string>
+    <string name="pref_updatepath">Updatelocation:</string>
+    <string name="pref_updatepath_sum">Coloque sua preferência para pasta de updates.</string>
+    <string name="pref_app_theme">Tema do aplicativo</string>
+    <string name="pref_app_theme_sum">Define o tema do aplicativo.</string>
+
+    <string name="app_theme_red">Vermelho - Leve Holo com toques vermelhos</string>
+    <string name="app_theme_light">Claro - Leve Holo com toques azuis</string>
+    <string name="app_theme_dark">Escuro - Leve Holo com toques azuis e barra de ação preta</string>
+
+    <!-- About -->
+    <string name="about_dialog">Olá. Obrigado por usar este aplicativo. Meu nome é
+                        Alexander Christ (Blechd0se) e escrevi esse aplicativo por diversão, no meu tempo livre.
+                        Ele também é de código aberto, então você pode pegar o código-fonte e modificar o quanto quiser.
+                        Se você quiser, pode também contribuir com Quarx pelo seu incrível trabalho, ou contribuir comigo.
+                        <b>A alegria da vida está em doar.</b>
+    </string>
+
+    <!-- Root Check -->
+    <string name="root_required">O seu dispositivo não parece estar com root. Este aplicativo não irá funcionar corretamente sem root.
+                                Se você acha que estou errado, por favor me informe!</string>
+
+    <!-- CPU Fragment -->
+
+    <string name="pref_cpu_freq">Frequências</string>
+    <string name="pref_cpu_freqmax">Frequência máx.</string>
+    <string name="pref_cpu_freqmin">Frequência min.</string>
+    <string name="pref_cpu_governor">Configurações do gerenciador</string>
+    <string name="perf_live_oc_uc">COntrole de OC/UC</string>
+    <string name="perf_live_oc_uc_sum">Controle frequências e voltagem em tempo real!</string>
+
+    <string name="pref_gov_choose">Configurações do gerenciador</string>
+    <string name="pref_gov_choose_sum">Seleciona seu gerenciador favorito!</string>
+
+    <string name="pref_gov_set">Configurações específicas do gerenciador</string>
+    <string name="pref_gov_set_sum">Seleciona as configurações específicas do gerenciador escolhido.</string>
+
+    <!-- Memory Fragment -->
+    <string name="pref_memory_settings">Configurações de memória</string>
+
+    <string name="pref_memory_swappiness">Substituição</string>
+    <string name="pref_memory_swappiness_sum">Define o modo como o kernel vai substituir as páginas de memória.</string>
+
+    <string name="pref_dynamic_fsync">FSync Dinâmico</string>
+    <string name="pref_dynamic_fsync_sum">FSync dinâmico habilita FSync apenas quando a tela está desligada..</string>
+
+    <string name="pref_memory_swap">Área de swap</string>
+    <string name="pref_memory_swap_sum">Cria uma área de troca.</string>
+
+    <string name="pref_memory_zcache">zCache</string>
+    <string name="pref_memory_zcache_sum">zCache usa processamento da CPU para um melhor gerenciamento de memória.</string>
+
+    <string name="pref_memory_zcache_compression">Compressão zCache</string>
+    <string name="pref_memory_zcache_compression_sum">Escolha o método de compressão para o zCache.</string>
+
+    <string name="pref_dynamic_writeback">Controle de sobrescrita</string>
+    <string name="pref_dynamic_writeback_sum">Ative ou desative o controle de sobrescrita aqui.</string>
+
+    <string name="pref_low_mem_option">Opções de baixa memória</string>
+    <string name="pref_low_mem_option_sum">Ative ou desative a opção de baixa memória aqui. Isso pode ajudar em dispositivos rodando 4.4+ (Kitkat).</string>
+
+    <string name="fstrim_header">Opções de corte</string>
+    <string name="fstrim_content">Retire várias partes do seu sistema! Isso pode levar algum tempo.</string>
+
+    <string name="pref_min_free_ram">Quantidade de RAM livre</string>
+    <string name="pref_min_free_ram_sum">COnfigure a quantidade de RAM que deve estar livre (in kb).</string>
+
+    <string name="has_journal_dialog_header">Problema detectado</string>
+
+    <string name="has_journal_dialog">Parece que a sua partição \data não tem a função <b>has_journal</b> ativada.
+                            Reinicie para o menu de recuperação e execute o seguinte comando via adb shell: <br /> <br />
+                            <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+    </string>
+
+    <string name="reboot_notifier_header">Ops, isso não deveria acontecer</string>
+    <string name="reboot_notifier">Parece que houve algum problema com o kernel. Cheque
+                    \n<b>/proc/last_kmsg </b> \n e mande o arquivo para o seu desenvolvedor favorito. Sério, mande! \n
+                    Pedimos desculpas por qualquer problema!</string>
+
+    <!-- IO Scheduler -->
+    <string name="io_scheduler">Designador de tarefas do IO</string>
+
+    <!-- GPU Fragment -->
+    <string name="pref_gpu_control_enable">Controle da GPU</string>
+    <string name="pref_gpu_control_enable_sum">Isso vai ativar o driver de controle da GPU. Ele gerencia overclocking e undervolting
+                                            como tarefas básicas da GPU.</string>
+    <string name="pref_gpu_max_freq">Frequência Máx.</string>
+    <string name="pref_gpu_max_freq_sum">Define a frequência máxima da GPU. O original é 200 MHz.</string>
+
+    <string name="pref_display_color">Cores do display</string>
+    <string name="pref_display_color_sum">Ajuste aqui as cores do display.</string>
+    <string name="defy_red_colors">Cores para o Defy de lente vermelha</string>
+    <string name="defy_green_colors">Cores para o Defy de lente verde</string>
+    <string name="defy_energy_saver">Economizar energia</string>
+
+
+    <!-- Updater Fragment -->
+    <string name="pref_updater">Atualização e restauração do kernel</string>
+    <string name="pref_backup_kernel">Restaura o seu Kernel</string>
+    <string name="pref_backup_kernel_sum">Salva uma cópia do seu kernel atual.</string>
+
+    <string name="pref_updater_kernel">Atualizar Kernel</string>
+    <string name="pref_updater_kernel_sum">Vai atualizar seu kernel.</string>
+
+    <string name="pref_restore">Restauração</string>
+    <string name="pref_restore_kernel">Restaurar</string>
+    <string name="pref_restore_kernel_sum">Restaurar de um backup antigo do kernel.</string>
+
+    <string name="last_backup_from">Última restauração de </string>
+    <string name="backup_from">Restauração de </string>
+    <string name="restore_from_backup">Deseja restaurar de </string>
+    <string name="proceed_backup">Proceder com a restauração? Salva uma cópia do seu kernel atual.</string>
+
+    <!-- Showcase Strings -->
+    <string name="showcase_aero_fragment">Welcome to Aero Control!</string>
+    <string name="showcase_aero_fragment_sum">Deslize da esquerda para a direita para mostrar a gaveta de navegação.
+                                                A página em que você está é o painel de visualização geral.
+                                                Aqui está um resumo das configurações atuais. São ao vivo, você não precisa atualizar nada!</string>
+
+    <string name="showcase_memory_fragment_trim">Opções de corte</string>
+    <string name="showcase_memory_fragment_trim_sum">Para manter a performance do dispositivo, Você pode cortar diversas partes do sistema. Isso pode levar algum tempo,
+                                                    especialmente se você armazenou muitos dados.</string>
+
+    <string name="showcase_cpu_fragment_governor">Gerenciador da CPU</string>
+    <string name="showcase_cpu_fragment_governor_sum">Selecione este símbolo para ter acesso total às configurações do gerenciador da CPU!
+                                                Você pode mudar cada parâmetro de cada gerenciador para melhorar a performance.</string>
+
+    <!-- Defy Parts -->
+    <string name="pref_general_settings_defy">Configurações gerais</string>
+    <string name="pref_charging_led">Cor do LED ao carregar</string>
+    <string name="pref_charging_led_sum">Cor do LED enquanto está carregando</string>
+
+    <string name="pref_button_brightness">Brilho dos botões</string>
+    <string name="pref_button_brightness_sum">Muda o brilho dos botões capacitivos.</string>
+
+    <string name="pref_multitouch">Pontos de multitouch</string>
+    <string name="pref_multitouch_sum">Muda o número de pontos reconhecidos pelo multitouch.</string>
+
+    <string name="pref_charge_led_mode_white">LED Branco</string>
+    <string name="pref_charge_led_mode_rgb">LED misto (vermelho/branco/verde)</string>
+    <string name="pref_charge_led_mode_off">Desligado</string>
+
+    <!-- Profile Fragment -->
+    <string name="pref_profile_enter_name">Você precisa colocar um nome.</string>
+    <string name="pref_profile_name_exists">Esse nome já existe.</string>
+    <string name="pref_profile_change_name">Coloque outro nome</string>
+    <string name="pref_profile_change_name_sum">Mude o nome do seu perfil.</string>
+
+</resources>
