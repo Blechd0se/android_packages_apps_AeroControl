@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aero.control.R;
+import com.aero.control.helpers.settingsHelper;
 import com.aero.control.helpers.shellHelper;
 
 import java.io.File;
@@ -41,6 +42,7 @@ public class ProfileFragment extends PreferenceFragment {
     private SharedPreferences prefs;
     private final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
     shellHelper shell = new shellHelper();
+    settingsHelper settings = new settingsHelper();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -352,6 +354,7 @@ public class ProfileFragment extends PreferenceFragment {
                                 deleteProfile("com.aero.control_preferences");
                                 SharedPreferences AeroProfile = getActivity().getSharedPreferences(txtView.getText().toString(), Context.MODE_PRIVATE);
                                 applyProfile(AeroProfile);
+                                settings.setSettings(getActivity(), 0);
 
                             }
                         })
