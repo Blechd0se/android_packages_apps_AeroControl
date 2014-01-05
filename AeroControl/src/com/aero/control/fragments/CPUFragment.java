@@ -432,32 +432,13 @@ public class CPUFragment extends PreferenceFragment {
             case R.id.action_governor_settings:
 
                 String complete_path = CPU_GOV_SET_BASE + listPref.getValue();
+                ArrayList<String> al = new ArrayList<String>();
 
                 /*
                  * Before we can get governor specific parameters,
                  * we need permissions first. Since we don't want to use "su"
                  * here, we change the current governor shortly to performance.
                  */
-
-                if (!(Build.MODEL.equals("MB526") ||
-                        Build.MODEL.equals("MB525"))) {
-
-                    setGovernor("performance");
-
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-
-                    }
-
-                    setGovernor(listPref.getValue());
-
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-
-                    }
-                }
 
                 try {
 
@@ -471,10 +452,30 @@ public class CPUFragment extends PreferenceFragment {
                     PrefCat.setTitle(R.string.pref_gov_set);
                     root.addPreference(PrefCat);
 
+                    /*
+                     * Sometimes its just all about permissions;
+                     */
+
+                    for (String b : completeParamterList) {
+                        al.add("chmod 644 " + complete_path + "/" + b);
+                        al.add("chown system:root " + complete_path + "/" + b);
+                    }
+                    String[] commands = al.toArray(new String[0]);
+                    shell.setRootInfo(commands);
+
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        Log.e("Aero", "Something interrupted the main Thread, try again.", e);
+                    }
+
                     handler h = new handler();
 
-                    for (String b : completeParamterList)
+                    for (String b : completeParamterList) {
                         h.generateSettings(completeParamterList, complete_path);
+                        al.add("chmod 644 " + complete_path + "/" + b);
+                        al.add("chown system:root " + complete_path + "/" + b);
+                    }
 
                     // Probably the wrong place, should be in getDirInfo ?
                 } catch (NullPointerException e) {
@@ -652,14 +653,15 @@ public class CPUFragment extends PreferenceFragment {
             final GovernorTextPreference prefload = new GovernorTextPreference(getActivity());
             // Strings saves the complete path for a given governor;
             final String parameterPath = path + "/" + parameter[index];
+            String summary = shell.getInfo(parameterPath);
 
             // Only show numbers in input field;
             prefload.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 
-            // Setup all things we would normaly do in XML;
-            prefload.setSummary(shell.getInfo(parameterPath));
+            // Setup all things we would normally do in XML;
+            prefload.setSummary(summary);
             prefload.setTitle(parameter[index]);
-            prefload.setText(shell.getInfo(parameterPath));
+            prefload.setText(summary);
             prefload.setDialogTitle(parameter[index]);
 
             if (prefload.getSummary().equals("Unavailable")) {
