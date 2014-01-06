@@ -11,6 +11,14 @@
     <string name="default_values">Valori implicite</string>
     <string name="need_reboot">Acest lucru va necesita o repornire.</string>
     <string name="unavailable">Indisponibil</string>
+    <string name="got_it">Înțeleasă</string>
+    <string name="back_for_close">Apasă inapoi din nou pentru a iesi din aplicație.</string>
+    <string name="define_a_name">Definește un nume pentru acest profil.</string>
+    <string name="add_a_name">Nume Profil</string>
+    <string name="add">Adaugă</string>
+    <string name="nothing_added_yet">Whoop! Nu ai adăugat niciun profil încă.</string>
+    <string name="not_rooted">Nu există acces la Root?</string>
+    <string name="apply">Aplică</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -20,7 +28,7 @@
     <string name="slider_memory_settings">Tuning memorie</string>
     <string name="slider_defy_parts">Setări dispozitiv</string>
     <string name="slider_updater">Actualizator</string>
-    <string name="slider_profile">Profiles</string>
+    <string name="slider_profile">Profile</string>
 
     <!-- Overview Elements -->
 
@@ -41,10 +49,16 @@
     <string name="pref_appspecific">Specifice aplicației </string>
     <string name="pref_setatboot">Stabilește setările la pornire</string>
     <string name="pref_setatboot_sum">Atenție: Aceast lucru va stabili setările la pornirea sistemului.</string>
+    <string name="pref_rebootcheck">Random Reboot Checker</string>
+    <string name="pref_rebootcheck_sum">Aceasta vă va informa dacă dispozitivul s-a restartat brusc.</string>
     <string name="pref_updatepath">Locație de actualizare:</string>
     <string name="pref_updatepath_sum">Setați locația pentru actualizările dorite.</string>
     <string name="pref_app_theme">Teme pentru aplicație</string>
     <string name="pref_app_theme_sum">Definește tema implicită pentru aplicație.</string>
+
+    <string name="app_theme_red">Roșu - Light Holo cu accent roșu</string>
+    <string name="app_theme_light">Deschis - Light Holo cu accent albastru</string>
+    <string name="app_theme_dark">Închis - Light Holo cu accent albastru și bară activități neagră</string>
 
     <!-- About -->
     <string name="about_dialog">Bună ziua. Vă mulțumesc pentru utilizarea acestei aplicații. Numele meu este
@@ -53,6 +67,10 @@
                         Dacă doriți, puteți dona, fie lui Quarx pentru ROM-ul său minunat sau pentru mine.
                         <b>Plăcerea de a trăi se află în a dărui.</b>
     </string>
+
+    <!-- Root Check -->
+    <string name="root_required">Se pare că dispozitivul nu are acces la Root. Această aplicație nu va funcționa corect fără acces Root.
+                                Dacă credeți că e o greșeală, informați-mă!</string>
 
     <!-- CPU Fragment -->
 
@@ -89,6 +107,9 @@
 
     <string name="pref_dynamic_writeback">Control Writeback</string>
     <string name="pref_dynamic_writeback_sum">Activează sau dezactivează controlul Writeback aici.</string>
+    
+    <string name="pref_low_mem_option">Optiune memorie mică</string>
+    <string name="pref_low_mem_option_sum">Activează sau dezactivează opțiunea memorie mică. Aceasta s-ar putea să ajute dispozitivele cu 4.4+ (Kitkat).</string>
 
     <string name="fstrim_header">Opțiuni Trim</string>
     <string name="fstrim_content">Utilizați Trim pe diverse partiții ale sistemului dvs! Aceast lucru ar putea dura câteva minute.</string>
@@ -102,6 +123,11 @@
                             Vă rugăm să reporniți sistemul în recovery și rulați următoarea comandă prin adb shell: <br /> <br />
                             <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
     </string>
+    
+    <string name="reboot_notifier_header">Oops, aceasta nu trebuia să se întâmple</string>
+    <string name="reboot_notifier">Se pare că nucleul s-a prăbușit. Verifică
+                    \n<b>/proc/last_kmsg </b> \nand trimite acest fișier programatorului tău favorit. Serios, trimite-l! \n
+                    Ne cerem scuze pentru inconvenient!</string>
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">Manager Intrare/Ieșire</string>
@@ -115,9 +141,10 @@
 
     <string name="pref_display_color">Culoare Afișaj</string>
     <string name="pref_display_color_sum">Aici reglați cularea afișajului.</string>
-    <string name="defy_red_colors">Culoare Defy Red</string>
-    <string name="defy_green_colors">Culoare Defy Green</string>
+    <string name="defy_red_colors">Culoare Defy Roșu</string>
+    <string name="defy_green_colors">Culoare Defy Verde</string>
     <string name="defy_energy_saver">Economizor Energie</string>
+    
 
     <!-- Updater Fragment -->
     <string name="pref_updater">Actualizare Nucleu și copie de siguranță</string>
@@ -137,7 +164,7 @@
     <string name="proceed_backup">Continuați? Acest lucru va face o copie de siguranță la nucleul curent.</string>
 
     <!-- Showcase Strings -->
-    <string name="showcase_aero_fragment">Bunvenit în Aero Control!</string>
+    <string name="showcase_aero_fragment">Bun venit în Aero Control!</string>
     <string name="showcase_aero_fragment_sum">Trageți de la stânga spre dreapta pentru a afișa sertarul de navigare.
                                                 Pagina pe care o vizualizați în acet moment este pagina de prezentare generală.
                                                 Există un mic rezumat pentru unele setări ale nucleului. Sunt în timp real,
@@ -147,5 +174,30 @@
     <string name="showcase_memory_fragment_trim_sum">Pentru a menține performanța dispozitivului, puteți utiliza Trim
                                                     pe diverse partiții ale sistemului dvs. de operare. Acest lucru poate
                                                     dura un anumit timp, mai ales dacă sunt stocate o mulțime date.</string>
+                                                    
+    <string name="showcase_cpu_fragment_governor">Manager CPU</string>
+    <string name="showcase_cpu_fragment_governor_sum">Click pe acest simbol pentru a obține acces la setările managerului! Pentru a obține  
+                                                performanță poți modifica fiecare parametru pentru fiecare manager în parte, .</string>
+    
+    <!-- Defy Parts -->
+    <string name="pref_general_settings_defy">Setări generale</string>
+    <string name="pref_charging_led">Culoare LED în timpul îcărcării</string>
+    <string name="pref_charging_led_sum">Culoarea LED-ului în timp ce bateria este încărcată</string>
+
+    <string name="pref_button_brightness">Luminozitate butoane</string>
+    <string name="pref_button_brightness_sum">Schimba intensitatea luminii butoanelor.</string>
+
+    <string name="pref_multitouch">Puncte Multitouch</string>
+    <string name="pref_multitouch_sum">Numărul punctelor multitouch.</string>
+
+    <string name="pref_charge_led_mode_white">LED Alb</string>
+    <string name="pref_charge_led_mode_rgb">LED Mixt (roșu/verde)</string>
+    <string name="pref_charge_led_mode_off">Stins</string>
+
+    <!-- Profile Fragment -->
+    <string name="pref_profile_enter_name">Trebuie să introduci un nume.</string>
+    <string name="pref_profile_name_exists">Acest nume există deja.</string>
+    <string name="pref_profile_change_name">Introduceți alt nume</string>
+    <string name="pref_profile_change_name_sum">Schimbă numele profilului tău.</string>
 
 </resources>
