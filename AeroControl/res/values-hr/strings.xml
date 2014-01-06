@@ -171,10 +171,10 @@
      <string name="pref_charging_led">LED boja punjenja</string>
      <string name="pref_charging_led_sum">Boja Vaše LED prilikom punjenja</string>
 
-+    <string name="pref_button_brightness">Svjetlina tipki</string>
+     <string name="pref_button_brightness">Svjetlina tipki</string>
      <string name="pref_button_brightness_sum">Ovdje promjenite svjetlinu tipki.</string>
 
-+    <string name="pref_multitouch">Multitouch-Točke</string>
+     <string name="pref_multitouch">Multitouch-Točke</string>
      <string name="pref_multitouch_sum">Broj multitouch točaka.</string> 
 
     <string name="pref_charge_led_mode_white">Bijela LED</string>
