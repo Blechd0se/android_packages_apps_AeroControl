@@ -471,11 +471,8 @@ public class CPUFragment extends PreferenceFragment {
 
                     handler h = new handler();
 
-                    for (String b : completeParamterList) {
+                    for (String b : completeParamterList)
                         h.generateSettings(completeParamterList, complete_path);
-                        al.add("chmod 644 " + complete_path + "/" + b);
-                        al.add("chown system:root " + complete_path + "/" + b);
-                    }
 
                     // Probably the wrong place, should be in getDirInfo ?
                 } catch (NullPointerException e) {
