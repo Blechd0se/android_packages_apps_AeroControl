@@ -1,5 +1,6 @@
 package com.aero.control.helpers;
 
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -105,6 +106,50 @@ public class shellHelper {
     }
 
     /**
+     * Gets information from the filesystem with a given path
+     *
+     * @param s           => path (with filename)
+     * @param deepsleep   => Should current deepsleep value be added?
+     *
+     * @return String[]
+     */
+    public String[] getInfo(String s, boolean deepsleep) {
+
+        String info;
+        // Just make some gerneric error-code
+        String[] error = new String[0];
+        ArrayList<String> al = new ArrayList<String>();
+
+        if (deepsleep) {
+            long sleepTime = (SystemClock.elapsedRealtime()
+                    - SystemClock.uptimeMillis()) / 10;
+            al.add(Long.toString(sleepTime));
+        }
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(s), 256);
+            try {
+                info = reader.readLine();
+
+                while (info != null) {
+                    al.add(info);
+                    info = reader.readLine();
+                }
+
+            } finally {
+                reader.close();
+            }
+            return al.toArray(new String[0]);
+        } catch (IOException e) {
+            Log.e(LOG_TAG,
+                    "IO Exception when trying to get information.",
+                    e);
+
+            return error;
+        }
+    }
+
+    /**
      * Gets all files in a given dictionary
      *
      * @param s    => path to read the files
@@ -162,7 +207,6 @@ public class shellHelper {
         String[] output = null;
         // Just make some gerneric error-code
         String[] error = new String[0];
-        int bropen, brclose;
 
         try {
             // Try to read the given Path, if not available -> throw exception
