@@ -46,7 +46,7 @@ import com.aero.control.prefs.PrefsActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity {
+public class AeroActivity extends Activity {
 
     private static final String SELECTED_ITEM = "SelectedItem";
 
