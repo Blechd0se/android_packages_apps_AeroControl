@@ -4,6 +4,7 @@
     <string-array name="aero_array">
         <item>@string/slider_overview</item>
         <item>@string/slider_cpu_settings</item>
+        <item>@string/slider_statistics</item>
         <item>@string/slider_gpu_settings</item>
         <item>@string/slider_memory_settings</item>
         <item>@string/slider_defy_parts</item>

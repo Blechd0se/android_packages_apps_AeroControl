@@ -12,7 +12,7 @@
     <string name="need_reboot">Benötige Reboot.</string>
     <string name="unavailable">Nicht verfügbar</string>
     <string name="got_it">Verstanden</string>
-    <string name="back_for_close">PDrücke noch einmal Zurück um die App zu schließen.</string>
+    <string name="back_for_close">Drücke noch einmal Zurück um die App zu schließen.</string>
     <string name="define_a_name">Definiere Deinen Profilnamen.</string>
     <string name="add_a_name">Profilname</string>
     <string name="add">Hinzufügen</string>
@@ -30,6 +30,7 @@
     <string name="slider_defy_parts">Defy Einstellungen</string>
     <string name="slider_updater">Updater</string>
     <string name="slider_profile">Profile</string>
+    <string name="slider_statistics">CPU Statistik</string>
 
     <!-- Overview Elements -->
 

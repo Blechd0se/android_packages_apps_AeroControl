@@ -19,6 +19,7 @@ public class generatingLists {
     public void listItems() {
         addItem(new PreferenceItem(R.string.slider_overview, R.drawable.overview));
         addItem(new PreferenceItem(R.string.slider_cpu_settings, R.drawable.cpu));
+        addItem(new PreferenceItem(R.string.slider_statistics, R.drawable.clock));
         addItem(new PreferenceItem(R.string.slider_gpu_settings, R.drawable.gpu));
         addItem(new PreferenceItem(R.string.slider_memory_settings, R.drawable.memory));
         addItem(new PreferenceItem(R.string.slider_defy_parts, R.drawable.gear));

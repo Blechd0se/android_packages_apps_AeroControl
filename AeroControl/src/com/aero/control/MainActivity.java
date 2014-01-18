@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,8 +36,10 @@ import com.aero.control.fragments.DefyPartsFragment;
 import com.aero.control.fragments.GPUFragment;
 import com.aero.control.fragments.MemoryFragment;
 import com.aero.control.fragments.ProfileFragment;
+import com.aero.control.fragments.StatisticsFragment;
 import com.aero.control.fragments.UpdaterFragment;
 import com.aero.control.helpers.rootHelper;
+import com.aero.control.helpers.shellHelper;
 import com.aero.control.lists.generatingLists;
 import com.aero.control.lists.generatingLists.PreferenceItem;
 import com.aero.control.prefs.PrefsActivity;
@@ -59,11 +62,12 @@ public class MainActivity extends Activity {
     // Fragment Keys;
     private static final int OVERVIEW = 0;
     private static final int CPU = 1;
-    private static final int GPU = 2;
-    private static final int MEMORY = 3;
-    private static final int DEFYPARTS = 4;
-    private static final int UPDATER = 5;
-    private static final int PROFILE = 6;
+    private static final int STATISTICS = 2;
+    private static final int GPU = 3;
+    private static final int MEMORY = 4;
+    private static final int DEFYPARTS = 5;
+    private static final int UPDATER = 6;
+    private static final int PROFILE = 7;
 
     // Fragments;
     private AeroFragment mAeroFragment;
@@ -73,14 +77,16 @@ public class MainActivity extends Activity {
     private MemoryFragment mMemoryFragment;
     private UpdaterFragment mUpdaterFragement;
     private ProfileFragment mProfileFragment;
+    private StatisticsFragment mStatisticsFragment;
 
     private SharedPreferences prefs;
 
     private int mBackCounter = 0;
 
-    final Handler mHandler = new Handler(Looper.getMainLooper());
+    private static final Handler mHandler = new Handler(Looper.getMainLooper());
 
-    rootHelper rootCheck = new rootHelper();
+    private static final rootHelper rootCheck = new rootHelper();
+    public static final shellHelper shell = new shellHelper();
 
 
     @Override
@@ -181,6 +187,9 @@ public class MainActivity extends Activity {
                 ImageView icon = (ImageView) v.findViewById(R.id.icon);
                 TextView text = (TextView) v.findViewById(R.id.text);
 
+                Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+                text.setTypeface(font);
+
                 if (icon != null) {
                     icon.setImageResource(item.drawable);
                 }
@@ -271,6 +280,13 @@ public class MainActivity extends Activity {
                     mCPUFragement = new CPUFragment();
                 }
                 fragment = mCPUFragement;
+                break;
+            case STATISTICS:
+
+                if (mStatisticsFragment == null) {
+                    mStatisticsFragment = new StatisticsFragment();
+                }
+                fragment = mStatisticsFragment;
                 break;
             case GPU:
                 if (mGPUFragement == null) {
