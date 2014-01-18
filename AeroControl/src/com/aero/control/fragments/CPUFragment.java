@@ -3,7 +3,6 @@ package com.aero.control.fragments;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -12,7 +11,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -32,8 +30,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.shellHelper;
 import com.espian.showcaseview.ShowcaseView;
 
 /**
@@ -68,9 +66,7 @@ public class CPUFragment extends PreferenceFragment {
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
 
-    public final int mNumCpus = Runtime.getRuntime().availableProcessors();
-
-    shellHelper shell = new shellHelper();
+    public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
     @Override
     final public void onCreate(Bundle savedInstanceState) {
@@ -96,7 +92,7 @@ public class CPUFragment extends PreferenceFragment {
 
         final Preference cpu_oc_uc = (Preference) root.findPreference("cpu_oc_uc");
 
-        if (shell.getInfo(CPU_VSEL).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(CPU_VSEL).equals("Unavailable"))
             cpu_oc_uc.setEnabled(false);
 
         cpu_oc_uc.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -112,7 +108,7 @@ public class CPUFragment extends PreferenceFragment {
 
                 // Our cpu values list;
                 final ArrayList<String> cpu_list = new ArrayList<String>();
-                final String overclockOutput = shell.getRootInfo("cat", CPU_VSEL);
+                final String overclockOutput = AeroActivity.shell.getRootInfo("cat", CPU_VSEL);
 
                 // Set up our EditText fields;
                 final EditText value1 = (EditText) layout.findViewById(R.id.value1);
@@ -125,10 +121,10 @@ public class CPUFragment extends PreferenceFragment {
                 final EditText value8 = (EditText) layout.findViewById(R.id.value8);
 
                 // Left side (cpu frequencies);
-                value1.setText(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[0]);
-                value3.setText(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[1]);
-                value5.setText(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[2]);
-                value7.setText(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[3]);
+                value1.setText(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[0]);
+                value3.setText(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[1]);
+                value5.setText(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[2]);
+                value7.setText(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0)[3]);
 
                 // Substring is not ideal, but it gets the job done;
                 value2.setText(overclockOutput.substring(42, 44));
@@ -188,7 +184,7 @@ public class CPUFragment extends PreferenceFragment {
                                                 String[] commands = cpu_list.toArray(new String[0]);
 
                                                 // Throw them all in!
-                                                shell.setRootInfo(commands);
+                                                AeroActivity.shell.setRootInfo(commands);
 
                                                 //** store preferences
                                                 //** note that this time we put to preferences commands instead of single values,
@@ -248,7 +244,7 @@ public class CPUFragment extends PreferenceFragment {
                                 cpu_list.add("echo " + "300000" + " > " + CPU_MIN_FREQ);
 
                                 String[] commands = cpu_list.toArray(new String[0]);
-                                shell.setRootInfo(commands);
+                                AeroActivity.shell.setRootInfo(commands);
 
                                 //** store preferences
                                 //** note that this time we put to preferences commands instead of single values,
@@ -291,10 +287,10 @@ public class CPUFragment extends PreferenceFragment {
         // Find our ListPreference (governor_settings);
         listPref = (ListPreference) root.findPreference("set_governor");
         // Just throw in our frequencies;
-        listPref.setEntries(shell.getInfoArray(ALL_GOV_AVAILABLE, 0, 0));
-        listPref.setEntryValues(shell.getInfoArray(ALL_GOV_AVAILABLE, 0, 0));
-        listPref.setValue(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
-        listPref.setSummary(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
+        listPref.setEntries(AeroActivity.shell.getInfoArray(ALL_GOV_AVAILABLE, 0, 0));
+        listPref.setEntryValues(AeroActivity.shell.getInfoArray(ALL_GOV_AVAILABLE, 0, 0));
+        listPref.setValue(AeroActivity.shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
+        listPref.setSummary(AeroActivity.shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
         listPref.setDialogIcon(R.drawable.cpu_dark);
 
         // If there are already some entries, kill them all (with fire)
@@ -315,7 +311,6 @@ public class CPUFragment extends PreferenceFragment {
                  * value _before_ the value actually was changed.
                  */
                 String a = (String) o;
-                ArrayList<String> array = new ArrayList<String>();
 
                 // If there are already some entries, kill them all (with fire)
                 if (PrefCat != null)
@@ -333,7 +328,7 @@ public class CPUFragment extends PreferenceFragment {
                 } catch (InterruptedException e) {
                     Log.e("Aero", "Something interrupted the main Thread, try again.", e);
                 }
-                listPref.setSummary(shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
+                listPref.setSummary(AeroActivity.shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
 
                 // store preferences
                 preference.getEditor().commit();
@@ -358,13 +353,13 @@ public class CPUFragment extends PreferenceFragment {
 
                 for (int k = 0; k < mNumCpus; k++) {
 
-                    shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_BASE_PATH + k + CPU_MAX_FREQ);
+                    AeroActivity.shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_BASE_PATH + k + CPU_MAX_FREQ);
 
-                    if (shell.checkPath(shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ), a)) {
-                        max_frequency.setSummary(shell.toMHz((a.substring(0, a.length() - 4) + "000")));
+                    if (AeroActivity.shell.checkPath(AeroActivity.shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ), a)) {
+                        max_frequency.setSummary(AeroActivity.shell.toMHz((a.substring(0, a.length() - 4) + "000")));
                     } else {
                         Toast.makeText(getActivity(), "Couldn't set max frequency." + " Old value; " +
-                                shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
+                                AeroActivity.shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
                         max_frequency.setSummary(oldValue);
                     }
 
@@ -384,13 +379,13 @@ public class CPUFragment extends PreferenceFragment {
 
                 for (int k = 0; k < mNumCpus; k++) {
 
-                    shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_BASE_PATH + k + CPU_MIN_FREQ);
+                    AeroActivity.shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_BASE_PATH + k + CPU_MIN_FREQ);
 
-                    if (shell.checkPath(shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ), a)) {
-                        min_frequency.setSummary(shell.toMHz((a.substring(0, a.length() - 4) + "000")));
+                    if (AeroActivity.shell.checkPath(AeroActivity.shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ), a)) {
+                        min_frequency.setSummary(AeroActivity.shell.toMHz((a.substring(0, a.length() - 4) + "000")));
                     } else {
                         Toast.makeText(getActivity(), "Couldn't set min frequency."  + " Old value; " +
-                                shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
+                                AeroActivity.shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
                         min_frequency.setSummary(oldValue);
                     }
 
@@ -431,7 +426,7 @@ public class CPUFragment extends PreferenceFragment {
         switch (item.getItemId()) {
             case R.id.action_governor_settings:
 
-                String complete_path = CPU_GOV_SET_BASE + listPref.getValue();
+                final String complete_path = CPU_GOV_SET_BASE + listPref.getValue();
                 ArrayList<String> al = new ArrayList<String>();
 
                 /*
@@ -442,7 +437,7 @@ public class CPUFragment extends PreferenceFragment {
 
                 try {
 
-                    String completeParamterList[] = shell.getDirInfo(complete_path, true);
+                    String completeParamterList[] = AeroActivity.shell.getDirInfo(complete_path, true);
 
                     // If there are already some entries, kill them all (with fire)
                     if (PrefCat != null)
@@ -461,18 +456,18 @@ public class CPUFragment extends PreferenceFragment {
                         al.add("chown system:root " + complete_path + "/" + b);
                     }
                     String[] commands = al.toArray(new String[0]);
-                    shell.setRootInfo(commands);
+                    AeroActivity.shell.setRootInfo(commands);
 
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         Log.e("Aero", "Something interrupted the main Thread, try again.", e);
                     }
 
-                    handler h = new handler();
+                    final handler h = new handler();
 
                     for (String b : completeParamterList)
-                        h.generateSettings(completeParamterList, complete_path);
+                        h.generateSettings(b, complete_path);
 
                     // Probably the wrong place, should be in getDirInfo ?
                 } catch (NullPointerException e) {
@@ -518,18 +513,18 @@ public class CPUFragment extends PreferenceFragment {
         }
         String[] commands = array.toArray(new String[0]);
 
-        shell.setRootInfo(commands);
+        AeroActivity.shell.setRootInfo(commands);
 
     }
 
     public void updateMinFreq() {
         // Just throw in our frequencies;
-        min_frequency.setEntries(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
-        min_frequency.setEntryValues(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
+        min_frequency.setEntries(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
+        min_frequency.setEntryValues(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
         min_frequency.setSummary(null);
         try {
-            min_frequency.setValue(shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
-            min_frequency.setSummary(shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
+            min_frequency.setValue(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
+            min_frequency.setSummary(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
             min_frequency.setValue("Unavailable");
             min_frequency.setSummary("Unavailable");
@@ -542,11 +537,11 @@ public class CPUFragment extends PreferenceFragment {
 
     public void updateMaxFreq() {
         // Just throw in our frequencies;
-        max_frequency.setEntries(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
-        max_frequency.setEntryValues(shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
+        max_frequency.setEntries(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
+        max_frequency.setEntryValues(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
         try {
-            max_frequency.setValue(shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 1, 0)[0]);
-            max_frequency.setSummary(shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 1, 0)[0]);
+            max_frequency.setValue(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 1, 0)[0]);
+            max_frequency.setSummary(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 1, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
             max_frequency.setValue("Unavailable");
             max_frequency.setSummary("Unavailable");
@@ -568,10 +563,10 @@ public class CPUFragment extends PreferenceFragment {
 
         // Set up our file;
         int output = 0;
-        byte[] buffer = new byte[1024];
+        final byte[] buffer = new byte[1024];
 
         try {
-            FileInputStream fis = getActivity().openFileInput(FILENAME);
+            final FileInputStream fis = getActivity().openFileInput(FILENAME);
             output = fis.read(buffer);
             fis.close();
         } catch (IOException e) {
@@ -589,7 +584,7 @@ public class CPUFragment extends PreferenceFragment {
         String string = "1";
 
         try {
-            FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            final FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
             fos.write(string.getBytes());
             fos.close();
         }
@@ -643,23 +638,21 @@ public class CPUFragment extends PreferenceFragment {
     // Make a private class to load all parameters;
     private class handler {
 
-        private int index = 0;
+        public void generateSettings(final String parameter, String path) {
 
-        public void generateSettings(final String parameter[], String path) {
-
-            final GovernorTextPreference prefload = new GovernorTextPreference(getActivity());
+            final CustomTextPreference prefload = new CustomTextPreference(getActivity());
             // Strings saves the complete path for a given governor;
-            final String parameterPath = path + "/" + parameter[index];
-            String summary = shell.getInfo(parameterPath);
+            final String parameterPath = path + "/" + parameter;
+            String summary = AeroActivity.shell.getInfo(parameterPath);
 
             // Only show numbers in input field;
             prefload.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 
             // Setup all things we would normally do in XML;
             prefload.setSummary(summary);
-            prefload.setTitle(parameter[index]);
+            prefload.setTitle(parameter);
             prefload.setText(summary);
-            prefload.setDialogTitle(parameter[index]);
+            prefload.setDialogTitle(parameter);
 
             if (prefload.getSummary().equals("Unavailable")) {
                 prefload.setEnabled(false);
@@ -667,7 +660,6 @@ public class CPUFragment extends PreferenceFragment {
             }
 
             PrefCat.addPreference(prefload);
-            index++;
 
             // Custom OnChangeListener for each element in our list;
             prefload.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -677,13 +669,13 @@ public class CPUFragment extends PreferenceFragment {
                     String a = (String) o;
                     CharSequence oldValue = prefload.getSummary();
 
-                    shell.setRootInfo(a, parameterPath);
+                    AeroActivity.shell.setRootInfo(a, parameterPath);
 
-                    if (shell.checkPath(shell.getInfo(parameterPath), a)) {
+                    if (AeroActivity.shell.checkPath(AeroActivity.shell.getInfo(parameterPath), a)) {
                         prefload.setSummary(a);
                     } else {
                         Toast.makeText(getActivity(), "Couldn't set desired parameter"  + " Old value; " +
-                                shell.getInfo(parameterPath) + " New Value; " + a, Toast.LENGTH_LONG).show();
+                                AeroActivity.shell.getInfo(parameterPath) + " New Value; " + a, Toast.LENGTH_LONG).show();
                         prefload.setSummary(oldValue);
                     }
                     

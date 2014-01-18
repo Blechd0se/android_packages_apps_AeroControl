@@ -1,5 +1,7 @@
 package com.aero.control.helpers;
 
+import android.util.Log;
+
 import java.io.File;
 
 /**
@@ -8,7 +10,7 @@ import java.io.File;
 
 public class rootHelper {
 
-        private String LOG_TAG = rootHelper.class.getName();
+    private static final String LOG_TAG = rootHelper.class.getName();
 
         public boolean isDeviceRooted() {
             return checkRootMethod1() || checkRootMethod2();
@@ -19,6 +21,7 @@ public class rootHelper {
                 File file = new File("/system/app/Superuser.apk");
                 return file.exists();
             } catch (Exception e) {
+                Log.e(LOG_TAG, "An Error occured while checking for Superuser.apk.", e);
                 return false;
             }
 
@@ -29,6 +32,7 @@ public class rootHelper {
                 File file = new File("/system/xbin/su");
                 return file.exists();
             } catch (Exception e) {
+                Log.e(LOG_TAG, "An Error occured while checking for su.", e);
                 return false;
             }
         }

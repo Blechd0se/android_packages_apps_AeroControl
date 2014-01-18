@@ -7,21 +7,21 @@ import android.util.AttributeSet;
 /**
  * Created by Alexander Christ on 30.09.13.
  */
-public class GovernorTextPreference extends EditTextPreference {
+public class CustomTextPreference extends EditTextPreference {
 
     private Context context;
 
-    public GovernorTextPreference(Context context, AttributeSet attrs, int defStyle) {
+    public CustomTextPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.setContext(context);
     }
 
-    public GovernorTextPreference(Context context, AttributeSet attrs) {
+    public CustomTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setContext(context);
     }
 
-    public GovernorTextPreference(Context context) {
+    public CustomTextPreference(Context context) {
         super(context);
         this.setContext(context);
     }

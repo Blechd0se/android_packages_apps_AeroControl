@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.adapter.AeroAdapter;
 import com.aero.control.adapter.adapterInit;
-import com.aero.control.helpers.shellHelper;
 import com.espian.showcaseview.ShowcaseView;
 
 import java.io.File;
@@ -34,11 +34,10 @@ public class AeroFragment extends Fragment {
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String GPU_FREQ = "/proc/gpu/cur_rate";
     public static final String GPU_FREQ_NEXUS4 = "/sys/class/kgsl/kgsl-3d0/gpuclk";
-    private static final String FILENAME_PROC_MEMINFO = "/proc/meminfo";
+    public static final String FILENAME_PROC_MEMINFO = "/proc/meminfo";
 
     public ListView listView1;
     public ViewGroup root;
-    public shellHelper shell = new shellHelper();
     public AeroAdapter adapter;
     public AeroFragment mAeroFragment;
     public ShowcaseView.ConfigOptions mConfigOptions;
@@ -118,7 +117,7 @@ public class AeroFragment extends Fragment {
          * Current Problem; Thread won't start again after FragmentSwitch
          */
 
-        File gpu = new File(GPU_FREQ_NEXUS4);
+        final File gpu = new File(GPU_FREQ_NEXUS4);
         if (gpu.exists())
             gpu_file = GPU_FREQ_NEXUS4;
         else
@@ -153,7 +152,7 @@ public class AeroFragment extends Fragment {
         byte[] buffer = new byte[1024];
 
         try {
-            FileInputStream fis = getActivity().openFileInput(FILENAME);
+            final FileInputStream fis = getActivity().openFileInput(FILENAME);
             output = fis.read(buffer);
             fis.close();
         } catch (IOException e) {
@@ -168,7 +167,7 @@ public class AeroFragment extends Fragment {
 
 
     // Get all frequencies for all cores;
-    public String getFreqPerCore() {
+    public final String getFreqPerCore() {
         final String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu";
         final String SCALE_PATH_NAME = "/cpufreq/scaling_cur_freq";
         String complete_path;
@@ -177,7 +176,7 @@ public class AeroFragment extends Fragment {
 
         for (int k = 0; k < i; k++) {
             complete_path = SCALE_CUR_FILE + k + SCALE_PATH_NAME;
-            freq_string = freq_string + " " + shell.toMHz(shell.getInfo(complete_path));
+            freq_string = freq_string + " " + AeroActivity.shell.toMHz(AeroActivity.shell.getInfo(complete_path));
         }
         freq_string = freq_string.replace("Unavailable", " Offline ");
 
@@ -190,12 +189,12 @@ public class AeroFragment extends Fragment {
         adapterInit overview_data[] = new adapterInit[]
                 {
                         // First Value (0) is for loadable images.
-                        new adapterInit(0, getString(R.string.kernel_version), shell.getKernel()),
-                        new adapterInit(0, getString(R.string.current_governor), shell.getInfo(GOV_FILE)),
-                        new adapterInit(0, getString(R.string.current_io_governor), shell.getInfo(GOV_IO_FILE)),
+                        new adapterInit(0, getString(R.string.kernel_version), AeroActivity.shell.getKernel()),
+                        new adapterInit(0, getString(R.string.current_governor), AeroActivity.shell.getInfo(GOV_FILE)),
+                        new adapterInit(0, getString(R.string.current_io_governor), AeroActivity.shell.getInfo(GOV_IO_FILE)),
                         new adapterInit(0, getString(R.string.current_cpu_speed), getFreqPerCore()),
-                        new adapterInit(0, getString(R.string.current_gpu_speed), shell.toMHz((shell.getInfo(gpu_file).substring(0, shell.getInfo(gpu_file).length() - 3)))),
-                        new adapterInit(0, getString(R.string.available_memory), shell.getMemory(FILENAME_PROC_MEMINFO))
+                        new adapterInit(0, getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((AeroActivity.shell.getInfo(gpu_file).substring(0, AeroActivity.shell.getInfo(gpu_file).length() - 3)))),
+                        new adapterInit(0, getString(R.string.available_memory), AeroActivity.shell.getMemory(FILENAME_PROC_MEMINFO))
                 };
 
         listView1 = (ListView) root.findViewById(R.id.listView1);
@@ -213,7 +212,7 @@ public class AeroFragment extends Fragment {
         String string = "1";
 
         try {
-            FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            final FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
             fos.write(string.getBytes());
             fos.close();
         }
@@ -227,13 +226,13 @@ public class AeroFragment extends Fragment {
     public void setPermissions() {
 
 
-        String[] commands = new String[]
+        final String[] commands = new String[]
                 {
                         "chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
                         "chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
                         "chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",
                 };
-        shell.setRootInfo(commands);
+        AeroActivity.shell.setRootInfo(commands);
 
     }
 

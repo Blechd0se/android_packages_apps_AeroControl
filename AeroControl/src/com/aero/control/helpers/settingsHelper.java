@@ -45,9 +45,9 @@ public class settingsHelper {
     public static final String PREF_MIN_FREE = "min_free";
 
     private SharedPreferences prefs;
-    public final int mNumCpus = Runtime.getRuntime().availableProcessors();
+    public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
-    private shellHelper shell = new shellHelper();
+    private static final shellHelper shell = new shellHelper();
 
     public void setSettings(final Context context, final int flag) {
 

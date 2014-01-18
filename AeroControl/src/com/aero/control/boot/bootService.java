@@ -16,7 +16,7 @@ import android.os.IBinder;
 public class bootService extends Service
 {
 
-    settingsHelper settings = new settingsHelper();
+    private static final settingsHelper settings = new settingsHelper();
 
     @Override
     public IBinder onBind(Intent intent)

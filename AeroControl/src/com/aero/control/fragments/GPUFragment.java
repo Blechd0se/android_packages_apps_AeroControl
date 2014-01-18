@@ -9,8 +9,8 @@ import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.shellHelper;
 
 import java.io.File;
 
@@ -28,8 +28,6 @@ public class GPUFragment extends PreferenceFragment {
     public boolean checkGpuControl;
 
     public String gpu_file;
-
-    shellHelper shell = new shellHelper();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +57,7 @@ public class GPUFragment extends PreferenceFragment {
         else
             gpu_file = GPU_FREQ_MAX;
 
-        if (shell.getInfo(DISPLAY_COLOR).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(DISPLAY_COLOR).equals("Unavailable"))
             display_control.setEnabled(false);
 
         // Get our strings;
@@ -74,20 +72,20 @@ public class GPUFragment extends PreferenceFragment {
 
         // Just throw in our frequencies;
         if (gpu_file.equals(GPU_FREQ_NEXUS4)) {
-            gpu_control_frequencies.setEntries(shell.getInfoArray(GPU_FREQ_NEXUS4_VALUES, 0, 0));
-            gpu_control_frequencies.setEntryValues(shell.getInfoArray(GPU_FREQ_NEXUS4_VALUES, 0, 0));
+            gpu_control_frequencies.setEntries(AeroActivity.shell.getInfoArray(GPU_FREQ_NEXUS4_VALUES, 0, 0));
+            gpu_control_frequencies.setEntryValues(AeroActivity.shell.getInfoArray(GPU_FREQ_NEXUS4_VALUES, 0, 0));
         } else {
             gpu_control_frequencies.setEntries(R.array.gpu_frequency_list);
             gpu_control_frequencies.setEntryValues(R.array.gpu_frequency_list_values);
         }
 
         try  {
-            gpu_control_frequencies.setValue(shell.getInfoArray(gpu_file, 0, 0)[0]);
-            gpu_control_frequencies.setSummary(shell.toMHz((shell.getInfoArray(gpu_file, 0, 0)[0].substring(0,
-                    shell.getInfoArray(gpu_file, 0, 0)[0].length() - 3))));
+            gpu_control_frequencies.setValue(AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0]);
+            gpu_control_frequencies.setSummary(AeroActivity.shell.toMHz((AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0].substring(0,
+                    AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0].length() - 3))));
 
             // Check if enabled or not;
-            if (shell.getInfo(GPU_CONTROL_ACTIVE).equals("1"))
+            if (AeroActivity.shell.getInfo(GPU_CONTROL_ACTIVE).equals("1"))
                 checkGpuControl = true;
             else
                 checkGpuControl = false;
@@ -119,7 +117,7 @@ public class GPUFragment extends PreferenceFragment {
 
                 Log.e("Aero", "output: " + a);
 
-                shell.setRootInfo(a, gpu_file);
+                AeroActivity.shell.setRootInfo(a, gpu_file);
 
                 // Sleep the thread again for UI delay;
                 try {
@@ -130,7 +128,7 @@ public class GPUFragment extends PreferenceFragment {
                            e);
                 }
 
-                gpu_control_frequencies.setSummary(shell.toMHz((a.substring(0, a.length() - 3))));
+                gpu_control_frequencies.setSummary(AeroActivity.shell.toMHz((a.substring(0, a.length() - 3))));
 
                 //** store preferences
                 preference.getEditor().commit();
@@ -147,9 +145,9 @@ public class GPUFragment extends PreferenceFragment {
                 String a =  o.toString();
 
                 if (a.equals("true"))
-                    shell.setRootInfo("1", GPU_CONTROL_ACTIVE);
+                    AeroActivity.shell.setRootInfo("1", GPU_CONTROL_ACTIVE);
                 else if (a.equals("false"))
-                    shell.setRootInfo("0", GPU_CONTROL_ACTIVE);
+                    AeroActivity.shell.setRootInfo("0", GPU_CONTROL_ACTIVE);
 
                 //** store preferences
                 preference.getEditor().commit();
@@ -165,12 +163,12 @@ public class GPUFragment extends PreferenceFragment {
                 String a = (String) o;
 
                 // Get Permissions first, then execute;
-                String[] commands = new String[]
+                final String[] commands = new String[]
                         {
                                 "chmod 0664 " + DISPLAY_COLOR,
                                 "echo " + a + " > " + DISPLAY_COLOR,
                         };
-                shell.setRootInfo(commands);
+                AeroActivity.shell.setRootInfo(commands);
 
                 Toast.makeText(getActivity(), "Turn your display off/on :)", Toast.LENGTH_LONG).show();
 

@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.aero.control.MainActivity;
+import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieSlice;
@@ -184,7 +182,7 @@ public class StatisticsFragment extends Fragment {
                 if(cpuFreqArray[i] == 0)
                     frequency = "DeepSleep";
                 else
-                    frequency = MainActivity.shell.toMHz(cpuFreqArray[i].toString());
+                    frequency = AeroActivity.shell.toMHz(cpuFreqArray[i].toString());
 
                 time_in_state = convertTime(g);
                 percentage = (int)((g / completeTime) * 100);
@@ -321,7 +319,7 @@ public class StatisticsFragment extends Fragment {
         if (!cpu_stats.exists())
             return 0;
 
-        data = MainActivity.shell.getInfo(TIME_IN_STATE_PATH, true);
+        data = AeroActivity.shell.getInfo(TIME_IN_STATE_PATH, true);
 
 
         return data.length;

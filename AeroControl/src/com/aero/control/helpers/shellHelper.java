@@ -24,14 +24,14 @@ public class shellHelper {
 
     // Buffer length;
     private static final int BUFF_LEN = 1024;
-    private String LOG_TAG = shellHelper.class.getName();
+    private static final String LOG_TAG = shellHelper.class.getName();
 
     /**
      * Gets the current Kernel Version + some useful information
      *
      * @return String
      */
-    public String getKernel() {
+    public final String getKernel() {
         // Taken from Androids/CM Gingerbread Branch:
         String procVersionStr;
 
@@ -84,7 +84,7 @@ public class shellHelper {
      *
      * @return String
      */
-    public String getInfo(String s) {
+    public final String getInfo(String s) {
 
         String info;
 
@@ -113,7 +113,7 @@ public class shellHelper {
      *
      * @return String[]
      */
-    public String[] getInfo(String s, boolean deepsleep) {
+    public final String[] getInfo(String s, boolean deepsleep) {
 
         String info;
         // Just make some gerneric error-code
@@ -157,7 +157,7 @@ public class shellHelper {
      *
      * @return String[]
      */
-    public String[] getDirInfo(String s, boolean flag) {
+    public final String[] getDirInfo(String s, boolean flag) {
 
         // Handle case if files are needed;
         if (flag) {
@@ -201,7 +201,7 @@ public class shellHelper {
      *
      * @return String[]
      */
-    public String[] getInfoArray(String s, int flag, int flag_io) {
+    public final String[] getInfoArray(String s, int flag, int flag_io) {
 
         String[] completeString = new String[0];
         String[] output = null;
@@ -244,7 +244,7 @@ public class shellHelper {
      *
      * @return String
      */
-    public String getInfoString(String s) {
+    public final String getInfoString(String s) {
 
         int open, close;
         String finalString;
@@ -266,7 +266,7 @@ public class shellHelper {
      *
      * @return String
      */
-    public String toMHz(String mhzString) {
+    public final String toMHz(String mhzString) {
         try {
             return new StringBuilder().append(Integer.valueOf(mhzString) / 1000).append(" MHz")
                     .toString();
@@ -285,8 +285,8 @@ public class shellHelper {
      *
      * @return String
      */
-    public String getMemory(String s) {
-        String result = null;
+    public final String getMemory(String s) {
+        String result;
 
         try {
             /* /proc/meminfo entries follow this format:
@@ -321,7 +321,7 @@ public class shellHelper {
      *
      * @return nothing
      */
-    public void setRootInfo(String command, String content) {
+    public final void setRootInfo(String command, String content) {
 
         Process rooting;
         try {
@@ -347,7 +347,7 @@ public class shellHelper {
      *
      * @return nothing
      */
-    public void setRootInfo(String array[]) {
+    public final void setRootInfo(String array[]) {
 
         try {
 
@@ -371,7 +371,7 @@ public class shellHelper {
      *
      * @return nothing
      */
-    public void remountSystem() {
+    public final void remountSystem() {
 
         Process rooting;
         try {
@@ -392,13 +392,14 @@ public class shellHelper {
 
     /**
      * Check if a method set a value correctly
+     * (Needs to be reworked/reviewed)
      *
      * @param oldPath   => the old path (+file)
      * @param newPath   => the new path (+file)
      *
      * @return boolean
      */
-    public boolean checkPath(String oldPath, String newPath) {
+    public final boolean checkPath(String oldPath, String newPath) {
 
         if(!oldPath.equals(newPath))
             return true;
@@ -415,10 +416,10 @@ public class shellHelper {
      *
      * @return String
      */
-    public String getRootInfo(String command, String parameter) {
+    public final String getRootInfo(String command, String parameter) {
 
         try {
-            Process rooting = Runtime.getRuntime().exec("su");
+            final Process rooting = Runtime.getRuntime().exec("su");
 
             DataOutputStream stdin = new DataOutputStream(rooting.getOutputStream());
 

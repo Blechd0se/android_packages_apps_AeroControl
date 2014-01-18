@@ -6,11 +6,10 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.shellHelper;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -26,8 +25,6 @@ public class DefyPartsFragment extends PreferenceFragment {
     private static final String PROP_TOUCH_POINTS = "persist.sys.multitouch";
     private static final String PROP_BUTTON_BRIGHTNESS = "persist.sys.button_brightness";
 
-    shellHelper shell = new shellHelper();
-
     private ListPreference led_charging;
     private ListPreference multi_touch;
     private EditTextPreference button_brightness;
@@ -42,9 +39,9 @@ public class DefyPartsFragment extends PreferenceFragment {
 
         PreferenceScreen root = this.getPreferenceScreen();
 
-        String charger = shell.getRootInfo("getprop ", PROP_CHARGE_LED_MODE);
-        String multitouch = shell.getRootInfo("getprop ", PROP_TOUCH_POINTS);
-        String brightness = shell.getRootInfo("getprop", PROP_BUTTON_BRIGHTNESS);
+        String charger = AeroActivity.shell.getRootInfo("getprop ", PROP_CHARGE_LED_MODE);
+        String multitouch = AeroActivity.shell.getRootInfo("getprop ", PROP_TOUCH_POINTS);
+        String brightness = AeroActivity.shell.getRootInfo("getprop", PROP_BUTTON_BRIGHTNESS);
 
         led_charging = (ListPreference)root.findPreference("led_charging");
         button_brightness = (EditTextPreference)root.findPreference("button_brightness");
@@ -122,7 +119,7 @@ public class DefyPartsFragment extends PreferenceFragment {
                 "setprop " + file + " " + o.toString()
         };
 
-        shell.setRootInfo(command);
+        AeroActivity.shell.setRootInfo(command);
 
         Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_SHORT).show();
 

@@ -19,8 +19,8 @@ import java.util.Calendar;
  */
 public class updateHelper {
 
-    public static String timeStamp = new SimpleDateFormat("ddMMyyyy").format(Calendar.getInstance().getTime());
-    private String LOG_TAG = updateHelper.class.getName();
+    public static final String timeStamp = new SimpleDateFormat("ddMMyyyy").format(Calendar.getInstance().getTime());
+    private static final String LOG_TAG = updateHelper.class.getName();
 
     /**
      * Method for copying files.
@@ -28,7 +28,7 @@ public class updateHelper {
      * @param original  => The original file (+Path)
      * @param copy      => The new file      (+Path)
      */
-    public void copyFile(File original, File copy, boolean rest) throws IOException {
+    public final void copyFile(File original, File copy, boolean rest) throws IOException {
 
         FileChannel input = null;
         FileChannel output = null;

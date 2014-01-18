@@ -19,9 +19,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.settingsHelper;
-import com.aero.control.helpers.shellHelper;
 
 import java.io.File;
 import java.util.Arrays;
@@ -37,12 +37,11 @@ public class ProfileFragment extends PreferenceFragment {
      *
      */
 
-    private String LOG_TAG = PreferenceFragment.class.getName();
+    private static final String LOG_TAG = PreferenceFragment.class.getName();
     private ViewGroup mContainerView;
     private SharedPreferences prefs;
-    private final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
-    shellHelper shell = new shellHelper();
-    settingsHelper settings = new settingsHelper();
+    private static final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
+    public static final settingsHelper settings = new settingsHelper();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,10 +66,10 @@ public class ProfileFragment extends PreferenceFragment {
     /*
      * Can be used later to create default profiles, placeholder for now
      */
-    private void addDefaultProfiles(EditText editText) {
+    private final void addDefaultProfiles(EditText editText) {
 
         // If the profile doesn't exist, create it;
-        File prefFile = new File (sharedPrefsPath + "performance.xml");
+        final File prefFile = new File (sharedPrefsPath + "performance.xml");
         if(prefFile.exists()) {
             Log.e(LOG_TAG, "Performance Profile exists already!");
         } else {
@@ -79,9 +78,9 @@ public class ProfileFragment extends PreferenceFragment {
         }
     }
 
-    private void loadProfiles() {
+    private final void loadProfiles() {
 
-        String[] completeProfiles = shell.getDirInfo(sharedPrefsPath, true);
+        final String[] completeProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
 
         for (String s : completeProfiles) {
 
@@ -133,9 +132,9 @@ public class ProfileFragment extends PreferenceFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showDialog(final EditText editText) {
+    private final void showDialog(final EditText editText) {
 
-        final String[] completeProfiles = shell.getDirInfo(sharedPrefsPath, true);
+        final String[] completeProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.add_a_name)
@@ -212,14 +211,14 @@ public class ProfileFragment extends PreferenceFragment {
 
     }
 
-    private boolean deleteProfile(String ProfileName) {
+    private final boolean deleteProfile(String ProfileName) {
 
         // Delete the file, not just clear the pref;
-        String[] cmd = new String[] {
+        final String[] cmd = new String[] {
                 "rm " + "\"" + sharedPrefsPath + ProfileName + ".xml" + "\""
         };
 
-        shell.setRootInfo(cmd);
+        AeroActivity.shell.setRootInfo(cmd);
 
         try {
             Thread.sleep(350);
@@ -228,7 +227,7 @@ public class ProfileFragment extends PreferenceFragment {
         }
 
         // Check if file is gone;
-        File prefFile = new File (sharedPrefsPath + ProfileName + ".xml");
+        final File prefFile = new File (sharedPrefsPath + ProfileName + ".xml");
 
         if(prefFile.exists()) {
             Log.e(LOG_TAG, "Whoop, it still exists, something went wrong");
@@ -238,30 +237,30 @@ public class ProfileFragment extends PreferenceFragment {
         }
     }
 
-    private void saveNewProfile(SharedPreferences AeroProfile) {
+    private final void saveNewProfile(SharedPreferences AeroProfile) {
         // Just to be save, loading default again;
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = AeroProfile.edit();
 
         // Get all our preferences;
-        Map<String,?> allKeys = prefs.getAll();
+        final Map<String,?> allKeys = prefs.getAll();
 
         saveProfile(allKeys, editor);
 
     }
 
-    private void applyProfile(SharedPreferences AeroProfile) {
+    private final void applyProfile(SharedPreferences AeroProfile) {
 
         // Just to be save, loading default again;
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
 
         // Get all our preferences;
-        Map<String,?> allKeys = AeroProfile.getAll();
+        final Map<String,?> allKeys = AeroProfile.getAll();
 
         saveProfile(allKeys, editor);
     }
 
-    private void saveProfile(Map<String,?> allKeys, SharedPreferences.Editor editor) {
+    private final void saveProfile(Map<String,?> allKeys, SharedPreferences.Editor editor) {
 
 
         for(Map.Entry<String, ?> entry : allKeys.entrySet()) {
@@ -295,13 +294,13 @@ public class ProfileFragment extends PreferenceFragment {
 
     }
 
-    private void renameProfile(CharSequence oldName, String newName, TextView txtView) {
+    private final void renameProfile(CharSequence oldName, String newName, TextView txtView) {
 
-        String[] cmd = new String[] {
+        final String[] cmd = new String[] {
                 "mv " + "\"" + sharedPrefsPath + oldName + ".xml" + "\"" + " " + "\"" + sharedPrefsPath + newName + ".xml" + "\""
         };
 
-        shell.setRootInfo(cmd);
+        AeroActivity.shell.setRootInfo(cmd);
 
         txtView.setText(newName);
 
@@ -311,7 +310,7 @@ public class ProfileFragment extends PreferenceFragment {
      * Create a onClick Listener for each profile;
      */
 
-    private void createListener(final TextView txtView) {
+    private final void createListener(final TextView txtView) {
 
         // Change something else?
         txtView.setOnClickListener(new View.OnClickListener() {
@@ -324,7 +323,7 @@ public class ProfileFragment extends PreferenceFragment {
                 String tmp;
 
                 // Get all our preferences;
-                Map<String,?> allKeys = AeroProfile.getAll();
+                final Map<String,?> allKeys = AeroProfile.getAll();
 
                 for(Map.Entry<String, ?> entry : allKeys.entrySet()) {
 
