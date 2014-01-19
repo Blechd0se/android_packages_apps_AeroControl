@@ -25,7 +25,9 @@ public class GPUFragment extends PreferenceFragment {
     public static final String DISPLAY_COLOR ="/sys/class/misc/display_control/display_brightness_value";
     public static final String GPU_FREQ_NEXUS4 = "/sys/class/kgsl/kgsl-3d0/max_gpuclk";
     public static final String GPU_FREQ_NEXUS4_VALUES = "/sys/class/kgsl/kgsl-3d0/gpu_available_frequencies";
+    public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
     public boolean checkGpuControl;
+    public boolean checkSweep2wake;
 
     public String gpu_file;
 
@@ -39,11 +41,15 @@ public class GPUFragment extends PreferenceFragment {
         PreferenceScreen root = this.getPreferenceScreen();
         // I don't like the following, can we simplify it?
 
-        // Find our ListPreference (max_frequency);
-        final ListPreference gpu_control_frequencies = (ListPreference)root.findPreference("gpu_max_freq");
         // Set our gpu control flag;
         final CheckBoxPreference gpu_control_enable = (CheckBoxPreference)root.findPreference("gpu_control_enable");
+        final CheckBoxPreference sweep2wake = (CheckBoxPreference)root.findPreference("sweeptowake");
+        // Find our ListPreference (max_frequency);
+        final ListPreference gpu_control_frequencies = (ListPreference)root.findPreference("gpu_max_freq");
         final ListPreference display_control = (ListPreference)root.findPreference("display_control");
+
+        if(!(new File(SWEEP2WAKE).exists()))
+            sweep2wake.setEnabled(false);
 
         if(!(new File(GPU_CONTROL_ACTIVE).exists()))
                 gpu_control_enable.setEnabled(false);
@@ -90,6 +96,13 @@ public class GPUFragment extends PreferenceFragment {
             else
                 checkGpuControl = false;
 
+            // Check if enabled or not;
+            if (AeroActivity.shell.getInfo(SWEEP2WAKE).equals("1"))
+                checkSweep2wake = true;
+            else
+                checkSweep2wake = false;
+
+            sweep2wake.setChecked(checkSweep2wake);
             gpu_control_enable.setChecked(checkGpuControl);
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -171,6 +184,23 @@ public class GPUFragment extends PreferenceFragment {
                 AeroActivity.shell.setRootInfo(commands);
 
                 Toast.makeText(getActivity(), "Turn your display off/on :)", Toast.LENGTH_LONG).show();
+
+                return true;
+            }
+        });
+
+        sweep2wake.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                String a =  o.toString();
+
+                if (a.equals("true"))
+                    AeroActivity.shell.setRootInfo("1", SWEEP2WAKE);
+                else if (a.equals("false"))
+                    AeroActivity.shell.setRootInfo("0", SWEEP2WAKE);
+
+                //** store preferences
+                preference.getEditor().commit();
 
                 return true;
             }

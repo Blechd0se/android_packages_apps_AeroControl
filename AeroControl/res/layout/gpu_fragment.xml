@@ -9,6 +9,11 @@
             android:title="@string/pref_gpu_control_enable"
             android:summary="@string/pref_gpu_control_enable_sum" />
 
+        <CheckBoxPreference
+            android:key="sweeptowake"
+            android:title="@string/pref_sweeptowake"
+            android:summary="@string/pref_sweeptowake_sum" />
+
         <ListPreference
             android:key="gpu_max_freq"
             android:title="@string/pref_gpu_max_freq"

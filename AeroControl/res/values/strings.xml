@@ -157,6 +157,8 @@
     <string name="defy_green_colors">Defy Green Colors</string>
     <string name="defy_energy_saver">Energy Saver</string>
 
+    <string name="pref_sweeptowake">Sweep2Wake</string>
+    <string name="pref_sweeptowake_sum">May drain your battery a bit more than usual.</string>
 
     <!-- Updater Fragment -->
     <string name="pref_updater">Kernel Updater and Backup</string>

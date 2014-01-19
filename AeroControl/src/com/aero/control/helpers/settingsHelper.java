@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -22,6 +23,7 @@ public class settingsHelper {
     public static final String GPU_FREQ_MAX = "/sys/kernel/gpu_control/max_freq";
     public static final String GPU_CONTROL_ACTIVE = "/sys/kernel/gpu_control/gpu_control_active";
     public static final String DISPLAY_COLOR = "/sys/class/misc/display_control/display_brightness_value";
+    public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
@@ -37,6 +39,7 @@ public class settingsHelper {
     public static final String PREF_GPU_FREQ_MAX = "gpu_max_freq";
     public static final String PREF_GPU_CONTROL_ACTIVE = "gpu_control_enable";
     public static final String PREF_DISPLAY_COLOR = "display_control";
+    public static final String PREF_SWEEP2WAKE = "sweeptowake";
 
     public static final String PREF_GOV_IO_FILE = "io_scheduler";
     public static final String PREF_SWAPPINESS_FILE = "swappiness";
@@ -97,6 +100,7 @@ public class settingsHelper {
         String gpu_max = prefs.getString(PREF_GPU_FREQ_MAX, null);
         String display_color = prefs.getString(PREF_DISPLAY_COLOR, null);
         Boolean gpu_enb = prefs.getBoolean(PREF_GPU_CONTROL_ACTIVE, false);
+        Boolean sweep = prefs.getBoolean(PREF_SWEEP2WAKE, false);
         // GET MEM VALUES FROM PREFERENCES
         String mem_ios = prefs.getString(PREF_GOV_IO_FILE, null);
         String mem_swp = prefs.getString(PREF_SWAPPINESS_FILE, null);
@@ -131,7 +135,11 @@ public class settingsHelper {
             al.add("echo " + gpu_max + " > " + GPU_FREQ_MAX);
         }
 
-        al.add("echo " + (gpu_enb ? "1" : "0") + " > " + GPU_CONTROL_ACTIVE);
+        if(new File(GPU_CONTROL_ACTIVE).exists())
+            al.add("echo " + (gpu_enb ? "1" : "0") + " > " + GPU_CONTROL_ACTIVE);
+
+        if(new File(SWEEP2WAKE).exists())
+            al.add("echo " + (sweep ? "1" : "0") + " > " + SWEEP2WAKE);
 
         if (display_color != null) {
             al.add("echo " + display_color + " > " + DISPLAY_COLOR);
@@ -164,20 +172,17 @@ public class settingsHelper {
 
             final String completeGovernorSettingList[] = shell.getDirInfo(CPU_GOV_BASE + cpu_gov, true);
 
-                    /* Governor Specific Settings at boot */
-            int index = 0;
+            /* Governor Specific Settings at boot */
 
             for (String b : completeGovernorSettingList) {
 
-                final String governorSetting = prefs.getString(CPU_GOV_BASE + cpu_gov + "/" + completeGovernorSettingList[index], null);
+                final String governorSetting = prefs.getString(CPU_GOV_BASE + cpu_gov + "/" + b, null);
 
                 if (governorSetting != null) {
-                    al.add("echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + completeGovernorSettingList[index]);
+                    al.add("echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
 
-                    Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + completeGovernorSettingList[index]);
+                    Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
                 }
-
-                index++;
             }
         } catch (NullPointerException e) {
             Log.e("Aero", "This shouldn't happen.. Maybe a race condition. " + e);
