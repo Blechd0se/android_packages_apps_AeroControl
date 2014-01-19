@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -301,17 +301,30 @@ public class AeroActivity extends Activity {
                 fragment = mMemoryFragment;
                 break;
             case DEFYPARTS:
-                if (mDefyPartsFragment == null) {
-                    mDefyPartsFragment = new DefyPartsFragment();
+                if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")) {
+                    if (mDefyPartsFragment == null) {
+                        mDefyPartsFragment = new DefyPartsFragment();
+                    }
+                    fragment = mDefyPartsFragment;
+                } else {
+                    if (mUpdaterFragement == null) {
+                        mUpdaterFragement = new UpdaterFragment();
+                    }
+                    fragment = mUpdaterFragement;
                 }
-                fragment = mDefyPartsFragment;
                 break;
             case UPDATER:
-
-                if (mUpdaterFragement == null) {
-                    mUpdaterFragement = new UpdaterFragment();
+                if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")) {
+                    if (mUpdaterFragement == null) {
+                        mUpdaterFragement = new UpdaterFragment();
+                    }
+                    fragment = mUpdaterFragement;
+                } else {
+                    if (mProfileFragment == null) {
+                        mProfileFragment = new ProfileFragment();
+                    }
+                    fragment = mProfileFragment;
                 }
-                fragment = mUpdaterFragement;
                 break;
             case PROFILE:
 
@@ -328,7 +341,12 @@ public class AeroActivity extends Activity {
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
-        setTitle(mAeroTitle[position]);
+        if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526") || position < 5) {
+            setTitle(mAeroTitle[position]);
+        } else {
+            setTitle(mAeroTitle[position + 1]);
+        }
+
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 

@@ -58,7 +58,7 @@ public class ProfileFragment extends PreferenceFragment {
         loadProfiles();
 
         // Load default profiles;
-        addDefaultProfiles(new EditText(getActivity()));
+        //addDefaultProfiles(new EditText(getActivity()));
 
         return mContainerView;
     }
