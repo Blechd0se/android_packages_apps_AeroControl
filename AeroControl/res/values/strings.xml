@@ -194,6 +194,10 @@
     <string name="showcase_hidden_feature_sum">You have found a secret feature! Be sure to tell nobody about this and if you have
                                          any troubles using it, don\'t worry. Its our little secret.</string>
 
+    <string name="showcase_profile_fragment">Add Profiles!</string>
+    <string name="showcase_profile_fragment_sum">Just click on this little button and add a profile. All your current settings will be saved into this
+                                        new Profile. If you have added multiple Profiles you can simply load them by clicking on them.</string>
+
 
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">General Settings</string>

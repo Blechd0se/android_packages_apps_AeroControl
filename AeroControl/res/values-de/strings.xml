@@ -186,6 +186,10 @@
     <string name="showcase_hidden_feature">Herzlichen Glückwunsch!</string>
     <string name="showcase_hidden_feature_sum">Du hast eine geheime Funktion gefunden! Bitte erzähl niemandem davon und wundere dich nicht
                                               falls Du Probleme hast. Das ist unser kleines Geheimnis.</string>
+    <string name="showcase_profile_fragment">Füge Profile hinzu!</string>
+    <string name="showcase_profile_fragment_sum">Mit nur einem Klick auf diesen Button kannst Du ein neues Profil hinzufügen. Deine momentanen Einstellungen
+                                            werden in diesem neuen Profil gespeichert. Wenn Du bereits Profile hinzugefügt hast, kannst Du diese mit einem Klick
+                                            laden.</string>
 
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">Allgemeine Einstellungen</string>

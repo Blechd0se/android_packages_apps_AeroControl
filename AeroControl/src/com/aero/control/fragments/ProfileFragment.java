@@ -22,25 +22,27 @@ import android.widget.Toast;
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.settingsHelper;
+import com.espian.showcaseview.ShowcaseView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 
 /**
- * Created by Alexander Christ on 10.10.13.
+ * Created by Alexander Christ on 09.12.13.
  */
 public class ProfileFragment extends PreferenceFragment {
 
-    /*
-     * TODO: - Add "Apply"
-     *
-     */
-
     private static final String LOG_TAG = PreferenceFragment.class.getName();
     private ViewGroup mContainerView;
+    public ShowcaseView mShowCase;
     private SharedPreferences prefs;
+    public ShowcaseView.ConfigOptions mConfigOptions;
     private static final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
+    public static final String FILENAME_PROFILES = "firstrun_profiles";
     public static final settingsHelper settings = new settingsHelper();
 
     @Override
@@ -396,5 +398,49 @@ public class ProfileFragment extends PreferenceFragment {
         });
 
     }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+        // Prepare Showcase;
+        mConfigOptions = new ShowcaseView.ConfigOptions();
+        mConfigOptions.hideOnClickOutside = false;
+        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
+
+        // Set up our file;
+        int output = 0;
+        final byte[] buffer = new byte[1024];
+
+        try {
+            FileInputStream fis = getActivity().openFileInput(FILENAME_PROFILES);
+            output = fis.read(buffer);
+            fis.close();
+        } catch (IOException e) {
+            Log.e("Aero", "Couldn't open File... " + output);
+        }
+
+        // Only show showcase once;
+        if (output == 0)
+            DrawFirstStart(R.string.showcase_profile_fragment, R.string.showcase_profile_fragment_sum, FILENAME_PROFILES);
+
+    }
+
+    public void DrawFirstStart(int header, int content, String filename) {
+
+        String string = "1";
+
+        try {
+            FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
+            fos.write(string.getBytes());
+            fos.close();
+        }
+        catch (IOException e) {
+            Log.e("Aero", "Could not save file. ", e);
+        }
+
+        mShowCase = ShowcaseView.insertShowcaseViewWithType(ShowcaseView.ITEM_ACTION_ITEM, R.id.action_add_item, getActivity(), header, content, mConfigOptions);
+    }
+
 
 }
