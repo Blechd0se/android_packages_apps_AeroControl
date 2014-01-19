@@ -190,6 +190,10 @@
     <string name="showcase_cpu_fragment_governor">CPU Governor</string>
     <string name="showcase_cpu_fragment_governor_sum">Click this symbol to get the full access of governor control! You can tweak
                                                 every parameter for every governor out there to gain performance.</string>
+    <string name="showcase_hidden_feature">Congratulations!</string>
+    <string name="showcase_hidden_feature_sum">You have found a secret feature! Be sure to tell nobody about this and if you have
+                                         any troubles using it, don\'t worry. Its our little secret.</string>
+
 
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">General Settings</string>

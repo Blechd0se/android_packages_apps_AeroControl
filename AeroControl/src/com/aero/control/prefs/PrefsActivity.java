@@ -153,7 +153,7 @@ public class PrefsActivity extends PreferenceActivity {
                 builder.setIcon(R.drawable.email_dark);
 
                 aboutText.setText(getText(R.string.legal_dialog));
-                aboutText.setTextSize(12);
+                aboutText.setTextSize(13);
 
                 builder.setView(layout)
                         .setPositiveButton(R.string.send_email, new DialogInterface.OnClickListener() {
@@ -162,7 +162,7 @@ public class PrefsActivity extends PreferenceActivity {
 
                                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                         "mailto", "alex.christ@hotmail.de", null));
-                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[AeroContro] Got something for you");
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[AeroControl] Got something for you");
                                 startActivity(Intent.createChooser(emailIntent, getText(R.string.send_email)));
                             }
                         });

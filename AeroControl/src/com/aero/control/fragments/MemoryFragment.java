@@ -46,6 +46,7 @@ public class MemoryFragment extends PreferenceFragment {
     public static final String MIN_FREE = "/proc/sys/vm/extra_free_kbytes";
     public static final String LOW_MEM = "/system/build.prop";
     public static final String FILENAME = "firstrun_trim";
+    public static final String FILENAME_HIDDEN = "firstrun_hidden_feature";
     public static final String GOV_IO_PARAMETER = "/sys/devices/platform/mmci-omap-hs.0/mmc_host/mmc0/mmc0:1234/block/mmcblk0/queue/iosched/";
 
     public ShowcaseView.ConfigOptions mConfigOptions;
@@ -442,16 +443,16 @@ public class MemoryFragment extends PreferenceFragment {
 
         // Only show showcase once;
         if (output == 0)
-            DrawFirstStart(R.string.showcase_memory_fragment_trim, R.string.showcase_memory_fragment_trim_sum);
+            DrawFirstStart(R.string.showcase_memory_fragment_trim, R.string.showcase_memory_fragment_trim_sum, FILENAME);
 
     }
 
-    public void DrawFirstStart(int header, int content) {
+    public void DrawFirstStart(int header, int content, String filename) {
 
         String string = "1";
 
         try {
-            FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
             fos.write(string.getBytes());
             fos.close();
         }
@@ -463,6 +464,26 @@ public class MemoryFragment extends PreferenceFragment {
     }
 
     private void loadIOParameter() {
+
+        mConfigOptions = new ShowcaseView.ConfigOptions();
+        mConfigOptions.hideOnClickOutside = false;
+        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
+
+        // Set up our file;
+        int output = 0;
+        final byte[] buffer = new byte[1024];
+
+        try {
+            FileInputStream fis = getActivity().openFileInput(FILENAME_HIDDEN);
+            output = fis.read(buffer);
+            fis.close();
+        } catch (IOException e) {
+            Log.e("Aero", "Couldn't open File... " + output);
+        }
+
+        // Only show showcase once;
+        if (output == 0)
+            DrawFirstStart(R.string.showcase_hidden_feature, R.string.showcase_hidden_feature_sum, FILENAME_HIDDEN);
 
         final String complete_path = GOV_IO_PARAMETER;
 

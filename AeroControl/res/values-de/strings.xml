@@ -183,6 +183,9 @@
     <string name="showcase_cpu_fragment_governor_sum">Klicke dieses Symbol um vollen Zugang zu den CPU Governor Parametern zu erhalten!
                                                     Du kannst jeden Parameter eines beliebigen Governors ändern um noch ein bisschen mehr Leistung
                                                     zu erhalten.</string>
+    <string name="showcase_hidden_feature">Herzlichen Glückwunsch!</string>
+    <string name="showcase_hidden_feature_sum">Du hast eine geheime Funktion gefunden! Bitte erzähl niemandem davon und wundere dich nicht
+                                              falls Du Probleme hast. Das ist unser kleines Geheimnis.</string>
 
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">Allgemeine Einstellungen</string>
