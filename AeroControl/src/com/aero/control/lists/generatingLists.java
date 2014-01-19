@@ -1,5 +1,7 @@
 package com.aero.control.lists;
 
+import android.os.Build;
+
 import com.aero.control.R;
 
 import java.util.ArrayList;
@@ -22,7 +24,10 @@ public class generatingLists {
         addItem(new PreferenceItem(R.string.slider_statistics, R.drawable.clock));
         addItem(new PreferenceItem(R.string.slider_gpu_settings, R.drawable.gpu));
         addItem(new PreferenceItem(R.string.slider_memory_settings, R.drawable.memory));
-        addItem(new PreferenceItem(R.string.slider_defy_parts, R.drawable.gear));
+
+        if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526"))
+            addItem(new PreferenceItem(R.string.slider_defy_parts, R.drawable.gear));
+
         addItem(new PreferenceItem(R.string.slider_updater, R.drawable.update));
         addItem(new PreferenceItem(R.string.slider_profile, R.drawable.profile));
     }

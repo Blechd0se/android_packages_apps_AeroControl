@@ -15,12 +15,6 @@
             android:title="@string/pref_rebootcheck"
             android:summary="@string/pref_rebootcheck_sum" />
 
-        <EditTextPreference
-            android:key="update_location"
-            android:title="@string/pref_updatepath"
-            android:summary="@string/pref_updatepath_sum"
-            android:dialogTitle="Lorum ipsum" />
-
         <ListPreference
             android:key="app_theme"
             android:title="@string/pref_app_theme"

@@ -459,7 +459,7 @@ public class MemoryFragment extends PreferenceFragment {
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        mShowCase = ShowcaseView.insertShowcaseView(150, 600, getActivity(), header, content, mConfigOptions);
+        mShowCase = ShowcaseView.insertShowcaseView(150, 730, getActivity(), header, content, mConfigOptions);
     }
 
     private void loadIOParameter() {

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.aero.control.AeroActivity;
 import com.aero.control.R;
 
 /**
@@ -63,15 +64,11 @@ public class PrefsActivity extends PreferenceActivity {
                 "red", "light", "dark"
         };
 
-        EditTextPreference updateLocation = (EditTextPreference)root.findPreference("update_location");
         CheckBoxPreference checkbox_preference = (CheckBoxPreference)root.findPreference("checkbox_preference");
         CheckBoxPreference reboot_checker = (CheckBoxPreference)root.findPreference("reboot_checker");
         ListPreference appTheme = (ListPreference)root.findPreference("app_theme");
-        Preference about = (Preference)root.findPreference("about");
-        Preference legal = (Preference)root.findPreference("legal");
-
-        updateLocation.setEnabled(false);
-        updateLocation.setIcon(R.drawable.ic_action_settings);
+        Preference about = root.findPreference("about");
+        Preference legal = root.findPreference("legal");
 
         checkbox_preference.setIcon(R.drawable.ic_action_warning);
         reboot_checker.setIcon(R.drawable.ic_action_phone);

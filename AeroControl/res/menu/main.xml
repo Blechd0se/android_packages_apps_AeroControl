@@ -3,5 +3,5 @@
         android:id="@+id/aero_settings"
         android:title="@string/aero_settings"
         android:showAsAction="always"
-        android:icon="@drawable/ic_action_edit"/>
+        android:icon="@drawable/ic_action_settings"/>
 </menu>
