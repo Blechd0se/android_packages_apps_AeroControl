@@ -69,6 +69,7 @@ public class PrefsActivity extends PreferenceActivity {
         CheckBoxPreference reboot_checker = (CheckBoxPreference)root.findPreference("reboot_checker");
         ListPreference appTheme = (ListPreference)root.findPreference("app_theme");
         Preference about = (Preference)root.findPreference("about");
+        Preference legal = (Preference)root.findPreference("legal");
 
         updateLocation.setEnabled(false);
         updateLocation.setIcon(R.drawable.ic_action_settings);
@@ -82,6 +83,7 @@ public class PrefsActivity extends PreferenceActivity {
         appTheme.setIcon(R.drawable.ic_action_event);
 
         about.setIcon(R.drawable.ic_action_about);
+        legal.setIcon(R.drawable.ic_action_legal);
 
         appTheme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -141,6 +143,40 @@ public class PrefsActivity extends PreferenceActivity {
                 return true;
             }
         });
+
+        legal.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.about_screen, null);
+                TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
+
+                builder.setTitle(R.string.legal);
+                builder.setIcon(R.drawable.email_dark);
+
+                aboutText.setText(getText(R.string.legal_dialog));
+                aboutText.setTextSize(12);
+
+                builder.setView(layout)
+                        .setPositiveButton(R.string.send_email, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                                        "mailto", "alex.christ@hotmail.de", null));
+                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[AeroContro] Got something for you");
+                                startActivity(Intent.createChooser(emailIntent, getText(R.string.send_email)));
+                            }
+                        });
+
+                builder.show();
+
+                return true;
+            }
+        });
+
     }
 
     @Override
