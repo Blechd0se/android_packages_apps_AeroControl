@@ -34,7 +34,7 @@
             android:name=".prefs.PrefsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aero.control.MainActivity" />
+                android:value="com.aero.control.AeroActivity" />
         </activity>
 
         <activity
