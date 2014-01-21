@@ -19,6 +19,9 @@
     <string name="nothing_added_yet">你还没有添加任何配置方案</string>
     <string name="not_rooted">没有 Root？</string>
     <string name="apply">应用</string>
+    <string name="refresh">刷新</string>
+    <string name="legal">法律声明</string>
+    <string name="send_email">发送电子邮件</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -29,6 +32,7 @@
     <string name="slider_defy_parts">Defy Parts</string>
     <string name="slider_updater">更新器</string>
     <string name="slider_profile">配置方案</string>
+    <string name="slider_statistics">CPU 统计</string>
 
     <!-- Overview Elements -->
 
@@ -140,6 +144,10 @@
     <string name="defy_green_colors">Defy 绿色</string>
     <string name="defy_energy_saver">节能</string>
 
+    <string name="pref_sweeptowake">滑动唤醒</string>
+    <string name="pref_sweeptowake_sum">相对平时可能会消耗更多的电量</string>
+    
+
     <!-- Updater Fragment -->
     <string name="pref_updater">内核更新及备份</string>
     <string name="pref_backup_kernel">备份内核</string>
@@ -166,6 +174,13 @@
 
     <string name="showcase_cpu_fragment_governor">CPU 调速器</string>
     <string name="showcase_cpu_fragment_governor_sum">点击这个符号来开启完整的调速器设置！你可以调节每一个调速器的每一个参数来增加性能</string>
+
+    <string name="showcase_hidden_feature">恭喜！</string>
+    <string name="showcase_hidden_feature_sum">你找到了一个秘密功能，不要告诉其他人哦。如果使用中遇到麻烦也别着急。它是我们的小秘密。</string>
+
+    <string name="showcase_profile_fragment">添加配置方案</string>
+    <string name="showcase_profile_fragment_sum">点击这个小按钮以添加一个配置方案，你当前的设置都会被存入新的配置方案里。如果有多个配置方案的话，点击它们即可载入。</string>
+    
 
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">一般设置</string>
