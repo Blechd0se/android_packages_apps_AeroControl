@@ -19,6 +19,9 @@
     <string name="nothing_added_yet">Whoop! Niste dodali još ni jedan profil.</string>
     <string name="not_rooted">Nema Root pristupa?</string>
     <string name="apply">Primjeni</string>
+    <string name="refresh">Osvježi</string>
+    <string name="legal">Pravne Napomene</string>
+    <string name="send_email">Pošalji E-mail</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -29,6 +32,7 @@
     <string name="slider_defy_parts">Defy Parts</string>
     <string name="slider_updater">Ažuriranja</string>
     <string name="slider_profile">Profili</string>
+    <string name="slider_statistics">CPU Statistike</string>
 
     <!-- Overview Elements -->
 
@@ -49,22 +53,30 @@
     <string name="pref_appspecific">Specifično</string>
     <string name="pref_setatboot">Postavi pri pokretanju</string>
     <string name="pref_setatboot_sum">Oprez: Postavlja Vaše postavke prilikom pokretanja uređaja.</string>
+    <string name="pref_rebootcheck">Provjera neplaniranog reboota</string>
+    <string name="pref_rebootcheck_sum">Obavještava Vas ako se uređaj nenadano ponovno pokrene.</string>
     <string name="pref_updatepath">Mjesto Ažuriranja:</string>
     <string name="pref_updatepath_sum">Postavite željeno mjesto ažuriranja.</string>
     <string name="pref_app_theme">Tema</string>
     <string name="pref_app_theme_sum">Određuje zadanu temu aplikacije.</string>
-
     <string name="app_theme_red">Crveno - Svijetla Holo-tema sa crvenim naglaskom</string>
     <string name="app_theme_light">Svijetlo - Svijetla Holo-tema sa plavim naglaskom</string>
     <string name="app_theme_dark">Tamno - Svijetla Holo-tema sa plavim naglaskom i crnom akcijskom trakom</string>
+
     <!-- About -->
     
     <string name="about_dialog">Pozdrav. Hvala što koristite ovu aplikaciju. Moje ime je
                         Alexander Christ (Blechd0se) i napisao sam ovu aplikaciju iz zabave i u svoje slobodno vrijeme.
                         Isto je tako Otvorenog kôda, tako da možete iskoristiti izvorni kôd i mijenjati ga po želji.
                         Ako želite možete ili donirati Quarx-u za njegov strašan rom ili meni.
-                        <b>Radost življenja je u davanju.</b>
-    </string>
+                        <b>Radost življenja je u davanju.</b></string>
+    
+    <!-- Legal Notices -->
+    
+    <string name="legal_dialog">Ova Aplikacija je licencirana pod Apache licencom.Kopiju licence možete preuzeti ovdje:
+                        <b>http://www.apache.org/licenses/LICENSE-2.0</b>\n
+                        ShowCase knjižnica od strane Alex Curran je licencirana pod Apache 2.0 Licencom.\n
+                        HoloGraph knjižnica od strane Daniel Nadeau je licencirana pod Apache 2.0. Licencom.</string>
 
     <!-- Root Check -->
     
@@ -108,9 +120,7 @@
     <string name="has_journal_dialog_header">Problem otkriven</string>
     <string name="has_journal_dialog">Izgleda da Vaša /data particija nema omogućenu <b>has_journal</b> značajku.
                             Molimo Vas reboot-ajte u recovery i pokrenite sljedeću naredbu preko adb shell: <br /> <br />
-                            <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
-    </string>
-    
+                            <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b></string>
     <string name="reboot_notifier_header">Oops, ovo se ne bi trebalo događati</string>
     <string name="reboot_notifier">Izgleda da je došlo do rušenja jezgre. Svakako provjerite
                     \n<b>/proc/last_kmsg </b> \nand pošaljite ovu datoteku svom omiljenom razvojnom programeru. Ozbiljno, pošaljite je! \n
@@ -132,6 +142,8 @@
     <string name="defy_red_colors">Defy Crvene Boje</string>
     <string name="defy_green_colors">Defy Zelene Boje</string>
     <string name="defy_energy_saver">Stednja Energije</string>
+    <string name="pref_sweeptowake">Sweep2Wake</string>
+    <string name="pref_sweeptowake_sum">Moguće brže pražnjenje baterije nego inaće.</string>
 
     <!-- Updater Fragment -->
     
@@ -155,28 +167,29 @@
                                                 Stranica koju trenutno gledate je glavni pregledni zaslon.
                                                 Tu je mali sažetak nekih postavki jezgre. One su u trenutnom vremenu, ne
                                                 morate ništa osvježavati!</string>
-
     <string name="showcase_memory_fragment_trim">Trim Opcije</string>
     <string name="showcase_memory_fragment_trim_sum">U cilju održavanja performansi uređaja, možete upotrijebiti trim
                                                      na nekoliko dijelova Vašeg operativnog sustava. To može potrajati neko vrijeme,
                                                      pogotovo kada imate spremljeno mnogo podataka.</string>
-
     <string name="showcase_cpu_fragment_governor">CPU Governor</string>
     <string name="showcase_cpu_fragment_governor_sum">Kliknite na ovaj simbol da biste dobili puni pristup upravljanju governora! Možete podesiti
                                                 svaki parametar za svaki dostupni governor da bi poboljšali performanse.</string>
+    <string name="showcase_hidden_feature">Čestitke!</string>
+    <string name="showcase_hidden_feature_sum">Otkrili ste skrivenu značajku! Nemojte nikome o tome pričati i ako imate
+                                         ikakvih problema sa korištenjem iste, ne brinite. To je naša mala tajna.</string>
+    <string name="showcase_profile_fragment">Dodaj profile!</string>
+    <string name="showcase_profile_fragment_sum">Samo kliknite na ovo malo dugme da bi dodali profil. Sve Vaše trenutne postavke će biti spremljene u
+                                        taj novi Profil. Ako ste dodali više Profila jednostavno ih učitajte tako da kliknete na njih.</string>						
 
     <!-- Defy Parts -->
     
-     <string name="pref_general_settings_defy">Opće postavke</string>
-     <string name="pref_charging_led">LED boja punjenja</string>
-     <string name="pref_charging_led_sum">Boja Vaše LED prilikom punjenja</string>
-
-     <string name="pref_button_brightness">Svjetlina tipki</string>
-     <string name="pref_button_brightness_sum">Ovdje promjenite svjetlinu tipki.</string>
-
-     <string name="pref_multitouch">Multitouch-Točke</string>
-     <string name="pref_multitouch_sum">Broj multitouch točaka.</string> 
-
+    <string name="pref_general_settings_defy">Opće postavke</string>
+    <string name="pref_charging_led">LED boja punjenja</string>
+    <string name="pref_charging_led_sum">Boja Vaše LED prilikom punjenja</string>
+    <string name="pref_button_brightness">Svjetlina tipki</string>
+    <string name="pref_button_brightness_sum">Ovdje promjenite svjetlinu tipki.</string>
+    <string name="pref_multitouch">Multitouch-Točke</string>
+    <string name="pref_multitouch_sum">Broj multitouch točaka.</string>
     <string name="pref_charge_led_mode_white">Bijela LED</string>
     <string name="pref_charge_led_mode_rgb">Miješana LED (crvena/zelena)</string>
     <string name="pref_charge_led_mode_off">Ugašena</string>
