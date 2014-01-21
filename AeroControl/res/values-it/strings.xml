@@ -17,8 +17,11 @@
     <string name="add_a_name">Nome del profilo</string>
     <string name="add">Aggiungi</string>
     <string name="nothing_added_yet">Ooops! Non hai ancora aggiunto un profilo.</string>
-    <string name="not_rooted">No Root?</string>
+    <string name="not_rooted">Non hai il root?</string>
     <string name="apply">Applica</string>
+    <string name="refresh">Aggiorna</string>
+    <string name="legal">Note Legali</string>
+    <string name="send_email">Invia una Email</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -29,6 +32,7 @@
     <string name="slider_defy_parts">Defy Parts</string>
     <string name="slider_updater">Aggiornamenti</string>
     <string name="slider_profile">Profili</string>
+    <string name="slider_statistics">Statistiche CPU</string>
 
     <!-- Overview Elements -->
 
@@ -68,6 +72,16 @@
                                 donare a Quarx per la sua fantastica rom o a me.
                                 <b>The joy of living is in the giving.</b>
     </string>
+
+
+<!-- Legal Notices -->
+ +    <string name="legal_dialog">This App is licensed under the Apache license. A copy of this can be downloaded here:
+ +                        <b>http://www.apache.org/licenses/LICENSE-2.0</b>\n
+ +                        ShowCase Library by Alex Curran is licensed under the Apache 2.0 License.\n
+ +                        HoloGraph Library by Daniel Nadeau is licensed under the Apache 2.0 License.
+ +
+ +    </string>
+
 
     <!-- Root Check -->
     <string name="root_required">Sembra che il tuo dispositivo non sia rootato. Questa applicazione non 
@@ -149,6 +163,8 @@
     <string name="defy_green_colors">Colori verdi</string>
     <string name="defy_energy_saver">Risparmio energia</string>
 
+    <string name="pref_sweeptowake">Sweep2Wake</string>
+    <string name="pref_sweeptowake_sum">Potrebbe scaricare la tua batteria più del solito.</string>
 
     <!-- Updater Fragment -->
     <string name="pref_updater">Backup e aggiornamento del Kernel</string>
@@ -182,6 +198,16 @@
     <string name="showcase_cpu_fragment_governor">Governor CPU</string>
     <string name="showcase_cpu_fragment_governor_sum">Premi questo tasto per avere il pieno controllo del governor! Puoi 
                                                     cambiare ogni parametro di ogni governor per migliori performance.</string>
+
+    <string name="showcase_hidden_feature">Congratulazioni!</string>
+    <string name="showcase_hidden_feature_sum">Hai trovato una funzione segreta! Ricordati di non dirlo a nessuno,
+    e se hai qualche problema ad usarla, non preoccuparti. É il nostro piccolo segreto. </string>
+
+    <string name="showcase_profile_fragment">Aggiungi profili!</string>
+    <string name="showcase_profile_fragment_sum">Premi su questo pulsante per creare un profilo.
+                                                Tutte le attuali impostazioni saranno salvate nel nuovo Profilo.
+                                                Se hai creato più Profili, puoi caricarli cliccandoci sopra. </string>
+
 
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">Impostazioni Generali</string>
