@@ -5,7 +5,7 @@
     <string name="error_detected">Błąd ?</string>
     <string name="cancel">Anuluj</string>
     <string name="save">Zapisz</string>
-    <string name="github">Github AeroControl</string>
+    <string name="github">AeroControl na Githubie</string>
     <string name="donation_blechdose">Wesprzyj Blechdose</string>
     <string name="donation_quarx">Wesprzyj Quarxa</string>
     <string name="default_values">Wartości domyślne</string>
@@ -17,6 +17,11 @@
     <string name="add_a_name">Nazwa profilu</string>
     <string name="add">Dodaj</string>
     <string name="nothing_added_yet">Ups! Nie dodałeś jeszcze żadnego profilu.</string>
+    <string name="not_rooted">Brak roota?</string>
+    <string name="apply">Zastosuj</string>
+    <string name="refresh">Odśwież</string>
+    <string name="legal">Noty prawne</string>
+    <string name="send_email">Wyślij email</string>
 
 
     <!-- Default Navigation Drawer entries -->
@@ -24,10 +29,11 @@
     <string name="slider_overview">Przegląd</string>
     <string name="slider_cpu_settings">Wydajność CPU</string>
     <string name="slider_gpu_settings">Kontrola GPU</string>
-    <string name="slider_memory_settings">Tuning pamięci</string>
+    <string name="slider_memory_settings">Optymalizacja pamięci</string>
     <string name="slider_defy_parts">Ustawienia urządzenia</string>
     <string name="slider_updater">Aktualizacja</string>
 	<string name="slider_profile">Profile</string>
+	<string name="slider_statistics">Statystyki CPU</string>
 	
     <!-- Overview Elements -->
 
@@ -48,10 +54,15 @@
     <string name="pref_appspecific">Specyficzne programu</string>
     <string name="pref_setatboot">Ustaw przy starcie systemu</string>
     <string name="pref_setatboot_sum">Uwaga: ta opcja zastosuje twoje ustawienia przy starcie systemu.</string>
+    <string name="pref_rebootcheck">Monitor losowego ponownego uruchomienia</string>
+    <string name="pref_rebootcheck_sum">Poinformuje cię gdy twoje urządzenie przypadkowo uruchomiło się ponownie.</string>
     <string name="pref_updatepath">Lokalizacja aktualizacji:</string>
     <string name="pref_updatepath_sum">Ustaw swoją lokalizację aktualizacji.</string>
     <string name="pref_app_theme">Motyw programu</string>
     <string name="pref_app_theme_sum">Ustawia domyślny motyw programu.</string>
+     <string name="app_theme_red">Czerwony - jasny z czerwonymi akcentami</string>
+    <string name="app_theme_light">Jasny - jasny z niebieskimi akcentami</string>
+    <string name="app_theme_dark">Ciemny - jasny z niebieskimi akcentami i czarnym paskiem działania</string>
 
     <!-- About -->
     <string name="about_dialog">Witam. Dziękuję za używanie tego programu. Nazywam się
@@ -60,6 +71,18 @@
                         Jeśli chcesz, możesz wesprzeć Quarxa za jego świetny rom lub mnie.
                         <b>The joy of living is in the giving.</b>
     </string>
+    
+        <!-- Legal Notices -->
+    <string name="legal_dialog">To jest aplikacja na licencji Apache. Jej kopię możesz pobrać tutaj:
+                        <b>http://www.apache.org/licenses/LICENSE-2.0</b>\n
+                        Biblioteka ShowCase Alexa Currana jest na licenji Apache 2.0.\n
+                        Biblioteka HoloGraph Daniela Nadeau jest na licencji Apache 2.0.
+
+    </string>
+
+    <!-- Root Check -->
+    <string name="root_required">Wygląda na to, że twoje urządzenie nie jest zrootowane. Ta aplikacja wymaga roota do poprawnego działania.
+                                Jeśli myślisz, że to pomyłka, daj mi znać!</string>
 
     <!-- CPU Fragment -->
 
@@ -128,9 +151,11 @@
     
     <string name="pref_display_color">Kolory wyświetlacza</string>
     <string name="pref_display_color_sum">Dostosuj kolory wyświetlacza tutaj.</string>
-    <string name="defy_red_colors">Czerwony kolor Defy</string>
-    <string name="defy_green_colors">Zielony kolor Defy</string>
-    <string name="defy_energy_saver">Tryb oszczędności baterii</string>
+    <string name="defy_red_colors">Czerwony kolor</string>
+    <string name="defy_green_colors">Zielony kolor</string>
+    <string name="defy_energy_saver">Oszczędność baterii</string>
+    <string name="pref_sweeptowake">Sweep2Wake</string>
+    <string name="pref_sweeptowake_sum">Może zużywać więcej baterii niż zwykle.</string>
 
 
     <!-- Updater Fragment -->
@@ -162,6 +187,17 @@
                                                     kilku częściach twojego systemu operacyjnego. Może to chwilę potrwać,
                                                     zwłaszcza jeśli przechowujesz dużą ilość danych.</string>
                                                     
+    <string name="showcase_cpu_fragment_governor">Zarządca CPU</string>
+    <string name="showcase_cpu_fragment_governor_sum">Kliknij tutaj aby uzyskać pełen dostęp do ustawień zarządcy procesora! Możesz edytować
+                                                wszystkie parametry każdego zarządcy aby zwiększyć jego wydajność.</string>
+    <string name="showcase_hidden_feature">Gratulacje!</string>
+    <string name="showcase_hidden_feature_sum">Znalazłeś ukrytą opcję! Nie mów o niej nikomu i jeśli napotkałeś
+                                         jakieś kłopoty podczas jej używania, nie przejmuj się. To nasz mały sekret</string>
+
+    <string name="showcase_profile_fragment">Dodaj profile!</string>
+    <string name="showcase_profile_fragment_sum">Po prostu kliknij na ten mały przycisk i dodaj profil. Wszystkie twoje ustawienia zostaną zapisane do tego
+                                        nowego profilu. Jeśli dodałeś więcej profili, możesz je łatwo zładować poprzez kliknięcie na nie.</string>
+                                                    
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">Ustawienia ogólne</string>
     <string name="pref_charging_led">Kolor diody ładowania</string>
@@ -173,5 +209,14 @@
     <string name="pref_multitouch">Multidotyk</string>
     <string name="pref_multitouch_sum">Ilość punktów dotyku na twoim wyświetlaczu.</string>
 
+    <string name="pref_charge_led_mode_white">Biała dioda</string>
+    <string name="pref_charge_led_mode_rgb">Dwukolorowa (czerwono-zielona)</string>
+    <string name="pref_charge_led_mode_off">Wyłączona</string>
+    
+    <!-- Profile Fragment -->
+    <string name="pref_profile_enter_name">Nie podałeś nazwy.</string>
+    <string name="pref_profile_name_exists">Profil o tej nazwie już istnieje.</string>
+    <string name="pref_profile_change_name">Wybierz inną nazwę</string>
+    <string name="pref_profile_change_name_sum">Zmień nazwę twojego profilu.</string>
 
 </resources>
