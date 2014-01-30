@@ -19,6 +19,9 @@
     <string name="nothing_added_yet">Whoop! Nu ai adăugat niciun profil încă.</string>
     <string name="not_rooted">Nu există acces la Root?</string>
     <string name="apply">Aplică</string>
+    <string name="refresh">Reîmprospătare</string>
+    <string name="legal">Mențiuni legale</string>
+    <string name="send_email">Trimite un e-mail</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -29,7 +32,8 @@
     <string name="slider_defy_parts">Setări dispozitiv</string>
     <string name="slider_updater">Actualizator</string>
     <string name="slider_profile">Profile</string>
-
+    <string name="slider_statistics">Statistici CPU</string>
+    
     <!-- Overview Elements -->
 
     <string name="kernel_version">Nucleu:</string>
@@ -66,6 +70,14 @@
                         De asemenea este Sursă Deschisă, așa că puteți să luați Codul Sursă și să-l modificați după cum doriți.
                         Dacă doriți, puteți dona, fie lui Quarx pentru ROM-ul său minunat sau pentru mine.
                         <b>Plăcerea de a trăi se află în a dărui.</b>
+    </string>
+    
+    <!-- Legal Notices -->
+    <string name="legal_dialog">Această aplicație este sub licență Apache. O copie acesteia poate fi descărcată aici:
+                        <b>http://www.apache.org/licenses/LICENSE-2.0</b>\n
+                        ShowCase Library de Alex Curran este sub licență Apache 2.0.\n
+                        HoloGraph Library de Daniel Nadeau este sub licență Apache 2.0.
+
     </string>
 
     <!-- Root Check -->
@@ -145,6 +157,8 @@
     <string name="defy_green_colors">Culoare Defy Verde</string>
     <string name="defy_energy_saver">Economizor Energie</string>
     
+    <string name="pref_sweeptowake">Sweep2Wake</string>
+    <string name="pref_sweeptowake_sum">Poate consuma bateria un pic mai mult decât de obicei.</string>
 
     <!-- Updater Fragment -->
     <string name="pref_updater">Actualizare Nucleu și copie de siguranță</string>
@@ -178,7 +192,15 @@
     <string name="showcase_cpu_fragment_governor">Manager CPU</string>
     <string name="showcase_cpu_fragment_governor_sum">Click pe acest simbol pentru a obține acces la setările managerului! Pentru a obține  
                                                 performanță poți modifica fiecare parametru pentru fiecare manager în parte, .</string>
-    
+    <string name="showcase_hidden_feature">Felicitări!</string>
+    <string name="showcase_hidden_feature_sum">Ai găsit o setare secretă! Nu spune nimănui despre asta și dacă ai
+                                         probleme, nu te impacienta. E secretul nostru.</string>
+
+    <string name="showcase_profile_fragment">Adaugă Profile!</string>
+    <string name="showcase_profile_fragment_sum">Apasă pe acest buton pentru a adăuga un profil. Toate setările tale vor fi salvate in acest
+                                        nou Profil. Dacă ai salvat mai multe Profile le poți încărca apăsând pe ele.</string>
+
+
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">Setări generale</string>
     <string name="pref_charging_led">Culoare LED în timpul îcărcării</string>
