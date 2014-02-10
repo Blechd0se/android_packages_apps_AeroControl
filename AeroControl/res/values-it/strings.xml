@@ -75,12 +75,12 @@
 
 
 <!-- Legal Notices -->
- +    <string name="legal_dialog">This App is licensed under the Apache license. A copy of this can be downloaded here:
- +                        <b>http://www.apache.org/licenses/LICENSE-2.0</b>\n
- +                        ShowCase Library by Alex Curran is licensed under the Apache 2.0 License.\n
- +                        HoloGraph Library by Daniel Nadeau is licensed under the Apache 2.0 License.
- +
- +    </string>
+     <string name="legal_dialog">This App is licensed under the Apache license. A copy of this can be downloaded here:
+                         <b>http://www.apache.org/licenses/LICENSE-2.0</b>\n
+                         ShowCase Library by Alex Curran is licensed under the Apache 2.0 License.\n
+                         HoloGraph Library by Daniel Nadeau is licensed under the Apache 2.0 License.
+
+     </string>
 
 
     <!-- Root Check -->
