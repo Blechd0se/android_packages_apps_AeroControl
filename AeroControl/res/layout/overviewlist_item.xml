@@ -2,6 +2,12 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
+    <com.aero.control.helpers.CardLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e3e3e3"
+        android:orientation="vertical">
+
     <!-- We need to set the listview element
         in one separated relative layout. Otherwise
         we couldn't interact with the screen -->
@@ -9,27 +15,30 @@
     <ListView
         android:id="@+id/listView1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:divider="@null"
+        android:dividerHeight="-2dp"
+        android:layout_marginTop="-1dp"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imgIcon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="0dp"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            style="@style/CardStyle">
 
             <TextView
                 android:textSize="16dip"
@@ -44,4 +53,5 @@
                 android:layout_height="wrap_content"></TextView>
         </LinearLayout>
     </LinearLayout>
+    </com.aero.control.helpers.CardLayout>
 </RelativeLayout>
