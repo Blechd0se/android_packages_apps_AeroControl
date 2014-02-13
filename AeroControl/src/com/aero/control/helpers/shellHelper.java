@@ -88,6 +88,9 @@ public class shellHelper {
 
         String info;
 
+        if (!new File(s).exists())
+            return "Unavailable";
+
         try {
             BufferedReader reader = new BufferedReader(new FileReader(s), 256);
             try {
@@ -267,6 +270,10 @@ public class shellHelper {
      * @return String
      */
     public final String toMHz(String mhzString) {
+
+        if (mhzString.equals("Unavailable"))
+            return "Unavailable";
+
         try {
             return new StringBuilder().append(Integer.valueOf(mhzString) / 1000).append(" MHz")
                     .toString();
