@@ -1,6 +1,7 @@
 package com.aero.control.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +18,10 @@ import com.aero.control.R;
  */
 public class AeroAdapter extends ArrayAdapter<adapterInit> {
 
-    Context context;
-    int layoutResourceId;
-    adapterInit data[];
+    private Context context;
+    private int layoutResourceId;
+    private adapterInit data[];
+    private final static Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
 
     public AeroAdapter(Context context, int layoutResourceId, adapterInit[] data) {
         super(context, layoutResourceId, data);
@@ -48,6 +50,9 @@ public class AeroAdapter extends ArrayAdapter<adapterInit> {
             holder.header = (TextView) row.findViewById(R.id.header);
             holder.content = (TextView) row.findViewById((R.id.content));
 
+            holder.header.setTypeface(font);
+            holder.content.setTypeface(font);
+
             row.setTag(holder);
         } else {
             holder = (Holder) row.getTag();
@@ -56,17 +61,16 @@ public class AeroAdapter extends ArrayAdapter<adapterInit> {
         final adapterInit overview = data[position];
         if (data != null) {
 
-
             // To ensure we can use this adapter for different things, make some hooks;
             if (overview.icon != 0)
                 holder.image.setImageResource(overview.icon);
 
             if (!overview.name.equals("A"))
-                holder.header.setText(Html.fromHtml("<i><b>" + overview.name + "</b></i>"));
-
+                holder.header.setText(overview.name);
 
             if (!overview.content.equals("A"))
                 holder.content.setText(overview.content);
+
         } else {
             Log.e("Aero",
                     "No Data found for adapter.");

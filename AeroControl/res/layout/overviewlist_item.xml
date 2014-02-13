@@ -41,13 +41,15 @@
             style="@style/CardStyle">
 
             <TextView
-                android:textSize="16dip"
+                android:textSize="20sp"
                 android:id="@+id/header"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"></TextView>
+                android:layout_height="wrap_content"
+                android:textColor="#7f8c8d"
+                android:layout_weight="1"></TextView>
 
             <TextView
-                android:textSize="14dip"
+                android:textSize="14sp"
                 android:id="@+id/content"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"></TextView>
