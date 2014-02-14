@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,11 +20,16 @@ import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.adapter.StatisticAdapter;
+import com.aero.control.adapter.statisticInit;
+import com.aero.control.helpers.shellHelper;
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieSlice;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -46,19 +52,23 @@ public class StatisticsFragment extends Fragment {
     public TextView txtFreq;
     public TextView txtPercentage;
     public TextView txtTime;
+    private double mCompleteTime = 0;
 
     public ArrayList<Long> cpuTime = new ArrayList<Long>();
     public ArrayList<Long> cpuFreq = new ArrayList<Long>();
+    public ArrayList<Long> cpuPercentage = new ArrayList<Long>();
+
+    public statisticInit[] mResult = new statisticInit[0];
 
     public static final String[] color_code = {
-        "#1abc9c", /* Turquoise */
-        "#FF8800", /* Orange */
-        "#2c3e50", /* Midnight Blue */
-        "#2980b9", /* Nephritis */
-        "#f1c40f", /* Sunflower */
-        "#8e44ad", /* Wisteria */
-        "#3498db", /* Peter River */
-        "#e74c3c", /* Pomegrante */
+            "#1abc9c", /* Turquoise */
+            "#FF8800", /* Orange */
+            "#2c3e50", /* Midnight Blue */
+            "#2980b9", /* Nephritis */
+            "#f1c40f", /* Sunflower */
+            "#8e44ad", /* Wisteria */
+            "#3498db", /* Peter River */
+            "#e74c3c", /* Pomegrante */
     };
 
     public static final String TIME_IN_STATE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state";
@@ -123,8 +133,8 @@ public class StatisticsFragment extends Fragment {
 
         final ArrayList<String> cpuValues = new ArrayList<String>();
         Long[] cpuFreqArray;
-        double completeTime = 0;
         double a;
+        mCompleteTime = 0;
         pg = (PieGraph) root.findViewById(R.id.graph);
 
         for (int k = 0; k < getCpuData(); k++) {
@@ -136,7 +146,7 @@ public class StatisticsFragment extends Fragment {
                 a = Integer.parseInt(c[1]);
             }
 
-            completeTime = completeTime + a;
+            mCompleteTime = mCompleteTime + a;
         }
 
         for (int i = 0, j = 0; i < getCpuData(); i++) {
@@ -177,15 +187,17 @@ public class StatisticsFragment extends Fragment {
             if (j == 8)
                 j = 0;
 
-            if (g != 0 && ((g / completeTime) * 100) >= 1) {
+            if(cpuFreqArray[i] == 0)
+                frequency = "DeepSleep";
+            else
+                frequency = AeroActivity.shell.toMHz(cpuFreqArray[i].toString());
 
-                if(cpuFreqArray[i] == 0)
-                    frequency = "DeepSleep";
-                else
-                    frequency = AeroActivity.shell.toMHz(cpuFreqArray[i].toString());
+            time_in_state = convertTime(g);
+            percentage = (int)((g / mCompleteTime) * 100);
+            // Safe all percentages in our array;
+            cpuPercentage.add((long)percentage);
 
-                time_in_state = convertTime(g);
-                percentage = (int)((g / completeTime) * 100);
+            if (g != 0 && ((g / mCompleteTime) * 100) >= 1) {
 
                 cpuValues.add(frequency + " " + time_in_state + " " + percentage + "%");
 
@@ -201,7 +213,7 @@ public class StatisticsFragment extends Fragment {
         }
 
         // Fill our listview with final values and load TextViews;
-        createList(cpuValues);
+        createList(cpuFreq, cpuTime, cpuPercentage);
         if (firstView)
             handleOnClick(cpuValues);
 
@@ -226,7 +238,8 @@ public class StatisticsFragment extends Fragment {
         /*
          * Cleanup the whole UI.
          * Notice: PieGraph and data might be cleaned anyway,
-         * clearing cpuTime/cpuFreq is _really_ necessary:
+         * clearing cpuTime/cpuFreq/cpuPercentage AND mResult
+         * is _really_ necessary:
          */
 
         if(pg != null)
@@ -241,6 +254,12 @@ public class StatisticsFragment extends Fragment {
         if(cpuFreq != null)
             cpuFreq.clear();
 
+        if(cpuPercentage != null)
+            cpuPercentage.clear();
+
+        if (statisticView != null) {
+            mResult = new statisticInit[0];
+        }
     }
 
     public void handleOnClick(ArrayList<String> list) {
@@ -300,12 +319,28 @@ public class StatisticsFragment extends Fragment {
         );
     }
 
-    public void createList(ArrayList<String> list) {
+    public void createList(ArrayList<Long> cpuFreq, ArrayList<Long> cpuTime, ArrayList<Long> cpuPercentage) {
 
-        statisticView = (ListView)root.findViewById(R.id.statisticListView);
+        /* statisticView = (ListView)root.findViewById(R.id.statisticListView);
 
         final StableArrayAdapter adapter = new StableArrayAdapter(getActivity(),
                 android.R.layout.simple_list_item_1, list);
+
+        statisticView.setAdapter(adapter); */
+
+
+        // Get Data;
+        Long[] freq = cpuFreq.toArray(new Long[0]);
+        Long[] time = cpuTime.toArray(new Long[0]);
+        Long[] percentage = cpuPercentage.toArray(new Long[0]);
+
+        ArrayDataLoader adl = new ArrayDataLoader();
+        adl.loadSingleEntry(freq, time, percentage);
+
+        statisticView = (ListView) root.findViewById(R.id.statisticListView);
+
+        StatisticAdapter adapter = new StatisticAdapter(getActivity(),
+                R.layout.statistic_layout, mResult);
 
         statisticView.setAdapter(adapter);
 
@@ -323,6 +358,45 @@ public class StatisticsFragment extends Fragment {
 
 
         return data.length;
+    }
+
+    private class ArrayDataLoader {
+
+        public void loadSingleEntry(Long[] freq, Long[] time, Long[] percentage) {
+
+            int length = freq.length;
+
+            for(int j = 0; j < length; j++) {
+
+                if (percentage[j] != 0 && percentage[j] >= 1) {
+                    String convertedFreq = AeroActivity.shell.toMHz(freq[j] + "");
+
+                    if(convertedFreq.length() < 8)
+                        convertedFreq = convertedFreq + "\t ";
+                    else if (convertedFreq.length() < 7)
+                        convertedFreq = convertedFreq + "\t\t ";
+
+                    if(j == 0)
+                        loadArray(mResult, new statisticInit("Deepsleep", convertTime(time[j]) + "", percentage[j] + "%"));
+                    else
+                        loadArray(mResult, new statisticInit(convertedFreq, convertTime(time[j]) + "", percentage[j] + "%"));
+                }
+            }
+
+        }
+
+        public void loadArray (statisticInit[] resultSet, statisticInit data) {
+
+            mResult = fillArray(resultSet, data);
+        }
+
+        public statisticInit[] fillArray (statisticInit[] resultSet, statisticInit data) {
+
+            statisticInit[] result = Arrays.copyOf(resultSet, resultSet.length + 1);
+            result[resultSet.length] = data;
+
+            return result;
+        }
     }
 
 
