@@ -4,9 +4,9 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,16 +21,12 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.adapter.StatisticAdapter;
 import com.aero.control.adapter.statisticInit;
-import com.aero.control.helpers.shellHelper;
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieSlice;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -41,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 public class StatisticsFragment extends Fragment {
     /*
     TODO: - Take time from other cores in account as well (not critical, governors keep freqs mostly synced)
-          - Change StableArrayAdapter to own one
+          - Unify listview and holograph data (?)
      */
     public StatisticsFragment mStatisticsFragment;
     public int mIndex = 0;
@@ -72,6 +67,7 @@ public class StatisticsFragment extends Fragment {
     };
 
     public static final String TIME_IN_STATE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state";
+    private final static Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
 
     public Fragment newInstance(Context context) {
         mStatisticsFragment = new StatisticsFragment();
@@ -129,15 +125,27 @@ public class StatisticsFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadUI(boolean firstView) {
+    /*
+     * Will load all data into different arrays. Some error checks are
+     * also calculated here. HoloSlices will be added according to found
+     * data.
+     */
+    private final void loadUI(boolean firstView) {
 
-        final ArrayList<String> cpuValues = new ArrayList<String>();
+        final ArrayList<String> cpuGraphValues = new ArrayList<String>();
         Long[] cpuFreqArray;
         double a;
+        int cpuData = getCpuData();
         mCompleteTime = 0;
         pg = (PieGraph) root.findViewById(R.id.graph);
 
-        for (int k = 0; k < getCpuData(); k++) {
+        // Handle no cpu data found;
+        if (cpuData == 0) {
+            root.findViewById(R.id.noCpuData).setVisibility(View.VISIBLE);
+        } else
+            root.findViewById(R.id.noCpuData).setVisibility(View.GONE);
+
+        for (int k = 0; k < cpuData; k++) {
             String b = data[k];
             String[] c = b.split(" ");
             if(k == 0) {
@@ -149,7 +157,7 @@ public class StatisticsFragment extends Fragment {
             mCompleteTime = mCompleteTime + a;
         }
 
-        for (int i = 0, j = 0; i < getCpuData(); i++) {
+        for (int i = 0, j = 0; i < cpuData; i++) {
 
             String b = data[i];
             String[] c = b.split(" ");
@@ -199,7 +207,7 @@ public class StatisticsFragment extends Fragment {
 
             if (g != 0 && ((g / mCompleteTime) * 100) >= 1) {
 
-                cpuValues.add(frequency + " " + time_in_state + " " + percentage + "%");
+                cpuGraphValues.add(frequency + " " + time_in_state + " " + percentage + "%");
 
                 slice.setValue(percentage);
                 slice.setColor(Color.parseColor(color_code[j]));
@@ -215,7 +223,7 @@ public class StatisticsFragment extends Fragment {
         // Fill our listview with final values and load TextViews;
         createList(cpuFreq, cpuTime, cpuPercentage);
         if (firstView)
-            handleOnClick(cpuValues);
+            handleOnClick(cpuGraphValues);
 
         pg.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -223,7 +231,7 @@ public class StatisticsFragment extends Fragment {
 
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
 
-                    handleOnClick(cpuValues);
+                    handleOnClick(cpuGraphValues);
                     return true;
                 }
 
@@ -233,7 +241,7 @@ public class StatisticsFragment extends Fragment {
 
     }
 
-    private void clearUI() {
+    private final void clearUI() {
 
         /*
          * Cleanup the whole UI.
@@ -262,7 +270,7 @@ public class StatisticsFragment extends Fragment {
         }
     }
 
-    public void handleOnClick(ArrayList<String> list) {
+    public final void handleOnClick(ArrayList<String> list) {
 
         final String[] valueArray = list.toArray(new String[0]);
         int i;
@@ -297,6 +305,10 @@ public class StatisticsFragment extends Fragment {
             txtTime.setText(tmp[1]);
             txtPercentage.setText(tmp[2]);
 
+            txtFreq.setTypeface(font);
+            txtTime.setTypeface(font);
+            txtPercentage.setTypeface(font);
+
             txtFreq.setTextColor(Color.parseColor(color_code[i]));
             txtTime.setTextColor(Color.parseColor(color_code[i]));
             txtPercentage.setTextColor(Color.parseColor(color_code[i]));
@@ -307,7 +319,7 @@ public class StatisticsFragment extends Fragment {
     /*
      * Convert usertime in human readable values;
      */
-    public String convertTime(long msTime) {
+    public final String convertTime(long msTime) {
 
         msTime = msTime * 10;
 
@@ -319,15 +331,11 @@ public class StatisticsFragment extends Fragment {
         );
     }
 
-    public void createList(ArrayList<Long> cpuFreq, ArrayList<Long> cpuTime, ArrayList<Long> cpuPercentage) {
+    /*
+     * Finally creates our list from three array sources
+     */
 
-        /* statisticView = (ListView)root.findViewById(R.id.statisticListView);
-
-        final StableArrayAdapter adapter = new StableArrayAdapter(getActivity(),
-                android.R.layout.simple_list_item_1, list);
-
-        statisticView.setAdapter(adapter); */
-
+    public final void createList(ArrayList<Long> cpuFreq, ArrayList<Long> cpuTime, ArrayList<Long> cpuPercentage) {
 
         // Get Data;
         Long[] freq = cpuFreq.toArray(new Long[0]);
@@ -347,7 +355,7 @@ public class StatisticsFragment extends Fragment {
     }
 
 
-    public int getCpuData() {
+    public final int getCpuData() {
 
         File cpu_stats = new File(TIME_IN_STATE_PATH);
 
@@ -356,26 +364,31 @@ public class StatisticsFragment extends Fragment {
 
         data = AeroActivity.shell.getInfo(TIME_IN_STATE_PATH, true);
 
-
         return data.length;
     }
 
-    private class ArrayDataLoader {
+    /*
+     * Loads our preloaded data into our listview;
+     */
+    private final class ArrayDataLoader {
 
-        public void loadSingleEntry(Long[] freq, Long[] time, Long[] percentage) {
+        public final void loadSingleEntry(Long[] freq, Long[] time, Long[] percentage) {
 
             int length = freq.length;
 
             for(int j = 0; j < length; j++) {
 
+                // Doing the percentage check here again;
                 if (percentage[j] != 0 && percentage[j] >= 1) {
                     String convertedFreq = AeroActivity.shell.toMHz(freq[j] + "");
 
+                    // Small UI-Tweak;
                     if(convertedFreq.length() < 8)
-                        convertedFreq = convertedFreq + "\t ";
+                        convertedFreq = convertedFreq + "\t";
                     else if (convertedFreq.length() < 7)
-                        convertedFreq = convertedFreq + "\t\t ";
+                        convertedFreq = convertedFreq + "\t\t";
 
+                    // Handle Deepsleep
                     if(j == 0)
                         loadArray(mResult, new statisticInit("Deepsleep", convertTime(time[j]) + "", percentage[j] + "%"));
                     else
@@ -385,43 +398,17 @@ public class StatisticsFragment extends Fragment {
 
         }
 
-        public void loadArray (statisticInit[] resultSet, statisticInit data) {
+        public final void loadArray (statisticInit[] resultSet, statisticInit data) {
 
             mResult = fillArray(resultSet, data);
         }
 
-        public statisticInit[] fillArray (statisticInit[] resultSet, statisticInit data) {
+        public final statisticInit[] fillArray (statisticInit[] resultSet, statisticInit data) {
 
             statisticInit[] result = Arrays.copyOf(resultSet, resultSet.length + 1);
             result[resultSet.length] = data;
 
             return result;
         }
-    }
-
-
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
-        }
-
-        @Override
-        public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
     }
 }

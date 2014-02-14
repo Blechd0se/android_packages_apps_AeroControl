@@ -22,6 +22,7 @@
     <string name="refresh">Refresh</string>
     <string name="legal">Legal Notices</string>
     <string name="send_email">Send an Email</string>
+    <string name="nocpu_data">Couldn\'t find any CPU data.</string>
 
     <!-- Default Navigation Drawer entries -->
 

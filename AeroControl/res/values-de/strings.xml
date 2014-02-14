@@ -21,6 +21,7 @@
     <string name="apply">Anwenden</string>
     <string name="legal">Rechtliche Hinweise</string>
     <string name="send_email">Sende eine Email</string>
+    <string name="nocpu_data">Konnte keine CPU Daten finden.</string>
 
 
     <!-- Default Navigation Drawer entries -->

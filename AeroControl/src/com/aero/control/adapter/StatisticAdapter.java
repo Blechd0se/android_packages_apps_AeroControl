@@ -89,18 +89,12 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
 
             if(overview.mFrequency != null)
                 holder.frequency.setText(overview.mFrequency);
-            else
-                holder.frequency.setText("Test");
 
             if(overview.mTimeInState != null)
                 holder.timeInState.setText(overview.mTimeInState);
-            else
-                holder.timeInState.setText("Bluu");
 
             if(overview.mPercentage != null)
                 holder.percentage.setText(overview.mPercentage);
-            else
-                holder.percentage.setText(" Daaa");
 
         } else {
             Log.e("Aero",
