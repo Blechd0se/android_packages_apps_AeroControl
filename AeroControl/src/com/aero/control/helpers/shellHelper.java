@@ -286,14 +286,16 @@ public class shellHelper {
     }
 
     /**
-     * Gets the total amount of memory
+     * Gets the total amount of memory and the total amount
+     * of truly free memory.
      *
      * @param s   => path to read
      *
      * @return String
      */
     public final String getMemory(String s) {
-        String result;
+        String totalMemory;
+        String totalFreeMemory;
 
         try {
             /* /proc/meminfo entries follow this format:
@@ -303,13 +305,20 @@ public class shellHelper {
              * Cached:            81652 kB
              */
             BufferedReader reader = new BufferedReader(new FileReader(s), 256);
-            result = reader.readLine();
-            if (result != null) {
-                String parts[] = result.split("\\s+");
+            totalMemory = reader.readLine();
+            totalFreeMemory = reader.readLine();
+
+            if (totalMemory != null && totalFreeMemory != null) {
+                String parts[] = totalMemory.split("\\s+");
                 if (parts.length == 3) {
-                    result = Long.parseLong(parts[1]) / 1024 + " MB";
+                    totalMemory = Long.parseLong(parts[1]) / 1024 + " MB";
+                }
+                parts = totalFreeMemory.split("\\s+");
+                if (parts.length == 3) {
+                    totalFreeMemory = Long.parseLong(parts[1]) / 1024 + " MB";
                 }
             }
+
         } catch (IOException e) {
             Log.e(LOG_TAG,
                     "Yep, i can't read your memory stats :( .",
@@ -317,7 +326,7 @@ public class shellHelper {
             return "Unavailable";
         }
 
-        return result;
+        return totalFreeMemory + " / " + totalMemory;
     }
 
     /**
