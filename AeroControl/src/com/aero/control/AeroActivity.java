@@ -232,12 +232,8 @@ public class AeroActivity extends Activity {
             return true;
         }
 
-        Fragment fragment = null;
-
         switch (item.getItemId()) {
             case R.id.aero_settings:
-                Toast.makeText(this, "Update location is not implemented yet.", Toast.LENGTH_SHORT).show();
-
 
                 Intent trIntent = new Intent("android.intent.action.PREFS");
                 trIntent.setClass(getBaseContext(), PrefsActivity.class);

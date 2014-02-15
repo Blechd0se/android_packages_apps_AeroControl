@@ -180,6 +180,10 @@ public class PrefsActivity extends PreferenceActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                finish();
+                Intent i = new Intent(context, AeroActivity.class);
+                context.startActivity(i);
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
