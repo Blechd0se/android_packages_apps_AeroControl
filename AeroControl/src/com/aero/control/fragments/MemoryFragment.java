@@ -206,8 +206,16 @@ public class MemoryFragment extends PreferenceFragment {
 
         if (showDialog) {
             // Ensure only devices with this special path are checked;
-            final String fileMount = AeroActivity.shell.getRootInfo("mount", "");
-            final boolean fileMountCheck = fileMount.length() == 0 ? false : fileMount.contains("/dev/block/mmcblk1p25");
+            final String fileMount[] = AeroActivity.shell.getInfo("/proc/mounts", false);
+            boolean fileMountCheck = false;
+
+            for (String tmp : fileMount) {
+                if(tmp.contains("/dev/block/mmcblk1p25")) {
+                    fileMountCheck = true;
+                    break;
+                }
+            }
+
             showDialog = false;
 
             if (fileMountCheck) {
