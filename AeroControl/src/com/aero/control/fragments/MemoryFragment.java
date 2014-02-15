@@ -269,7 +269,7 @@ public class MemoryFragment extends PreferenceFragment {
                         final String b = (String)system[item];
 
                         update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                        update.setCancelable(true);
+                        update.setCancelable(false);
                         update.setMax(100);
                         update.setIndeterminate(true);
                         update.show();
@@ -290,6 +290,10 @@ public class MemoryFragment extends PreferenceFragment {
 
                                         progressHandler.sendMessage(progressHandler.obtainMessage());
 
+                                        // Sleep the current thread and exit dialog;
+                                        Thread.sleep(2000);
+                                        update.dismiss();
+
                                     }
 
                                 } catch (Exception e) {
@@ -300,10 +304,8 @@ public class MemoryFragment extends PreferenceFragment {
                         Thread trimThread = new Thread(runnable);
                         if (!trimThread.isAlive())
                             trimThread.start();
-
                     }
                 }).show();
-
 
                 return true;
             };
