@@ -30,7 +30,7 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
             "#FF8800", /* Orange */
             "#2c3e50", /* Midnight Blue */
             "#2980b9", /* Nephritis */
-            "#f1c40f", /* Sunflower */
+            "#CF000F", /* Monza */
             "#8e44ad", /* Wisteria */
             "#3498db", /* Peter River */
             "#e74c3c", /* Pomegrante */
