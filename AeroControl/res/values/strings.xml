@@ -74,8 +74,8 @@
     </string>
 
     <!-- Legal Notices -->
-    <string name="legal_dialog">This App is licensed under the Apache license. A copy of this can be downloaded here:
-                        <b>http://www.apache.org/licenses/LICENSE-2.0</b>\n
+    <string name="legal_dialog">This App is licensed under the Apache license. A copy of this can be downloaded here:\n
+                            <b>http://www.apache.org/licenses/LICENSE-2.0</b>\n
                         ShowCase Library by Alex Curran is licensed under the Apache 2.0 License.\n
                         HoloGraph Library by Daniel Nadeau is licensed under the Apache 2.0 License.
 
@@ -83,7 +83,7 @@
 
     <!-- Root Check -->
     <string name="root_required">It looks like your device is not rooted. This app won\'t work correctly without root.
-                                If you think this is a mistake, please let me know!</string>
+                                If you think this is a mistake, please let me know and send me an email!</string>
 
     <!-- CPU Fragment -->
 
