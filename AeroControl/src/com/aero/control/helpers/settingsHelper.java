@@ -6,8 +6,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 

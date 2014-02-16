@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,10 +20,11 @@ import java.util.regex.Pattern;
  * Created by Alexander Christ on 18.09.13.
  * Summary of various shell-Methods, for easy method calling
  */
-public class shellHelper {
+public final class shellHelper {
 
     // Buffer length;
     private static final int BUFF_LEN = 1024;
+    private static final byte[] buffer = new byte[BUFF_LEN];
     private static final String LOG_TAG = shellHelper.class.getName();
 
     /**
@@ -442,7 +442,6 @@ public class shellHelper {
 
             stdin.writeBytes(command + " " + parameter + "\n");
             InputStream stdout = rooting.getInputStream();
-            byte[] buffer = new byte[BUFF_LEN];
             int read;
             String output = new String();
             while(true){

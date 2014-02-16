@@ -459,11 +459,9 @@ public class MemoryFragment extends PreferenceFragment {
 
     public void DrawFirstStart(int header, int content, String filename) {
 
-        String string = "1";
-
         try {
             FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
-            fos.write(string.getBytes());
+            fos.write("1".getBytes());
             fos.close();
         }
         catch (IOException e) {

@@ -44,6 +44,8 @@ public class AeroFragment extends Fragment {
     public ShowcaseView mShowCase;
     public boolean mVisible = true;
 
+    public final static String FILENAME = "firstrun";
+
     public String gpu_file;
 
     public Fragment newInstance(Context context) {
@@ -147,7 +149,6 @@ public class AeroFragment extends Fragment {
         mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
 
         // Set up our file;
-        String FILENAME = "firstrun";
         int output = 0;
         byte[] buffer = new byte[1024];
 
@@ -208,12 +209,9 @@ public class AeroFragment extends Fragment {
 
     public void DrawFirstStart(int header, int content) {
 
-        String FILENAME = "firstrun";
-        String string = "1";
-
         try {
             final FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            fos.write(string.getBytes());
+            fos.write("1".getBytes());
             fos.close();
         }
         catch (IOException e) {

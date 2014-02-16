@@ -584,11 +584,9 @@ public class CPUFragment extends PreferenceFragment {
 
     public void DrawFirstStart(int header, int content) {
 
-        String string = "1";
-
         try {
             final FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            fos.write(string.getBytes());
+            fos.write("1".getBytes());
             fos.close();
         }
         catch (IOException e) {
