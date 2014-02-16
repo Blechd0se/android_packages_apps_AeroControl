@@ -2,7 +2,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <PreferenceCategory android:title="@string/pref_memory_settings">
+    <PreferenceCategory
+        android:title="@string/pref_memory_settings"
+        android:key="memory_settings">
 
         <CheckBoxPreference
             android:key="dynFsync"

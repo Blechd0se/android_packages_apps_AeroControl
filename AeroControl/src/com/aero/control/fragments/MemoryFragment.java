@@ -92,9 +92,13 @@ public class MemoryFragment extends PreferenceFragment {
             zcache.setEnabled(false);
 
         // Min free ram:
-        if (AeroActivity.shell.getInfo(MIN_FREE).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(MIN_FREE).equals("Unavailable")) {
             min_free_ram.setEnabled(false);
-        else
+
+            // Remove until back in Kernel;
+            PreferenceCategory memoryCategory = (PreferenceCategory) findPreference("memory_settings");
+            memoryCategory.removePreference(min_free_ram);
+        } else
             min_free_ram.setText(AeroActivity.shell.getInfo(MIN_FREE));
 
 
