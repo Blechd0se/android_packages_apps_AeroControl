@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -57,6 +59,14 @@ public class settingsHelper {
         new Thread(new Runnable() {
             @Override
             public void run() {
+
+                // We need to sleep here for a short while for the kernel
+                shell.setOverclockAddress();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    Log.e("Aero", "Something went really wrong...", e);
+                }
 
                 // Apply all our saved values;
                 doBackground(context, flag);
@@ -191,7 +201,6 @@ public class settingsHelper {
         // EXECUTE ALL THE COMMANDS COLLECTED
         String[] commands = al.toArray(new String[0]);
         shell.setRootInfo(commands);
-
     }
 
 }

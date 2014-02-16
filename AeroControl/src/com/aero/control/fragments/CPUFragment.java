@@ -140,6 +140,7 @@ public class CPUFragment extends PreferenceFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
 
+                            AeroActivity.shell.setOverclockAddress();
                             // Objects;
                             final Object f = (value1.getText().toString().substring(0, value1.getText().toString().length() - 4) + "000");
                             final Object g = (value3.getText().toString().substring(0, value3.getText().toString().length() - 4) + "000");
@@ -229,6 +230,8 @@ public class CPUFragment extends PreferenceFragment {
                     .setNeutralButton(R.string.default_values, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             try {
+
+                                AeroActivity.shell.setOverclockAddress();
 
                                 // Set our max vsel after we changed the max freq
                                 cpu_list.add("echo " + "62" + " > " + CPU_VSEL_MAX);

@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -459,6 +460,34 @@ public class shellHelper {
             Log.e(LOG_TAG, "Do you even root, bro? :/", e);
         }
         return "Unavailable";
+    }
+
+    /**
+     * Sets the proper base addresses for the overclocking module
+     *
+     * @return nothing
+     */
+
+    public final void setOverclockAddress() {
+
+        if (new File("/proc/overclock/omap2_clk_init_cpufreq_table_addr").exists() &&
+                new File("/proc/overclock/cpufreq_stats_update_addr").exists()) {
+
+            // getRootInfo() is much faster for large strings compared to getInfo()
+            final String kallsyms = "/proc/kallsyms";
+            final String omap_address = getRootInfo("busybox egrep \"omap2_clk_init_cpufreq_table$\"", kallsyms).substring(0, 8);
+            final String cpufreq_address = getRootInfo("busybox egrep \"cpufreq_stats_update$\"", kallsyms).substring(0, 8);
+
+            final String [] commands = new String[] {
+                    "echo " + "0x" + omap_address + " > " + "/proc/overclock/omap2_clk_init_cpufreq_table_addr",
+                    "echo " + "0x" + cpufreq_address + " > " + "/proc/overclock/cpufreq_stats_update_addr",
+            };
+
+            setRootInfo(commands);
+        } else {
+            // Return quickly;
+            return;
+        }
     }
 
 
