@@ -341,11 +341,19 @@ public final class shellHelper {
     public final void setRootInfo(String command, String content) {
 
         Process rooting;
+        String tmp;
         try {
 
             rooting = Runtime.getRuntime().exec("su");
 
             DataOutputStream dataStream = new DataOutputStream(rooting.getOutputStream());
+
+            // Check if last char is a whitespace;
+            tmp = command.substring(command.length() - 1);
+            if (tmp.matches("^\\s*$")) {
+                command = command.substring(0, command.length() - 1);
+            }
+
             // Doing some String-puzzle;
             dataStream.writeBytes("echo \"" + command + "\" " + "> " + content + "\n");
             dataStream.writeBytes("exit\n");

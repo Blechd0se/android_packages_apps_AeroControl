@@ -92,8 +92,13 @@ public class CPUFragment extends PreferenceFragment {
 
         final Preference cpu_oc_uc = (Preference) root.findPreference("cpu_oc_uc");
 
-        if (AeroActivity.shell.getInfo(CPU_VSEL).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(CPU_VSEL).equals("Unavailable")) {
             cpu_oc_uc.setEnabled(false);
+
+            // Remove until back in Kernel;
+            PreferenceCategory cpuCategory = (PreferenceCategory) findPreference("cpu_settings");
+            cpuCategory.removePreference(cpu_oc_uc);
+        }
 
         cpu_oc_uc.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

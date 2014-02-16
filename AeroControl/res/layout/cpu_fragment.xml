@@ -3,7 +3,8 @@
     android:layout_height="match_parent">
 
     <PreferenceCategory
-        android:title="@string/pref_cpu_freq">
+        android:title="@string/pref_cpu_freq"
+        android:key="cpu_settings">
 
         <ListPreference
             android:key="max_frequency"
