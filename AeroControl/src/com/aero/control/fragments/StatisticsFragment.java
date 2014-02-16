@@ -187,7 +187,7 @@ public class StatisticsFragment extends Fragment {
 
         for(long g: cpuTime) {
 
-            PieSlice slice = new PieSlice();
+            PieSlice slice;
             String frequency, time_in_state;
             int percentage;
 
@@ -201,12 +201,13 @@ public class StatisticsFragment extends Fragment {
                 frequency = AeroActivity.shell.toMHz(cpuFreqArray[i].toString());
 
             time_in_state = convertTime(g);
-            percentage = (int)((g / mCompleteTime) * 100);
+            percentage = (int)Math.round((g / mCompleteTime) * 100);
             // Safe all percentages in our array;
             cpuPercentage.add((long)percentage);
 
-            if (g != 0 && ((g / mCompleteTime) * 100) >= 1) {
+            if (g != 0 && percentage >= 1) {
 
+                slice = new PieSlice();
                 cpuGraphValues.add(frequency + " " + time_in_state + " " + percentage + "%");
 
                 slice.setValue(percentage);
