@@ -201,6 +201,10 @@
     <string name="showcase_profile_fragment_sum">Just click on this little button and add a profile. All your current settings will be saved into this
                                         new Profile. If you have added multiple Profiles you can simply load them by clicking on them.</string>
 
+    <string name="showcase_statistics_fragment">Refresh your Statistics</string>
+    <string name="showcase_statistics_fragment_sum">This panel will show you your current CPU Time consuming statistics. It displays how long your device has spend time in
+                                        each CPU frequency. You might to want to check this later and see if your device performs as it should.</string>
+
 
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">General Settings</string>

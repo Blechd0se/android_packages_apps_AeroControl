@@ -195,6 +195,9 @@
                                             werden in diesem neuen Profil gespeichert. Wenn Du bereits Profile hinzugefügt hast, kannst Du diese mit einem Klick
                                             laden.</string>
 
+    <string name="showcase_statistics_fragment">Deine CPU Statistik</string>
+    <string name="showcase_statistics_fragment_sum">Diese Seite zeigt dir an, wie lange dein Gerät in welcher Frequenz war. Du kannst später auf diese
+                                            Seite zurückkehren, um sicherzustellen, dass dein Gerät so läuft wie Du es möchtest.</string>
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">Allgemeine Einstellungen</string>
     <string name="pref_charging_led">Lade-LED Farbe</string>

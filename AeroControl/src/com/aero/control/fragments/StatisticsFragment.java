@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,8 +24,12 @@ import com.aero.control.adapter.StatisticAdapter;
 import com.aero.control.adapter.statisticInit;
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieSlice;
+import com.espian.showcaseview.ShowcaseView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -48,6 +53,9 @@ public class StatisticsFragment extends Fragment {
     public TextView txtPercentage;
     public TextView txtTime;
     private double mCompleteTime = 0;
+    public ShowcaseView.ConfigOptions mConfigOptions;
+    public ShowcaseView mShowCase;
+    public static final String FILENAME_STATISTICS = "firstrun_statistics";
 
     public ArrayList<Long> cpuTime = new ArrayList<Long>();
     public ArrayList<Long> cpuFreq = new ArrayList<Long>();
@@ -123,6 +131,48 @@ public class StatisticsFragment extends Fragment {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+        // Prepare Showcase;
+
+        // Prepare Showcase;
+        mConfigOptions = new ShowcaseView.ConfigOptions();
+        mConfigOptions.hideOnClickOutside = false;
+        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
+
+        // Set up our file;
+        int output = 0;
+        final byte[] buffer = new byte[1024];
+
+        try {
+            FileInputStream fis = getActivity().openFileInput(FILENAME_STATISTICS);
+            output = fis.read(buffer);
+            fis.close();
+        } catch (IOException e) {
+            Log.e("Aero", "Couldn't open File... " + output);
+        }
+
+        // Only show showcase once;
+        if (output == 0)
+            DrawFirstStart(R.string.showcase_statistics_fragment, R.string.showcase_statistics_fragment_sum);
+    }
+
+    public void DrawFirstStart(int header, int content) {
+
+        try {
+            final FileOutputStream fos = getActivity().openFileOutput(FILENAME_STATISTICS, Context.MODE_PRIVATE);
+            fos.write("1".getBytes());
+            fos.close();
+        }
+        catch (IOException e) {
+            Log.e("Aero", "Could not save file. ", e);
+        }
+
+        mShowCase = ShowcaseView.insertShowcaseViewWithType(ShowcaseView.ITEM_ACTION_ITEM, R.id.action_refresh, getActivity(), header, content, mConfigOptions);
     }
 
     /*
