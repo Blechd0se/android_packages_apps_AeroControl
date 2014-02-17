@@ -6,7 +6,6 @@ package com.aero.control.adapter;
  */
 public class adapterInit {
 
-    public int icon;
     public String name;
     public String content;
 
@@ -14,9 +13,8 @@ public class adapterInit {
         super();
     }
 
-    public adapterInit(int icon, String name, String content) {
+    public adapterInit(String name, String content) {
         super();
-        this.icon = icon;
         this.name = name;
         this.content = content;
     }

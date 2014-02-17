@@ -30,7 +30,6 @@ public class AeroAdapter extends ArrayAdapter<adapterInit> {
     }
 
     public static class Holder {
-        ImageView image;
         TextView header;
         TextView content;
     }
@@ -45,7 +44,6 @@ public class AeroAdapter extends ArrayAdapter<adapterInit> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new Holder();
-            holder.image = (ImageView) row.findViewById(R.id.imgIcon);
             holder.header = (TextView) row.findViewById(R.id.header);
             holder.content = (TextView) row.findViewById((R.id.content));
 
@@ -61,9 +59,6 @@ public class AeroAdapter extends ArrayAdapter<adapterInit> {
         if (data != null) {
 
             // To ensure we can use this adapter for different things, make some hooks;
-            if (overview.icon != 0)
-                holder.image.setImageResource(overview.icon);
-
             if (!overview.name.equals("A"))
                 holder.header.setText(overview.name);
 

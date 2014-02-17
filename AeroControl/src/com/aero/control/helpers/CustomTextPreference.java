@@ -1,4 +1,4 @@
-package com.aero.control.fragments;
+package com.aero.control.helpers;
 
 import android.content.Context;
 import android.preference.EditTextPreference;

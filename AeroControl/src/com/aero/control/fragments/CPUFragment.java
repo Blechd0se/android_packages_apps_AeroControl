@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.CustomTextPreference;
 import com.espian.showcaseview.ShowcaseView;
 
 /**
