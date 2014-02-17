@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -28,6 +29,9 @@ public class PrefsActivity extends PreferenceActivity {
 
     static Context context;
     private SharedPreferences prefs;
+    public static final Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+    public int mActionBarTitleID;
+    public TextView mActionBarTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,9 @@ public class PrefsActivity extends PreferenceActivity {
             setTheme(R.style.RedHolo);
 
         super.onCreate(savedInstanceState);
+        mActionBarTitleID = getResources().getIdentifier("action_bar_title", "id", "android");
+        mActionBarTitle = (TextView) findViewById(mActionBarTitleID);
+        mActionBarTitle.setTypeface(font);
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.preference);

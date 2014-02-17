@@ -84,6 +84,9 @@ public class AeroActivity extends Activity {
     private int mBackCounter = 0;
 
     private static final Handler mHandler = new Handler(Looper.getMainLooper());
+    public static final Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+    public int mActionBarTitleID;
+    public TextView mActionBarTitle;
 
     private static final rootHelper rootCheck = new rootHelper();
     public static final shellHelper shell = new shellHelper();
@@ -110,6 +113,11 @@ public class AeroActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Assign action bar title;
+        mActionBarTitleID = getResources().getIdentifier("action_bar_title", "id", "android");
+        mActionBarTitle = (TextView) findViewById(mActionBarTitleID);
+        mActionBarTitle.setTypeface(font);
 
         // Check if system has root;
         if (!rootCheck.isDeviceRooted())
@@ -144,12 +152,12 @@ public class AeroActivity extends Activity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
+                setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
+                setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -187,7 +195,6 @@ public class AeroActivity extends Activity {
                 ImageView icon = (ImageView) v.findViewById(R.id.icon);
                 TextView text = (TextView) v.findViewById(R.id.text);
 
-                Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
                 text.setTypeface(font);
 
                 if (icon != null) {
@@ -334,7 +341,6 @@ public class AeroActivity extends Activity {
         if (fragment != null)
             switchContent(fragment);
 
-
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526") || position < 5) {
@@ -346,10 +352,9 @@ public class AeroActivity extends Activity {
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(mTitle);
+        mActionBarTitle.setText(mTitle);
     }
 
     /**
