@@ -388,6 +388,11 @@ public class StatisticsFragment extends Fragment {
 
     public final void createList(ArrayList<Long> cpuFreq, ArrayList<Long> cpuTime, ArrayList<Long> cpuPercentage) {
 
+        // Add Complete Uptime;
+        cpuFreq.add((long)1);
+        cpuTime.add((long)mCompleteTime);
+        cpuPercentage.add((long)100);
+
         // Get Data;
         Long[] freq = cpuFreq.toArray(new Long[0]);
         Long[] time = cpuTime.toArray(new Long[0]);
@@ -442,6 +447,8 @@ public class StatisticsFragment extends Fragment {
                     // Handle Deepsleep
                     if(j == 0)
                         loadArray(mResult, new statisticInit("Deepsleep", convertTime(time[j]) + "", percentage[j] + "%"));
+                    else if (j == length - 1)
+                        loadArray(mResult, new statisticInit("Uptime   ", convertTime(time[j]) + "", percentage[j] + "%"));
                     else
                         loadArray(mResult, new statisticInit(convertedFreq, convertTime(time[j]) + "", percentage[j] + "%"));
                 }
@@ -449,6 +456,9 @@ public class StatisticsFragment extends Fragment {
 
         }
 
+        /*
+         * Just a wrapper;
+         */
         public final void loadArray (statisticInit[] resultSet, statisticInit data) {
 
             mResult = fillArray(resultSet, data);
