@@ -7,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aero.control.R;
+
+import java.util.List;
 
 /**
  * Created by ac on 18.09.13.
@@ -19,10 +20,10 @@ public class AeroAdapter extends ArrayAdapter<adapterInit> {
 
     private Context context;
     private int layoutResourceId;
-    private adapterInit data[];
+    private List<adapterInit> data;
     private final static Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
 
-    public AeroAdapter(Context context, int layoutResourceId, adapterInit[] data) {
+    public AeroAdapter(Context context, int layoutResourceId, List<adapterInit> data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -35,13 +36,25 @@ public class AeroAdapter extends ArrayAdapter<adapterInit> {
     }
 
     @Override
+    public void clear() {
+        super.clear();
+        this.data.clear();
+        this.notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         Holder holder;
 
         if (row == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(layoutResourceId, parent, false);
+            row = inflater.inflate(layoutResourceId, null);
 
             holder = new Holder();
             holder.header = (TextView) row.findViewById(R.id.header);
@@ -55,7 +68,7 @@ public class AeroAdapter extends ArrayAdapter<adapterInit> {
             holder = (Holder) row.getTag();
         }
 
-        final adapterInit overview = data[position];
+        final adapterInit overview = data.get(position);
         if (data != null) {
 
             // To ensure we can use this adapter for different things, make some hooks;

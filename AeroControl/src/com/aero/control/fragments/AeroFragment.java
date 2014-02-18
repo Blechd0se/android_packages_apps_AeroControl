@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -39,6 +41,8 @@ public class AeroFragment extends Fragment {
     public ListView listView1;
     public ViewGroup root;
     public AeroAdapter adapter;
+    public List<adapterInit> overview_data;
+    public List<adapterInit> mOverviewData= new ArrayList<adapterInit>();
     public AeroFragment mAeroFragment;
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
@@ -107,6 +111,8 @@ public class AeroFragment extends Fragment {
         super.onResume();
 
         mVisible = true;
+        // onPause we need to reset our adapter;
+        adapter = null;
     }
 
     // Override for custom view;
@@ -116,8 +122,9 @@ public class AeroFragment extends Fragment {
 
         /*
          * Start the refresh Thread at startup;
-         * Current Problem; Thread won't start again after FragmentSwitch
          */
+
+        listView1 = (ListView) root.findViewById(R.id.listView1);
 
         final File gpu = new File(GPU_FREQ_NEXUS4);
         if (gpu.exists())
@@ -186,25 +193,44 @@ public class AeroFragment extends Fragment {
 
     public void createList() {
 
+        /*
+         * Cleanup all data, if there are any;
+         */
+        if (mOverviewData != null) {
+            mOverviewData.clear();
+        }
+        if (adapter != null) {
+            adapter.clear();
+            adapter.notifyDataSetChanged();
+        }
+
         // Default Overview Menu
-        adapterInit overview_data[] = new adapterInit[]
-                {
-                        // First Value (0) is for loadable images.
-                        new adapterInit(getString(R.string.kernel_version), AeroActivity.shell.getKernel()),
-                        new adapterInit(getString(R.string.current_governor), AeroActivity.shell.getInfo(GOV_FILE)),
-                        new adapterInit(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(GOV_IO_FILE)),
-                        new adapterInit(getString(R.string.current_cpu_speed), getFreqPerCore()),
-                        new adapterInit(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((AeroActivity.shell.getInfo(gpu_file).substring(0, AeroActivity.shell.getInfo(gpu_file).length() - 3)))),
-                        new adapterInit(getString(R.string.available_memory), AeroActivity.shell.getMemory(FILENAME_PROC_MEMINFO))
-                };
+        mOverviewData.add(new adapterInit(getString(R.string.kernel_version), AeroActivity.shell.getKernel()));
+        mOverviewData.add(new adapterInit(getString(R.string.current_governor), AeroActivity.shell.getInfo(GOV_FILE)));
+        mOverviewData.add(new adapterInit(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(GOV_IO_FILE)));
+        mOverviewData.add(new adapterInit(getString(R.string.current_cpu_speed), getFreqPerCore()));
+        mOverviewData.add(new adapterInit(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((AeroActivity.shell.getInfo(gpu_file).substring(0, AeroActivity.shell.getInfo(gpu_file).length() - 3)))));
+        mOverviewData.add(new adapterInit(getString(R.string.available_memory), AeroActivity.shell.getMemory(FILENAME_PROC_MEMINFO)));
 
-        listView1 = (ListView) root.findViewById(R.id.listView1);
 
-        adapter = new AeroAdapter(getActivity(),
-                R.layout.overviewlist_item, overview_data);
-
-        listView1.setAdapter(adapter);
-
+        if (adapter == null) {
+            /*
+             * Create our ArrayAdapter and bound it to our listview.
+             * Notice; we can only set our Adapter if it is freshly new,
+             * otherwise we can just fall through and execute a
+             * notifyDataSetChange() of our Adapter in the main UI Thread.
+             */
+            adapter = new AeroAdapter(getActivity(),
+                    R.layout.overviewlist_item, mOverviewData);
+            listView1.setAdapter(adapter);
+        } else {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     public void DrawFirstStart(int header, int content) {
