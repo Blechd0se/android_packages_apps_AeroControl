@@ -42,6 +42,7 @@ public class ProfileFragment extends PreferenceFragment {
     private SharedPreferences prefs;
     public ShowcaseView.ConfigOptions mConfigOptions;
     private static final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
+    private  String[] mCompleteProfiles;
     public static final String FILENAME_PROFILES = "firstrun_profiles";
     public static final settingsHelper settings = new settingsHelper();
 
@@ -82,9 +83,9 @@ public class ProfileFragment extends PreferenceFragment {
 
     private final void loadProfiles() {
 
-        final String[] completeProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
+        mCompleteProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
 
-        for (String s : completeProfiles) {
+        for (String s : mCompleteProfiles) {
 
             // Don't take default xml;
             if (!(s.equals("com.aero.control_preferences.xml") || s.equals("showcase_internal.xml"))) {
@@ -136,7 +137,7 @@ public class ProfileFragment extends PreferenceFragment {
 
     private final void showDialog(final EditText editText) {
 
-        final String[] completeProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
+        mCompleteProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.add_a_name)
@@ -146,7 +147,7 @@ public class ProfileFragment extends PreferenceFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        String allProfiles = Arrays.asList(completeProfiles).toString();
+                        String allProfiles = Arrays.asList(mCompleteProfiles).toString();
                         String profileTitle = editText.getText().toString();
 
                         // Add content;
@@ -372,6 +373,7 @@ public class ProfileFragment extends PreferenceFragment {
             @Override
             public boolean onLongClick(View view) {
 
+                mCompleteProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
                 final EditText editText = new EditText(getActivity());
                 final CharSequence oldName = txtView.getText();
                 editText.setText(oldName);
@@ -384,8 +386,15 @@ public class ProfileFragment extends PreferenceFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                txtView.setText(editText.getText().toString());
-                                renameProfile(oldName, editText.getText().toString(), txtView);
+                                String newName = editText.getText().toString();
+                                String allProfiles = Arrays.asList(mCompleteProfiles).toString();
+
+                                if (allProfiles.contains(newName + ".xml")) {
+                                    Toast.makeText(getActivity(), R.string.pref_profile_name_exists, Toast.LENGTH_LONG).show();
+                                } else {
+                                    txtView.setText(newName);
+                                    renameProfile(oldName, newName, txtView);
+                                }
                             }
                         })
                         .setNegativeButton(R.string.cancel, null)
