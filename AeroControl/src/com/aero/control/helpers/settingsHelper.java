@@ -52,7 +52,7 @@ public class settingsHelper {
 
     private static final shellHelper shell = new shellHelper();
 
-    public void setSettings(final Context context, final int flag) {
+    public void setSettings(final Context context) {
 
         new Thread(new Runnable() {
             @Override
@@ -67,14 +67,14 @@ public class settingsHelper {
                 }
 
                 // Apply all our saved values;
-                doBackground(context, flag);
+                doBackground(context);
 
             }
         }).start();
 
     }
 
-    private void doBackground(Context context, int flag) {
+    private void doBackground(Context context) {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         ArrayList<String> al = new ArrayList<String>();
@@ -84,23 +84,13 @@ public class settingsHelper {
         String cpu_min = prefs.getString(PREF_CPU_MIN_FREQ, null);
         String cpu_gov = prefs.getString(PREF_CURRENT_GOV_AVAILABLE, null);
 
-        if(flag == 0) {
-            String cpu_cmd = (String) prefs.getString(PREF_CPU_COMMANDS, null);
+        String cpu_cmd = (String) prefs.getString(PREF_CPU_COMMANDS, null);
 
-            if (cpu_cmd != null) {
-                // Since we can't cast to hashmap, little workaround;
-                String[] array = cpu_cmd.substring(1, cpu_cmd.length() - 1).split(",");
-                for (String cmd : array) {
-                    al.add(cmd);
-                }
-            }
-
-        } else  {
-           HashSet<String> cpu_cmd = (HashSet<String>) prefs.getStringSet(PREF_CPU_COMMANDS, null);
-            if (cpu_cmd != null) {
-                for (String cmd : cpu_cmd) {
-                    al.add(cmd);
-                }
+        if (cpu_cmd != null) {
+            // Since we can't cast to hashmap, little workaround;
+            String[] array = cpu_cmd.substring(1, cpu_cmd.length() - 1).split(",");
+            for (String cmd : array) {
+                al.add(cmd);
             }
         }
 

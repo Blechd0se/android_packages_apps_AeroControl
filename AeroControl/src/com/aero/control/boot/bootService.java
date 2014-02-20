@@ -7,12 +7,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-
-/*
- * TODO: - Add OC/UC Support
- *       - Make generic for governor parameters
- */
-
 public class bootService extends Service
 {
 
@@ -36,7 +30,7 @@ public class bootService extends Service
     {
         // service started
 
-        settings.setSettings(getBaseContext(), 1);
+        settings.setSettings(getBaseContext());
 
         return START_NOT_STICKY;
     }

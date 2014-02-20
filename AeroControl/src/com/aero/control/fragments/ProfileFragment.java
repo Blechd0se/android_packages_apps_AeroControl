@@ -356,7 +356,7 @@ public class ProfileFragment extends PreferenceFragment {
                                 deleteProfile("com.aero.control_preferences");
                                 SharedPreferences AeroProfile = getActivity().getSharedPreferences(txtView.getText().toString(), Context.MODE_PRIVATE);
                                 applyProfile(AeroProfile);
-                                settings.setSettings(getActivity(), 0);
+                                settings.setSettings(getActivity());
 
                             }
                         })
