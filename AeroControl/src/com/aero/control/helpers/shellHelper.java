@@ -338,30 +338,39 @@ public final class shellHelper {
      *
      * @return nothing
      */
-    public final void setRootInfo(String command, String content) {
+    public final void setRootInfo(final String command, final String content) {
 
-        Process rooting;
-        String tmp;
-        try {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                Process rooting;
+                String tmp;
+                try {
 
-            rooting = Runtime.getRuntime().exec("su");
+                    rooting = Runtime.getRuntime().exec("su");
 
-            DataOutputStream dataStream = new DataOutputStream(rooting.getOutputStream());
+                    DataOutputStream dataStream = new DataOutputStream(rooting.getOutputStream());
 
-            // Check if last char is a whitespace;
-            tmp = command.substring(command.length() - 1);
-            if (tmp.matches("^\\s*$")) {
-                command = command.substring(0, command.length() - 1);
+                    // Check if last char is a whitespace;
+                    tmp = command.substring(command.length() - 1);
+                    if (tmp.matches("^\\s*$")) {
+                        tmp = command.substring(0, command.length() - 1);
+                    } else {
+                        tmp = command;
+                    }
+
+                    // Doing some String-puzzle;
+                    dataStream.writeBytes("echo \"" + tmp + "\" " + "> " + content + "\n");
+                    dataStream.writeBytes("exit\n");
+                    dataStream.flush();
+
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Do you even root, bro? :/");
+                }
             }
-
-            // Doing some String-puzzle;
-            dataStream.writeBytes("echo \"" + command + "\" " + "> " + content + "\n");
-            dataStream.writeBytes("exit\n");
-            dataStream.flush();
-
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Do you even root, bro? :/");
-        }
+        };
+        Thread rootThread = new Thread(runnable);
+        rootThread.start();
 
     }
     /**
@@ -372,22 +381,29 @@ public final class shellHelper {
      *
      * @return nothing
      */
-    public final void setRootInfo(String array[]) {
+    public final void setRootInfo(final String array[]) {
 
-        try {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
 
-            Process process = Runtime.getRuntime().exec("su");
-            DataOutputStream dataStream = new DataOutputStream(process.getOutputStream());
-            for (String commands : array) {
-                dataStream.writeBytes(commands + "\n");
-                dataStream.flush();
+                    Process process = Runtime.getRuntime().exec("su");
+                    DataOutputStream dataStream = new DataOutputStream(process.getOutputStream());
+                    for (String commands : array) {
+                        dataStream.writeBytes(commands + "\n");
+                        dataStream.flush();
+                    }
+                    dataStream.writeBytes("exit\n");
+                    dataStream.flush();
+
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "Do you even root, bro? :/");
+                }
             }
-            dataStream.writeBytes("exit\n");
-            dataStream.flush();
-
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Do you even root, bro? :/");
-        }
+        };
+        Thread rootThread = new Thread(runnable);
+        rootThread.start();
 
     }
 
