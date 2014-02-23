@@ -84,13 +84,23 @@ public class settingsHelper {
         String cpu_min = prefs.getString(PREF_CPU_MIN_FREQ, null);
         String cpu_gov = prefs.getString(PREF_CURRENT_GOV_AVAILABLE, null);
 
-        String cpu_cmd = (String) prefs.getString(PREF_CPU_COMMANDS, null);
+        try {
+            HashSet<String> hashcpu_cmd = (HashSet<String>) prefs.getStringSet(PREF_CPU_COMMANDS, null);
+            if (hashcpu_cmd != null) {
+                for (String cmd : hashcpu_cmd) {
+                    al.add(cmd);
+                }
+            }
+        } catch (ClassCastException e) {
+            // HashSet didn't work, so we make a fallback;
+            String cpu_cmd = (String) prefs.getString(PREF_CPU_COMMANDS, null);
 
-        if (cpu_cmd != null) {
-            // Since we can't cast to hashmap, little workaround;
-            String[] array = cpu_cmd.substring(1, cpu_cmd.length() - 1).split(",");
-            for (String cmd : array) {
-                al.add(cmd);
+            if (cpu_cmd != null) {
+                // Since we can't cast to hashmap, little workaround;
+                String[] array = cpu_cmd.substring(1, cpu_cmd.length() - 1).split(",");
+                for (String cmd : array) {
+                    al.add(cmd);
+                }
             }
         }
 
