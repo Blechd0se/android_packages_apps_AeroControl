@@ -45,6 +45,7 @@ public class StatisticsFragment extends Fragment {
      */
     public StatisticsFragment mStatisticsFragment;
     public int mIndex = 0;
+    private int mColorIndex = 0;
     public ViewGroup root;
     public String[] data;
     public ListView statisticView;
@@ -324,21 +325,21 @@ public class StatisticsFragment extends Fragment {
     public final void handleOnClick(ArrayList<String> list) {
 
         final String[] valueArray = list.toArray(new String[0]);
-        int i;
 
         for (String a: valueArray) {
 
             int arrayLength = valueArray.length;
 
-            if(mIndex == arrayLength)
+            if(mIndex == arrayLength) {
                 mIndex = 0;
+                mColorIndex = 0;
+            }
 
             /*
              * Fix exception;
              */
-            i = mIndex;
-            if (i == 8)
-                i = 0;
+            if (mColorIndex >= 8)
+                mColorIndex = 0;
 
             String currentRow = valueArray[mIndex];
             String[] tmp = currentRow.split(" ");
@@ -360,10 +361,11 @@ public class StatisticsFragment extends Fragment {
             txtTime.setTypeface(font);
             txtPercentage.setTypeface(font);
 
-            txtFreq.setTextColor(Color.parseColor(color_code[i]));
-            txtTime.setTextColor(Color.parseColor(color_code[i]));
-            txtPercentage.setTextColor(Color.parseColor(color_code[i]));
+            txtFreq.setTextColor(Color.parseColor(color_code[mColorIndex]));
+            txtTime.setTextColor(Color.parseColor(color_code[mColorIndex]));
+            txtPercentage.setTextColor(Color.parseColor(color_code[mColorIndex]));
         }
+        mColorIndex++;
         mIndex++;
     }
 
