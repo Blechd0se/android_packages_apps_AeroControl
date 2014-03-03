@@ -62,6 +62,10 @@ public class MemoryFragment extends PreferenceFragment {
 
     public static final Handler progressHandler = new Handler();
 
+    private CheckBoxPreference mDynFSync, mZCache, mLowMemoryPref, mWriteBackControl;
+
+    private static final String MEMORY_SETTINGS_CATEGORY = "memory_settings";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,15 +75,17 @@ public class MemoryFragment extends PreferenceFragment {
 
 
         root = this.getPreferenceScreen();
+        final PreferenceCategory memorySettingsCategory =
+                (PreferenceCategory) findPreference(MEMORY_SETTINGS_CATEGORY);
         // I don't like the following, can we simplify it?
 
         // Declare our entries;
         final EditTextPreference swappiness = (EditTextPreference)root.findPreference("swappiness");
-        final CheckBoxPreference dynFsync = (CheckBoxPreference)root.findPreference("dynFsync");
-        final CheckBoxPreference zcache = (CheckBoxPreference)root.findPreference("zcache");
-        final CheckBoxPreference writeback_control = (CheckBoxPreference)root.findPreference("writeback");
         final EditTextPreference min_free_ram = (EditTextPreference)root.findPreference("min_free");
-        final CheckBoxPreference low_mem = (CheckBoxPreference)root.findPreference("low_mem");
+        mDynFSync = (CheckBoxPreference)findPreference("dynFsync");
+        mZCache = (CheckBoxPreference)findPreference("zcache");
+        mWriteBackControl = (CheckBoxPreference)findPreference("writeback");
+        mLowMemoryPref = (CheckBoxPreference)findPreference("low_mem");
 
         // Swappiness:
         swappiness.setText(AeroActivity.shell.getInfo(SWAPPNIESS_FILE));
@@ -90,7 +96,7 @@ public class MemoryFragment extends PreferenceFragment {
         min_free_ram.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 
         if (AeroActivity.shell.getInfo(CMDLINE_ZACHE).equals("Unavailable"))
-            zcache.setEnabled(false);
+            memorySettingsCategory.removePreference(mZCache);
 
         // Min free ram:
         if (AeroActivity.shell.getInfo(MIN_FREE).equals("Unavailable")) {
@@ -106,19 +112,18 @@ public class MemoryFragment extends PreferenceFragment {
         // Check if enabled or not;
         if (AeroActivity.shell.getInfo(DYANMIC_FSYNC).equals("1")) {
             checkDynFsync = true;
-        }
-        else if (AeroActivity.shell.getInfo(DYANMIC_FSYNC).equals("0")) {
+        } else if (AeroActivity.shell.getInfo(DYANMIC_FSYNC).equals("0")) {
             checkDynFsync = false;
-        }
-        else {
-            dynFsync.setEnabled(false); // If dyn fsync is not supported
+        } else {
+            // If dyn fsync is not supported
+            memorySettingsCategory.removePreference(mDynFSync);
         }
 
-        dynFsync.setChecked(checkDynFsync);
+        mDynFSync.setChecked(checkDynFsync);
 
         final String fileCMD = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
         final boolean zcacheEnabled = fileCMD.length() == 0 ? false : fileCMD.contains("zcache");
-        zcache.setChecked(zcacheEnabled);
+        mZCache.setChecked(zcacheEnabled);
 
         // Check if enabled or not;
         if (AeroActivity.shell.getInfo(WRITEBACK).equals("1")) {
@@ -128,86 +133,10 @@ public class MemoryFragment extends PreferenceFragment {
             checkDynWriteback = false;
         }
         else {
-            writeback_control.setEnabled(false); // If dyn writeback is not supported
+            // If dyn writeback is not supported
+            memorySettingsCategory.removePreference(mWriteBackControl);
         }
-        writeback_control.setChecked(checkDynWriteback);
-
-
-        low_mem.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String getState = null;
-                final String a =  o.toString();
-
-                AeroActivity.shell.remountSystem();
-
-
-                try {
-                    final BufferedReader br = new BufferedReader(new FileReader(LOW_MEM));
-                    try {
-                        StringBuilder sb = new StringBuilder();
-                        String line = br.readLine();
-
-                        while (line != null) {
-                            sb.append(line);
-                            sb.append('\n');
-                            line = br.readLine();
-                        }
-                        getState = sb.toString();
-
-                        if (a.equals("true")) {
-
-                            // If already on, we can bail out;
-                            if (getState.contains("ro.config.low_ram=true"))
-                                return true;
-
-                            getState = getState.replace("ro.config.low_ram=false", "ro.config.low_ram=true");
-
-                        }
-                        else if (a.equals("false")) {
-
-                            // bail out again, because its already how we want it;
-                            if (getState.contains("ro.config.low_ram=false"))
-                                return true;
-
-                            getState = getState.replace("ro.config.low_ram=true", "ro.config.low_ram=false");
-
-                        }
-
-                    } catch (IOException e) {
-
-                    }
-                } catch (FileNotFoundException e) {
-
-                }
-
-                // Set current State to path;
-                AeroActivity.shell.setRootInfo(getState, LOW_MEM);
-                Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
-
-                return true;
-            };
-        });
-
-        writeback_control.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-
-                String a =  o.toString();
-
-                if (a.equals("true"))
-                    AeroActivity.shell.setRootInfo("1", WRITEBACK);
-                else if (a.equals("false"))
-                    AeroActivity.shell.setRootInfo("0", WRITEBACK);
-
-                //** store preferences
-                preference.getEditor().commit();
-
-                return true;
-            };
-        });
+        mWriteBackControl.setChecked(checkDynWriteback);
 
         if (showDialog) {
             // Ensure only devices with this special path are checked;
@@ -377,62 +306,6 @@ public class MemoryFragment extends PreferenceFragment {
                 return true;
             };
         });
-
-        dynFsync.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-
-                String a =  o.toString();
-
-                if (a.equals("true"))
-                    AeroActivity.shell.setRootInfo("1", DYANMIC_FSYNC);
-                else if (a.equals("false"))
-                    AeroActivity.shell.setRootInfo("0", DYANMIC_FSYNC);
-
-                //** store preferences
-                preference.getEditor().commit();
-
-                return true;
-            };
-        });
-
-        zcache.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String getState = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
-                String a =  o.toString();
-
-                AeroActivity.shell.remountSystem();
-
-                // It's checked, so we can enable zcache;
-                if (a.equals("true")) {
-
-                    // If already on, we can bail out;
-                    if (getState.contains("zcache"))
-                        return true;
-
-                    getState = getState + " zcache";
-
-                }
-                else if (a.equals("false")) {
-
-                    // bail out again, because its already how we want it;
-                    if (!getState.contains("zcache"))
-                        return true;
-
-                    getState = getState.replace(" zcache", "");
-
-                }
-
-                // Set current State to path;
-                AeroActivity.shell.setRootInfo(getState, CMDLINE_ZACHE);
-                Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
-
-                return true;
-            };
-        });
     }
 
     @Override
@@ -460,6 +333,81 @@ public class MemoryFragment extends PreferenceFragment {
         if (output == 0)
             DrawFirstStart(R.string.showcase_memory_fragment_trim, R.string.showcase_memory_fragment_trim_sum, FILENAME);
 
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mLowMemoryPref) {
+            lowMemoryPrefClick();
+        } else if (preference == mDynFSync) {
+            boolean value = mDynFSync.isChecked();
+            if (value) AeroActivity.shell.setRootInfo("1", DYANMIC_FSYNC);
+            else AeroActivity.shell.setRootInfo("0", DYANMIC_FSYNC);
+            //** store preferences
+            preference.getEditor().commit();
+        } else if (preference == mZCache) {
+            zCacheClick();
+        } else if (preference == mWriteBackControl) {
+            boolean value = mWriteBackControl.isChecked();
+            if (value) AeroActivity.shell.setRootInfo("1", WRITEBACK);
+            else AeroActivity.shell.setRootInfo("0", WRITEBACK);
+            //** store preferences
+            preference.getEditor().commit();
+        } else {
+            return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
+        return true;
+    }
+
+    private void zCacheClick() {
+        String getState = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
+        boolean value = mZCache.isChecked();
+        AeroActivity.shell.remountSystem();
+        if (value) {
+            // If already on, we can bail out;
+            if (getState.contains("zcache")) return;
+            getState = getState + " zcache";
+        } else {
+            // bail out again, because its already how we want it;
+            if (!getState.contains("zcache")) return;
+            getState = getState.replace(" zcache", "");
+        }
+        // Set current State to path;
+        AeroActivity.shell.setRootInfo(getState, CMDLINE_ZACHE);
+        Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
+    }
+
+    private void lowMemoryPrefClick() {
+        String getState = null;
+        boolean value = mLowMemoryPref.isChecked();
+        AeroActivity.shell.remountSystem();
+        try {
+            final BufferedReader br = new BufferedReader(new FileReader(LOW_MEM));
+            try {
+                StringBuilder sb = new StringBuilder();
+                String line = br.readLine();
+                while (line != null) {
+                    sb.append(line);
+                    sb.append('\n');
+                    line = br.readLine();
+                }
+                getState = sb.toString();
+                if (value) {
+                    // If already on, we can bail out;
+                    if (getState.contains("ro.config.low_ram=true")) return;
+                    getState = getState.replace("ro.config.low_ram=false", "ro.config.low_ram=true");
+                } else {
+                    // bail out again, because its already how we want it;
+                    if (getState.contains("ro.config.low_ram=false")) return;
+                    getState = getState.replace("ro.config.low_ram=true", "ro.config.low_ram=false");
+                }
+            } catch (IOException e) {
+            }
+        } catch (FileNotFoundException e) {
+        }
+        // Set current State to path;
+        AeroActivity.shell.setRootInfo(getState, LOW_MEM);
+        Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
     }
 
     public void DrawFirstStart(int header, int content, String filename) {
