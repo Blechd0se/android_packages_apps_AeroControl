@@ -37,7 +37,7 @@ import java.io.IOException;
  * Created by Alexander Christ on 16.09.13.
  * Default Memory Fragment
  */
-public class MemoryFragment extends PreferenceFragment {
+public class MemoryFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
@@ -57,86 +57,78 @@ public class MemoryFragment extends PreferenceFragment {
 
     public boolean showDialog = true;
 
-    public boolean checkDynFsync;
-    public boolean checkDynWriteback;
-
     public static final Handler progressHandler = new Handler();
 
     private CheckBoxPreference mDynFSync, mZCache, mLowMemoryPref, mWriteBackControl;
+    private EditTextPreference mSwappiness, mMinFreeRAM;
+    private Preference mFSTrimToggle;
+    private ListPreference mIOScheduler;
 
     private static final String MEMORY_SETTINGS_CATEGORY = "memory_settings";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.memory_fragment);
-
 
         root = this.getPreferenceScreen();
         final PreferenceCategory memorySettingsCategory =
                 (PreferenceCategory) findPreference(MEMORY_SETTINGS_CATEGORY);
-        // I don't like the following, can we simplify it?
 
-        // Declare our entries;
-        final EditTextPreference swappiness = (EditTextPreference)root.findPreference("swappiness");
-        final EditTextPreference min_free_ram = (EditTextPreference)root.findPreference("min_free");
-        mDynFSync = (CheckBoxPreference)findPreference("dynFsync");
-        mZCache = (CheckBoxPreference)findPreference("zcache");
-        mWriteBackControl = (CheckBoxPreference)findPreference("writeback");
-        mLowMemoryPref = (CheckBoxPreference)findPreference("low_mem");
-
-        // Swappiness:
-        swappiness.setText(AeroActivity.shell.getInfo(SWAPPNIESS_FILE));
-        // Only show numbers in input field;
-        swappiness.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-
-        // Only show numbers in input field;
-        min_free_ram.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-
-        if (AeroActivity.shell.getInfo(CMDLINE_ZACHE).equals("Unavailable"))
-            memorySettingsCategory.removePreference(mZCache);
-
-        // Min free ram:
-        if (AeroActivity.shell.getInfo(MIN_FREE).equals("Unavailable")) {
-            min_free_ram.setEnabled(false);
-
-            // Remove until back in Kernel;
-            PreferenceCategory memoryCategory = (PreferenceCategory) findPreference("memory_settings");
-            memoryCategory.removePreference(min_free_ram);
-        } else
-            min_free_ram.setText(AeroActivity.shell.getInfo(MIN_FREE));
-
-
-        // Check if enabled or not;
-        if (AeroActivity.shell.getInfo(DYANMIC_FSYNC).equals("1")) {
-            checkDynFsync = true;
-        } else if (AeroActivity.shell.getInfo(DYANMIC_FSYNC).equals("0")) {
-            checkDynFsync = false;
+        mDynFSync = (CheckBoxPreference) findPreference("dynFsync");
+        if ("1".equals(AeroActivity.shell.getInfo(DYANMIC_FSYNC))) {
+            mDynFSync.setChecked(true);
+        } else if ("0".equals(AeroActivity.shell.getInfo(DYANMIC_FSYNC))) {
+            mDynFSync.setChecked(false);
         } else {
-            // If dyn fsync is not supported
-            memorySettingsCategory.removePreference(mDynFSync);
+            if (memorySettingsCategory != null) memorySettingsCategory.removePreference(mDynFSync);
         }
 
-        mDynFSync.setChecked(checkDynFsync);
+        mZCache = (CheckBoxPreference) findPreference("zcache");
+        if ("Unavailable".equals(AeroActivity.shell.getInfo(CMDLINE_ZACHE)))
+            if (memorySettingsCategory != null) memorySettingsCategory.removePreference(mZCache);
+            else {
+                final String fileCMD = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
+                final boolean zcacheEnabled = fileCMD.length() != 0 && fileCMD.contains("zcache");
+                mZCache.setChecked(zcacheEnabled);
+            }
 
-        final String fileCMD = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
-        final boolean zcacheEnabled = fileCMD.length() == 0 ? false : fileCMD.contains("zcache");
-        mZCache.setChecked(zcacheEnabled);
-
-        // Check if enabled or not;
+        mWriteBackControl = (CheckBoxPreference) findPreference("writeback");
         if (AeroActivity.shell.getInfo(WRITEBACK).equals("1")) {
-            checkDynWriteback = true;
+            mWriteBackControl.setChecked(true);
+        } else if (AeroActivity.shell.getInfo(WRITEBACK).equals("0")) {
+            mWriteBackControl.setChecked(false);
+        } else {
+            if (memorySettingsCategory != null)
+                memorySettingsCategory.removePreference(mWriteBackControl);
         }
-        else if (AeroActivity.shell.getInfo(WRITEBACK).equals("0")) {
-            checkDynWriteback = false;
+
+        mLowMemoryPref = (CheckBoxPreference) findPreference("low_mem");
+
+        mSwappiness = (EditTextPreference) findPreference("swappiness");
+        mSwappiness.setText(AeroActivity.shell.getInfo(SWAPPNIESS_FILE));
+        mSwappiness.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+        mSwappiness.setOnPreferenceChangeListener(this);
+
+        mFSTrimToggle = findPreference("fstrim_toggle");
+
+        mMinFreeRAM = (EditTextPreference) findPreference("min_free");
+        if ("Unavailable".equals(AeroActivity.shell.getInfo(MIN_FREE))) {
+            if (memorySettingsCategory != null)
+                memorySettingsCategory.removePreference(mMinFreeRAM);
+        } else {
+            mMinFreeRAM.setText(AeroActivity.shell.getInfo(MIN_FREE));
+            mMinFreeRAM.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
         }
-        else {
-            // If dyn writeback is not supported
-            memorySettingsCategory.removePreference(mWriteBackControl);
-        }
-        mWriteBackControl.setChecked(checkDynWriteback);
+
+        mIOScheduler = (ListPreference) findPreference("io_scheduler_list");
+        mIOScheduler.setEntries(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
+        mIOScheduler.setEntryValues(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
+        mIOScheduler.setValue(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(GOV_IO_FILE)));
+        mIOScheduler.setSummary(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(GOV_IO_FILE)));
+        mIOScheduler.setDialogIcon(R.drawable.memory_dark);
+        mIOScheduler.setOnPreferenceChangeListener(this);
 
         if (showDialog) {
             // Ensure only devices with this special path are checked;
@@ -144,7 +136,7 @@ public class MemoryFragment extends PreferenceFragment {
             boolean fileMountCheck = false;
 
             for (String tmp : fileMount) {
-                if(tmp.contains("/dev/block/mmcblk1p25")) {
+                if (tmp.contains("/dev/block/mmcblk1p25")) {
                     fileMountCheck = true;
                     break;
                 }
@@ -154,19 +146,18 @@ public class MemoryFragment extends PreferenceFragment {
 
             if (fileMountCheck) {
                 final String fileJournal = AeroActivity.shell.getRootInfo("tune2fs -l", "/dev/block/mmcblk1p25");
-                final boolean fileSystemCheck = fileJournal.length() == 0 ? false : fileJournal.contains("has_journal");
-                if (!fileSystemCheck){
-
+                final boolean fileSystemCheck = fileJournal.length() != 0 && fileJournal.contains("has_journal");
+                if (!fileSystemCheck) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     LayoutInflater inflater = getActivity().getLayoutInflater();
                     // Just reuse aboutScreen, because its Linear and has a TextView
                     View layout = inflater.inflate(R.layout.about_screen, null);
-                    TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
-
+                    TextView aboutText = (TextView) (layout != null ? layout.findViewById(R.id.aboutScreen) : null);
                     builder.setTitle(R.string.has_journal_dialog_header);
-                    aboutText.setText(getText(R.string.has_journal_dialog));
-                    aboutText.setTextSize(13);
-
+                    if (aboutText != null) {
+                        aboutText.setText(getText(R.string.has_journal_dialog));
+                        aboutText.setTextSize(13);
+                    }
                     builder.setView(layout)
                             .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -180,132 +171,6 @@ public class MemoryFragment extends PreferenceFragment {
                 }
             }
         }
-
-        // Find our ListPreference (max_frequency);
-        final ListPreference io_scheduler = (ListPreference) root.findPreference("io_scheduler_list");
-        // Just throw in our frequencies;
-        io_scheduler.setEntries(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
-        io_scheduler.setEntryValues(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
-        io_scheduler.setValue(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(GOV_IO_FILE)));
-        io_scheduler.setSummary(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(GOV_IO_FILE)));
-        io_scheduler.setDialogIcon(R.drawable.memory_dark);
-
-        final Preference fstrim_toggle = root.findPreference("fstrim_toggle");
-
-
-        fstrim_toggle.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-
-                final CharSequence[] system = {"/system", "/data", "/cache"};
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                final ProgressDialog update = new ProgressDialog(getActivity());
-                builder.setTitle(R.string.fstrim_header);
-                builder.setIcon(R.drawable.gear_dark);
-
-                builder.setItems(system, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-
-                        final String b = (String)system[item];
-
-                        update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                        update.setCancelable(false);
-                        update.setMax(100);
-                        update.setIndeterminate(true);
-                        update.show();
-                        AeroActivity.shell.remountSystem();
-
-                        Runnable runnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-
-                                    while (update.getProgress()< 100) {
-
-                                        // Set up the root-command;
-                                        AeroActivity.shell.getRootInfo("fstrim -v", b);
-
-                                        update.setIndeterminate(false);
-                                        update.setProgress(100);
-
-                                        progressHandler.sendMessage(progressHandler.obtainMessage());
-
-                                        // Sleep the current thread and exit dialog;
-                                        Thread.sleep(2000);
-                                        update.dismiss();
-
-                                    }
-
-                                } catch (Exception e) {
-                                    Log.e("Aero", "An error occurred while trimming.", e);
-                                }
-                            }
-                        };
-                        Thread trimThread = new Thread(runnable);
-                        if (!trimThread.isAlive())
-                            trimThread.start();
-                    }
-                }).show();
-
-                return true;
-            };
-
-        });
-
-
-        // Start our custom change listener;
-        io_scheduler.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String a = (String) o;
-
-                AeroActivity.shell.setRootInfo(a, GOV_IO_FILE);
-                io_scheduler.setSummary(a);
-
-                loadIOParameter();
-
-                //** store preferences
-                preference.getEditor().commit();
-
-                return true;
-            };
-        });
-
-        swappiness.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String a = (String) o;
-
-
-                AeroActivity.shell.setRootInfo(a, SWAPPNIESS_FILE);
-                swappiness.setText(AeroActivity.shell.getInfo(SWAPPNIESS_FILE));
-
-                //** store preferences
-                preference.getEditor().commit();
-
-                return true;
-            };
-        });
-
-        min_free_ram.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String a = (String) o;
-
-                AeroActivity.shell.setRootInfo(a, MIN_FREE);
-                min_free_ram.setText(AeroActivity.shell.getInfo(MIN_FREE));
-
-                //** store preferences
-                preference.getEditor().commit();
-
-                return true;
-            };
-        });
     }
 
     @Override
@@ -343,19 +208,40 @@ public class MemoryFragment extends PreferenceFragment {
             boolean value = mDynFSync.isChecked();
             if (value) AeroActivity.shell.setRootInfo("1", DYANMIC_FSYNC);
             else AeroActivity.shell.setRootInfo("0", DYANMIC_FSYNC);
-            //** store preferences
-            preference.getEditor().commit();
         } else if (preference == mZCache) {
             zCacheClick();
         } else if (preference == mWriteBackControl) {
             boolean value = mWriteBackControl.isChecked();
             if (value) AeroActivity.shell.setRootInfo("1", WRITEBACK);
             else AeroActivity.shell.setRootInfo("0", WRITEBACK);
-            //** store preferences
-            preference.getEditor().commit();
+        } else if (preference == mFSTrimToggle) {
+            fsTrimToggleClick();
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
+        preference.getEditor().commit();
+        return true;
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mSwappiness) {
+            String value = (String) newValue;
+            mSwappiness.setText(value);
+            AeroActivity.shell.setRootInfo(value, SWAPPNIESS_FILE);
+        } else if (preference == mMinFreeRAM) {
+            String value = (String) newValue;
+            mMinFreeRAM.setText(value);
+            AeroActivity.shell.setRootInfo(value, MIN_FREE);
+        } else if (preference == mIOScheduler) {
+            String value = (String) newValue;
+            mIOScheduler.setSummary(value);
+            AeroActivity.shell.setRootInfo(value, GOV_IO_FILE);
+            loadIOParameter();
+        } else {
+            return false;
+        }
+        preference.getEditor().commit();
         return true;
     }
 
@@ -401,13 +287,54 @@ public class MemoryFragment extends PreferenceFragment {
                     if (getState.contains("ro.config.low_ram=false")) return;
                     getState = getState.replace("ro.config.low_ram=true", "ro.config.low_ram=false");
                 }
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         }
         // Set current State to path;
         AeroActivity.shell.setRootInfo(getState, LOW_MEM);
         Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
+    }
+
+    private void fsTrimToggleClick() {
+        final CharSequence[] system = {"/system", "/data", "/cache"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final ProgressDialog update = new ProgressDialog(getActivity());
+        builder.setTitle(R.string.fstrim_header);
+        builder.setIcon(R.drawable.gear_dark);
+        builder.setItems(system, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                final String b = (String) system[item];
+                update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                update.setCancelable(false);
+                update.setMax(100);
+                update.setIndeterminate(true);
+                update.show();
+                AeroActivity.shell.remountSystem();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            while (update.getProgress() < 100) {
+                                // Set up the root-command;
+                                AeroActivity.shell.getRootInfo("fstrim -v", b);
+                                update.setIndeterminate(false);
+                                update.setProgress(100);
+                                progressHandler.sendMessage(progressHandler.obtainMessage());
+                                // Sleep the current thread and exit dialog;
+                                Thread.sleep(2000);
+                                update.dismiss();
+                            }
+                        } catch (Exception e) {
+                            Log.e("Aero", "An error occurred while trimming.", e);
+                        }
+                    }
+                };
+                Thread trimThread = new Thread(runnable);
+                if (!trimThread.isAlive())
+                    trimThread.start();
+            }
+        }).show();
     }
 
     public void DrawFirstStart(int header, int content, String filename) {
@@ -416,8 +343,7 @@ public class MemoryFragment extends PreferenceFragment {
             FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
             fos.write("1".getBytes());
             fos.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e("Aero", "Could not save file. ", e);
         }
 
@@ -480,7 +406,6 @@ public class MemoryFragment extends PreferenceFragment {
 
     }
 
-
     // Make a private class to load all parameters;
     private class handler {
 
@@ -500,7 +425,7 @@ public class MemoryFragment extends PreferenceFragment {
             prefload.setText(summary);
             prefload.setDialogTitle(parameter);
 
-            if (prefload.getSummary().equals("Unavailable")) {
+            if ("Unavailable".equals(prefload.getSummary())) {
                 prefload.setEnabled(false);
                 prefload.setSummary("This value can't be changed.");
             }
@@ -520,7 +445,7 @@ public class MemoryFragment extends PreferenceFragment {
                     if (AeroActivity.shell.checkPath(AeroActivity.shell.getInfo(parameterPath), a)) {
                         prefload.setSummary(a);
                     } else {
-                        Toast.makeText(getActivity(), "Couldn't set desired parameter"  + " Old value; " +
+                        Toast.makeText(getActivity(), "Couldn't set desired parameter" + " Old value; " +
                                 AeroActivity.shell.getInfo(parameterPath) + " New Value; " + a, Toast.LENGTH_LONG).show();
                         prefload.setSummary(oldValue);
                     }
@@ -530,7 +455,9 @@ public class MemoryFragment extends PreferenceFragment {
                     preferences.edit().putString(parameterPath, o.toString()).commit();
 
                     return true;
-                };
+                }
+
+                ;
             });
         }
 
