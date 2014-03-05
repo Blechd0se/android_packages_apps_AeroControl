@@ -22,6 +22,7 @@
     <string name="refresh">Aggiorna</string>
     <string name="legal">Note Legali</string>
     <string name="send_email">Invia una Email</string>
+    <string name="nocpu_data">Nessun dato CPU trovato.</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -29,7 +30,7 @@
     <string name="slider_cpu_settings">Prestazioni CPU</string>
     <string name="slider_gpu_settings">Controllo GPU</string>
     <string name="slider_memory_settings">Messa a punto Memoria</string>
-    <string name="slider_defy_parts">Defy Parts</string>
+    <string name="slider_defy_parts">Opzioni Defy</string>
     <string name="slider_updater">Aggiornamenti</string>
     <string name="slider_profile">Profili</string>
     <string name="slider_statistics">Statistiche CPU</string>
@@ -85,7 +86,7 @@
 
     <!-- Root Check -->
     <string name="root_required">Sembra che il tuo dispositivo non sia rootato. Questa applicazione non 
-                                funzionerà correttamente senza root. Se pensi che sia un errore, segnalamelo!</string>
+                                funzionerà correttamente senza root. Se pensi che ci sia un errore, segnalamelo con un\'email!</string>
 
 
     <!-- CPU Fragment -->
@@ -164,7 +165,7 @@
     <string name="defy_energy_saver">Risparmio energia</string>
 
     <string name="pref_sweeptowake">Sweep2Wake</string>
-    <string name="pref_sweeptowake_sum">Potrebbe scaricare la tua batteria più del solito.</string>
+    <string name="pref_sweeptowake_sum">Potrebbe consumare la batteria più del solito.</string>
 
     <!-- Updater Fragment -->
     <string name="pref_updater">Backup e aggiornamento del Kernel</string>
@@ -185,10 +186,10 @@
 
     <!-- Showcase Strings -->
     <string name="showcase_aero_fragment">Benvenuto in Aero Control!</string>
-    <string name="showcase_aero_fragment_sum">Fai uno Swipe da sinistra verso destra per vedere il drawer delle notifiche.
+    <string name="showcase_aero_fragment_sum">Trascina da sinistra verso destra per vedere il menu.
                                                 La pagina che vedi è il pannello della panoramica.
                                                 C\'è un piccolo riassunto delle impostazioni del kernel.
-                                                Sono in tempo reale, quindi non è necessario fare un refresh!</string>
+                                                Sono in tempo reale, quindi non è necessario ricaricare!</string>
 
     <string name="showcase_memory_fragment_trim">Opzioni Trim</string>
     <string name="showcase_memory_fragment_trim_sum">Per mantenere le performance del dispositivo, puoi tagliare delle parti del tuo
@@ -198,6 +199,7 @@
     <string name="showcase_cpu_fragment_governor">Governor CPU</string>
     <string name="showcase_cpu_fragment_governor_sum">Premi questo tasto per avere il pieno controllo del governor! Puoi 
                                                     cambiare ogni parametro di ogni governor per migliori performance.</string>
+    
 
     <string name="showcase_hidden_feature">Congratulazioni!</string>
     <string name="showcase_hidden_feature_sum">Hai trovato una funzione segreta! Ricordati di non dirlo a nessuno,
@@ -217,7 +219,7 @@
     <string name="pref_button_brightness">Luminosità tasti</string>
     <string name="pref_button_brightness_sum">Imposta la luminosità dei tasti.</string>
 
-    <string name="pref_multitouch">Punti MultiTouch</string>
+    <string name="pref_multitouch">Punti Multi-Touch</string>
     <string name="pref_multitouch_sum">Imposta il numero dei punti multi-touch.</string>
 
     <string name="pref_charge_led_mode_white">LED bianco</string>
