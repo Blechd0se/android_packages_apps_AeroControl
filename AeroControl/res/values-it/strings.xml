@@ -22,7 +22,7 @@
     <string name="refresh">Aggiorna</string>
     <string name="legal">Note Legali</string>
     <string name="send_email">Invia una Email</string>
-    <string name="nocpu_data">Couldn\'t find any CPU data.</string>
+    <string name="nocpu_data">Nessun dato CPU trovato.</string>
 
     <!-- Default Navigation Drawer entries -->
 
