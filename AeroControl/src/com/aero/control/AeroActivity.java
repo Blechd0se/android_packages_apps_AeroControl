@@ -379,15 +379,17 @@ public class AeroActivity extends Activity {
     @Override
     public void onBackPressed() {
 
-        mBackCounter++;
-
-        Toast.makeText(this, R.string.back_for_close, Toast.LENGTH_SHORT).show();
-
-        if (getFragmentManager().getBackStackEntryCount() == 1)
+        if (getFragmentManager().getBackStackEntryCount() == 1) {
+            getFragmentManager().popBackStack();
             return;
+        }
+
+        mBackCounter++;
+        Toast.makeText(this, R.string.back_for_close, Toast.LENGTH_SHORT).show();
 
         if (mBackCounter == 2)
             finish();
+
     }
 
     public void showRootDialog() {
