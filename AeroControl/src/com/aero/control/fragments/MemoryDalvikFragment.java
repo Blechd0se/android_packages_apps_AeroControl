@@ -20,6 +20,7 @@ public class MemoryDalvikFragment extends PreferenceFragment {
     public MemoryDalvikFragment mMemoryDalvikFragment;
     public PreferenceScreen root;
     public PreferenceCategory PrefCat;
+    public boolean mVisible;
     public static final String DALVIK_TWEAK = "/proc/sys/vm/";
 
     public Fragment newInstance(Context context) {
@@ -37,6 +38,16 @@ public class MemoryDalvikFragment extends PreferenceFragment {
 
         // Load our custom preferences;
         loadDalvik();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        mVisible = false;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mVisible = true;
     }
 
     public void loadDalvik() {

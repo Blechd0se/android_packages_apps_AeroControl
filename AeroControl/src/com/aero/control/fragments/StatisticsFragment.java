@@ -93,6 +93,7 @@ public class StatisticsFragment extends Fragment {
         // Clear UI:
         clearUI();
         mIndex = 0;
+        mColorIndex = 0;
 
         loadUI(true);
 

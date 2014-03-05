@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.CustomTextPreference;
+import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
 import java.io.BufferedReader;
@@ -482,7 +483,7 @@ public class MemoryFragment extends PreferenceFragment {
                 Log.e("Aero", "Something interrupted the main Thread, try again.", e);
             }
 
-            handler h = new handler();
+            PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
             for (String b : completeParamterList)
                 h.generateSettings(b, complete_path);
@@ -495,62 +496,5 @@ public class MemoryFragment extends PreferenceFragment {
         }
 
     }
-
-
-    // Make a private class to load all parameters;
-    private class handler {
-
-        public void generateSettings(final String parameter, String path) {
-
-            final CustomTextPreference prefload = new CustomTextPreference(getActivity());
-            // Strings saves the complete path for a given governor;
-            final String parameterPath = path + "/" + parameter;
-            String summary = AeroActivity.shell.getInfo(parameterPath);
-
-            // Only show numbers in input field;
-            prefload.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-
-            // Setup all things we would normally do in XML;
-            prefload.setSummary(summary);
-            prefload.setTitle(parameter);
-            prefload.setText(summary);
-            prefload.setDialogTitle(parameter);
-
-            if (prefload.getSummary().equals("Unavailable")) {
-                prefload.setEnabled(false);
-                prefload.setSummary("This value can't be changed.");
-            }
-
-            PrefCat.addPreference(prefload);
-
-            // Custom OnChangeListener for each element in our list;
-            prefload.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object o) {
-
-                    String a = (String) o;
-                    CharSequence oldValue = prefload.getSummary();
-
-                    AeroActivity.shell.setRootInfo(a, parameterPath);
-
-                    if (AeroActivity.shell.checkPath(AeroActivity.shell.getInfo(parameterPath), a)) {
-                        prefload.setSummary(a);
-                    } else {
-                        Toast.makeText(getActivity(), "Couldn't set desired parameter"  + " Old value; " +
-                                AeroActivity.shell.getInfo(parameterPath) + " New Value; " + a, Toast.LENGTH_LONG).show();
-                        prefload.setSummary(oldValue);
-                    }
-
-                    // Store our custom preferences if available;
-                    SharedPreferences preferences = getPreferenceManager().getSharedPreferences();
-                    preferences.edit().putString(parameterPath, o.toString()).commit();
-
-                    return true;
-                };
-            });
-        }
-
-    }
-
 }
 
