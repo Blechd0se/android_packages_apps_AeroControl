@@ -1,6 +1,7 @@
 package com.aero.control.fragments;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -54,6 +55,7 @@ public class MemoryFragment extends PreferenceFragment {
     public ShowcaseView mShowCase;
     public PreferenceCategory PrefCat;
     public PreferenceScreen root;
+    private MemoryDalvikFragment mMemoryDalvikFragment;
 
     public boolean showDialog = true;
 
@@ -323,6 +325,24 @@ public class MemoryFragment extends PreferenceFragment {
                 return true;
             };
 
+        });
+
+        final Preference dalvik_settings = root.findPreference("dalvik_settings");
+        dalvik_settings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                if (mMemoryDalvikFragment == null)
+                    mMemoryDalvikFragment = new MemoryDalvikFragment();
+
+                Fragment fragment = mMemoryDalvikFragment;
+
+                getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
+                        android.R.animator.fade_out).replace(R.id.content_frame, fragment).addToBackStack("Memory").commit();
+
+
+                return true;
+            }
         });
 
 

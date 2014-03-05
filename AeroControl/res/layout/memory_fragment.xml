@@ -41,6 +41,11 @@
             android:title="@string/fstrim_header"
             android:summary="@string/fstrim_content" />
 
+        <Preference
+            android:key="dalvik_settings"
+            android:title="@string/pref_dalvik_setttings"
+            android:summary="@string/pref_dalvik_setttings_sum" />
+
         <EditTextPreference
             android:key="min_free"
             android:title="@string/pref_min_free_ram"

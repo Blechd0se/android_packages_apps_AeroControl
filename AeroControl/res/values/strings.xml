@@ -130,6 +130,9 @@
     <string name="pref_min_free_ram">Amount of free RAM</string>
     <string name="pref_min_free_ram_sum">Set the amount of true free ram here (in kb).</string>
 
+    <string name="pref_dalvik_setttings">VM Settings</string>
+    <string name="pref_dalvik_setttings_sum">Change parameters of the virtual machine.</string>
+
     <string name="has_journal_dialog_header">Problem detected</string>
 
     <string name="has_journal_dialog">Looks like your /data partition doesn\'t have the <b>has_journal</b> Feature enabled.
