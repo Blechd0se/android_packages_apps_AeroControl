@@ -95,9 +95,6 @@
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Speichereinstellungen</string>
 
-    <string name="pref_memory_swappiness">Swappiness</string>
-    <string name="pref_memory_swappiness_sum">Swappiness legt fest, wie aggressiv der Kernel Speicherseiten in SWAP-Geräte auslagern soll. </string>
-
     <string name="pref_dynamic_fsync">Dynamisches FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamisches FSync aktiviert FSync nur während der Bildschirm aus ist.</string>
 
@@ -118,9 +115,6 @@
 
     <string name="fstrim_header">Trim Optionen</string>
     <string name="fstrim_content">Mit Trim lassen sich Partition trimmen, um die Performance zu erhöhen. Das kann eine Weile dauern.</string>
-
-    <string name="pref_min_free_ram">Menge an freiem RAM</string>
-    <string name="pref_min_free_ram_sum">Setze hier die absolute Minimalgrenze an freiem RAM (in KBs).</string>
 
     <string name="pref_dalvik_setttings">VM Einstellungen</string>
     <string name="pref_dalvik_setttings_sum">Ändere hier Einstellungen der virtuellen Maschine.</string>

@@ -30,12 +30,6 @@
             android:summary="@string/pref_low_mem_option_sum"
             android:dialogTitle="@string/pref_low_mem_option" />
 
-        <EditTextPreference
-            android:key="swappiness"
-            android:title="@string/pref_memory_swappiness"
-            android:summary="@string/pref_memory_swappiness_sum"
-            android:dialogTitle="Swappiness" />
-
         <Preference
             android:key="fstrim_toggle"
             android:title="@string/fstrim_header"
@@ -45,12 +39,6 @@
             android:key="dalvik_settings"
             android:title="@string/pref_dalvik_setttings"
             android:summary="@string/pref_dalvik_setttings_sum" />
-
-        <EditTextPreference
-            android:key="min_free"
-            android:title="@string/pref_min_free_ram"
-            android:summary="@string/pref_min_free_ram_sum"
-            android:dialogTitle="@string/pref_min_free_ram" />
 
     </PreferenceCategory>
 

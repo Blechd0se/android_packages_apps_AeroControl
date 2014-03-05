@@ -41,11 +41,9 @@ import java.io.IOException;
 public class MemoryFragment extends PreferenceFragment {
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
-    public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
     public static final String CMDLINE_ZACHE = "/system/bootmenu/2nd-boot/cmdline";
     public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
-    public static final String MIN_FREE = "/proc/sys/vm/extra_free_kbytes";
     public static final String LOW_MEM = "/system/build.prop";
     public static final String FILENAME = "firstrun_trim";
     public static final String FILENAME_HIDDEN = "firstrun_hidden_feature";
@@ -76,34 +74,13 @@ public class MemoryFragment extends PreferenceFragment {
         // I don't like the following, can we simplify it?
 
         // Declare our entries;
-        final EditTextPreference swappiness = (EditTextPreference)root.findPreference("swappiness");
         final CheckBoxPreference dynFsync = (CheckBoxPreference)root.findPreference("dynFsync");
         final CheckBoxPreference zcache = (CheckBoxPreference)root.findPreference("zcache");
         final CheckBoxPreference writeback_control = (CheckBoxPreference)root.findPreference("writeback");
-        final EditTextPreference min_free_ram = (EditTextPreference)root.findPreference("min_free");
         final CheckBoxPreference low_mem = (CheckBoxPreference)root.findPreference("low_mem");
-
-        // Swappiness:
-        swappiness.setText(AeroActivity.shell.getInfo(SWAPPNIESS_FILE));
-        // Only show numbers in input field;
-        swappiness.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-
-        // Only show numbers in input field;
-        min_free_ram.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 
         if (AeroActivity.shell.getInfo(CMDLINE_ZACHE).equals("Unavailable"))
             zcache.setEnabled(false);
-
-        // Min free ram:
-        if (AeroActivity.shell.getInfo(MIN_FREE).equals("Unavailable")) {
-            min_free_ram.setEnabled(false);
-
-            // Remove until back in Kernel;
-            PreferenceCategory memoryCategory = (PreferenceCategory) findPreference("memory_settings");
-            memoryCategory.removePreference(min_free_ram);
-        } else
-            min_free_ram.setText(AeroActivity.shell.getInfo(MIN_FREE));
-
 
         // Check if enabled or not;
         if (AeroActivity.shell.getInfo(DYANMIC_FSYNC).equals("1")) {
@@ -357,39 +334,6 @@ public class MemoryFragment extends PreferenceFragment {
                 io_scheduler.setSummary(a);
 
                 loadIOParameter();
-
-                //** store preferences
-                preference.getEditor().commit();
-
-                return true;
-            };
-        });
-
-        swappiness.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String a = (String) o;
-
-
-                AeroActivity.shell.setRootInfo(a, SWAPPNIESS_FILE);
-                swappiness.setText(AeroActivity.shell.getInfo(SWAPPNIESS_FILE));
-
-                //** store preferences
-                preference.getEditor().commit();
-
-                return true;
-            };
-        });
-
-        min_free_ram.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String a = (String) o;
-
-                AeroActivity.shell.setRootInfo(a, MIN_FREE);
-                min_free_ram.setText(AeroActivity.shell.getInfo(MIN_FREE));
 
                 //** store preferences
                 preference.getEditor().commit();
