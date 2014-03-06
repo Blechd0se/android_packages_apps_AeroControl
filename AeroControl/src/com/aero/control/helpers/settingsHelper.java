@@ -26,10 +26,8 @@ public class settingsHelper {
     public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
-    public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
     public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
-    public static final String MIN_FREE = "/proc/sys/vm/extra_free_kbytes";
 
     public static final String PREF_CURRENT_GOV_AVAILABLE = "set_governor";
     public static final String PREF_CPU_MAX_FREQ = "max_frequency";
@@ -158,17 +156,9 @@ public class settingsHelper {
             al.add("echo " + mem_ios + " > " + GOV_IO_FILE);
         }
 
-        if (mem_swp != null) {
-            al.add("echo " + mem_swp + " > " + SWAPPNIESS_FILE);
-        }
-
         al.add("echo " + (mem_dfs ? "1" : "0") + " > " + DYANMIC_FSYNC);
 
         al.add("echo " + (mem_wrb ? "1" : "0") + " > " + WRITEBACK);
-
-        if (mem_min != null) {
-            al.add("echo " + mem_min + " > " + MIN_FREE);
-        }
 
         try {
 

@@ -40,11 +40,9 @@ import java.io.IOException;
 public class MemoryFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
-    public static final String SWAPPNIESS_FILE = "/proc/sys/vm/swappiness";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
     public static final String CMDLINE_ZACHE = "/system/bootmenu/2nd-boot/cmdline";
     public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
-    public static final String MIN_FREE = "/proc/sys/vm/extra_free_kbytes";
     public static final String LOW_MEM = "/system/build.prop";
     public static final String FILENAME = "firstrun_trim";
     public static final String FILENAME_HIDDEN = "firstrun_hidden_feature";
@@ -54,6 +52,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     public ShowcaseView mShowCase;
     public PreferenceCategory PrefCat;
     public PreferenceScreen root;
+    private MemoryDalvikFragment mMemoryDalvikFragment;
 
     public boolean showDialog = true;
 
@@ -61,7 +60,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
     private CheckBoxPreference mDynFSync, mZCache, mLowMemoryPref, mWriteBackControl;
     private EditTextPreference mSwappiness, mMinFreeRAM;
-    private Preference mFSTrimToggle;
+    private Preference mFSTrimToggle, mDalvikSettings;
     private ListPreference mIOScheduler;
 
     private static final String MEMORY_SETTINGS_CATEGORY = "memory_settings";
@@ -105,22 +104,8 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         }
 
         mLowMemoryPref = (CheckBoxPreference) findPreference("low_mem");
-
-        mSwappiness = (EditTextPreference) findPreference("swappiness");
-        mSwappiness.setText(AeroActivity.shell.getInfo(SWAPPNIESS_FILE));
-        mSwappiness.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-        mSwappiness.setOnPreferenceChangeListener(this);
-
         mFSTrimToggle = findPreference("fstrim_toggle");
-
-        mMinFreeRAM = (EditTextPreference) findPreference("min_free");
-        if ("Unavailable".equals(AeroActivity.shell.getInfo(MIN_FREE))) {
-            if (memorySettingsCategory != null)
-                memorySettingsCategory.removePreference(mMinFreeRAM);
-        } else {
-            mMinFreeRAM.setText(AeroActivity.shell.getInfo(MIN_FREE));
-            mMinFreeRAM.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-        }
+        mDalvikSettings = findPreference("dalvik_settings");
 
         mIOScheduler = (ListPreference) findPreference("io_scheduler_list");
         mIOScheduler.setEntries(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
@@ -216,6 +201,15 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             else AeroActivity.shell.setRootInfo("0", WRITEBACK);
         } else if (preference == mFSTrimToggle) {
             fsTrimToggleClick();
+        } else if (preference == mDalvikSettings) {
+            if (mMemoryDalvikFragment == null)
+                mMemoryDalvikFragment = new MemoryDalvikFragment();
+            getFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .replace(R.id.content_frame, mMemoryDalvikFragment)
+                    .addToBackStack("Memory")
+                    .commit();
         } else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
@@ -225,15 +219,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mSwappiness) {
-            String value = (String) newValue;
-            mSwappiness.setText(value);
-            AeroActivity.shell.setRootInfo(value, SWAPPNIESS_FILE);
-        } else if (preference == mMinFreeRAM) {
-            String value = (String) newValue;
-            mMinFreeRAM.setText(value);
-            AeroActivity.shell.setRootInfo(value, MIN_FREE);
-        } else if (preference == mIOScheduler) {
+        if (preference == mIOScheduler) {
             String value = (String) newValue;
             mIOScheduler.setSummary(value);
             AeroActivity.shell.setRootInfo(value, GOV_IO_FILE);

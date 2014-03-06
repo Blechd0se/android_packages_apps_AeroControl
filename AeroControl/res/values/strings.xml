@@ -103,9 +103,6 @@
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Memory Settings</string>
 
-    <string name="pref_memory_swappiness">Swappiness</string>
-    <string name="pref_memory_swappiness_sum">Swappiness defines how aggressive the kernel will swap memory pages.</string>
-
     <string name="pref_dynamic_fsync">Dynamic FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamic FSync enables fsync only while the screen is off.</string>
 
@@ -127,8 +124,8 @@
     <string name="fstrim_header">Trim Option</string>
     <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
 
-    <string name="pref_min_free_ram">Amount of free RAM</string>
-    <string name="pref_min_free_ram_sum">Set the amount of true free ram here (in kb).</string>
+    <string name="pref_dalvik_setttings">VM Settings</string>
+    <string name="pref_dalvik_setttings_sum">Change parameters of the virtual machine.</string>
 
     <string name="has_journal_dialog_header">Problem detected</string>
 
