@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -99,6 +101,12 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
             Log.e("Aero",
                     "No Data found for adapter.");
         }
+
+        /* Small animation effect */
+        int delay = (position * 200);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.right_to_left);
+        animation.setStartOffset(delay);
+        row.setAnimation(animation);
 
         return row;
     }
