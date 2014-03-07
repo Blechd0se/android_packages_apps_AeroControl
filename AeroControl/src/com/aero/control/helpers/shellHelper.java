@@ -179,7 +179,6 @@ public final class shellHelper {
                 result[i] = results.get(i).toString();
             }
             Arrays.sort(result);
-            List<String> sortedList = Arrays.asList(result);
 
             return result;
 

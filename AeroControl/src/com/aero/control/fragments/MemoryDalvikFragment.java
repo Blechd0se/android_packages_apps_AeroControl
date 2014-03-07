@@ -22,12 +22,6 @@ public class MemoryDalvikFragment extends PreferenceFragment {
     public PreferenceCategory PrefCat;
     public static final String DALVIK_TWEAK = "/proc/sys/vm";
 
-    public Fragment newInstance(Context context) {
-        mMemoryDalvikFragment = new MemoryDalvikFragment();
-
-        return mMemoryDalvikFragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

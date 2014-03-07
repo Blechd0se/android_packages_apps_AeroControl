@@ -310,8 +310,8 @@ public class MemoryFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                if (mMemoryDalvikFragment == null)
-                    mMemoryDalvikFragment = new MemoryDalvikFragment();
+                mMemoryDalvikFragment = null;
+                mMemoryDalvikFragment = new MemoryDalvikFragment();
 
                 Fragment fragment = mMemoryDalvikFragment;
 
