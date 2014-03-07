@@ -85,18 +85,18 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         }
 
         mZCache = (CheckBoxPreference) findPreference("zcache");
-        if ("Unavailable".equals(AeroActivity.shell.getInfo(CMDLINE_ZACHE)))
+        if ("Unavailable".equals(AeroActivity.shell.getInfo(CMDLINE_ZACHE))) {
             if (memorySettingsCategory != null) memorySettingsCategory.removePreference(mZCache);
-            else {
-                final String fileCMD = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
-                final boolean zcacheEnabled = fileCMD.length() != 0 && fileCMD.contains("zcache");
-                mZCache.setChecked(zcacheEnabled);
-            }
+        } else {
+            final String fileCMD = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
+            final boolean zcacheEnabled = fileCMD.length() != 0 && fileCMD.contains("zcache");
+            mZCache.setChecked(zcacheEnabled);
+        }
 
         mWriteBackControl = (CheckBoxPreference) findPreference("writeback");
-        if (AeroActivity.shell.getInfo(WRITEBACK).equals("1")) {
+        if ("1".equals(AeroActivity.shell.getInfo(WRITEBACK))) {
             mWriteBackControl.setChecked(true);
-        } else if (AeroActivity.shell.getInfo(WRITEBACK).equals("0")) {
+        } else if ("0".equals(AeroActivity.shell.getInfo(WRITEBACK))) {
             mWriteBackControl.setChecked(false);
         } else {
             if (memorySettingsCategory != null)
