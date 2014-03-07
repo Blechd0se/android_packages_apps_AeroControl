@@ -28,6 +28,7 @@ public class settingsHelper {
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
     public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
+    public static final String DALVIK_TWEAK = "/proc/sys/vm";
 
     public static final String PREF_CURRENT_GOV_AVAILABLE = "set_governor";
     public static final String PREF_CPU_MAX_FREQ = "max_frequency";
@@ -168,22 +169,41 @@ public class settingsHelper {
                 Log.e("Aero", "Something interrupted the main Thread, try again.", e);
             }
 
-            final String completeGovernorSettingList[] = shell.getDirInfo(CPU_GOV_BASE + cpu_gov, true);
+            if (cpu_gov != null) {
 
-            /* Governor Specific Settings at boot */
+                final String completeGovernorSettingList[] = shell.getDirInfo(CPU_GOV_BASE + cpu_gov, true);
 
-            for (String b : completeGovernorSettingList) {
+                /* Governor Specific Settings at boot */
 
-                final String governorSetting = prefs.getString(CPU_GOV_BASE + cpu_gov + "/" + b, null);
+                for (String b : completeGovernorSettingList) {
 
-                if (governorSetting != null) {
-                    al.add("echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
+                    final String governorSetting = prefs.getString(CPU_GOV_BASE + cpu_gov + "/" + b, null);
 
-                    Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
+                    if (governorSetting != null) {
+                        al.add("echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
+
+                        Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
+                    }
                 }
             }
+
+            final String completeVMSettings[] = shell.getDirInfo(DALVIK_TWEAK, true);
+
+            /* VM specific settings at boot */
+
+            for (String c : completeVMSettings) {
+
+                final String vmSettings = prefs.getString(DALVIK_TWEAK + "/" + c, null);
+
+                if (vmSettings != null) {
+                    al.add("echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
+
+                    Log.e("Aero", "Output: " + "echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
+                }
+            }
+
         } catch (NullPointerException e) {
-            Log.e("Aero", "This shouldn't happen.. Maybe a race condition. " + e);
+            Log.e("Aero", "This shouldn't happen.. Maybe a race condition. ", e);
         }
 
         // EXECUTE ALL THE COMMANDS COLLECTED
