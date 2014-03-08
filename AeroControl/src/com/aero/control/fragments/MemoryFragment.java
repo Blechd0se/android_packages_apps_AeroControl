@@ -1,7 +1,6 @@
 package com.aero.control.fragments;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,7 +38,7 @@ import java.io.IOException;
  * Created by Alexander Christ on 16.09.13.
  * Default Memory Fragment
  */
-public class MemoryFragment extends PreferenceFragment {
+public class MemoryFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
@@ -54,140 +53,67 @@ public class MemoryFragment extends PreferenceFragment {
     public ShowcaseView mShowCase;
     public PreferenceCategory PrefCat;
     public PreferenceScreen root;
-    private MemoryDalvikFragment mMemoryDalvikFragment;
 
     public boolean showDialog = true;
 
-    public boolean checkDynFsync;
-    public boolean checkDynWriteback;
-
     public static final Handler progressHandler = new Handler();
+
+    private CheckBoxPreference mDynFSync, mZCache, mLowMemoryPref, mWriteBackControl;
+    private EditTextPreference mSwappiness, mMinFreeRAM;
+    private Preference mFSTrimToggle, mDalvikSettings;
+    private ListPreference mIOScheduler;
+
+    private static final String MEMORY_SETTINGS_CATEGORY = "memory_settings";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.memory_fragment);
 
-
         root = this.getPreferenceScreen();
-        // I don't like the following, can we simplify it?
+        final PreferenceCategory memorySettingsCategory =
+                (PreferenceCategory) findPreference(MEMORY_SETTINGS_CATEGORY);
 
-        // Declare our entries;
-        final CheckBoxPreference dynFsync = (CheckBoxPreference)root.findPreference("dynFsync");
-        final CheckBoxPreference zcache = (CheckBoxPreference)root.findPreference("zcache");
-        final CheckBoxPreference writeback_control = (CheckBoxPreference)root.findPreference("writeback");
-        final CheckBoxPreference low_mem = (CheckBoxPreference)root.findPreference("low_mem");
-
-        if (AeroActivity.shell.getInfo(CMDLINE_ZACHE).equals("Unavailable"))
-            zcache.setEnabled(false);
-
-        // Check if enabled or not;
-        if (AeroActivity.shell.getInfo(DYANMIC_FSYNC).equals("1")) {
-            checkDynFsync = true;
-        }
-        else if (AeroActivity.shell.getInfo(DYANMIC_FSYNC).equals("0")) {
-            checkDynFsync = false;
-        }
-        else {
-            dynFsync.setEnabled(false); // If dyn fsync is not supported
+        mDynFSync = (CheckBoxPreference) findPreference("dynFsync");
+        if ("1".equals(AeroActivity.shell.getInfo(DYANMIC_FSYNC))) {
+            mDynFSync.setChecked(true);
+        } else if ("0".equals(AeroActivity.shell.getInfo(DYANMIC_FSYNC))) {
+            mDynFSync.setChecked(false);
+        } else {
+            if (memorySettingsCategory != null) memorySettingsCategory.removePreference(mDynFSync);
         }
 
-        dynFsync.setChecked(checkDynFsync);
-
-        final String fileCMD = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
-        final boolean zcacheEnabled = fileCMD.length() == 0 ? false : fileCMD.contains("zcache");
-        zcache.setChecked(zcacheEnabled);
-
-        // Check if enabled or not;
-        if (AeroActivity.shell.getInfo(WRITEBACK).equals("1")) {
-            checkDynWriteback = true;
+        mZCache = (CheckBoxPreference) findPreference("zcache");
+        if ("Unavailable".equals(AeroActivity.shell.getInfo(CMDLINE_ZACHE))) {
+            if (memorySettingsCategory != null) memorySettingsCategory.removePreference(mZCache);
+        } else {
+            final String fileCMD = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
+            final boolean zcacheEnabled = fileCMD.length() != 0 && fileCMD.contains("zcache");
+            mZCache.setChecked(zcacheEnabled);
         }
-        else if (AeroActivity.shell.getInfo(WRITEBACK).equals("0")) {
-            checkDynWriteback = false;
+
+        mWriteBackControl = (CheckBoxPreference) findPreference("writeback");
+        if ("1".equals(AeroActivity.shell.getInfo(WRITEBACK))) {
+            mWriteBackControl.setChecked(true);
+        } else if ("0".equals(AeroActivity.shell.getInfo(WRITEBACK))) {
+            mWriteBackControl.setChecked(false);
+        } else {
+            if (memorySettingsCategory != null)
+                memorySettingsCategory.removePreference(mWriteBackControl);
         }
-        else {
-            writeback_control.setEnabled(false); // If dyn writeback is not supported
-        }
-        writeback_control.setChecked(checkDynWriteback);
 
+        mLowMemoryPref = (CheckBoxPreference) findPreference("low_mem");
+        mFSTrimToggle = findPreference("fstrim_toggle");
+        mDalvikSettings = findPreference("dalvik_settings");
 
-        low_mem.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String getState = null;
-                final String a =  o.toString();
-
-                AeroActivity.shell.remountSystem();
-
-
-                try {
-                    final BufferedReader br = new BufferedReader(new FileReader(LOW_MEM));
-                    try {
-                        StringBuilder sb = new StringBuilder();
-                        String line = br.readLine();
-
-                        while (line != null) {
-                            sb.append(line);
-                            sb.append('\n');
-                            line = br.readLine();
-                        }
-                        getState = sb.toString();
-
-                        if (a.equals("true")) {
-
-                            // If already on, we can bail out;
-                            if (getState.contains("ro.config.low_ram=true"))
-                                return true;
-
-                            getState = getState.replace("ro.config.low_ram=false", "ro.config.low_ram=true");
-
-                        }
-                        else if (a.equals("false")) {
-
-                            // bail out again, because its already how we want it;
-                            if (getState.contains("ro.config.low_ram=false"))
-                                return true;
-
-                            getState = getState.replace("ro.config.low_ram=true", "ro.config.low_ram=false");
-
-                        }
-
-                    } catch (IOException e) {
-
-                    }
-                } catch (FileNotFoundException e) {
-
-                }
-
-                // Set current State to path;
-                AeroActivity.shell.setRootInfo(getState, LOW_MEM);
-                Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
-
-                return true;
-            };
-        });
-
-        writeback_control.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-
-                String a =  o.toString();
-
-                if (a.equals("true"))
-                    AeroActivity.shell.setRootInfo("1", WRITEBACK);
-                else if (a.equals("false"))
-                    AeroActivity.shell.setRootInfo("0", WRITEBACK);
-
-                //** store preferences
-                preference.getEditor().commit();
-
-                return true;
-            };
-        });
+        mIOScheduler = (ListPreference) findPreference("io_scheduler_list");
+        mIOScheduler.setEntries(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
+        mIOScheduler.setEntryValues(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
+        mIOScheduler.setValue(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(GOV_IO_FILE)));
+        mIOScheduler.setSummary(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(GOV_IO_FILE)));
+        mIOScheduler.setDialogIcon(R.drawable.memory_dark);
+        mIOScheduler.setOnPreferenceChangeListener(this);
 
         if (showDialog) {
             // Ensure only devices with this special path are checked;
@@ -195,7 +121,7 @@ public class MemoryFragment extends PreferenceFragment {
             boolean fileMountCheck = false;
 
             for (String tmp : fileMount) {
-                if(tmp.contains("/dev/block/mmcblk1p25")) {
+                if (tmp.contains("/dev/block/mmcblk1p25")) {
                     fileMountCheck = true;
                     break;
                 }
@@ -205,19 +131,18 @@ public class MemoryFragment extends PreferenceFragment {
 
             if (fileMountCheck) {
                 final String fileJournal = AeroActivity.shell.getRootInfo("tune2fs -l", "/dev/block/mmcblk1p25");
-                final boolean fileSystemCheck = fileJournal.length() == 0 ? false : fileJournal.contains("has_journal");
-                if (!fileSystemCheck){
-
+                final boolean fileSystemCheck = fileJournal.length() != 0 && fileJournal.contains("has_journal");
+                if (!fileSystemCheck) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     LayoutInflater inflater = getActivity().getLayoutInflater();
                     // Just reuse aboutScreen, because its Linear and has a TextView
                     View layout = inflater.inflate(R.layout.about_screen, null);
-                    TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
-
+                    TextView aboutText = (TextView) (layout != null ? layout.findViewById(R.id.aboutScreen) : null);
                     builder.setTitle(R.string.has_journal_dialog_header);
-                    aboutText.setText(getText(R.string.has_journal_dialog));
-                    aboutText.setTextSize(13);
-
+                    if (aboutText != null) {
+                        aboutText.setText(getText(R.string.has_journal_dialog));
+                        aboutText.setTextSize(13);
+                    }
                     builder.setView(layout)
                             .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
@@ -231,173 +156,6 @@ public class MemoryFragment extends PreferenceFragment {
                 }
             }
         }
-
-        // Find our ListPreference (max_frequency);
-        final ListPreference io_scheduler = (ListPreference) root.findPreference("io_scheduler_list");
-        // Just throw in our frequencies;
-        io_scheduler.setEntries(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
-        io_scheduler.setEntryValues(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
-        io_scheduler.setValue(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(GOV_IO_FILE)));
-        io_scheduler.setSummary(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(GOV_IO_FILE)));
-        io_scheduler.setDialogIcon(R.drawable.memory_dark);
-
-        final Preference fstrim_toggle = root.findPreference("fstrim_toggle");
-
-
-        fstrim_toggle.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-
-                final CharSequence[] system = {"/system", "/data", "/cache"};
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                final ProgressDialog update = new ProgressDialog(getActivity());
-                builder.setTitle(R.string.fstrim_header);
-                builder.setIcon(R.drawable.gear_dark);
-
-                builder.setItems(system, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-
-                        final String b = (String)system[item];
-
-                        update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                        update.setCancelable(false);
-                        update.setMax(100);
-                        update.setIndeterminate(true);
-                        update.show();
-                        AeroActivity.shell.remountSystem();
-
-                        Runnable runnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-
-                                    while (update.getProgress()< 100) {
-
-                                        // Set up the root-command;
-                                        AeroActivity.shell.getRootInfo("fstrim -v", b);
-
-                                        update.setIndeterminate(false);
-                                        update.setProgress(100);
-
-                                        progressHandler.sendMessage(progressHandler.obtainMessage());
-
-                                        // Sleep the current thread and exit dialog;
-                                        Thread.sleep(2000);
-                                        update.dismiss();
-
-                                    }
-
-                                } catch (Exception e) {
-                                    Log.e("Aero", "An error occurred while trimming.", e);
-                                }
-                            }
-                        };
-                        Thread trimThread = new Thread(runnable);
-                        if (!trimThread.isAlive())
-                            trimThread.start();
-                    }
-                }).show();
-
-                return true;
-            };
-
-        });
-
-        final Preference dalvik_settings = root.findPreference("dalvik_settings");
-        dalvik_settings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-
-                mMemoryDalvikFragment = null;
-                mMemoryDalvikFragment = new MemoryDalvikFragment();
-
-                Fragment fragment = mMemoryDalvikFragment;
-
-                getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
-                        android.R.animator.fade_out).replace(R.id.content_frame, fragment).addToBackStack("Memory").commit();
-
-
-                return true;
-            }
-        });
-
-
-        // Start our custom change listener;
-        io_scheduler.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String a = (String) o;
-
-                AeroActivity.shell.setRootInfo(a, GOV_IO_FILE);
-                io_scheduler.setSummary(a);
-
-                loadIOParameter();
-
-                //** store preferences
-                preference.getEditor().commit();
-
-                return true;
-            };
-        });
-
-        dynFsync.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-
-                String a =  o.toString();
-
-                if (a.equals("true"))
-                    AeroActivity.shell.setRootInfo("1", DYANMIC_FSYNC);
-                else if (a.equals("false"))
-                    AeroActivity.shell.setRootInfo("0", DYANMIC_FSYNC);
-
-                //** store preferences
-                preference.getEditor().commit();
-
-                return true;
-            };
-        });
-
-        zcache.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String getState = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
-                String a =  o.toString();
-
-                AeroActivity.shell.remountSystem();
-
-                // It's checked, so we can enable zcache;
-                if (a.equals("true")) {
-
-                    // If already on, we can bail out;
-                    if (getState.contains("zcache"))
-                        return true;
-
-                    getState = getState + " zcache";
-
-                }
-                else if (a.equals("false")) {
-
-                    // bail out again, because its already how we want it;
-                    if (!getState.contains("zcache"))
-                        return true;
-
-                    getState = getState.replace(" zcache", "");
-
-                }
-
-                // Set current State to path;
-                AeroActivity.shell.setRootInfo(getState, CMDLINE_ZACHE);
-                Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
-
-                return true;
-            };
-        });
     }
 
     @Override
@@ -427,14 +185,148 @@ public class MemoryFragment extends PreferenceFragment {
 
     }
 
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mLowMemoryPref) {
+            lowMemoryPrefClick();
+        } else if (preference == mDynFSync) {
+            boolean value = mDynFSync.isChecked();
+            if (value) AeroActivity.shell.setRootInfo("1", DYANMIC_FSYNC);
+            else AeroActivity.shell.setRootInfo("0", DYANMIC_FSYNC);
+        } else if (preference == mZCache) {
+            zCacheClick();
+        } else if (preference == mWriteBackControl) {
+            boolean value = mWriteBackControl.isChecked();
+            if (value) AeroActivity.shell.setRootInfo("1", WRITEBACK);
+            else AeroActivity.shell.setRootInfo("0", WRITEBACK);
+        } else if (preference == mFSTrimToggle) {
+            fsTrimToggleClick();
+        } else if (preference == mDalvikSettings) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .replace(R.id.content_frame, new MemoryDalvikFragment())
+                    .addToBackStack("Memory")
+                    .commit();
+        } else {
+            return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
+        preference.getEditor().commit();
+        return true;
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mIOScheduler) {
+            String value = (String) newValue;
+            mIOScheduler.setSummary(value);
+            AeroActivity.shell.setRootInfo(value, GOV_IO_FILE);
+            loadIOParameter();
+        } else {
+            return false;
+        }
+        preference.getEditor().commit();
+        return true;
+    }
+
+    private void zCacheClick() {
+        String getState = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
+        boolean value = mZCache.isChecked();
+        AeroActivity.shell.remountSystem();
+        if (value) {
+            // If already on, we can bail out;
+            if (getState.contains("zcache")) return;
+            getState = getState + " zcache";
+        } else {
+            // bail out again, because its already how we want it;
+            if (!getState.contains("zcache")) return;
+            getState = getState.replace(" zcache", "");
+        }
+        // Set current State to path;
+        AeroActivity.shell.setRootInfo(getState, CMDLINE_ZACHE);
+        Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
+    }
+
+    private void lowMemoryPrefClick() {
+        String getState = null;
+        boolean value = mLowMemoryPref.isChecked();
+        AeroActivity.shell.remountSystem();
+        try {
+            final BufferedReader br = new BufferedReader(new FileReader(LOW_MEM));
+            try {
+                StringBuilder sb = new StringBuilder();
+                String line = br.readLine();
+                while (line != null) {
+                    sb.append(line);
+                    sb.append('\n');
+                    line = br.readLine();
+                }
+                getState = sb.toString();
+                if (value) {
+                    // If already on, we can bail out;
+                    if (getState.contains("ro.config.low_ram=true")) return;
+                    getState = getState.replace("ro.config.low_ram=false", "ro.config.low_ram=true");
+                } else {
+                    // bail out again, because its already how we want it;
+                    if (getState.contains("ro.config.low_ram=false")) return;
+                    getState = getState.replace("ro.config.low_ram=true", "ro.config.low_ram=false");
+                }
+            } catch (IOException ignored) {
+            }
+        } catch (FileNotFoundException ignored) {
+        }
+        // Set current State to path;
+        AeroActivity.shell.setRootInfo(getState, LOW_MEM);
+        Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
+    }
+
+    private void fsTrimToggleClick() {
+        final CharSequence[] system = {"/system", "/data", "/cache"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final ProgressDialog update = new ProgressDialog(getActivity());
+        builder.setTitle(R.string.fstrim_header);
+        builder.setIcon(R.drawable.gear_dark);
+        builder.setItems(system, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                final String b = (String)system[item];
+                update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                update.setCancelable(false);
+                update.setMax(100);
+                update.setIndeterminate(true);
+                update.show();
+                AeroActivity.shell.remountSystem();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            while (update.getProgress()< 100) {
+                                // Set up the root-command;
+                                AeroActivity.shell.getRootInfo("fstrim -v", b);
+                                update.setIndeterminate(false);
+                                update.setProgress(100);
+                                progressHandler.sendMessage(progressHandler.obtainMessage());
+                                // Sleep the current thread and exit dialog;
+                                Thread.sleep(2000);
+                                update.dismiss();
+                            }
+                        } catch (Exception e) {
+                            Log.e("Aero", "An error occurred while trimming.", e);
+                        }
+                    }
+                };
+                Thread trimThread = new Thread(runnable);
+                if (!trimThread.isAlive()) trimThread.start();
+            }
+        }).show();
+    }
+
     public void DrawFirstStart(int header, int content, String filename) {
 
         try {
             FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
             fos.write("1".getBytes());
             fos.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e("Aero", "Could not save file. ", e);
         }
 
@@ -466,7 +358,6 @@ public class MemoryFragment extends PreferenceFragment {
         final String complete_path = GOV_IO_PARAMETER;
 
         try {
-
             String completeParamterList[] = AeroActivity.shell.getDirInfo(complete_path, true);
 
             // If there are already some entries, kill them all (with fire)
@@ -492,9 +383,7 @@ public class MemoryFragment extends PreferenceFragment {
         } catch (NullPointerException e) {
             Toast.makeText(getActivity(), "Looks like there are no parameter for this governor?", Toast.LENGTH_LONG).show();
             Log.e("Aero", "There isn't any folder i can check. Does this governor has parameters?", e);
-
         }
-
     }
 }
 
