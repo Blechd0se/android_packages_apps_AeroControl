@@ -22,6 +22,7 @@
     <string name="refresh">Osvježi</string>
     <string name="legal">Pravne Napomene</string>
     <string name="send_email">Pošalji E-mail</string>
+    <string name="nocpu_data">Nije moguće pronaći ikakve CPU podatke.</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -158,7 +159,7 @@
     <string name="last_backup_from">Zadnji Backup sa </string>
     <string name="backup_from">Backup sa </string>
     <string name="restore_from_backup">Da li želite povratiti backup sa </string>
-    <string name="proceed_backup">Nastavi s backupom? Ovo će napraviti prićuvnu kopiju Vašu trenutnu jezgru.</string>
+    <string name="proceed_backup">Nastavi s backupom? Ovo će napraviti prićuvnu kopiju Vaše trenutne jezgre.</string>
     
      <!-- Showcase Strings -->
 
@@ -180,6 +181,9 @@
     <string name="showcase_profile_fragment">Dodaj profile!</string>
     <string name="showcase_profile_fragment_sum">Samo kliknite na ovo malo dugme da bi dodali profil. Sve Vaše trenutne postavke će biti spremljene u
                                         taj novi Profil. Ako ste dodali više Profila jednostavno ih učitajte tako da kliknete na njih.</string>						
+    <string name="showcase_statistics_fragment">Osvježi Statistike</string>
+    <string name="showcase_statistics_fragment_sum">Ovaj panel će prikazivati Vaše trenutne vremenske CPU statistike. Prikazuje koliko vremena Vaš uređaj provodi koristeći
+                                        pojedinu CPU frekvenciju. Možete to kasnije provjeriti i vidjeti da li Vaš uređaj radi kao što bi trebao .</string>
 
     <!-- Defy Parts -->
     
