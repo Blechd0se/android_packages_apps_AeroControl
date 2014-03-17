@@ -19,6 +19,8 @@
     <string name="nothing_added_yet">Whoop! Du hast bis jetzt keine Profile hinzugefügt.</string>
     <string name="not_rooted">Kein Rootzugriff?</string>
     <string name="apply">Anwenden</string>
+    <string name="refresh">Neuladen</string>
+    <string name="reload">Zurücksetzen</string>
     <string name="legal">Rechtliche Hinweise</string>
     <string name="send_email">Sende eine Email</string>
     <string name="nocpu_data">Konnte keine CPU Daten finden.</string>
@@ -91,6 +93,9 @@
 
     <string name="pref_gov_set">Governor spezfische Einstellungen</string>
     <string name="pref_gov_set_sum">Setzt Governor spezfische Einstellungen</string>
+
+    <string name="perf_cpu_hotplug">Hotplug Einstellungen</string>
+    <string name="perf_cpu_hotplug_sum">Stelle hier den Hotplug-Treiber ein</string>
 
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Speichereinstellungen</string>

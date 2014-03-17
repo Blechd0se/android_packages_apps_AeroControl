@@ -1,5 +1,6 @@
 package com.aero.control.fragments;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -79,6 +80,8 @@ public class CPUFragment extends PreferenceFragment {
         addPreferencesFromResource(R.layout.cpu_fragment);
 
         root = this.getPreferenceScreen();
+        // Remove until back in Kernel;
+        PreferenceCategory cpuCategory = (PreferenceCategory) findPreference("cpu_settings");
 
         // I don't like the following, can we simplify it?
 
@@ -92,13 +95,30 @@ public class CPUFragment extends PreferenceFragment {
         updateMinFreq();
         min_frequency.setDialogIcon(R.drawable.lightning_dark);
 
+        final Preference cpu_hotplug = root.findPreference("hotplug_control");
+        if (new File("/sys/kernel/hotplug_control").exists()) {
+            cpu_hotplug.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    getFragmentManager()
+                        .beginTransaction()
+                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                            .replace(R.id.content_frame, new CPUHotplugFragment())
+                            .addToBackStack("Hotplug")
+                            .commit();
+
+                    return true;
+                }
+            });
+        } else {
+            cpuCategory.removePreference(cpu_hotplug);
+        }
+
         final Preference cpu_oc_uc = (Preference) root.findPreference("cpu_oc_uc");
 
         if (AeroActivity.shell.getInfo(CPU_VSEL).equals("Unavailable")) {
             cpu_oc_uc.setEnabled(false);
 
-            // Remove until back in Kernel;
-            PreferenceCategory cpuCategory = (PreferenceCategory) findPreference("cpu_settings");
             cpuCategory.removePreference(cpu_oc_uc);
         }
 
@@ -527,7 +547,7 @@ public class CPUFragment extends PreferenceFragment {
         // Change governor for each available CPU;
         for (int k = 0; k < mNumCpus; k++) {
             // To ensure we get proper permissions, change the governor to performance first;
-            array.add("echo " + "performance" + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
+            //array.add("echo " + "performance" + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
             array.add("echo " + s + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
         }
         String[] commands = array.toArray(new String[0]);

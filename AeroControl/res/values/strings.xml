@@ -20,6 +20,7 @@
     <string name="not_rooted">No Root?</string>
     <string name="apply">Apply</string>
     <string name="refresh">Refresh</string>
+    <string name="reload">Reset</string>
     <string name="legal">Legal Notices</string>
     <string name="send_email">Send an Email</string>
     <string name="nocpu_data">Couldn\'t find any CPU data.</string>
@@ -99,6 +100,9 @@
 
     <string name="pref_gov_set">Governor Specific Settings</string>
     <string name="pref_gov_set_sum">Set the governor Specific settings here.</string>
+
+    <string name="perf_cpu_hotplug">Hotplug Settings</string>
+    <string name="perf_cpu_hotplug_sum">Adjust the hotplug driver here</string>
 
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Memory Settings</string>
