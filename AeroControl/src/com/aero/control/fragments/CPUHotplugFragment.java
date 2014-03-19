@@ -5,6 +5,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
@@ -25,6 +26,8 @@ public class CPUHotplugFragment extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.cpu_hotplug_fragment);
         root = this.getPreferenceScreen();
+        TextView mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
+        mActionBarTitle.setText(R.string.perf_cpu_hotplug_driver);
 
         // Load our custom preferences;
         loadHotplug();

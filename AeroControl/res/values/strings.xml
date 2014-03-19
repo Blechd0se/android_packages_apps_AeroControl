@@ -103,6 +103,7 @@
     <string name="pref_gov_set_sum">Set the governor Specific settings here.</string>
 
     <string name="perf_cpu_hotplug">Hotplug Settings</string>
+    <string name="perf_cpu_hotplug_driver">Hotplug Driver</string>
     <string name="perf_cpu_hotplug_sum">Adjust the hotplug driver here</string>
 
     <!-- Memory Fragment -->
@@ -130,6 +131,7 @@
     <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
 
     <string name="pref_dalvik_setttings">VM Settings</string>
+    <string name="pref_dalvik_setttings_heading">Virtual Machine</string>
     <string name="pref_dalvik_setttings_sum">Change parameters of the virtual machine.</string>
 
     <string name="has_journal_dialog_header">Problem detected</string>

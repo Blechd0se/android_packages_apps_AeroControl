@@ -21,7 +21,6 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,7 +32,6 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.CustomTextPreference;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 

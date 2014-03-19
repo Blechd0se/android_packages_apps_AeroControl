@@ -96,6 +96,7 @@
     <string name="pref_gov_set_sum">Setzt Governor spezfische Einstellungen</string>
 
     <string name="perf_cpu_hotplug">Hotplug Einstellungen</string>
+    <string name="perf_cpu_hotplug_driver">Hotplug Treiber</string>
     <string name="perf_cpu_hotplug_sum">Stelle hier den Hotplug-Treiber ein</string>
 
     <!-- Memory Fragment -->
@@ -123,6 +124,7 @@
     <string name="fstrim_content">Mit Trim lassen sich Partition trimmen, um die Performance zu erhöhen. Das kann eine Weile dauern.</string>
 
     <string name="pref_dalvik_setttings">VM Einstellungen</string>
+    <string name="pref_dalvik_setttings_heading">Virtuelle Maschine</string>
     <string name="pref_dalvik_setttings_sum">Ändere hier Einstellungen der virtuellen Maschine.</string>
 
     <string name="has_journal_dialog_header">Problem gefunden</string>
