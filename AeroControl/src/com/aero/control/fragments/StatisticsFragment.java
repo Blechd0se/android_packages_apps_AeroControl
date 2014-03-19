@@ -1,11 +1,16 @@
 package com.aero.control.fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +37,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -59,8 +65,10 @@ public class StatisticsFragment extends Fragment {
     public static final String FILENAME_STATISTICS = "firstrun_statistics";
 
     public ArrayList<Long> cpuTime = new ArrayList<Long>();
+    public ArrayList<Long> cpuOverallTime = new ArrayList<Long>();
     public ArrayList<Long> cpuFreq = new ArrayList<Long>();
     public ArrayList<Long> cpuPercentage = new ArrayList<Long>();
+    public ArrayList<Long> cpuResetTime;
 
     public statisticInit[] mResult = new statisticInit[0];
 
@@ -76,6 +84,7 @@ public class StatisticsFragment extends Fragment {
     };
 
     public static final String TIME_IN_STATE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state";
+    public static final String OFFSET_STAT = "/data/data/com.aero.control/files/offset_stat";
     private final static Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
 
     public Fragment newInstance(Context context) {
@@ -94,6 +103,8 @@ public class StatisticsFragment extends Fragment {
         clearUI();
         mIndex = 0;
         mColorIndex = 0;
+
+        loadResetState();
 
         loadUI(true);
 
@@ -127,9 +138,12 @@ public class StatisticsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-
                 clearUI();
                 loadUI(false);
+                break;
+            case R.id.action_reload:
+                showResetDialog();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -177,6 +191,105 @@ public class StatisticsFragment extends Fragment {
         mShowCase = ShowcaseView.insertShowcaseViewWithType(ShowcaseView.ITEM_ACTION_ITEM, R.id.action_refresh, getActivity(), header, content, mConfigOptions);
     }
 
+    private void showResetDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View layout = inflater.inflate(R.layout.about_screen, null);
+        TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
+
+        builder.setTitle(R.string.proceed_with_reset);
+
+        aboutText.setText(R.string.delete_statistics);
+
+        builder.setView(layout)
+                .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Continue with resetting
+                        resetStatistics();
+                    }
+                })
+                .setNegativeButton(R.string.maybe_later, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                })
+        ;
+
+        builder.show();
+
+    }
+
+    private void resetStatistics() {
+
+        // Take the current time;
+        Long[] time = cpuOverallTime.toArray(new Long[0]);
+
+        // Add the time to our reset timer;
+        if (cpuResetTime != null)
+            cpuResetTime = null;
+        cpuResetTime = new ArrayList<Long>();
+
+        for (Long t : time) {
+            cpuResetTime.add(t);
+        }
+
+        Collections.reverse(cpuResetTime);
+        Long[] reversedTime = cpuResetTime.toArray(new Long[0]);
+
+        try {
+            final FileOutputStream fos = getActivity().openFileOutput("offset_stat", Context.MODE_PRIVATE);
+
+            String a = "";
+            for (long f : reversedTime) {
+                // Last Time is actually complete Time;
+                if (reversedTime.length == 0) {
+                    // do nothing;
+                } else {
+                    a = f + " " + a;
+                }
+            }
+            fos.write(a.getBytes());
+            fos.close();
+        }
+        catch (IOException e) {
+            Log.e("Aero", "Could not save file. ", e);
+        }
+
+        clearUI();
+        loadUI(false);
+
+
+    }
+
+    public void loadResetState() {
+
+        /*
+         * First Case; user resetted statistics, but closed app
+         * Second Case; user resetted statistics once, but rebooted
+         */
+
+        File a = new File(OFFSET_STAT);
+
+        // Handle First case;
+        if (a.exists() && cpuResetTime == null) {
+            cpuResetTime = new ArrayList<Long>();
+            String[] array = AeroActivity.shell.getInfoArray(OFFSET_STAT, 0, 0);
+
+            for (String b : array) {
+                cpuResetTime.add(Long.parseLong(b));
+            }
+
+            //Handle second case here;
+            if (Long.parseLong(array[array.length - 1]) > (SystemClock.elapsedRealtime() / 10)) {
+                a.delete();
+                cpuResetTime = null;
+            }
+        }
+
+    }
+
     /*
      * Will load all data into different arrays. Some error checks are
      * also calculated here. HoloSlices will be added according to found
@@ -205,8 +318,17 @@ public class StatisticsFragment extends Fragment {
             } else {
                 a = Integer.parseInt(c[1]);
             }
+            cpuOverallTime.add((long)a);
 
             mCompleteTime = mCompleteTime + a;
+        }
+        cpuOverallTime.add((long)mCompleteTime);
+
+        // Handle Uptime here, maybe we don't want to reset it anyway...
+        if (cpuResetTime != null) {
+            String resetUptime = (AeroActivity.shell.getInfoArray(OFFSET_STAT, 0, 0))[(AeroActivity.shell.getInfoArray(OFFSET_STAT, 0, 0)).length - 1];
+            long mResetTime = Long.parseLong(resetUptime);
+            mCompleteTime = mCompleteTime - mResetTime;
         }
 
         for (int i = 0, j = 0; i < cpuData; i++) {
@@ -219,15 +341,22 @@ public class StatisticsFragment extends Fragment {
                 j = 0;
 
             /*
-             * Handle deepsleep;
+             * Handle deepsleep, if statistics are resetted hook into the calculation process;
              */
             if(i == 0) {
                 cpuFreq.add((long)0);
-                cpuTime.add((long)Integer.parseInt(c[0]));
+                if (cpuResetTime != null) {
+                    cpuTime.add((long) Integer.parseInt(c[0]) - Long.parseLong(AeroActivity.shell.getInfoArray(OFFSET_STAT, 0, 0)[i]));
+                } else {
+                    cpuTime.add((long)Integer.parseInt(c[0]));
+                }
             } else {
                 cpuFreq.add((long)Integer.parseInt(c[0]));
-                cpuTime.add((long)Integer.parseInt(c[1]));
-
+                if (cpuResetTime != null) {
+                    cpuTime.add((long)Integer.parseInt(c[1]) - Long.parseLong(AeroActivity.shell.getInfoArray(OFFSET_STAT, 0, 0)[i]));
+                } else {
+                    cpuTime.add((long)Integer.parseInt(c[1]));
+                }
             }
 
         }
@@ -255,7 +384,7 @@ public class StatisticsFragment extends Fragment {
             time_in_state = convertTime(g);
             percentage = (int)Math.round((g / mCompleteTime) * 100);
             // Safe all percentages in our array;
-            cpuPercentage.add((long)percentage);
+            cpuPercentage.add((long) percentage);
 
             if (g != 0 && percentage >= 1) {
 
@@ -311,6 +440,9 @@ public class StatisticsFragment extends Fragment {
 
         if(cpuTime != null)
             cpuTime.clear();
+
+        if(cpuOverallTime != null)
+            cpuOverallTime.clear();
 
         if(cpuFreq != null)
             cpuFreq.clear();

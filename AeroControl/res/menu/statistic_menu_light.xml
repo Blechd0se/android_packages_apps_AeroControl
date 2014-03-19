@@ -5,4 +5,9 @@
         android:icon="@drawable/ic_action_refresh_light"
         android:showAsAction="ifRoom" />
 
+    <item android:id="@+id/action_reload"
+        android:title="@string/reload"
+        android:icon="@drawable/ic_action_reload_light"
+        android:showAsAction="ifRoom" />
+
 </menu>

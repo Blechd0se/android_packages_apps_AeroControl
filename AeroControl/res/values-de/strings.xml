@@ -24,6 +24,7 @@
     <string name="legal">Rechtliche Hinweise</string>
     <string name="send_email">Sende eine Email</string>
     <string name="nocpu_data">Konnte keine CPU Daten finden.</string>
+    <string name="maybe_later">Vielleicht später</string>
 
 
     <!-- Default Navigation Drawer entries -->
@@ -172,6 +173,9 @@
     <string name="restore_from_backup">Möchtest Du folgendes Backup wiederherstellen </string>
     <string name="proceed_backup">Fortfahren mit Backup? Das wird deinen momentanen Kernel sichern.</string>
 
+    <!-- Statistics Fragment -->
+    <string name="proceed_with_reset">Forfahren?</string>
+    <string name="delete_statistics">Deine momentane Statistik wird zurückgesetzt wie als hättest du dein Gerät neugestartet.</string>
 
     <!-- Showcase Strings -->
     <string name="showcase_aero_fragment">Willkommen bei Aero Control!</string>
