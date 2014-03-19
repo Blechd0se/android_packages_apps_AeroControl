@@ -388,23 +388,19 @@ public class CPUFragment extends PreferenceFragment {
                  * Clocks than default...
                  */
                 String a = (String) o;
-                CharSequence oldValue = max_frequency.getSummary();
+                ArrayList<String> array = new ArrayList<String>();
 
                 for (int k = 0; k < mNumCpus; k++) {
 
-                    AeroActivity.shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_BASE_PATH + k + CPU_MAX_FREQ);
-
-                    if (AeroActivity.shell.checkPath(AeroActivity.shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ), a)) {
-                        max_frequency.setSummary(AeroActivity.shell.toMHz((a.substring(0, a.length() - 4) + "000")));
-                    } else {
-                        Toast.makeText(getActivity(), "Couldn't set max frequency." + " Old value; " +
-                                AeroActivity.shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
-                        max_frequency.setSummary(oldValue);
-                    }
+                    array.add("echo " + a + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
 
                     //** store preferences
                     preference.getEditor().commit();
                 }
+                max_frequency.setSummary(AeroActivity.shell.toMHz(a));
+                String[] commands = array.toArray(new String[0]);
+
+                AeroActivity.shell.setRootInfo(commands);
                 return true;
             };
         });
@@ -414,23 +410,19 @@ public class CPUFragment extends PreferenceFragment {
             public boolean onPreferenceChange(Preference preference, Object o) {
 
                 String a = (String) o;
-                CharSequence oldValue = min_frequency.getSummary();
+                ArrayList<String> array = new ArrayList<String>();
 
                 for (int k = 0; k < mNumCpus; k++) {
 
-                    AeroActivity.shell.setRootInfo((a.substring(0, a.length() - 4) + "000"), CPU_BASE_PATH + k + CPU_MIN_FREQ);
-
-                    if (AeroActivity.shell.checkPath(AeroActivity.shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ), a)) {
-                        min_frequency.setSummary(AeroActivity.shell.toMHz((a.substring(0, a.length() - 4) + "000")));
-                    } else {
-                        Toast.makeText(getActivity(), "Couldn't set min frequency."  + " Old value; " +
-                                AeroActivity.shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ) + " New Value; " + a, Toast.LENGTH_LONG).show();
-                        min_frequency.setSummary(oldValue);
-                    }
+                    array.add("echo " + a + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
 
                     //** store preferences
                     preference.getEditor().commit();
                 }
+                min_frequency.setSummary(AeroActivity.shell.toMHz(a));
+                String[] commands = array.toArray(new String[0]);
+
+                AeroActivity.shell.setRootInfo(commands);
                 return true;
             };
         });
@@ -559,10 +551,9 @@ public class CPUFragment extends PreferenceFragment {
     public void updateMinFreq() {
         // Just throw in our frequencies;
         min_frequency.setEntries(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
-        min_frequency.setEntryValues(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
-        min_frequency.setSummary(null);
+        min_frequency.setEntryValues(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 0, 0));
         try {
-            min_frequency.setValue(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
+            min_frequency.setValue(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 0, 0)[0]);
             min_frequency.setSummary(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
             min_frequency.setValue("Unavailable");
@@ -577,9 +568,9 @@ public class CPUFragment extends PreferenceFragment {
     public void updateMaxFreq() {
         // Just throw in our frequencies;
         max_frequency.setEntries(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
-        max_frequency.setEntryValues(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
+        max_frequency.setEntryValues(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 0, 0));
         try {
-            max_frequency.setValue(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 1, 0)[0]);
+            max_frequency.setValue(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 0, 0)[0]);
             max_frequency.setSummary(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 1, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
             max_frequency.setValue("Unavailable");
