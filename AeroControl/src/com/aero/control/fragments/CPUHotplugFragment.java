@@ -24,7 +24,7 @@ public class CPUHotplugFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Load the preferences from an XML resource
-        addPreferencesFromResource(R.layout.cpu_hotplug_fragment);
+        addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
         TextView mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
         mActionBarTitle.setText(R.string.perf_cpu_hotplug_driver);

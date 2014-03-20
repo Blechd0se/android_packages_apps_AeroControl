@@ -158,6 +158,10 @@
     <string name="pref_sweeptowake">Sweep2Wake</string>
     <string name="pref_sweeptowake_sum">Könnte etwas auf die Akkulaufzeit gehen.</string>
 
+    <string name="perf_gpu_gov">GPU Governor</string>
+    <string name="perf_gpu_gov_settings">GPU Governor Einstellungen</string>
+    <string name="perf_gpu_gov_settings_sum">Stelle hier die Parameter der GPU ein.</string>
+
     <!-- Updater Fragment -->
     <string name="pref_updater">Kernel Updater und Backup</string>
     <string name="pref_backup_kernel">Backup vom Kernel</string>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class GPUFragment extends PreferenceFragment {
         addPreferencesFromResource(R.layout.gpu_fragment);
 
         PreferenceScreen root = this.getPreferenceScreen();
+        PreferenceCategory gpuCategory = (PreferenceCategory) findPreference("gpu_settings");
         // I don't like the following, can we simplify it?
 
         // Set our gpu control flag;
@@ -49,13 +51,13 @@ public class GPUFragment extends PreferenceFragment {
         final ListPreference display_control = (ListPreference)root.findPreference("display_control");
 
         if(!(new File(SWEEP2WAKE).exists()))
-            sweep2wake.setEnabled(false);
+            gpuCategory.removePreference(sweep2wake);
 
         if(!(new File(GPU_CONTROL_ACTIVE).exists()))
-                gpu_control_enable.setEnabled(false);
+                gpuCategory.removePreference(gpu_control_enable);
 
         if (!(new File(GPU_FREQ_MAX).exists() || new File(GPU_FREQ_NEXUS4).exists()))
-            gpu_control_frequencies.setEnabled(false);
+            gpuCategory.removePreference(gpu_control_frequencies);
 
         // Check for nexus;
         if (new File(GPU_FREQ_NEXUS4).exists())
@@ -64,7 +66,26 @@ public class GPUFragment extends PreferenceFragment {
             gpu_file = GPU_FREQ_MAX;
 
         if (AeroActivity.shell.getInfo(DISPLAY_COLOR).equals("Unavailable"))
-            display_control.setEnabled(false);
+            gpuCategory.removePreference(display_control);
+
+        final Preference gpu_gov_settings = root.findPreference("gpu_gov_settings");
+        if (new File("/sys/module/msm_kgsl_core/parameters").exists()) {
+            gpu_gov_settings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    getFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                            .replace(R.id.content_frame, new GPUGovernorFragment())
+                            .addToBackStack("GPU Governor")
+                            .commit();
+
+                    return true;
+                }
+            });
+        } else {
+            gpuCategory.removePreference(gpu_gov_settings);
+        }
 
         // Get our strings;
         CharSequence[] display_entries = {

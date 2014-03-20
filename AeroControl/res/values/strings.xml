@@ -165,6 +165,10 @@
     <string name="pref_sweeptowake">Sweep2Wake</string>
     <string name="pref_sweeptowake_sum">May drain your battery a bit more than usual.</string>
 
+    <string name="perf_gpu_gov">GPU Governor</string>
+    <string name="perf_gpu_gov_settings">GPU Governor Settings</string>
+    <string name="perf_gpu_gov_settings_sum">Tweak the governor parameters of your gpu.</string>
+
     <!-- Updater Fragment -->
     <string name="pref_updater">Kernel Updater and Backup</string>
     <string name="pref_backup_kernel">Backup your Kernel</string>

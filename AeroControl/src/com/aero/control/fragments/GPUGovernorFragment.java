@@ -12,14 +12,13 @@ import com.aero.control.R;
 import com.aero.control.helpers.PreferenceHandler;
 
 /**
- * Created by Alexander Christ on 05.03.14.
+ * Created by Alexander Christ on 09.03.14.
  */
-public class MemoryDalvikFragment extends PreferenceFragment {
+public class GPUGovernorFragment extends PreferenceFragment {
 
-    public MemoryDalvikFragment mMemoryDalvikFragment;
     public PreferenceScreen root;
     public PreferenceCategory PrefCat;
-    public static final String DALVIK_TWEAK = "/proc/sys/vm";
+    public static final String GPU_GOV_PATH = "/sys/module/msm_kgsl_core/parameters";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,22 +27,22 @@ public class MemoryDalvikFragment extends PreferenceFragment {
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
         TextView mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
-        mActionBarTitle.setText(R.string.pref_dalvik_setttings);
+        mActionBarTitle.setText(R.string.perf_gpu_gov);
 
         // Load our custom preferences;
-        loadDalvik();
+        loadGPUGov();
     }
 
-    public void loadDalvik() {
+    public void loadGPUGov() {
 
-        String completeParamterList[] = AeroActivity.shell.getDirInfo(DALVIK_TWEAK, true);
+        String completeParamterList[] = AeroActivity.shell.getDirInfo(GPU_GOV_PATH, true);
 
         // If there are already some entries, kill them all (with fire)
         if (PrefCat != null)
             root.removePreference(PrefCat);
 
         PrefCat = new PreferenceCategory(getActivity());
-        PrefCat.setTitle(R.string.pref_dalvik_setttings_heading);
+        PrefCat.setTitle(R.string.perf_gpu_gov_settings);
         root.addPreference(PrefCat);
 
         try {
@@ -51,7 +50,7 @@ public class MemoryDalvikFragment extends PreferenceFragment {
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
             for (String b : completeParamterList)
-                h.generateSettings(b, DALVIK_TWEAK);
+                h.generateSettings(b, GPU_GOV_PATH);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);
