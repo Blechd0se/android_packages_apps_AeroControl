@@ -335,6 +335,13 @@ public class ProfileFragment extends PreferenceFragment {
                     // For better looking;
                     if (tmp.contains("/sys/devices/system/cpu/cpufreq/"))
                         tmp = tmp.replace("/sys/devices/system/cpu/cpufreq/", "");
+                    else if (tmp.contains("/proc/sys/vm/"))
+                        tmp = tmp.replace("/proc/sys/vm/", "");
+                    else if (tmp.contains("/sys/module/msm_kgsl_core/parameters/"))
+                        tmp = tmp.replace("/sys/module/msm_kgsl_core/parameters/", "gpu -> ");
+                    else if (tmp.contains("/sys/kernel/hotplug_control/"))
+                        tmp = tmp.replace("/sys/kernel/hotplug_control/", "hotplug_control -> ");
+
 
                     content = tmp + " = " + entry.getValue().toString() + "\n" + content;
 
