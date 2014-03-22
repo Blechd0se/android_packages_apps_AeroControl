@@ -412,7 +412,7 @@ public class CPUFragment extends PreferenceFragment {
 
                 for (int k = 0; k < mNumCpus; k++) {
 
-                    array.add("echo " + a + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
+                    array.add("echo " + a + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
 
                     //** store preferences
                     preference.getEditor().commit();
