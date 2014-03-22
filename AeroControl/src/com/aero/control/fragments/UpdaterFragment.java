@@ -35,7 +35,7 @@ public class UpdaterFragment extends PreferenceFragment {
     private static final String sdpath = Environment.getExternalStorageDirectory().getPath();
 
     public static final String timeStamp = new SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
-    public static final String zImage = "/system/bootmenu/2nd-boot/zImage";
+    public static final String zImage = "/system/bootstrap/2nd-boot/zImage";
     public static final File BACKUP_PATH = new File(sdpath + "/com.aero.control/" + timeStamp + "/zImage");
     public static final File IMAGE = new File (zImage);
 
