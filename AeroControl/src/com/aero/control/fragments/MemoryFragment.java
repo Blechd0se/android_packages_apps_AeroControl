@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.CheckBoxPreference;
@@ -14,7 +13,6 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +21,6 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.CustomTextPreference;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 

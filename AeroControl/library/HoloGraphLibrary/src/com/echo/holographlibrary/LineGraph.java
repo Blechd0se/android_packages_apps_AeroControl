@@ -24,9 +24,16 @@
 package com.echo.holographlibrary;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Path.Direction;
+import android.graphics.Point;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Region;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;

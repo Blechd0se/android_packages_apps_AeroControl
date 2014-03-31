@@ -1,8 +1,8 @@
 package com.espian.showcaseview.drawing;
 
-import com.espian.showcaseview.utils.ShowcaseAreaCalculator;
-
 import android.graphics.Canvas;
+
+import com.espian.showcaseview.utils.ShowcaseAreaCalculator;
 
 /**
  * Created by curraa01 on 13/10/2013.

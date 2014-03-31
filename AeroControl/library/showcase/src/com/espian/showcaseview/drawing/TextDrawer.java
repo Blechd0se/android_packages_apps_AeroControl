@@ -1,9 +1,9 @@
 package com.espian.showcaseview.drawing;
 
-import com.espian.showcaseview.ShowcaseView;
-
 import android.content.Context;
 import android.graphics.Canvas;
+
+import com.espian.showcaseview.ShowcaseView;
 
 /**
  * Created by curraa01 on 13/10/2013.

@@ -1,13 +1,5 @@
 package com.aero.control.fragments;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +26,14 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Created by ac on 03.10.13.

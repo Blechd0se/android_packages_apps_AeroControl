@@ -1,8 +1,5 @@
 package com.espian.showcaseview.drawing;
 
-import com.espian.showcaseview.ShowcaseView;
-import com.espian.showcaseview.utils.ShowcaseAreaCalculator;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.text.DynamicLayout;
@@ -11,6 +8,9 @@ import android.text.SpannableString;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
+
+import com.espian.showcaseview.ShowcaseView;
+import com.espian.showcaseview.utils.ShowcaseAreaCalculator;
 
 /**
  * Draws the text as required by the ShowcaseView
