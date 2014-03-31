@@ -44,6 +44,9 @@ public class settingsHelper {
     public static final String PREF_DYANMIC_FSYNC = "dynFsync";
     public static final String PREF_WRITEBACK = "writeback";
 
+    public static final String PREF_HOTPLUG = "/sys/kernel/hotplug_control";
+    public static final String PREF_GPU_GOV = "/sys/module/msm_kgsl_core/parameters";
+
     private SharedPreferences prefs;
     public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
@@ -178,7 +181,7 @@ public class settingsHelper {
                     if (governorSetting != null) {
                         al.add("echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
 
-                        Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
+                        //Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
                     }
                 }
             }
@@ -194,7 +197,37 @@ public class settingsHelper {
                 if (vmSettings != null) {
                     al.add("echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
 
-                    Log.e("Aero", "Output: " + "echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
+                    //Log.e("Aero", "Output: " + "echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
+                }
+            }
+
+            final String completeHotplugSettings[] = shell.getDirInfo(PREF_HOTPLUG, true);
+
+            /* Hotplug specific settings at boot */
+
+            for (String d : completeHotplugSettings) {
+
+                final String hotplugSettings = prefs.getString(PREF_HOTPLUG + "/" + d, null);
+
+                if (hotplugSettings != null) {
+                    al.add("echo " + hotplugSettings + " > " + PREF_HOTPLUG + "/" + d);
+
+                    //Log.e("Aero", "Output: " + "echo " + hotplugSettings + " > " + PREF_HOTPLUG + "/" + d);
+                }
+            }
+
+            final String completeGPUGovSettings[] = shell.getDirInfo(PREF_GPU_GOV, true);
+
+            /* GPU Governor specific settings at boot */
+
+            for (String e : completeGPUGovSettings) {
+
+                final String gpugovSettings = prefs.getString(PREF_GPU_GOV + "/" + e, null);
+
+                if (gpugovSettings != null) {
+                    al.add("echo " + gpugovSettings + " > " + PREF_GPU_GOV + "/" + e);
+
+                    //Log.e("Aero", "Output: " + "echo " + gpugovSettings + " > " + PREF_GPU_GOV + "/" + e);
                 }
             }
 
