@@ -41,10 +41,8 @@ public class settingsHelper {
     public static final String PREF_SWEEP2WAKE = "sweeptowake";
 
     public static final String PREF_GOV_IO_FILE = "io_scheduler";
-    public static final String PREF_SWAPPINESS_FILE = "swappiness";
     public static final String PREF_DYANMIC_FSYNC = "dynFsync";
     public static final String PREF_WRITEBACK = "writeback";
-    public static final String PREF_MIN_FREE = "min_free";
 
     private SharedPreferences prefs;
     public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
@@ -110,19 +108,17 @@ public class settingsHelper {
         Boolean sweep = prefs.getBoolean(PREF_SWEEP2WAKE, false);
         // GET MEM VALUES FROM PREFERENCES
         String mem_ios = prefs.getString(PREF_GOV_IO_FILE, null);
-        String mem_swp = prefs.getString(PREF_SWAPPINESS_FILE, null);
         Boolean mem_dfs = prefs.getBoolean(PREF_DYANMIC_FSYNC, false);
         Boolean mem_wrb = prefs.getBoolean(PREF_WRITEBACK, false);
-        String mem_min = prefs.getString(PREF_MIN_FREE, null);
 
         // ADD CPU COMMANDS TO THE ARRAY
         for (int k = 0; k < mNumCpus; k++) {
             if (cpu_max != null) {
-                al.add("echo " + cpu_max.substring(0, cpu_max.length()-4) + "000" + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
+                al.add("echo " + cpu_max + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
             }
 
             if (cpu_min != null) {
-                al.add("echo " + cpu_min.substring(0, cpu_min.length()-4) + "000" + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
+                al.add("echo " + cpu_min + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
             }
 
             if (cpu_gov != null) {
