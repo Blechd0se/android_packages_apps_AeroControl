@@ -25,7 +25,7 @@
     <string name="send_email">Sende eine Email</string>
     <string name="nocpu_data">Konnte keine CPU Daten finden.</string>
     <string name="maybe_later">Vielleicht später</string>
-
+    <string name="successful">Erfolg!</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -181,7 +181,7 @@
 
     <!-- Statistics Fragment -->
     <string name="proceed_with_reset">Forfahren?</string>
-    <string name="delete_statistics">Deine momentane Statistik wird zurückgesetzt wie als hättest du dein Gerät neugestartet.</string>
+    <string name="delete_statistics">Deine momentane Statistik wird zurückgesetzt so als hättest du dein Gerät neugestartet.</string>
 
     <!-- Showcase Strings -->
     <string name="showcase_aero_fragment">Willkommen bei Aero Control!</string>
@@ -230,5 +230,7 @@
     <string name="pref_profile_name_exists">Dieser name existiert bereits.</string>
     <string name="pref_profile_change_name">Ändere den Namen</string>
     <string name="pref_profile_change_name_sum">Ändere den Namen deines Profils.</string>
+    <string name="pref_profile_reset">Zurücksetzen des Standardprofils</string>
+    <string name="pref_profile_reset_sum">Dein momentanes Profil wird zurückgesetzt. So als ob du Aero Control frisch installiert hast.</string>
 
 </resources>

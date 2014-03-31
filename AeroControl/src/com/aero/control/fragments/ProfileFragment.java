@@ -129,10 +129,44 @@ public class ProfileFragment extends PreferenceFragment {
                 mContainerView.findViewById(android.R.id.empty).setVisibility(View.GONE);
 
                 showDialog(new EditText(getActivity()));
-                return true;
+                break;
+            case R.id.action_reload:
+                showResetDialog();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showResetDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View layout = inflater.inflate(R.layout.about_screen, null);
+        TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
+
+        builder.setTitle(R.string.pref_profile_reset);
+
+        aboutText.setText(R.string.pref_profile_reset_sum);
+
+        builder.setView(layout)
+                .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Continue with resetting
+                        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor  editor = prefs.edit();
+                        editor.clear();
+                        editor.commit();
+                        Toast.makeText(getActivity(), R.string.successful , Toast.LENGTH_LONG).show();
+                    }
+                })
+                .setNegativeButton(R.string.maybe_later, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        builder.show();
     }
 
     private final void showDialog(final EditText editText) {
