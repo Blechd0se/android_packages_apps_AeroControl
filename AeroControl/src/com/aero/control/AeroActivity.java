@@ -35,6 +35,7 @@ import com.aero.control.fragments.CPUFragment;
 import com.aero.control.fragments.DefyPartsFragment;
 import com.aero.control.fragments.GPUFragment;
 import com.aero.control.fragments.MemoryFragment;
+import com.aero.control.fragments.MiscSettingsFragment;
 import com.aero.control.fragments.ProfileFragment;
 import com.aero.control.fragments.StatisticsFragment;
 import com.aero.control.fragments.UpdaterFragment;
@@ -65,7 +66,7 @@ public class AeroActivity extends Activity {
     private static final int STATISTICS = 2;
     private static final int GPU = 3;
     private static final int MEMORY = 4;
-    private static final int DEFYPARTS = 5;
+    private static final int MISC = 5;
     private static final int UPDATER = 6;
     private static final int PROFILE = 7;
 
@@ -78,6 +79,7 @@ public class AeroActivity extends Activity {
     private UpdaterFragment mUpdaterFragement;
     private ProfileFragment mProfileFragment;
     private StatisticsFragment mStatisticsFragment;
+    private MiscSettingsFragment mMiscSettingsFragment;
 
     private SharedPreferences prefs;
 
@@ -303,34 +305,29 @@ public class AeroActivity extends Activity {
                 }
                 fragment = mMemoryFragment;
                 break;
-            case DEFYPARTS:
+            case MISC:
+                /* Defy parts for defy, misc settings for the rest.
+                 * Notice; we override position later for different headings
+                 */
                 if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")) {
                     if (mDefyPartsFragment == null) {
                         mDefyPartsFragment = new DefyPartsFragment();
                     }
                     fragment = mDefyPartsFragment;
                 } else {
-                    if (mUpdaterFragement == null) {
-                        mUpdaterFragement = new UpdaterFragment();
+                    if (mMiscSettingsFragment == null) {
+                        mMiscSettingsFragment = new MiscSettingsFragment();
                     }
-                    fragment = mUpdaterFragement;
+                    fragment = mMiscSettingsFragment;
                 }
                 break;
             case UPDATER:
-                if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")) {
-                    if (mUpdaterFragement == null) {
-                        mUpdaterFragement = new UpdaterFragment();
-                    }
-                    fragment = mUpdaterFragement;
-                } else {
-                    if (mProfileFragment == null) {
-                        mProfileFragment = new ProfileFragment();
-                    }
-                    fragment = mProfileFragment;
+                if (mUpdaterFragement == null) {
+                    mUpdaterFragement = new UpdaterFragment();
                 }
+                fragment = mUpdaterFragement;
                 break;
             case PROFILE:
-
                 if (mProfileFragment == null) {
                     mProfileFragment = new ProfileFragment();
                 }
@@ -343,11 +340,9 @@ public class AeroActivity extends Activity {
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
-        if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526") || position < 5) {
-            setTitle(mAeroTitle[position]);
-        } else {
-            setTitle(mAeroTitle[position + 1]);
-        }
+        if (!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")) && position == 5)
+            position = 8;
+        setTitle(mAeroTitle[position]);
 
         mDrawerLayout.closeDrawer(mDrawerList);
     }

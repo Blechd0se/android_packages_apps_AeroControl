@@ -2,10 +2,12 @@ package com.aero.control.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Vibrator;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
@@ -27,8 +29,16 @@ public class PreferenceHandler {
         this.mPrefCat = PrefCat;
         this.mPrefMan = PrefMan;
     }
-
-    public void generateSettings(final String parameter, String path) {
+    /**
+     * Gets all files in a given dictionary and adds Preferences on top of them
+     *
+     * @param parameter     => actual file to read/write
+     * @param path          => directory (where to look up the file)
+     * @param flag          => force vibration after change
+     *
+     * @return nothing
+     */
+    public void generateSettings(final String parameter, String path, final boolean flag) {
 
         final CustomTextPreference prefload = new CustomTextPreference(mContext);
         // Strings saves the complete path for a given governor;
@@ -73,9 +83,24 @@ public class PreferenceHandler {
                 SharedPreferences preferences = mPrefMan.getSharedPreferences();
                 preferences.edit().putString(parameterPath, o.toString()).commit();
 
+                if (flag)
+                    forceVibration();
+
                 return true;
             };
         });
+    }
+
+    public void forceVibration() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Log.e("Aero", "Something interrupted the main Thread, try again.", e);
+        }
+
+        Vibrator vibrate = (Vibrator)mContext.getSystemService(mContext.VIBRATOR_SERVICE);
+
+        vibrate.vibrate(500);
     }
 
 }

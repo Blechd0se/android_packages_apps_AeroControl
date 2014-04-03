@@ -37,6 +37,7 @@
     <string name="slider_updater">Updater</string>
     <string name="slider_profile">Profile</string>
     <string name="slider_statistics">CPU Statistik</string>
+    <string name="slider_misc_settings">Misc Einstellungen</string>
 
     <!-- Overview Elements -->
 
@@ -224,6 +225,9 @@
     <string name="pref_charge_led_mode_white">Weiße LED</string>
     <string name="pref_charge_led_mode_rgb">Gemischte LED (rot/grün)</string>
     <string name="pref_charge_led_mode_off">Aus</string>
+
+    <!-- Misc Settings -->
+    <string name="perf_misc_settings_vib">Vibrations Kontrolle</string>
 
     <!-- Profile Fragment -->
     <string name="pref_profile_enter_name">Du musst einen Namen eingeben.</string>

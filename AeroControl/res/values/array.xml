@@ -10,6 +10,7 @@
         <item>@string/slider_defy_parts</item>
         <item>@string/slider_updater</item>
         <item>@string/slider_profile</item>
+        <item>@string/slider_misc_settings</item>
     </string-array>
 
 

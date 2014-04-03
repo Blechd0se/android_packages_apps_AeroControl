@@ -50,7 +50,7 @@ public class GPUGovernorFragment extends PreferenceFragment {
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
             for (String b : completeParamterList)
-                h.generateSettings(b, GPU_GOV_PATH);
+                h.generateSettings(b, GPU_GOV_PATH, false);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);

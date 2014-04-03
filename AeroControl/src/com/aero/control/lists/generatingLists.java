@@ -27,6 +27,8 @@ public class generatingLists {
 
         if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526"))
             addItem(new PreferenceItem(R.string.slider_defy_parts, R.drawable.gear));
+        else
+            addItem(new PreferenceItem(R.string.slider_misc_settings, R.drawable.gear));
 
         addItem(new PreferenceItem(R.string.slider_updater, R.drawable.update));
         addItem(new PreferenceItem(R.string.slider_profile, R.drawable.profile));
