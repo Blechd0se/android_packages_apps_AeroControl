@@ -47,6 +47,8 @@ public class settingsHelper {
     public static final String PREF_HOTPLUG = "/sys/kernel/hotplug_control";
     public static final String PREF_GPU_GOV = "/sys/module/msm_kgsl_core/parameters";
 
+    public static final String MISC_SETTINGS_PATH = "/sys/devices/virtual/timed_output/vibrator/vtg_level";
+
     private SharedPreferences prefs;
     public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
@@ -87,9 +89,8 @@ public class settingsHelper {
         try {
             HashSet<String> hashcpu_cmd = (HashSet<String>) prefs.getStringSet(PREF_CPU_COMMANDS, null);
             if (hashcpu_cmd != null) {
-                for (String cmd : hashcpu_cmd) {
+                for (String cmd : hashcpu_cmd)
                     al.add(cmd);
-                }
             }
         } catch (ClassCastException e) {
             // HashSet didn't work, so we make a fallback;
@@ -98,9 +99,8 @@ public class settingsHelper {
             if (cpu_cmd != null) {
                 // Since we can't cast to hashmap, little workaround;
                 String[] array = cpu_cmd.substring(1, cpu_cmd.length() - 1).split(",");
-                for (String cmd : array) {
+                for (String cmd : array)
                     al.add(cmd);
-                }
             }
         }
 
@@ -113,16 +113,16 @@ public class settingsHelper {
         String mem_ios = prefs.getString(PREF_GOV_IO_FILE, null);
         Boolean mem_dfs = prefs.getBoolean(PREF_DYANMIC_FSYNC, false);
         Boolean mem_wrb = prefs.getBoolean(PREF_WRITEBACK, false);
+        // Get Misc Settings from preferences
+        String misc_vib = prefs.getString(MISC_SETTINGS_PATH, null);
 
         // ADD CPU COMMANDS TO THE ARRAY
         for (int k = 0; k < mNumCpus; k++) {
-            if (cpu_max != null) {
+            if (cpu_max != null)
                 al.add("echo " + cpu_max + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
-            }
 
-            if (cpu_min != null) {
+            if (cpu_min != null)
                 al.add("echo " + cpu_min + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
-            }
 
             if (cpu_gov != null) {
 
@@ -137,9 +137,8 @@ public class settingsHelper {
         }
 
         // ADD GPU COMMANDS TO THE ARRAY
-        if (gpu_max != null) {
+        if (gpu_max != null)
             al.add("echo " + gpu_max + " > " + GPU_FREQ_MAX);
-        }
 
         if(new File(GPU_CONTROL_ACTIVE).exists())
             al.add("echo " + (gpu_enb ? "1" : "0") + " > " + GPU_CONTROL_ACTIVE);
@@ -147,18 +146,20 @@ public class settingsHelper {
         if(new File(SWEEP2WAKE).exists())
             al.add("echo " + (sweep ? "1" : "0") + " > " + SWEEP2WAKE);
 
-        if (display_color != null) {
+        if (display_color != null)
             al.add("echo " + display_color + " > " + DISPLAY_COLOR);
-        }
 
         // ADD MEM COMMANDS TO THE ARRAY
-        if (mem_ios != null) {
+        if (mem_ios != null)
             al.add("echo " + mem_ios + " > " + GOV_IO_FILE);
-        }
 
         al.add("echo " + (mem_dfs ? "1" : "0") + " > " + DYANMIC_FSYNC);
 
         al.add("echo " + (mem_wrb ? "1" : "0") + " > " + WRITEBACK);
+
+        // Add misc commands to array
+        if (misc_vib != null)
+            al.add("echo " + misc_vib + " > " + MISC_SETTINGS_PATH);
 
         try {
 
