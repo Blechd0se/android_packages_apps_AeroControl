@@ -39,6 +39,7 @@ public class settingsHelper {
     public static final String PREF_GPU_CONTROL_ACTIVE = "gpu_control_enable";
     public static final String PREF_DISPLAY_COLOR = "display_control";
     public static final String PREF_SWEEP2WAKE = "sweeptowake";
+    public static final String PERF_COLOR_CONTROL = "/sys/devices/platform/kcal_ctrl.0/kcal";
 
     public static final String PREF_GOV_IO_FILE = "io_scheduler";
     public static final String PREF_DYANMIC_FSYNC = "dynFsync";
@@ -109,6 +110,7 @@ public class settingsHelper {
         String display_color = prefs.getString(PREF_DISPLAY_COLOR, null);
         Boolean gpu_enb = prefs.getBoolean(PREF_GPU_CONTROL_ACTIVE, false);
         Boolean sweep = prefs.getBoolean(PREF_SWEEP2WAKE, false);
+        String rgbValues = prefs.getString("rgbValues", null);
         // GET MEM VALUES FROM PREFERENCES
         String mem_ios = prefs.getString(PREF_GOV_IO_FILE, null);
         Boolean mem_dfs = prefs.getBoolean(PREF_DYANMIC_FSYNC, false);
@@ -148,6 +150,9 @@ public class settingsHelper {
 
         if (display_color != null)
             al.add("echo " + display_color + " > " + DISPLAY_COLOR);
+
+        if (rgbValues != null)
+            al.add("echo " + rgbValues + " > " + PERF_COLOR_CONTROL);
 
         // ADD MEM COMMANDS TO THE ARRAY
         if (mem_ios != null)

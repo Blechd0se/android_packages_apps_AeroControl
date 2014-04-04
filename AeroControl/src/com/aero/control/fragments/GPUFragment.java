@@ -2,12 +2,14 @@ package com.aero.control.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +22,6 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 
 import java.io.File;
-
 /**
  * Created by ac on 16.09.13.
  */
@@ -241,7 +242,7 @@ public class GPUFragment extends PreferenceFragment {
 
         color_control.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
-            public boolean onPreferenceClick(Preference preference) {
+            public boolean onPreferenceClick(final Preference preference) {
 
                 mColorValues = AeroActivity.shell.getInfoArray(COLOR_CONTROL, 0, 0);
 
@@ -318,6 +319,11 @@ public class GPUFragment extends PreferenceFragment {
 
                                 String rgbValues = redValue.getText() + " " + greenValue.getText() + " " + blueValue.getText();
                                 AeroActivity.shell.setRootInfo(rgbValues, COLOR_CONTROL);
+
+                                //** store preferences
+                                SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+                                preference.edit().putString("rgbValues", rgbValues).commit();
+
                             }
                         })
                         .setNegativeButton(R.string.maybe_later, new DialogInterface.OnClickListener() {
