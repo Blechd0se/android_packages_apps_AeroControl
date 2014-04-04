@@ -275,8 +275,12 @@ public final class shellHelper {
             return "Unavailable";
 
         try {
-            return new StringBuilder().append(Integer.valueOf(mhzString) / 1000).append(" MHz")
-                    .toString();
+            if (mhzString.length() > 8)
+                return new StringBuilder().append(Integer.valueOf(mhzString) / 1000000).append(" MHz")
+                        .toString();
+            else
+                return new StringBuilder().append(Integer.valueOf(mhzString) / 1000).append(" MHz")
+                        .toString();
         } catch (NumberFormatException e) {
             Log.e(LOG_TAG,
                     "Tried to add something to a non existing string.",
