@@ -25,6 +25,7 @@ import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -44,7 +45,8 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     public static final String LOW_MEM = "/system/build.prop";
     public static final String FILENAME = "firstrun_trim";
     public static final String FILENAME_HIDDEN = "firstrun_hidden_feature";
-    public static final String GOV_IO_PARAMETER = "/sys/devices/platform/mmci-omap-hs.0/mmc_host/mmc0/mmc0:1234/block/mmcblk0/queue/iosched/";
+    public static final String GOV_IO_PARAMETER_OMAP = "/sys/devices/platform/mmci-omap-hs.0/mmc_host/mmc0/mmc0:1234/block/mmcblk0/queue/iosched/";
+    public static final String GOV_IO_PARAMETER_MSM = "/sys/devices/msm_sdcc.1/mmc_host/mmc0/mmc0:0001/block/mmcblk0/queue/iosched";
 
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
@@ -56,7 +58,6 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     public static final Handler progressHandler = new Handler();
 
     private CheckBoxPreference mDynFSync, mZCache, mLowMemoryPref, mWriteBackControl;
-    private EditTextPreference mSwappiness, mMinFreeRAM;
     private Preference mFSTrimToggle, mDalvikSettings;
     private ListPreference mIOScheduler;
 
@@ -348,11 +349,18 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             Log.e("Aero", "Couldn't open File... " + output);
         }
 
+        String complete_path;
+
+        if (new File(GOV_IO_PARAMETER_OMAP).exists())
+            complete_path = GOV_IO_PARAMETER_OMAP;
+        else if (new File(GOV_IO_PARAMETER_MSM).exists())
+            complete_path = GOV_IO_PARAMETER_MSM;
+        else
+            return;
+
         // Only show showcase once;
         if (output == 0)
             DrawFirstStart(R.string.showcase_hidden_feature, R.string.showcase_hidden_feature_sum, FILENAME_HIDDEN);
-
-        final String complete_path = GOV_IO_PARAMETER;
 
         try {
             String completeParamterList[] = AeroActivity.shell.getDirInfo(complete_path, true);
@@ -366,7 +374,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             root.addPreference(PrefCat);
 
             try {
-                Thread.sleep(100);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 Log.e("Aero", "Something interrupted the main Thread, try again.", e);
             }
