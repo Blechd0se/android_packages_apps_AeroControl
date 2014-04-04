@@ -404,6 +404,9 @@ public class CPUFragment extends PreferenceFragment {
                 String a = (String) o;
                 ArrayList<String> array = new ArrayList<String>();
 
+                if (Integer.parseInt(a) < Integer.parseInt(min_frequency.getValue()))
+                    return false;
+
                 for (int k = 0; k < mNumCpus; k++) {
 
                     array.add("echo " + a + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
@@ -425,6 +428,9 @@ public class CPUFragment extends PreferenceFragment {
 
                 String a = (String) o;
                 ArrayList<String> array = new ArrayList<String>();
+
+                if (Integer.parseInt(a) > Integer.parseInt(max_frequency.getValue()))
+                    return false;
 
                 for (int k = 0; k < mNumCpus; k++) {
 
