@@ -30,6 +30,13 @@
             android:key="display_control"
             android:title="@string/pref_display_color"
             android:summary="@string/pref_display_color_sum" />
+
+        <Preference
+            android:key="display_color_control"
+            android:title="Display Color"
+            android:summary="Adjust the display color"
+            android:inputType="number" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

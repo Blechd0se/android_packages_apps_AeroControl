@@ -1,5 +1,7 @@
 package com.aero.control.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -8,6 +10,11 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
@@ -27,8 +34,10 @@ public class GPUFragment extends PreferenceFragment {
     public static final String GPU_FREQ_NEXUS4 = "/sys/class/kgsl/kgsl-3d0/max_gpuclk";
     public static final String GPU_FREQ_NEXUS4_VALUES = "/sys/class/kgsl/kgsl-3d0/gpu_available_frequencies";
     public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
+    public static final String COLOR_CONTROL = "/sys/devices/platform/kcal_ctrl.0/kcal";
     public boolean checkGpuControl;
     public boolean checkSweep2wake;
+    public String[] mColorValues;
 
     public String gpu_file;
 
@@ -49,6 +58,7 @@ public class GPUFragment extends PreferenceFragment {
         // Find our ListPreference (max_frequency);
         final ListPreference gpu_control_frequencies = (ListPreference)root.findPreference("gpu_max_freq");
         final ListPreference display_control = (ListPreference)root.findPreference("display_control");
+        final Preference color_control = (Preference)root.findPreference("display_color_control");
 
         if(!(new File(SWEEP2WAKE).exists()))
             gpuCategory.removePreference(sweep2wake);
@@ -58,6 +68,12 @@ public class GPUFragment extends PreferenceFragment {
 
         if (!(new File(GPU_FREQ_MAX).exists() || new File(GPU_FREQ_NEXUS4).exists()))
             gpuCategory.removePreference(gpu_control_frequencies);
+
+        if (!(new File(COLOR_CONTROL).exists())) {
+            gpuCategory.removePreference(color_control);
+        } else {
+            mColorValues = AeroActivity.shell.getInfoArray(COLOR_CONTROL, 0, 0);
+        }
 
         // Check for nexus;
         if (new File(GPU_FREQ_NEXUS4).exists())
@@ -224,6 +240,98 @@ public class GPUFragment extends PreferenceFragment {
                 preference.getEditor().commit();
 
                 return true;
+            }
+        });
+
+        color_control.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View layout = inflater.inflate(R.layout.gpu_color_control, null);
+                final SeekBar redValues = (SeekBar)layout.findViewById(R.id.redValues);
+                final SeekBar greenValues = (SeekBar)layout.findViewById(R.id.greenValues);
+                final SeekBar blueValues = (SeekBar)layout.findViewById(R.id.blueValues);
+
+                final EditText redValue = (EditText)layout.findViewById(R.id.redValue);
+                final EditText greenValue = (EditText)layout.findViewById(R.id.greenValue);
+                final EditText blueValue = (EditText)layout.findViewById(R.id.blueValue);
+
+                redValues.setProgress(Integer.parseInt(mColorValues[0]));
+                greenValues.setProgress(Integer.parseInt(mColorValues[1]));
+                blueValues.setProgress(Integer.parseInt(mColorValues[2]));
+
+                redValue.setText(mColorValues[0]);
+                greenValue.setText(mColorValues[1]);
+                blueValue.setText(mColorValues[2]);
+
+                redValues.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                        redValue.setText("" + i);
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {}
+                });
+                greenValues.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                        greenValue.setText("" + i);
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {}
+                });
+                blueValues.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                        blueValue.setText("" + i);
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {}
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {}
+                });
+
+
+                builder.setTitle("Color Control");
+
+                //aboutText.setText("Adjust color");
+
+                builder.setView(layout)
+                        .setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Continue with resetting
+                                String rgbValues = redValue.getText() + " " + greenValue.getText() + " " + blueValue.getText();
+                                String[] tmp = new String[] {
+                                        redValue.getText().toString(),
+                                        greenValue.getText().toString(),
+                                        blueValue.getText().toString(),
+                                };
+                                mColorValues = tmp;
+                                AeroActivity.shell.setRootInfo(rgbValues, COLOR_CONTROL);
+                            }
+                        })
+                        .setNegativeButton(R.string.maybe_later, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+
+                builder.show();
+
+                return false;
             }
         });
     }

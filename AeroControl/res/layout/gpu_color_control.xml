@@ -1,0 +1,99 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <!-- First row; -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Red"
+        android:textSize="18sp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"/>
+
+    <SeekBar
+        android:id="@+id/redValues"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:max="255"
+        android:layout_toLeftOf="@+id/redValue"/>
+    <EditText
+        android:id="@+id/redValue"
+        android:inputType="number"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_alignParentRight="true"/>
+
+    <!-- Second row; -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Green"
+        android:textSize="18sp"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"/>
+
+    <SeekBar
+        android:id="@+id/greenValues"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:max="255"
+        android:layout_toLeftOf="@+id/greenValue"
+        android:layout_below="@id/redValues"/>
+    <EditText
+        android:id="@+id/greenValue"
+        android:inputType="number"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/redValue"/>
+
+    <!-- Third row; -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blue"
+        android:textSize="18sp"
+        android:layout_marginTop="126dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"/>
+
+    <SeekBar
+        android:id="@+id/blueValues"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:max="255"
+        android:layout_toLeftOf="@+id/blueValue"
+        android:layout_below="@id/greenValues"/>
+    <EditText
+        android:id="@+id/blueValue"
+        android:inputType="number"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/greenValue"/>
+
+</RelativeLayout>
