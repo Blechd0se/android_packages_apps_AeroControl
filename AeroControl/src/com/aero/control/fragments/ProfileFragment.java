@@ -88,7 +88,8 @@ public class ProfileFragment extends PreferenceFragment {
         for (String s : mCompleteProfiles) {
 
             // Don't take default xml;
-            if (!(s.equals("com.aero.control_preferences.xml") || s.equals("showcase_internal.xml"))) {
+            if (!(s.equals("com.aero.control_preferences.xml") || s.equals("showcase_internal.xml")
+                    || s.equals("app_rate_prefs.xml"))) {
                 // Just for the looks;
                 s = s.replace(".xml", "");
                 addProfile(s, false);

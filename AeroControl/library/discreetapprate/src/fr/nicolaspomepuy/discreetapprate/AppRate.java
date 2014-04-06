@@ -49,6 +49,7 @@ public class AppRate {
     private SharedPreferences.Editor editor;
     private int delay = 0;
     private int autoHide = 0;
+    private boolean allowPlayLink = true;
     private long installedSince;
     private boolean debug;
     private AppRateTheme theme = AppRateTheme.DARK;
@@ -178,6 +179,11 @@ public class AppRate {
      */
     public AppRate autoHide(int autoHide) {
         this.autoHide = autoHide;
+        return this;
+    }
+
+    public AppRate allowPlayLink(boolean allowPlayLink) {
+        this.allowPlayLink = allowPlayLink;
         return this;
     }
 
@@ -442,17 +448,19 @@ public class AppRate {
             }
         });
 
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + activity.getPackageName())));
-                hideAllViews(mainView);
-                editor.putBoolean(KEY_CLICKED, true);
-                editor.commit();
-                if (onShowListener != null) onShowListener.onRateAppClicked();
+        if (allowPlayLink) {
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + activity.getPackageName())));
+                    hideAllViews(mainView);
+                    editor.putBoolean(KEY_CLICKED, true);
+                    editor.commit();
+                    if (onShowListener != null) onShowListener.onRateAppClicked();
 
-            }
-        });
+                }
+            });
+        }
 
         if (theme == AppRateTheme.LIGHT) {
             PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
