@@ -48,6 +48,7 @@ public class AppRate {
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
     private int delay = 0;
+    private int autoHide = 0;
     private long installedSince;
     private boolean debug;
     private AppRateTheme theme = AppRateTheme.DARK;
@@ -166,6 +167,17 @@ public class AppRate {
      */
     public AppRate delay(int delay) {
         this.delay = delay;
+        return this;
+    }
+
+    /**
+     * Auto hide the {@link AppRate} after delay
+     *
+     * @param autoHide the auto-delay in ms
+     * @return the {@link AppRate} instance
+     */
+    public AppRate autoHide(int autoHide) {
+        this.autoHide = autoHide;
         return this;
     }
 
@@ -508,6 +520,17 @@ public class AppRate {
 
                 }
             }
+        }
+
+        if (autoHide > 0) {
+            activity.getWindow().getDecorView().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    hideAllViews(mainView);
+                }
+            }, autoHide);
+        } else {
+            // Don't hide if not correctly set
         }
 
         if (delay > 0) {
