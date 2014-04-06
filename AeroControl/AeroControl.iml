@@ -16,6 +16,7 @@
     <orderEntry type="library" name="android-support-v4" level="project" />
     <orderEntry type="module" module-name="showcase" />
     <orderEntry type="module" module-name="HoloGraphLibrary" />
+    <orderEntry type="module" module-name="discreetapprate" />
   </component>
 </module>
 

@@ -142,8 +142,6 @@ public class AeroFragment extends Fragment {
         createList();
         setPermissions();
 
-
-
         return root;
     }
     @Override
