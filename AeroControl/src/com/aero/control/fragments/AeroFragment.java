@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.nicolaspomepuy.discreetapprate.AppRate;
+
 /**
  * Created by Alexander Christ on 16.09.13.
  * Default Overview Fragment
@@ -141,6 +143,14 @@ public class AeroFragment extends Fragment {
         // Generate our main ListView;
         createList();
         setPermissions();
+
+        AppRate.with(getActivity())
+                .text(R.string.rateIt)
+                .fromTop(false)
+                .delay(2000)
+                .autoHide(10000)
+                .allowPlayLink(true)
+                .checkAndShow();
 
         return root;
     }

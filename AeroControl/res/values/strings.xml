@@ -246,4 +246,7 @@
     <string name="pref_profile_reset">Reset your current profile</string>
     <string name="pref_profile_reset_sum">This will completely reset your current profile. Just like if you freshly installed Aero Control.</string>
 
+    <!-- Toast Messages -->
+    <string name="rateIt">Like it? Rate it!</string>
+
 </resources>
