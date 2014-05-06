@@ -26,6 +26,8 @@
     <string name="nocpu_data">Couldn\'t find any CPU data.</string>
     <string name="maybe_later">Maybe later</string>
     <string name="successful">Successful!</string>
+    <string name="mVPlus">+25 mV</string>
+    <string name="mVMinus">-25 mV</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -107,6 +109,9 @@
     <string name="perf_cpu_hotplug">Hotplug Settings</string>
     <string name="perf_cpu_hotplug_driver">Hotplug Driver</string>
     <string name="perf_cpu_hotplug_sum">Adjust the hotplug driver here</string>
+
+    <string name="perf_voltage_control">Voltage Control</string>
+    <string name="perf_voltage_control_sum">Adjust the voltage of your cpu here</string>
 
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Memory Settings</string>

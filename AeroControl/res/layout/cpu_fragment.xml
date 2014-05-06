@@ -27,6 +27,11 @@
             android:title="@string/perf_cpu_hotplug"
             android:summary="@string/perf_cpu_hotplug_sum" />
 
+        <Preference
+            android:key="undervolt_control"
+            android:title="@string/perf_voltage_control"
+            android:summary="@string/perf_voltage_control_sum" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_cpu_governor">

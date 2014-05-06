@@ -112,6 +112,26 @@ public class CPUFragment extends PreferenceFragment {
             cpuCategory.removePreference(cpu_hotplug);
         }
 
+        final Preference voltage_control = root.findPreference("undervolt_control");
+        if (new File("/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table").exists()) {
+            voltage_control.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    getFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                            .replace(R.id.content_frame, new VoltageFragment())
+                            .addToBackStack("Voltage")
+                            .commit();
+
+                    return true;
+                }
+            });
+        } else {
+            cpuCategory.removePreference(voltage_control);
+        }
+
+
         final Preference cpu_oc_uc = (Preference) root.findPreference("cpu_oc_uc");
 
         if (AeroActivity.shell.getInfo(CPU_VSEL).equals("Unavailable")) {
