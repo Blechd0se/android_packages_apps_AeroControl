@@ -49,8 +49,7 @@ public class CPUHotplugFragment extends PreferenceFragment {
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            for (String b : completeParamterList)
-                h.generateSettings(b, HOTPLUG_PATH, false);
+            h.genPrefFromDictionary(completeParamterList, HOTPLUG_PATH);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);

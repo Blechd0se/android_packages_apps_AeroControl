@@ -2,6 +2,7 @@ package com.aero.control.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Vibrator;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -29,6 +30,61 @@ public class PreferenceHandler {
         this.mPrefCat = PrefCat;
         this.mPrefMan = PrefMan;
     }
+
+    /**
+     * Generates the preferences for a path
+     *
+     * @param array     => Contains the parameters in the path/dictionary
+     * @param path      => directory (where to look up the files)
+     *
+     * @return nothing
+     */
+    public void genPrefFromDictionary(String[] array, String path) {
+
+        int counter = array.length;
+        int i = 0;
+
+        for (String b : array) {
+            generateSettings(b, path, false);
+            i++;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            /* For better KitKat+ looks; */
+                if (i == counter) {
+                    Preference blankedPref = new Preference(mContext);
+                    blankedPref.setSelectable(false);
+                    mPrefCat.addPreference(blankedPref);
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets a file from a given path and adds a Preference on top of it
+     *
+     * @param array     => 2D Array which contains filename and path
+     *
+     * @return nothing
+     */
+    public void genPrefFromFiles(String[][] array) {
+
+        int counter = array.length;
+        int i = 0;
+
+        for (int j = 0; j < array.length; j++) {
+
+            generateSettings(array[j][0], array[j][1], false);
+            i++;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            /* For better KitKat+ looks; */
+                if (i == counter) {
+                    Preference blankedPref = new Preference(mContext);
+                    blankedPref.setSelectable(false);
+                    mPrefCat.addPreference(blankedPref);
+                }
+            }
+        }
+    }
+
     /**
      * Gets all files in a given dictionary and adds Preferences on top of them
      *
@@ -38,7 +94,7 @@ public class PreferenceHandler {
      *
      * @return nothing
      */
-    public void generateSettings(final String parameter, String path, final boolean flag) {
+    private void generateSettings(final String parameter, String path, final boolean flag) {
 
         final CustomTextPreference prefload = new CustomTextPreference(mContext);
         // Strings saves the complete path for a given governor;

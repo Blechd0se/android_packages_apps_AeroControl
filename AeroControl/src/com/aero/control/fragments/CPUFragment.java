@@ -537,8 +537,7 @@ public class CPUFragment extends PreferenceFragment {
 
                     final PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-                    for (String b : completeParamterList)
-                        h.generateSettings(b, complete_path, false);
+                    h.genPrefFromDictionary(completeParamterList, complete_path);
 
                     // Probably the wrong place, should be in getDirInfo ?
                 } catch (NullPointerException e) {

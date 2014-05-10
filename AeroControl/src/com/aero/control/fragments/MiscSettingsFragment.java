@@ -49,7 +49,10 @@ public class MiscSettingsFragment extends PreferenceFragment {
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            h.generateSettings("vtg_level", MISC_SETTINGS_PATH, true);
+            String[][] array = new String[][] {
+                    {"vtg_level", MISC_SETTINGS_PATH}
+            };
+            h.genPrefFromFiles(array);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);

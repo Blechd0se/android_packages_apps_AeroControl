@@ -50,8 +50,7 @@ public class MemoryDalvikFragment extends PreferenceFragment {
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            for (String b : completeParamterList)
-                h.generateSettings(b, DALVIK_TWEAK, false);
+            h.genPrefFromDictionary(completeParamterList, DALVIK_TWEAK);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);
