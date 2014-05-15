@@ -424,8 +424,12 @@ public class CPUFragment extends PreferenceFragment {
                 String a = (String) o;
                 ArrayList<String> array = new ArrayList<String>();
 
-                if (Integer.parseInt(a) < Integer.parseInt(min_frequency.getValue()))
+                try {
+                    if (Integer.parseInt(a) < Integer.parseInt(min_frequency.getValue()))
+                        return false;
+                } catch (NullPointerException e) {
                     return false;
+                }
 
                 for (int k = 0; k < mNumCpus; k++) {
 
@@ -449,8 +453,12 @@ public class CPUFragment extends PreferenceFragment {
                 String a = (String) o;
                 ArrayList<String> array = new ArrayList<String>();
 
-                if (Integer.parseInt(a) > Integer.parseInt(max_frequency.getValue()))
+                try {
+                    if (Integer.parseInt(a) > Integer.parseInt(max_frequency.getValue()))
+                        return false;
+                } catch (NullPointerException e) {
                     return false;
+                }
 
                 for (int k = 0; k < mNumCpus; k++) {
 
