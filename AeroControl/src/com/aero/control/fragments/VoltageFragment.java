@@ -1,5 +1,6 @@
 package com.aero.control.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -140,6 +141,12 @@ public class VoltageFragment extends PreferenceFragment {
                 };
             });
 
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            /* For better KitKat+ looks; */
+                Preference blankedPref = new Preference(getActivity());
+                blankedPref.setSelectable(false);
+                PrefCat.addPreference(blankedPref);
         }
     }
 
