@@ -2,6 +2,7 @@ package com.aero.control.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Vibrator;
 import android.preference.Preference;
@@ -21,6 +22,7 @@ public class PreferenceHandler {
     public Context mContext;
     public PreferenceCategory mPrefCat;
     public PreferenceManager mPrefMan;
+    public static final Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
 
     /*
      * Default constructor to set our objects
@@ -109,6 +111,7 @@ public class PreferenceHandler {
         prefload.setTitle(parameter);
         prefload.setText(summary);
         prefload.setDialogTitle(parameter);
+        prefload.setStyle(CustomTextPreference.STYLE_NORMAL);
 
         if (prefload.getSummary().equals("Unavailable")) {
             prefload.setEnabled(false);
