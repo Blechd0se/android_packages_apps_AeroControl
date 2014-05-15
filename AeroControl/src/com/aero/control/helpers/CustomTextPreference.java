@@ -56,7 +56,8 @@ public class CustomTextPreference extends EditTextPreference {
         summaryView.setTypeface(Typeface.DEFAULT);
     }
 
-        @Override
+    /*
+    @Override
     protected void onBindView(View view) {
         super.onBindView(view);
         switch (style) {
@@ -70,7 +71,7 @@ public class CustomTextPreference extends EditTextPreference {
                 break;
         }
 
-    }
+    } */
 
     public void setStyle(int style) {
         switch (style) {

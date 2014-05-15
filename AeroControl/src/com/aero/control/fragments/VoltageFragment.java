@@ -164,7 +164,7 @@ public class VoltageFragment extends PreferenceFragment {
 
         String [] voltArray = voltList.toArray(new String[0]);
 
-        for (int i = 0; i < PrefCat.getPreferenceCount(); i++) {
+        for (int i = 0; i < PrefCat.getPreferenceCount() - 1; i++) {
             CustomTextPreference voltPref = (CustomTextPreference)PrefCat.getPreference(i);
             voltPref.setSummary(voltArray[i] + "mV");
             voltPref.setText(voltArray[i]);
