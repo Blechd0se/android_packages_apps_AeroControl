@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -41,6 +42,7 @@ public class ProfileFragment extends PreferenceFragment {
     public ShowcaseView mShowCase;
     private SharedPreferences prefs;
     public ShowcaseView.ConfigOptions mConfigOptions;
+    public static final Typeface kitkatFont = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     private static final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
     private  String[] mCompleteProfiles;
     public static final String FILENAME_PROFILES = "firstrun_profiles";
@@ -226,8 +228,11 @@ public class ProfileFragment extends PreferenceFragment {
 
         // Create TextView, with Content and Listeners;
         final TextView txtView = (TextView)childView.findViewById(R.id.profile_text);
+        final TextView txtViewSummary = (TextView)childView.findViewById(R.id.profile_text_summary);
         txtView.setText(s);
-        createListener(txtView);
+        txtViewSummary.setText(s);
+        txtView.setTypeface(kitkatFont);
+        createListener(txtView, txtViewSummary);
 
         // Remove the complete ViewGroup;
         childView.findViewById(R.id.delete_button).setOnClickListener(new View.OnClickListener() {
@@ -242,6 +247,14 @@ public class ProfileFragment extends PreferenceFragment {
                 if (mContainerView.getChildCount() == 1) {
                     mContainerView.findViewById(android.R.id.empty).setVisibility(View.VISIBLE);
                 }
+            }
+        });
+        // Assign this profile to an app
+        childView.findViewById(R.id.assign_to_app).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Stub, code for per-app profile goes here;
+                Log.e("Aero", "Clicked: " + txtView.getText().toString());
             }
         });
 
@@ -332,7 +345,7 @@ public class ProfileFragment extends PreferenceFragment {
 
     }
 
-    private final void renameProfile(CharSequence oldName, String newName, TextView txtView) {
+    private final void renameProfile(CharSequence oldName, String newName, TextView txtView, TextView txtViewSummary) {
 
         final String[] cmd = new String[] {
                 "mv " + "\"" + sharedPrefsPath + oldName + ".xml" + "\"" + " " + "\"" + sharedPrefsPath + newName + ".xml" + "\""
@@ -341,6 +354,7 @@ public class ProfileFragment extends PreferenceFragment {
         AeroActivity.shell.setRootInfo(cmd);
 
         txtView.setText(newName);
+        txtViewSummary.setText(newName);
 
     }
 
@@ -348,10 +362,13 @@ public class ProfileFragment extends PreferenceFragment {
      * Create a onClick Listener for each profile;
      */
 
-    private final void createListener(final TextView txtView) {
+    private final void createListener(final TextView txtView, final TextView txtViewSummary) {
 
-        // Change something else?
-        txtView.setOnClickListener(new View.OnClickListener() {
+        // Get our relative layout parent view first and set the listener
+        View v = (View)txtView.getParent();
+
+        // Show the actual profile;
+        v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -376,7 +393,8 @@ public class ProfileFragment extends PreferenceFragment {
                         tmp = tmp.replace("/sys/module/msm_kgsl_core/parameters/", "gpu -> ");
                     else if (tmp.contains("/sys/kernel/hotplug_control/"))
                         tmp = tmp.replace("/sys/kernel/hotplug_control/", "hotplug_control -> ");
-
+                    else if (tmp.contains("/sys/devices/virtual/timed_output/vibrator/"))
+                        tmp = tmp.replace("/sys/devices/virtual/timed_output/vibrator/", "vibrator -> ");
 
                     content = tmp + " = " + entry.getValue().toString() + "\n" + content;
 
@@ -387,6 +405,7 @@ public class ProfileFragment extends PreferenceFragment {
                 profileText.setVerticalScrollBarEnabled(true);
                 profileText.setMovementMethod(new ScrollingMovementMethod());
                 profileText.setPadding(20, 20, 20, 20);
+                profileText.setTypeface(kitkatFont);
 
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
                         .setTitle(getText(R.string.slider_overview) + ": " + txtView.getText().toString())
@@ -411,7 +430,7 @@ public class ProfileFragment extends PreferenceFragment {
         });
 
         // Change the name of the profile;
-        txtView.setOnLongClickListener(new View.OnLongClickListener() {
+        v.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
 
@@ -435,7 +454,7 @@ public class ProfileFragment extends PreferenceFragment {
                                     Toast.makeText(getActivity(), R.string.pref_profile_name_exists, Toast.LENGTH_LONG).show();
                                 } else {
                                     txtView.setText(newName);
-                                    renameProfile(oldName, newName, txtView);
+                                    renameProfile(oldName, newName, txtView, txtViewSummary);
                                 }
                             }
                         })
