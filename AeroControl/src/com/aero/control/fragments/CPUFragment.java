@@ -427,7 +427,7 @@ public class CPUFragment extends PreferenceFragment {
                 try {
                     if (Integer.parseInt(a) < Integer.parseInt(min_frequency.getValue()))
                         return false;
-                } catch (NullPointerException e) {
+                } catch (NumberFormatException e) {
                     return false;
                 }
 
@@ -456,7 +456,7 @@ public class CPUFragment extends PreferenceFragment {
                 try {
                     if (Integer.parseInt(a) > Integer.parseInt(max_frequency.getValue()))
                         return false;
-                } catch (NullPointerException e) {
+                } catch (NumberFormatException e) {
                     return false;
                 }
 
