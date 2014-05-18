@@ -80,7 +80,6 @@ public class settingsHelper {
     private void doBackground(Context context) {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        ArrayList<String> al = new ArrayList<String>();
 
         // GET CPU VALUES AND COMMANDS FROM PREFERENCES
         String cpu_max = prefs.getString(PREF_CPU_MAX_FREQ, null);
@@ -91,7 +90,7 @@ public class settingsHelper {
             HashSet<String> hashcpu_cmd = (HashSet<String>) prefs.getStringSet(PREF_CPU_COMMANDS, null);
             if (hashcpu_cmd != null) {
                 for (String cmd : hashcpu_cmd)
-                    al.add(cmd);
+                    shell.queueWork(cmd);
             }
         } catch (ClassCastException e) {
             // HashSet didn't work, so we make a fallback;
@@ -101,7 +100,7 @@ public class settingsHelper {
                 // Since we can't cast to hashmap, little workaround;
                 String[] array = cpu_cmd.substring(1, cpu_cmd.length() - 1).split(",");
                 for (String cmd : array)
-                    al.add(cmd);
+                    shell.queueWork(cmd);
             }
         }
 
@@ -121,10 +120,10 @@ public class settingsHelper {
         // ADD CPU COMMANDS TO THE ARRAY
         for (int k = 0; k < mNumCpus; k++) {
             if (cpu_max != null)
-                al.add("echo " + cpu_max + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
+                shell.queueWork("echo " + cpu_max + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
 
             if (cpu_min != null)
-                al.add("echo " + cpu_min + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
+                shell.queueWork("echo " + cpu_min + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
 
             if (cpu_gov != null) {
 
@@ -133,46 +132,42 @@ public class settingsHelper {
                  * For safety reasons we sleep this thread later
                  */
 
-                String[] a = { "echo " + cpu_gov + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE };
-                shell.setRootInfo(a);
+                shell.queueWork("echo " + cpu_gov + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
+                shell.queueWork("sleep 0.5");
             }
         }
 
         // ADD GPU COMMANDS TO THE ARRAY
         if (gpu_max != null)
-            al.add("echo " + gpu_max + " > " + GPU_FREQ_MAX);
+            shell.queueWork("echo " + gpu_max + " > " + GPU_FREQ_MAX);
 
         if(new File(GPU_CONTROL_ACTIVE).exists())
-            al.add("echo " + (gpu_enb ? "1" : "0") + " > " + GPU_CONTROL_ACTIVE);
+            shell.queueWork("echo " + (gpu_enb ? "1" : "0") + " > " + GPU_CONTROL_ACTIVE);
 
         if(new File(SWEEP2WAKE).exists())
-            al.add("echo " + (sweep ? "1" : "0") + " > " + SWEEP2WAKE);
+            shell.queueWork("echo " + (sweep ? "1" : "0") + " > " + SWEEP2WAKE);
 
         if (display_color != null)
-            al.add("echo " + display_color + " > " + DISPLAY_COLOR);
+            shell.queueWork("echo " + display_color + " > " + DISPLAY_COLOR);
 
         if (rgbValues != null)
-            al.add("echo " + rgbValues + " > " + PERF_COLOR_CONTROL);
+            shell.queueWork("echo " + rgbValues + " > " + PERF_COLOR_CONTROL);
 
         // ADD MEM COMMANDS TO THE ARRAY
         if (mem_ios != null)
-            al.add("echo " + mem_ios + " > " + GOV_IO_FILE);
+            shell.queueWork("echo " + mem_ios + " > " + GOV_IO_FILE);
 
-        al.add("echo " + (mem_dfs ? "1" : "0") + " > " + DYANMIC_FSYNC);
+        shell.queueWork("echo " + (mem_dfs ? "1" : "0") + " > " + DYANMIC_FSYNC);
 
-        al.add("echo " + (mem_wrb ? "1" : "0") + " > " + WRITEBACK);
+        shell.queueWork("echo " + (mem_wrb ? "1" : "0") + " > " + WRITEBACK);
 
         // Add misc commands to array
         if (misc_vib != null)
-            al.add("echo " + misc_vib + " > " + MISC_SETTINGS_PATH);
+            shell.queueWork("echo " + misc_vib + " > " + MISC_SETTINGS_PATH);
 
         try {
 
-            try {
-                Thread.sleep(850);
-            } catch (InterruptedException e) {
-                Log.e("Aero", "Something interrupted the main Thread, try again.", e);
-            }
+            shell.queueWork("sleep 0.5");
 
             if (cpu_gov != null) {
 
@@ -185,7 +180,7 @@ public class settingsHelper {
                     final String governorSetting = prefs.getString(CPU_GOV_BASE + cpu_gov + "/" + b, null);
 
                     if (governorSetting != null) {
-                        al.add("echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
+                        shell.queueWork("echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
 
                         //Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
                     }
@@ -201,7 +196,7 @@ public class settingsHelper {
                 final String vmSettings = prefs.getString(DALVIK_TWEAK + "/" + c, null);
 
                 if (vmSettings != null) {
-                    al.add("echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
+                    shell.queueWork("echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
 
                     //Log.e("Aero", "Output: " + "echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
                 }
@@ -216,7 +211,7 @@ public class settingsHelper {
                 final String hotplugSettings = prefs.getString(PREF_HOTPLUG + "/" + d, null);
 
                 if (hotplugSettings != null) {
-                    al.add("echo " + hotplugSettings + " > " + PREF_HOTPLUG + "/" + d);
+                    shell.queueWork("echo " + hotplugSettings + " > " + PREF_HOTPLUG + "/" + d);
 
                     //Log.e("Aero", "Output: " + "echo " + hotplugSettings + " > " + PREF_HOTPLUG + "/" + d);
                 }
@@ -231,7 +226,7 @@ public class settingsHelper {
                 final String gpugovSettings = prefs.getString(PREF_GPU_GOV + "/" + e, null);
 
                 if (gpugovSettings != null) {
-                    al.add("echo " + gpugovSettings + " > " + PREF_GPU_GOV + "/" + e);
+                    shell.queueWork("echo " + gpugovSettings + " > " + PREF_GPU_GOV + "/" + e);
 
                     //Log.e("Aero", "Output: " + "echo " + gpugovSettings + " > " + PREF_GPU_GOV + "/" + e);
                 }
@@ -242,8 +237,8 @@ public class settingsHelper {
         }
 
         // EXECUTE ALL THE COMMANDS COLLECTED
-        String[] commands = al.toArray(new String[0]);
-        shell.setRootInfo(commands);
+        shell.execWork();
+        shell.flushWork();
     }
 
 }

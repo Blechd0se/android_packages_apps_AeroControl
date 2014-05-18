@@ -1,5 +1,7 @@
 package com.aero.control.helpers;
 
+import android.content.Context;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -23,9 +25,69 @@ import java.util.regex.Pattern;
 public final class shellHelper {
 
     // Buffer length;
-    private static final int BUFF_LEN = 1024;
+    private static final int BUFF_LEN = 256;
     private static final byte[] buffer = new byte[BUFF_LEN];
     private static final String LOG_TAG = shellHelper.class.getName();
+    private ShellWorkqueue shWork = new ShellWorkqueue();
+
+
+    /*
+     * Allows to simply query up commands to execute by the root process
+     */
+    private class ShellWorkqueue {
+
+        private ArrayList<String> mWorkItems;
+
+        private void addToWork(String work) {
+
+            if (mWorkItems == null)
+                initWork();
+            mWorkItems.add(work);
+        }
+
+        private String[] execWork() {
+            return mWorkItems.toArray(new String[0]);
+        }
+
+        private void initWork() {
+            mWorkItems = new ArrayList<String>();
+        }
+
+        private void flushWork() {
+            mWorkItems.clear();
+            mWorkItems = null;
+        }
+
+    };
+
+    /**
+     * Adds a work item to the current workqueue
+     *
+     * @param work   => work item (command for shell)
+     *
+     * @return nothing
+     */
+    public void queueWork(String work) {
+        shWork.addToWork(work);
+    }
+
+    /**
+     * Executes the current workqueue
+     *
+     * @return nothing
+     */
+    public void execWork() {
+        setRootInfo(shWork.execWork());
+    }
+
+    /**
+     * Flushes the workqueue with its items
+     *
+     * @return nothing
+     */
+    public void flushWork() {
+        shWork.flushWork();
+    }
 
     /**
      * Gets the current Kernel Version + some useful information
@@ -37,7 +99,7 @@ public final class shellHelper {
         String procVersionStr;
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("/proc/version"), 256);
+            BufferedReader reader = new BufferedReader(new FileReader("/proc/version"), BUFF_LEN);
             try {
                 procVersionStr = reader.readLine();
             } finally {
@@ -93,7 +155,7 @@ public final class shellHelper {
             return "Unavailable";
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(s), 256);
+            BufferedReader reader = new BufferedReader(new FileReader(s), BUFF_LEN);
             try {
                 info = reader.readLine();
             } finally {
@@ -131,7 +193,7 @@ public final class shellHelper {
         }
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(s), 256);
+            BufferedReader reader = new BufferedReader(new FileReader(s), BUFF_LEN);
             try {
                 info = reader.readLine();
 
@@ -208,12 +270,10 @@ public final class shellHelper {
 
         String[] completeString = new String[0];
         String[] output = null;
-        // Just make some gerneric error-code
-        String[] error = new String[0];
 
         try {
             // Try to read the given Path, if not available -> throw exception
-            BufferedReader reader = new BufferedReader(new FileReader(s), 256);
+            BufferedReader reader = new BufferedReader(new FileReader(s), BUFF_LEN);
             try {
                 if (flag_io == 1)
                     completeString = reader.readLine().replace("[", "").replace("]", "").split(" ");
@@ -236,7 +296,7 @@ public final class shellHelper {
                     "IO Exception when trying to get information with an Array.",
                     e);
 
-            return error;
+            return null;
         }
     }
 
@@ -275,11 +335,11 @@ public final class shellHelper {
             return "Unavailable";
 
         try {
-            if (mhzString.length() > 8)
-                return new StringBuilder().append(Integer.valueOf(mhzString) / 1000000).append(" MHz")
+            if (mhzString.length() < 8)
+                return new StringBuilder().append(Integer.valueOf(mhzString) / 1000).append(" MHz")
                         .toString();
             else
-                return new StringBuilder().append(Integer.valueOf(mhzString) / 1000).append(" MHz")
+                return new StringBuilder().append(Integer.valueOf(mhzString) / 1000000).append(" MHz")
                         .toString();
         } catch (NumberFormatException e) {
             Log.e(LOG_TAG,
@@ -308,7 +368,7 @@ public final class shellHelper {
              * Buffers:            5236 kB
              * Cached:            81652 kB
              */
-            BufferedReader reader = new BufferedReader(new FileReader(s), 256);
+            BufferedReader reader = new BufferedReader(new FileReader(s), BUFF_LEN);
             totalMemory = reader.readLine();
             totalFreeMemory = reader.readLine();
 
