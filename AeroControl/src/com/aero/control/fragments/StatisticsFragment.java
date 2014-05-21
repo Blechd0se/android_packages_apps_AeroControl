@@ -152,8 +152,6 @@ public class StatisticsFragment extends Fragment {
 
         super.onActivityCreated(savedInstanceState);
         // Prepare Showcase;
-
-        // Prepare Showcase;
         mConfigOptions = new ShowcaseView.ConfigOptions();
         mConfigOptions.hideOnClickOutside = false;
         mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
@@ -163,7 +161,7 @@ public class StatisticsFragment extends Fragment {
         final byte[] buffer = new byte[1024];
 
         try {
-            FileInputStream fis = getActivity().openFileInput(FILENAME_STATISTICS);
+            final FileInputStream fis = getActivity().openFileInput(FILENAME_STATISTICS);
             output = fis.read(buffer);
             fis.close();
         } catch (IOException e) {

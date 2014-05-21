@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,6 @@ public class AeroFragment extends Fragment {
     public ListView listView1;
     public ViewGroup root;
     public AeroAdapter adapter;
-    public List<adapterInit> overview_data;
     public List<adapterInit> mOverviewData= new ArrayList<adapterInit>();
     public AeroFragment mAeroFragment;
     public ShowcaseView.ConfigOptions mConfigOptions;
@@ -243,6 +243,8 @@ public class AeroFragment extends Fragment {
 
     public void DrawFirstStart(int header, int content) {
 
+        int actionBarHeight = 0;
+
         try {
             final FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
             fos.write("1".getBytes());
@@ -252,7 +254,12 @@ public class AeroFragment extends Fragment {
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        mShowCase = ShowcaseView.insertShowcaseView(100, 175, getActivity(), header, content, mConfigOptions);
+        TypedValue tv = new TypedValue();
+        if (getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+        }
+
+        mShowCase = ShowcaseView.insertShowcaseView(100, (actionBarHeight + 50), getActivity(), header, content, mConfigOptions);
     }
 
     public void setPermissions() {

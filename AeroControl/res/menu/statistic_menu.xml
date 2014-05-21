@@ -3,10 +3,10 @@
     <item android:id="@+id/action_reload"
         android:title="@string/reload"
         android:icon="@drawable/ic_action_reload"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="always" />
 
     <item android:id="@+id/action_refresh"
         android:title="@string/refresh"
         android:icon="@drawable/ic_action_refresh"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="always" />
 </menu>

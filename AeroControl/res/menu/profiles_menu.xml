@@ -3,11 +3,11 @@
     <item android:id="@+id/action_reload"
         android:title="@string/reload"
         android:icon="@drawable/ic_action_reload"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="always" />
 
     <item android:id="@+id/action_add_item"
         android:title="@string/add"
         android:icon="@drawable/ic_action_new"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="always" />
 
 </menu>
