@@ -269,7 +269,7 @@ public final class shellHelper {
     public final String[] getInfoArray(String s, int flag, int flag_io) {
 
         String[] completeString = new String[0];
-        String[] output = null;
+        String[] output = new String[] { "Unavailable" };
 
         try {
             // Try to read the given Path, if not available -> throw exception
@@ -296,7 +296,7 @@ public final class shellHelper {
                     "IO Exception when trying to get information with an Array.",
                     e);
 
-            return null;
+            return output;
         }
     }
 
