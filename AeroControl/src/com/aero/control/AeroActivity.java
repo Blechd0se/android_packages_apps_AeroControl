@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -118,7 +119,8 @@ public class AeroActivity extends Activity {
             setTheme(R.style.RedHolo);
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
+                !(ViewConfiguration.get(getBaseContext()).hasPermanentMenuKey())) {
 
             Window win = getWindow();
             WindowManager.LayoutParams winParams = win.getAttributes();
