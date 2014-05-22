@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.Button;
@@ -139,11 +140,18 @@ public class ShowcaseView extends RelativeLayout
         if (!mOptions.noButton && mEndButton.getParent() == null) {
             RelativeLayout.LayoutParams lps = getConfigOptions().buttonLayoutParams;
             if (lps == null) {
+                int additionalMargin;
                 lps = (LayoutParams) generateDefaultLayoutParams();
                 lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 lps.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
+                        !(ViewConfiguration.get(getContext()).hasPermanentMenuKey())) {
+                    additionalMargin = ((Number) (metricScale * 30)).intValue();
+                } else {
+                    additionalMargin = 0;
+                }
                 int margin = ((Number) (metricScale * 12)).intValue();
-                lps.setMargins(margin, margin, margin, margin);
+                lps.setMargins(margin, margin, margin, (margin + additionalMargin));
             }
             mEndButton.setLayoutParams(lps);
             mEndButton.setText(
