@@ -28,6 +28,8 @@
     <string name="successful">Successful!</string>
     <string name="mVPlus">+25 mV</string>
     <string name="mVMinus">-25 mV</string>
+    <string name="perAppAssigned">Active</string>
+    <string name="notperAppAssigned">Not active</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -66,6 +68,8 @@
     <string name="pref_updatepath_sum">Set your desired update path.</string>
     <string name="pref_app_theme">App Theme</string>
     <string name="pref_app_theme_sum">Defines the default app theme.</string>
+    <string name="pref_per_app_service">Per-App Profile Service</string>
+    <string name="pref_per_app_service_sum">Enable or disable the per-app profile service.</string>
 
     <string name="app_theme_red">Red - Light Holo with red accent</string>
     <string name="app_theme_light">Light - Light Holo with blue accent</string>

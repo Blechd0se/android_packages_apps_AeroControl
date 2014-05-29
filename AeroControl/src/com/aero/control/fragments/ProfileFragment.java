@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.text.method.ScrollingMovementMethod;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.perAppHelper;
 import com.aero.control.helpers.settingsHelper;
 import com.espian.showcaseview.ShowcaseView;
 
@@ -44,6 +47,7 @@ public class ProfileFragment extends PreferenceFragment {
     public ShowcaseView.ConfigOptions mConfigOptions;
     public static final Typeface kitkatFont = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     private static final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
+    private static final String perAppProfileHandler = "perAppProfileHandler";
     private  String[] mCompleteProfiles;
     public static final String FILENAME_PROFILES = "firstrun_profiles";
     public static final settingsHelper settings = new settingsHelper();
@@ -91,7 +95,7 @@ public class ProfileFragment extends PreferenceFragment {
 
             // Don't take default xml;
             if (!(s.equals("com.aero.control_preferences.xml") || s.equals("showcase_internal.xml")
-                    || s.equals("app_rate_prefs.xml"))) {
+                    || s.equals("app_rate_prefs.xml") || s.equals(perAppProfileHandler + ".xml"))) {
                 // Just for the looks;
                 s = s.replace(".xml", "");
                 addProfile(s, false);
@@ -204,17 +208,18 @@ public class ProfileFragment extends PreferenceFragment {
     }
 
     // Adds the object to our "list", s = Name
-    private void addProfile(String s, boolean flag) {
+    private void addProfile(final String s, boolean flag) {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final SharedPreferences AeroProfile = getActivity().getSharedPreferences(s, Context.MODE_PRIVATE);
         final File defaultFile = new File(sharedPrefsPath + "com.aero.control_preferences.xml");
 
-        if(defaultFile.exists()) {
-            //
-        } else {
+        // Init the perApp data here, so we can re-use it for each profile
+        final perAppHelper perApp = new perAppHelper(getActivity());
+        perApp.getAllApps(perApp.getSystemAppStatus());
+
+        if(!(defaultFile.exists()))
             return;
-        }
 
         // Flag if we add a profile to the list which already exists as a file;
         if (flag) {
@@ -230,7 +235,30 @@ public class ProfileFragment extends PreferenceFragment {
         final TextView txtView = (TextView)childView.findViewById(R.id.profile_text);
         final TextView txtViewSummary = (TextView)childView.findViewById(R.id.profile_text_summary);
         txtView.setText(s);
-        txtViewSummary.setText(s);
+
+        getPersistentData(perApp, s);
+
+        // Load our already selected apps into UI;
+        if (perApp.getCurrentSelectedPackagesByName() != null) {
+
+            int count = 0;
+
+            for (int k = 0; k < perApp.getCurrentSelectedPackagesByName().length; k++) {
+                count++;
+            }
+            if (count > 0) {
+                txtViewSummary.setText(R.string.perAppAssigned);
+                txtViewSummary.setTextColor(Color.parseColor("#1abc9c"));
+            } else {
+                txtViewSummary.setText(R.string.notperAppAssigned);
+                txtViewSummary.setTextColor(Color.parseColor("#e74c3c"));
+            }
+
+        } else {
+            txtViewSummary.setText(R.string.notperAppAssigned);
+            txtViewSummary.setTextColor(Color.parseColor("#e74c3c"));
+        }
+
         txtView.setTypeface(kitkatFont);
         createListener(txtView, txtViewSummary);
 
@@ -254,7 +282,7 @@ public class ProfileFragment extends PreferenceFragment {
             @Override
             public void onClick(View view) {
                 // Stub, code for per-app profile goes here;
-                Log.e("Aero", "Clicked: " + txtView.getText().toString());
+                showPerAppDialog(perApp, s, txtViewSummary);
             }
         });
 
@@ -262,28 +290,139 @@ public class ProfileFragment extends PreferenceFragment {
 
     }
 
+    /* Maps the persistent data in shared_prefs to our currently
+     * available objects
+     */
+    private final void getPersistentData(perAppHelper perApp, String name) {
+
+        SharedPreferences perAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
+
+        String savedSelectedProfiles = perAppPrefs.getString(name, null);
+        String systemApps = perAppPrefs.getString("systemStatus", null);
+
+        //Probably a "fresh" profile;
+        if (systemApps == null)
+            systemApps = "false";
+
+        if (savedSelectedProfiles == null)
+            return;
+
+        perApp.setSystemAppStatus(Boolean.valueOf(systemApps));
+        perApp.getAllApps(perApp.getSystemAppStatus());
+
+        String tmp[];
+        tmp = savedSelectedProfiles.replace("+", " ").split(" ");
+
+        // Finds the matches;
+        perApp.findMatch(tmp);
+
+    }
+
+    private final void showPerAppDialog(final perAppHelper perApp, final String profileName, final TextView txtViewSummary) {
+
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+
+        dialog.setTitle("The Choice Is Yours");
+        dialog.setMultiChoiceItems(perApp.getAllPackageNames(), perApp.getCheckedState(), new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                if (b) {
+                    perApp.setChecked(true, i);
+                } else {
+                    perApp.setChecked(false, i);
+                }
+                int count = 0;
+
+                for (int k = 0; k < perApp.getCurrentSelectedPackagesByName().length; k++) {
+                    count++;
+                }
+                if (count > 0) {
+                    txtViewSummary.setText(R.string.perAppAssigned);
+                    txtViewSummary.setTextColor(Color.parseColor("#1abc9c"));
+                } else {
+                    txtViewSummary.setText(R.string.notperAppAssigned);
+                    txtViewSummary.setTextColor(Color.parseColor("#e74c3c"));
+                }
+            }
+        })
+                // Set the action buttons
+                .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        SharedPreferences perAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
+
+                        String[] packageNames = perApp.getCurrentSelectedPackages();
+
+                        String tmp = "";
+
+                        for (String a : packageNames ) {
+                            tmp = tmp + a + "+";
+                        }
+                        perAppPrefs.edit().remove(profileName);
+
+                        perAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
+                        perAppPrefs.edit().putString(profileName, tmp).commit();
+
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Do Stuff
+
+                    }
+                })
+                .setNeutralButton("Show SystemApps", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        perApp.setSystemAppStatus(!perApp.getSystemAppStatus());
+                        // Invoke a new "scan";
+                        perApp.getAllApps(perApp.getSystemAppStatus());
+
+                        SharedPreferences perAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
+
+                        perAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
+
+                        // At this point in time, it can't be assigned to any apps;
+                        txtViewSummary.setText(R.string.notperAppAssigned);
+                        txtViewSummary.setTextColor(Color.parseColor("#e74c3c"));
+                    }
+
+                })
+        ;
+        dialog.create().show();
+
+    }
+
     private final boolean deleteProfile(String ProfileName) {
 
-        // Delete the file, not just clear the pref;
-        final String[] cmd = new String[] {
-                "rm " + "\"" + sharedPrefsPath + ProfileName + ".xml" + "\""
-        };
-
-        AeroActivity.shell.setRootInfo(cmd);
-
-        try {
-            Thread.sleep(350);
-        } catch (InterruptedException e) {
-            Log.e(LOG_TAG, "Something interrupted the main Thread, try again.", e);
-        }
-
-        // Check if file is gone;
+        SharedPreferences profile = getActivity().getSharedPreferences(ProfileName, Context.MODE_PRIVATE);
         final File prefFile = new File (sharedPrefsPath + ProfileName + ".xml");
 
-        if(prefFile.exists()) {
-            Log.e(LOG_TAG, "Whoop, it still exists, something went wrong");
-            return false;
+        //Clear it and delete it;
+        profile.edit().clear().commit();
+        prefFile.delete();
+
+        // Check if file is gone;
+        if(!(prefFile.exists())) {
+            return true;
         } else {
+            // Now we need to try to delete it with fire
+            Log.e(LOG_TAG, "Whoop, it still exists, something went wrong");
+
+            // Delete the file, not just clear the pref;
+            final String[] cmd = new String[] {
+                    "rm " + "\"" + sharedPrefsPath + ProfileName + ".xml" + "\""
+            };
+
+            AeroActivity.shell.setRootInfo(cmd);
+
+            try {
+                Thread.sleep(350);
+            } catch (InterruptedException e) {
+                Log.e(LOG_TAG, "Something interrupted the main Thread, try again.", e);
+            }
             return true;
         }
     }
@@ -347,14 +486,29 @@ public class ProfileFragment extends PreferenceFragment {
 
     private final void renameProfile(CharSequence oldName, String newName, TextView txtView, TextView txtViewSummary) {
 
-        final String[] cmd = new String[] {
-                "mv " + "\"" + sharedPrefsPath + oldName + ".xml" + "\"" + " " + "\"" + sharedPrefsPath + newName + ".xml" + "\""
-        };
+        final File prefFile = new File (sharedPrefsPath + oldName.toString() + ".xml");
 
-        AeroActivity.shell.setRootInfo(cmd);
+        prefFile.renameTo(new File (sharedPrefsPath + newName.toString() + ".xml"));
+        prefFile.delete();
+
+        if (prefFile.exists()) {
+            final String[] cmd = new String[] {
+                    "mv " + "\"" + sharedPrefsPath + oldName + ".xml" + "\"" + " " + "\"" + sharedPrefsPath + newName + ".xml" + "\""
+            };
+
+            AeroActivity.shell.setRootInfo(cmd);
+        }
+
+        SharedPreferences perAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
+
+        // We need to delete the "old" preference if there are profiles assigned;
+        String valueOld = perAppPrefs.getString(oldName.toString(), null);
+        perAppPrefs.edit().remove(oldName.toString()).commit();
+        perAppPrefs.edit().putString(newName.toString(), valueOld).commit();
 
         txtView.setText(newName);
-        txtViewSummary.setText(newName);
+        //txtViewSummary.setText(newName);
+        //loadProfiles();
 
     }
 
@@ -417,7 +571,7 @@ public class ProfileFragment extends PreferenceFragment {
                                 deleteProfile("com.aero.control_preferences");
                                 SharedPreferences AeroProfile = getActivity().getSharedPreferences(txtView.getText().toString(), Context.MODE_PRIVATE);
                                 applyProfile(AeroProfile);
-                                settings.setSettings(getActivity());
+                                settings.setSettings(getActivity(), null);
 
                             }
                         })
