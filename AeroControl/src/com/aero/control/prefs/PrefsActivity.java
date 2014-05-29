@@ -1,6 +1,8 @@
 package com.aero.control.prefs;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +24,9 @@ import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.service.PerAppService;
+
+import java.util.Calendar;
 
 /**
  * Created by Alexander Christ on 21.09.13.
@@ -72,12 +78,16 @@ public class PrefsActivity extends PreferenceActivity {
 
         CheckBoxPreference checkbox_preference = (CheckBoxPreference)root.findPreference("checkbox_preference");
         CheckBoxPreference reboot_checker = (CheckBoxPreference)root.findPreference("reboot_checker");
+        final CheckBoxPreference per_app_check = (CheckBoxPreference)root.findPreference("per_app_service");
         ListPreference appTheme = (ListPreference)root.findPreference("app_theme");
         Preference about = root.findPreference("about");
         Preference legal = root.findPreference("legal");
 
+        per_app_check.setChecked(true);
+
         checkbox_preference.setIcon(R.drawable.ic_action_warning);
         reboot_checker.setIcon(R.drawable.ic_action_phone);
+        per_app_check.setIcon(R.drawable.ic_action_person);
 
         appTheme.setEntries(R.array.app_themes);
         appTheme.setEntryValues(data);
@@ -86,6 +96,31 @@ public class PrefsActivity extends PreferenceActivity {
 
         about.setIcon(R.drawable.ic_action_about);
         legal.setIcon(R.drawable.ic_action_legal);
+
+        per_app_check.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                if (per_app_check.isChecked()) {
+
+                    // Only start if really down;
+                    if (AeroActivity.perAppService.getState() == false)
+                        AeroActivity.perAppService.startService();
+
+
+                    //** store preferences
+                    preference.getEditor().commit();
+                    return true;
+                } else  {
+
+                    // Only stop if running;
+                    if (AeroActivity.perAppService.getState() == true)
+                        AeroActivity.perAppService.stopService();
+
+                    return false;
+                }
+            }
+        });
 
         appTheme.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override

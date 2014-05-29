@@ -49,6 +49,7 @@ import com.aero.control.helpers.shellHelper;
 import com.aero.control.lists.generatingLists;
 import com.aero.control.lists.generatingLists.PreferenceItem;
 import com.aero.control.prefs.PrefsActivity;
+import com.aero.control.service.PerAppServiceHelper;
 
 import java.util.ArrayList;
 
@@ -97,6 +98,7 @@ public class AeroActivity extends Activity {
 
     private static final rootHelper rootCheck = new rootHelper();
     public static final shellHelper shell = new shellHelper();
+    public static PerAppServiceHelper perAppService;
 
 
     @Override
@@ -118,7 +120,6 @@ public class AeroActivity extends Activity {
         else
             setTheme(R.style.RedHolo);
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
                 !(ViewConfiguration.get(getBaseContext()).hasPermanentMenuKey())) {
 
@@ -137,6 +138,10 @@ public class AeroActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        perAppService = new PerAppServiceHelper(getBaseContext());
+        if (perAppService.shouldBeStarted())
+            perAppService.startService();
 
         // Assign action bar title;
         mActionBarTitleID = getResources().getIdentifier("action_bar_title", "id", "android");

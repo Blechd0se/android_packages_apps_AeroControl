@@ -15,6 +15,11 @@
             android:title="@string/pref_rebootcheck"
             android:summary="@string/pref_rebootcheck_sum" />
 
+        <CheckBoxPreference
+            android:key="per_app_service"
+            android:title="@string/pref_per_app_service"
+            android:summary="@string/pref_per_app_service_sum" />
+
         <ListPreference
             android:key="app_theme"
             android:title="@string/pref_app_theme"

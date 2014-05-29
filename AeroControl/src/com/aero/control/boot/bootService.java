@@ -30,7 +30,7 @@ public class bootService extends Service
     {
         // service started
 
-        settings.setSettings(getBaseContext());
+        settings.setSettings(getBaseContext(), null);
 
         return START_NOT_STICKY;
     }
