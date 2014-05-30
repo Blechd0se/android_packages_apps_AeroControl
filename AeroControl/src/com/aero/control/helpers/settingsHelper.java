@@ -42,7 +42,7 @@ public class settingsHelper {
     public static final String PREF_SWEEP2WAKE = "sweeptowake";
     public static final String PERF_COLOR_CONTROL = "/sys/devices/platform/kcal_ctrl.0/kcal";
 
-    public static final String PREF_GOV_IO_FILE = "io_scheduler";
+    public static final String PREF_GOV_IO_FILE = "io_scheduler_list";
     public static final String PREF_DYANMIC_FSYNC = "dynFsync";
     public static final String PREF_WRITEBACK = "writeback";
 
@@ -131,12 +131,16 @@ public class settingsHelper {
         ArrayList<String> governorSettings = new ArrayList<String>();
         for (int k = 0; k < mNumCpus; k++) {
             if (cpu_max != null) {
-                defaultProfile.add("echo " + shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ) + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
+                if (Profile != null)
+                    defaultProfile.add("echo " + shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ) + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
+
                 shell.queueWork("echo " + cpu_max + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
             }
 
             if (cpu_min != null) {
-                defaultProfile.add("echo " + shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ) + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
+                if (Profile != null)
+                    defaultProfile.add("echo " + shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ) + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
+
                 shell.queueWork("echo " + cpu_min + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
             }
 
@@ -146,59 +150,80 @@ public class settingsHelper {
                  * Needs to be executed first, otherwise we would get a NullPointer
                  * For safety reasons we sleep this thread later
                  */
-                defaultProfile.add("echo " + shell.getInfo(CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE) + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
+                if (Profile != null)
+                    defaultProfile.add("echo " + shell.getInfo(CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE) + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
 
                 governorSettings.add("echo " + cpu_gov + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
             }
         }
-        // Seriously, we need to set this first because of dependencies;
-        shell.setRootInfo(governorSettings.toArray(new String[0]));
+        if (cpu_gov != null) {
+            // Seriously, we need to set this first because of dependencies;
+            shell.setRootInfo(governorSettings.toArray(new String[0]));
+        }
 
         // ADD GPU COMMANDS TO THE ARRAY
         if (gpu_max != null) {
-            defaultProfile.add("echo " + shell.getInfo(GPU_FREQ_MAX) + " > " + GPU_FREQ_MAX);
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(GPU_FREQ_MAX) + " > " + GPU_FREQ_MAX);
+
             shell.queueWork("echo " + gpu_max + " > " + GPU_FREQ_MAX);
         }
 
         if(new File(GPU_CONTROL_ACTIVE).exists()) {
-            defaultProfile.add("echo " + shell.getInfo(GPU_CONTROL_ACTIVE) + " > " + GPU_CONTROL_ACTIVE);
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(GPU_CONTROL_ACTIVE) + " > " + GPU_CONTROL_ACTIVE);
+
             shell.queueWork("echo " + (gpu_enb ? "1" : "0") + " > " + GPU_CONTROL_ACTIVE);
         }
 
         if(new File(SWEEP2WAKE).exists()) {
-            defaultProfile.add("echo " + shell.getInfo(SWEEP2WAKE) + " > " + SWEEP2WAKE);
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(SWEEP2WAKE) + " > " + SWEEP2WAKE);
+
             shell.queueWork("echo " + (sweep ? "1" : "0") + " > " + SWEEP2WAKE);
         }
 
         if (display_color != null) {
-            defaultProfile.add("echo " + shell.getInfo(DISPLAY_COLOR) + " > " + DISPLAY_COLOR);
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(DISPLAY_COLOR) + " > " + DISPLAY_COLOR);
+
             shell.queueWork("echo " + display_color + " > " + DISPLAY_COLOR);
         }
 
         if (rgbValues != null) {
-            defaultProfile.add("echo " + shell.getInfo(PERF_COLOR_CONTROL) + " > " + PERF_COLOR_CONTROL);
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(PERF_COLOR_CONTROL) + " > " + PERF_COLOR_CONTROL);
+
             shell.queueWork("echo " + rgbValues + " > " + PERF_COLOR_CONTROL);
         }
 
         // ADD MEM COMMANDS TO THE ARRAY
         if (mem_ios != null) {
-            defaultProfile.add("echo " + shell.getInfo(GOV_IO_FILE) + " > " + GOV_IO_FILE);
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfoString(shell.getInfo(GOV_IO_FILE)) + " > " + GOV_IO_FILE);
+
             shell.queueWork("echo " + mem_ios + " > " + GOV_IO_FILE);
         }
 
         if (new File(DYANMIC_FSYNC).exists()) {
-            defaultProfile.add("echo " + shell.getInfo(DYANMIC_FSYNC) + " > " + DYANMIC_FSYNC);
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(DYANMIC_FSYNC) + " > " + DYANMIC_FSYNC);
+
             shell.queueWork("echo " + (mem_dfs ? "1" : "0") + " > " + DYANMIC_FSYNC);
         }
 
         if (new File(WRITEBACK).exists()) {
-            defaultProfile.add("echo " + shell.getInfo(WRITEBACK) + " > " + WRITEBACK);
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(WRITEBACK) + " > " + WRITEBACK);
+
             shell.queueWork("echo " + (mem_wrb ? "1" : "0") + " > " + WRITEBACK);
         }
 
         // Add misc commands to array
         if (misc_vib != null) {
-            defaultProfile.add("echo " + shell.getInfo(MISC_SETTINGS_PATH) + " > " + MISC_SETTINGS_PATH);
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(MISC_SETTINGS_PATH) + " > " + MISC_SETTINGS_PATH);
+
             shell.queueWork("echo " + misc_vib + " > " + MISC_SETTINGS_PATH);
         }
 
@@ -221,7 +246,9 @@ public class settingsHelper {
                     final String governorSetting = prefs.getString(CPU_GOV_BASE + cpu_gov + "/" + b, null);
 
                     if (governorSetting != null) {
-                        defaultProfile.add("echo " + shell.getInfo(CPU_GOV_BASE + cpu_gov + "/" + b) + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
+                        if (Profile != null)
+                            defaultProfile.add("echo " + shell.getInfo(CPU_GOV_BASE + cpu_gov + "/" + b) + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
+
                         shell.queueWork("echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
 
                         //Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
@@ -238,8 +265,9 @@ public class settingsHelper {
                 final String vmSettings = prefs.getString(DALVIK_TWEAK + "/" + c, null);
 
                 if (vmSettings != null) {
+                    if (Profile != null)
+                        defaultProfile.add("echo " + shell.getInfo(DALVIK_TWEAK + "/" + c) + " > " + DALVIK_TWEAK + "/" + c);
 
-                    defaultProfile.add("echo " + shell.getInfo(DALVIK_TWEAK + "/" + c) + " > " + DALVIK_TWEAK + "/" + c);
                     shell.queueWork("echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
 
                     //Log.e("Aero", "Output: " + "echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
@@ -256,8 +284,9 @@ public class settingsHelper {
                     final String hotplugSettings = prefs.getString(PREF_HOTPLUG + "/" + d, null);
 
                     if (hotplugSettings != null) {
+                        if (Profile != null)
+                            defaultProfile.add("echo " + shell.getInfo(PREF_HOTPLUG + "/" + d) + " > " + PREF_HOTPLUG + "/" + d);
 
-                        defaultProfile.add("echo " + shell.getInfo(PREF_HOTPLUG + "/" + d) + " > " + PREF_HOTPLUG + "/" + d);
                         shell.queueWork("echo " + hotplugSettings + " > " + PREF_HOTPLUG + "/" + d);
 
                         //Log.e("Aero", "Output: " + "echo " + hotplugSettings + " > " + PREF_HOTPLUG + "/" + d);
@@ -275,8 +304,9 @@ public class settingsHelper {
                     final String gpugovSettings = prefs.getString(PREF_GPU_GOV + "/" + e, null);
 
                     if (gpugovSettings != null) {
+                        if (Profile != null)
+                            defaultProfile.add("echo " + shell.getInfo(PREF_GPU_GOV + "/" + e) + " > " + PREF_GPU_GOV + "/" + e);
 
-                        defaultProfile.add("echo " + shell.getInfo(PREF_GPU_GOV + "/" + e) + " > " + PREF_GPU_GOV + "/" + e);
                         shell.queueWork("echo " + gpugovSettings + " > " + PREF_GPU_GOV + "/" + e);
 
                         //Log.e("Aero", "Output: " + "echo " + gpugovSettings + " > " + PREF_GPU_GOV + "/" + e);
