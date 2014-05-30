@@ -159,6 +159,7 @@
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">IO Scheduler</string>
+    <string name="pref_io_scheduler">O Scheduler Parameter</string>
 
     <!-- GPU Fragment -->
     <string name="pref_gpu_control_enable">GPU Control</string>

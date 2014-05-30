@@ -46,8 +46,8 @@
 
         <ListPreference
             android:key="io_scheduler_list"
-            android:title="IO Scheduler"
-            android:dialogTitle="IO Scheduler" />
+            android:title="@string/io_scheduler"
+            android:dialogTitle="@string/io_scheduler" />
 
     </PreferenceCategory>
 

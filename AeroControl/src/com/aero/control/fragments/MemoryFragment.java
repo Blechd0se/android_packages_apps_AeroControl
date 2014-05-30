@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.CheckBoxPreference;
@@ -12,9 +13,13 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,13 +50,13 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     public static final String LOW_MEM = "/system/build.prop";
     public static final String FILENAME = "firstrun_trim";
     public static final String FILENAME_HIDDEN = "firstrun_hidden_feature";
-    public static final String GOV_IO_PARAMETER_OMAP = "/sys/devices/platform/mmci-omap-hs.0/mmc_host/mmc0/mmc0:1234/block/mmcblk0/queue/iosched/";
-    public static final String GOV_IO_PARAMETER_MSM = "/sys/devices/msm_sdcc.1/mmc_host/mmc0/mmc0:0001/block/mmcblk0/queue/iosched";
+    public static final String GOV_IO_PARAMETER = "/sys/block/mmcblk0/queue/iosched";
 
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
     public PreferenceCategory PrefCat;
     public PreferenceScreen root;
+    private SharedPreferences prefs;
 
     public boolean showDialog = true;
 
@@ -68,6 +73,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         super.onCreate(savedInstanceState);
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.memory_fragment);
+        setHasOptionsMenu(true);
 
         root = this.getPreferenceScreen();
         final PreferenceCategory memorySettingsCategory =
@@ -183,6 +189,40 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
     }
 
+    // Create our options menu;
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String a = prefs.getString("app_theme", null);
+
+        if (a == null)
+            a = "";
+
+        if (a.equals("red"))
+            inflater.inflate(R.menu.memory_menu, menu);
+        else if (a.equals("light"))
+            inflater.inflate(R.menu.memory_menu, menu);
+        else if (a.equals("dark"))
+            inflater.inflate(R.menu.memory_menu_light, menu);
+        else
+            inflater.inflate(R.menu.memory_menu, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_io_settings:
+                loadIOParameter();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mLowMemoryPref) {
@@ -219,7 +259,10 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             String value = (String) newValue;
             mIOScheduler.setSummary(value);
             AeroActivity.shell.setRootInfo(value, GOV_IO_FILE);
-            loadIOParameter();
+
+            // Kill everything with fire;
+            if (PrefCat != null)
+                root.removePreference(PrefCat);
         } else {
             return false;
         }
@@ -333,55 +376,26 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
     private void loadIOParameter() {
 
-        mConfigOptions = new ShowcaseView.ConfigOptions();
-        mConfigOptions.hideOnClickOutside = false;
-        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
-
-        // Set up our file;
-        int output = 0;
-        final byte[] buffer = new byte[1024];
-
         try {
-            FileInputStream fis = getActivity().openFileInput(FILENAME_HIDDEN);
-            output = fis.read(buffer);
-            fis.close();
-        } catch (IOException e) {
-            Log.e("Aero", "Couldn't open File... " + output);
-        }
-
-        String complete_path;
-
-        if (new File(GOV_IO_PARAMETER_OMAP).exists())
-            complete_path = GOV_IO_PARAMETER_OMAP;
-        else if (new File(GOV_IO_PARAMETER_MSM).exists())
-            complete_path = GOV_IO_PARAMETER_MSM;
-        else
-            return;
-
-        // Only show showcase once;
-        if (output == 0)
-            DrawFirstStart(R.string.showcase_hidden_feature, R.string.showcase_hidden_feature_sum, FILENAME_HIDDEN);
-
-        try {
-            String completeParamterList[] = AeroActivity.shell.getDirInfo(complete_path, true);
+            String completeParamterList[] = AeroActivity.shell.getDirInfo(GOV_IO_PARAMETER, true);
 
             // If there are already some entries, kill them all (with fire)
             if (PrefCat != null)
                 root.removePreference(PrefCat);
 
             PrefCat = new PreferenceCategory(getActivity());
-            PrefCat.setTitle(R.string.io_scheduler);
+            PrefCat.setTitle(R.string.pref_io_scheduler);
             root.addPreference(PrefCat);
 
             try {
-                Thread.sleep(250);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 Log.e("Aero", "Something interrupted the main Thread, try again.", e);
             }
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            h.genPrefFromDictionary(completeParamterList, complete_path);
+            h.genPrefFromDictionary(completeParamterList, GOV_IO_PARAMETER);
 
             // Probably the wrong place, should be in getDirInfo ?
         } catch (NullPointerException e) {
