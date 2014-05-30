@@ -27,6 +27,7 @@ public class settingsHelper {
     public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
+    public static final String GOV_IO_PARAMETER = "/sys/block/mmcblk0/queue/iosched";
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
     public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
     public static final String DALVIK_TWEAK = "/proc/sys/vm";
@@ -156,7 +157,14 @@ public class settingsHelper {
                 governorSettings.add("echo " + cpu_gov + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
             }
         }
-        if (cpu_gov != null) {
+        if (mem_ios != null) {
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfoString(shell.getInfo(GOV_IO_FILE)) + " > " + GOV_IO_FILE);
+
+            governorSettings.add("echo " + mem_ios + " > " + GOV_IO_FILE);
+        }
+
+        if (cpu_gov != null || mem_ios != null) {
             // Seriously, we need to set this first because of dependencies;
             shell.setRootInfo(governorSettings.toArray(new String[0]));
         }
@@ -198,12 +206,6 @@ public class settingsHelper {
         }
 
         // ADD MEM COMMANDS TO THE ARRAY
-        if (mem_ios != null) {
-            if (Profile != null)
-                defaultProfile.add("echo " + shell.getInfoString(shell.getInfo(GOV_IO_FILE)) + " > " + GOV_IO_FILE);
-
-            shell.queueWork("echo " + mem_ios + " > " + GOV_IO_FILE);
-        }
 
         if (new File(DYANMIC_FSYNC).exists()) {
             if (Profile != null)
@@ -228,6 +230,31 @@ public class settingsHelper {
         }
 
         try {
+
+            if (mem_ios != null) {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    Log.e("Aero", "Something interrupted the main Thread, try again.", e);
+                }
+                String completeIOSchedulerSettings[] = shell.getDirInfo(GOV_IO_PARAMETER, true);
+
+                /* IO Scheduler Specific Settings at boot */
+
+                for (String b : completeIOSchedulerSettings) {
+
+                    final String ioSettings = prefs.getString(GOV_IO_PARAMETER + "/" + b, null);
+
+                    if (ioSettings != null) {
+                        if (Profile != null)
+                            defaultProfile.add("echo " + shell.getInfo(GOV_IO_PARAMETER + "/" + b) + " > " + GOV_IO_PARAMETER + "/" + b);
+
+                        shell.queueWork("echo " + ioSettings + " > " + GOV_IO_PARAMETER + "/" + b);
+
+                        //Log.e("Aero", "Output: " + "echo " + ioSettings + " > " + GOV_IO_PARAMETER + "/" + b);
+                    }
+                }
+            }
 
             if (cpu_gov != null) {
 
