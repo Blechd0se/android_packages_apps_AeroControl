@@ -77,6 +77,7 @@ public final class shellHelper {
      * @return nothing
      */
     public void execWork() {
+        shWork.addToWork("echo ");
         setRootInfo(shWork.execWork());
     }
 
