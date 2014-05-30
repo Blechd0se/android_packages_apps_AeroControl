@@ -26,6 +26,8 @@
     <string name="nocpu_data">Konnte keine CPU Daten finden.</string>
     <string name="maybe_later">Vielleicht später</string>
     <string name="successful">Erfolg!</string>
+    <string name="perAppAssigned">Aktiv</string>
+    <string name="notperAppAssigned">Nicht aktiv</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -64,6 +66,8 @@
     <string name="pref_updatepath_sum">Gewünschter Updatepfad.</string>
     <string name="pref_app_theme">App Aussehen</string>
     <string name="pref_app_theme_sum">Setzt den Style der App fest.</string>
+    <string name="pref_per_app_service">Per-App Profil Service</string>
+    <string name="pref_per_app_service_sum">Aktiviere oder deaktiviere hier den Per-App Profil Service.</string>
 
     <string name="app_theme_red">Rot - Light Holo mit rotem Akzent</string>
     <string name="app_theme_light">Light - Light Holo mit blauem Akzent</string>
@@ -99,6 +103,9 @@
     <string name="perf_cpu_hotplug">Hotplug Einstellungen</string>
     <string name="perf_cpu_hotplug_driver">Hotplug Treiber</string>
     <string name="perf_cpu_hotplug_sum">Stelle hier den Hotplug-Treiber ein</string>
+
+    <string name="perf_voltage_control">Spannungskontrolle</string>
+    <string name="perf_voltage_control_sum">Stelle hier die Spannung der CPU ein.</string>
 
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Speichereinstellungen</string>
@@ -142,6 +149,7 @@
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">IO Scheduler</string>
+    <string name="pref_io_scheduler">IO Scheduler Parameter</string>
 
     <!-- GPU Fragment -->
     <string name="pref_gpu_control_enable">GPU Kontrolle</string>
@@ -236,5 +244,10 @@
     <string name="pref_profile_change_name_sum">Ändere den Namen deines Profils.</string>
     <string name="pref_profile_reset">Zurücksetzen des Standardprofils</string>
     <string name="pref_profile_reset_sum">Dein momentanes Profil wird zurückgesetzt. So als ob du Aero Control frisch installiert hast.</string>
+    <string name="pref_profile_perApp">Wähle Deine Apps aus</string>
+    <string name="pref_profile_showSystem">Zeige System Apps</string>
+
+    <!-- Toast Messages -->
+    <string name="rateIt">Klick mich und bewerte diese App!</string>
 
 </resources>

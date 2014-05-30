@@ -159,7 +159,7 @@
 
     <!-- IO Scheduler -->
     <string name="io_scheduler">IO Scheduler</string>
-    <string name="pref_io_scheduler">O Scheduler Parameter</string>
+    <string name="pref_io_scheduler">IO Scheduler Parameter</string>
 
     <!-- GPU Fragment -->
     <string name="pref_gpu_control_enable">GPU Control</string>
@@ -255,8 +255,10 @@
     <string name="pref_profile_change_name_sum">Change the name of your profile.</string>
     <string name="pref_profile_reset">Reset your current profile</string>
     <string name="pref_profile_reset_sum">This will completely reset your current profile. Just like if you freshly installed Aero Control.</string>
+    <string name="pref_profile_perApp">Choose your apps</string>
+    <string name="pref_profile_showSystem">Show system apps</string>
 
     <!-- Toast Messages -->
-    <string name="rateIt">Like it? Rate it!</string>
+    <string name="rateIt">Click me and rate this app!</string>
 
 </resources>

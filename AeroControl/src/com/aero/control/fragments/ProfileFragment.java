@@ -322,7 +322,7 @@ public class ProfileFragment extends PreferenceFragment {
 
         final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 
-        dialog.setTitle("The Choice Is Yours");
+        dialog.setTitle(R.string.pref_profile_perApp);
         dialog.setMultiChoiceItems(perApp.getAllPackageNames(), perApp.getCheckedState(), new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i, boolean b) {
@@ -346,7 +346,7 @@ public class ProfileFragment extends PreferenceFragment {
             }
         })
                 // Set the action buttons
-                .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
@@ -373,7 +373,7 @@ public class ProfileFragment extends PreferenceFragment {
 
                     }
                 })
-                .setNeutralButton("Show SystemApps", new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.pref_profile_showSystem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         perApp.setSystemAppStatus(!perApp.getSystemAppStatus());
