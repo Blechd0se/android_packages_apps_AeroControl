@@ -49,6 +49,7 @@ public class settingsHelper {
 
     public static final String PREF_HOTPLUG = "/sys/kernel/hotplug_control";
     public static final String PREF_GPU_GOV = "/sys/module/msm_kgsl_core/parameters";
+    public static final String PREF_VOLTAGE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table";
 
     public static final String MISC_SETTINGS_PATH = "/sys/devices/virtual/timed_output/vibrator/vtg_level";
 
@@ -114,6 +115,10 @@ public class settingsHelper {
                 }
             }
         }
+        String voltage = prefs.getString("voltage_values", null);
+
+        if (voltage != null)
+            shell.queueWork("echo " + voltage + " > " + PREF_VOLTAGE_PATH);
 
         // GET GPU VALUES FROM PREFERENCES
         String gpu_max = prefs.getString(PREF_GPU_FREQ_MAX, null);

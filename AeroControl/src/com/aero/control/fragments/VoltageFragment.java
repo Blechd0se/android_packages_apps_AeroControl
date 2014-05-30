@@ -1,10 +1,12 @@
 package com.aero.control.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.text.InputType;
 import android.util.Log;
@@ -28,6 +30,7 @@ public class VoltageFragment extends PreferenceFragment {
     public PreferenceCategory PrefCat;
     public static final String VOLTAGE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table";
     final ArrayList<String> voltList = new ArrayList<String>();
+    private SharedPreferences mPrefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,7 +156,8 @@ public class VoltageFragment extends PreferenceFragment {
     // Executes the new voltage values and updates UI
     public void executeVolt(String exeVolt) {
 
-        Log.e("Aero", "Output: " + exeVolt);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mPrefs.edit().putString("voltage_values", exeVolt).commit();
         AeroActivity.shell.setRootInfo(exeVolt, VOLTAGE_PATH);
         updateUI();
 
