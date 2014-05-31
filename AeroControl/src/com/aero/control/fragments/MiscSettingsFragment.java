@@ -20,9 +20,10 @@ import java.util.Objects;
  */
 public class MiscSettingsFragment extends PreferenceFragment {
 
-    public PreferenceScreen root;
-    public PreferenceCategory PrefCat;
-    public static final String MISC_SETTINGS_PATH = "/sys/devices/virtual/timed_output/vibrator";
+    private PreferenceScreen root;
+    private PreferenceCategory PrefCat;
+    private static final String MISC_VIBRATOR_CONTROL = "/sys/devices/virtual/timed_output/vibrator";
+    private static final String MISC_THERMAL_CONTROL = "/sys/module/msm_thermal/parameters";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class MiscSettingsFragment extends PreferenceFragment {
             root.removePreference(PrefCat);
 
         PrefCat = new PreferenceCategory(getActivity());
-        PrefCat.setTitle(R.string.perf_misc_settings_vib);
+        PrefCat.setTitle(R.string.pref_misc_settings);
         root.addPreference(PrefCat);
 
         try {
@@ -50,7 +51,8 @@ public class MiscSettingsFragment extends PreferenceFragment {
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
             String[][] array = new String[][] {
-                    {"vtg_level", MISC_SETTINGS_PATH}
+                    {"vtg_level", MISC_VIBRATOR_CONTROL},
+                    {"temp_threshold", MISC_THERMAL_CONTROL}
             };
             h.genPrefFromFiles(array);
 

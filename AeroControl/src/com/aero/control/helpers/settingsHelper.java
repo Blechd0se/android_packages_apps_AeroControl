@@ -51,7 +51,8 @@ public class settingsHelper {
     public static final String PREF_GPU_GOV = "/sys/module/msm_kgsl_core/parameters";
     public static final String PREF_VOLTAGE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table";
 
-    public static final String MISC_SETTINGS_PATH = "/sys/devices/virtual/timed_output/vibrator/vtg_level";
+    public static final String MISC_VIBRATOR_CONTROL = "/sys/devices/virtual/timed_output/vibrator/vtg_level";
+    private static final String MISC_THERMAL_CONTROL = "/sys/module/msm_thermal/parameters/temp_threshold";
 
     private SharedPreferences prefs;
     public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
@@ -131,7 +132,8 @@ public class settingsHelper {
         Boolean mem_dfs = prefs.getBoolean(PREF_DYANMIC_FSYNC, false);
         Boolean mem_wrb = prefs.getBoolean(PREF_WRITEBACK, false);
         // Get Misc Settings from preferences
-        String misc_vib = prefs.getString(MISC_SETTINGS_PATH, null);
+        String misc_vib = prefs.getString(MISC_VIBRATOR_CONTROL, null);
+        String misc_thm = prefs.getString(MISC_THERMAL_CONTROL, null);
 
         // ADD CPU COMMANDS TO THE ARRAY
         ArrayList<String> governorSettings = new ArrayList<String>();
@@ -229,9 +231,16 @@ public class settingsHelper {
         // Add misc commands to array
         if (misc_vib != null) {
             if (Profile != null)
-                defaultProfile.add("echo " + shell.getInfo(MISC_SETTINGS_PATH) + " > " + MISC_SETTINGS_PATH);
+                defaultProfile.add("echo " + shell.getInfo(MISC_VIBRATOR_CONTROL) + " > " + MISC_VIBRATOR_CONTROL);
 
-            shell.queueWork("echo " + misc_vib + " > " + MISC_SETTINGS_PATH);
+            shell.queueWork("echo " + misc_vib + " > " + MISC_VIBRATOR_CONTROL);
+        }
+
+        if (misc_thm != null) {
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(MISC_THERMAL_CONTROL) + " > " + MISC_THERMAL_CONTROL);
+
+            shell.queueWork("echo " + misc_thm + " > " + MISC_THERMAL_CONTROL);
         }
 
         try {

@@ -246,7 +246,7 @@
     <string name="pref_charge_led_mode_off">Off</string>
 
     <!-- Misc Settings -->
-    <string name="perf_misc_settings_vib">Vibration Control</string>
+    <string name="pref_misc_settings">Misc Settings</string>
 
     <!-- Profile Fragment -->
     <string name="pref_profile_enter_name">You have to enter a name.</string>
