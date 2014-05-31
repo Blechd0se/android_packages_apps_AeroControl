@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.Parcelable;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.text.method.ScrollingMovementMethod;
@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import com.aero.control.R;
 import com.aero.control.helpers.perAppHelper;
 import com.aero.control.helpers.settingsHelper;
 import com.espian.showcaseview.ShowcaseView;
+import com.cocosw.undobar.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,12 +40,12 @@ import java.util.Map;
 /**
  * Created by Alexander Christ on 09.12.13.
  */
-public class ProfileFragment extends PreferenceFragment {
+public class ProfileFragment extends PreferenceFragment implements UndoBarController.AdvancedUndoListener {
 
     private static final String LOG_TAG = PreferenceFragment.class.getName();
     private ViewGroup mContainerView;
     public ShowcaseView mShowCase;
-    private SharedPreferences prefs;
+    private SharedPreferences mPrefs;
     public ShowcaseView.ConfigOptions mConfigOptions;
     public static final Typeface kitkatFont = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     private static final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
@@ -51,6 +53,8 @@ public class ProfileFragment extends PreferenceFragment {
     private  String[] mCompleteProfiles;
     public static final String FILENAME_PROFILES = "firstrun_profiles";
     public static final settingsHelper settings = new settingsHelper();
+    private ViewGroup mDeletedChild;
+    private String mDeletedProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,8 +113,8 @@ public class ProfileFragment extends PreferenceFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String a = prefs.getString("app_theme", null);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String a = mPrefs.getString("app_theme", null);
 
         if (a == null)
             a = "";
@@ -161,8 +165,8 @@ public class ProfileFragment extends PreferenceFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Continue with resetting
-                        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                        SharedPreferences.Editor  editor = prefs.edit();
+                        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        SharedPreferences.Editor  editor = mPrefs.edit();
                         editor.clear();
                         editor.commit();
                         Toast.makeText(getActivity(), R.string.successful , Toast.LENGTH_LONG).show();
@@ -210,7 +214,7 @@ public class ProfileFragment extends PreferenceFragment {
     // Adds the object to our "list", s = Name
     private void addProfile(final String s, boolean flag) {
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         final SharedPreferences AeroProfile = getActivity().getSharedPreferences(s, Context.MODE_PRIVATE);
         final File defaultFile = new File(sharedPrefsPath + "com.aero.control_preferences.xml");
 
@@ -262,19 +266,24 @@ public class ProfileFragment extends PreferenceFragment {
         txtView.setTypeface(kitkatFont);
         createListener(txtView, txtViewSummary);
 
+
+        final UndoBarStyle style = new UndoBarStyle(R.drawable.ic_action_undo, R.string.pref_profile_undo,
+                R.drawable.undobar_background, 10000).setAnim(AnimationUtils.loadAnimation(getActivity(),
+                android.R.anim.fade_in), AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+
         // Remove the complete ViewGroup;
         childView.findViewById(R.id.delete_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                UndoBarController.show(getActivity(), getText(R.string.pref_profile_deleted), ProfileFragment.this, style);
 
-                if (deleteProfile(txtView.getText().toString()))
-                    mContainerView.removeView(childView);
+                mDeletedProfile = txtView.getText().toString();
+                mDeletedChild = childView;
+                mPrefs = getActivity().getSharedPreferences(mDeletedProfile, Context.MODE_PRIVATE);
 
-                // If there are no rows remaining, show
-                // the empty view.
-                if (mContainerView.getChildCount() == 1) {
-                    mContainerView.findViewById(android.R.id.empty).setVisibility(View.VISIBLE);
-                }
+
+                mContainerView.removeView(mDeletedChild);
+
             }
         });
         // Assign this profile to an app
@@ -287,6 +296,36 @@ public class ProfileFragment extends PreferenceFragment {
         });
 
         mContainerView.addView(childView, 0);
+
+    }
+
+    /*
+     * Called to revoke the operations;
+     */
+    @Override
+    public void onUndo(final Parcelable token) {
+        try {
+            Toast.makeText(getActivity(), R.string.successful, Toast.LENGTH_SHORT).show();
+        } catch (NullPointerException e) {
+            Log.e("Aero", "Can't show a toast without context!", e);
+        }
+        mContainerView.addView(mDeletedChild);
+    }
+
+    /*
+     * Called to execute the operations;
+     */
+    @Override
+    public void onHide(final Parcelable token) {
+        if (deleteProfile(mDeletedProfile)) {
+            mContainerView.removeView(mDeletedChild);
+        }
+
+        // If there are no rows remaining, show
+        // the empty view.
+        if (mContainerView.getChildCount() == 1) {
+            mContainerView.findViewById(android.R.id.empty).setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -397,11 +436,10 @@ public class ProfileFragment extends PreferenceFragment {
 
     private final boolean deleteProfile(String ProfileName) {
 
-        SharedPreferences profile = getActivity().getSharedPreferences(ProfileName, Context.MODE_PRIVATE);
         final File prefFile = new File (sharedPrefsPath + ProfileName + ".xml");
 
         //Clear it and delete it;
-        profile.edit().clear().commit();
+        mPrefs.edit().clear().commit();
         prefFile.delete();
 
         // Check if file is gone;
@@ -429,11 +467,11 @@ public class ProfileFragment extends PreferenceFragment {
 
     private final void saveNewProfile(SharedPreferences AeroProfile) {
         // Just to be save, loading default again;
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = AeroProfile.edit();
 
         // Get all our preferences;
-        final Map<String,?> allKeys = prefs.getAll();
+        final Map<String,?> allKeys = mPrefs.getAll();
 
         saveProfile(allKeys, editor);
 
@@ -568,6 +606,7 @@ public class ProfileFragment extends PreferenceFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
+                                mPrefs = getActivity().getSharedPreferences("com.aero.control_preferences", Context.MODE_PRIVATE);
                                 deleteProfile("com.aero.control_preferences");
                                 SharedPreferences AeroProfile = getActivity().getSharedPreferences(txtView.getText().toString(), Context.MODE_PRIVATE);
                                 applyProfile(AeroProfile);

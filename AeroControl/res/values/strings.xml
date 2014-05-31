@@ -257,6 +257,8 @@
     <string name="pref_profile_reset_sum">This will completely reset your current profile. Just like if you freshly installed Aero Control.</string>
     <string name="pref_profile_perApp">Choose your apps</string>
     <string name="pref_profile_showSystem">Show system apps</string>
+    <string name="pref_profile_deleted">Deleted</string>
+    <string name="pref_profile_undo">Undo</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Click me and rate this app!</string>

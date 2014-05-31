@@ -246,6 +246,8 @@
     <string name="pref_profile_reset_sum">Dein momentanes Profil wird zurückgesetzt. So als ob du Aero Control frisch installiert hast.</string>
     <string name="pref_profile_perApp">Wähle Deine Apps aus</string>
     <string name="pref_profile_showSystem">Zeige System Apps</string>
+    <string name="pref_profile_deleted">Gelöscht</string>
+    <string name="pref_profile_undo">Rückgangig</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Klick mich und bewerte diese App!</string>
