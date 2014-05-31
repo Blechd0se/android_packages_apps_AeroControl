@@ -37,8 +37,9 @@ public class AeroFragment extends Fragment {
     // Values to read from;
     public static final String GOV_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
-    public static final String GPU_FREQ = "/proc/gpu/cur_rate";
-    public static final String GPU_FREQ_NEXUS4 = "/sys/class/kgsl/kgsl-3d0/gpuclk";
+    public static final String[] GPU_FILES = {"/sys/class/kgsl/kgsl-3d0/gpuclk", /* Adreno GPUs */
+                                                "/sys/devices/platform/omap/pvrsrvkm.0/sgx_fck_rate" /* Defy 3.0 Kernel */,
+                                                "/proc/gpu/cur_rate" /* Defy 2.6 Kernel */};
     public static final String FILENAME_PROC_MEMINFO = "/proc/meminfo";
 
     public ListView listView1;
@@ -128,11 +129,13 @@ public class AeroFragment extends Fragment {
 
         listView1 = (ListView) root.findViewById(R.id.listView1);
 
-        final File gpu = new File(GPU_FREQ_NEXUS4);
-        if (gpu.exists())
-            gpu_file = GPU_FREQ_NEXUS4;
-        else
-            gpu_file = GPU_FREQ;
+        /* Find correct gpu path */
+        for (String a : GPU_FILES) {
+            if (new File(a).exists()) {
+                gpu_file = a;
+                break;
+            }
+        }
 
         try {
             mRefreshThread.start();

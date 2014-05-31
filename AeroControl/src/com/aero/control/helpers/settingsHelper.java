@@ -20,8 +20,9 @@ public class settingsHelper {
     public static final String CURRENT_GOV_AVAILABLE = "/cpufreq/scaling_governor";
     public static final String CPU_MAX_FREQ = "/cpufreq/scaling_max_freq";
     public static final String CPU_MIN_FREQ = "/cpufreq/scaling_min_freq";
-
-    public static final String GPU_FREQ_MAX = "/sys/kernel/gpu_control/max_freq";
+    public static final String[] GPU_FILES = {"/sys/kernel/gpu_control/max_freq", /* Defy 2.6 Kernel */
+                                                "/sys/class/kgsl/kgsl-3d0/max_gpuclk", /* Adreno GPUs */
+                                                "/sys/devices/platform/omap/pvrsrvkm.0/sgx_fck_rate" /* Defy 3.0 Kernel */};
     public static final String GPU_CONTROL_ACTIVE = "/sys/kernel/gpu_control/gpu_control_active";
     public static final String DISPLAY_COLOR = "/sys/class/misc/display_control/display_brightness_value";
     public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
@@ -55,6 +56,7 @@ public class settingsHelper {
     private static final String MISC_THERMAL_CONTROL = "/sys/module/msm_thermal/parameters/temp_threshold";
 
     private SharedPreferences prefs;
+    private String gpu_file;
     public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
     private static final shellHelper shell = new shellHelper();
@@ -178,10 +180,19 @@ public class settingsHelper {
 
         // ADD GPU COMMANDS TO THE ARRAY
         if (gpu_max != null) {
-            if (Profile != null)
-                defaultProfile.add("echo " + shell.getInfo(GPU_FREQ_MAX) + " > " + GPU_FREQ_MAX);
 
-            shell.queueWork("echo " + gpu_max + " > " + GPU_FREQ_MAX);
+            for (String a : GPU_FILES) {
+                if (new File(a).exists()) {
+                    gpu_file = a;
+                    break;
+                }
+            }
+            if (gpu_file != null) {
+                if (Profile != null)
+                    defaultProfile.add("echo " + shell.getInfo(gpu_file) + " > " + gpu_file);
+
+                shell.queueWork("echo " + gpu_max + " > " + gpu_file);
+            }
         }
 
         if(new File(GPU_CONTROL_ACTIVE).exists()) {
