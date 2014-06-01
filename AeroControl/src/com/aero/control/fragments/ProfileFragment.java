@@ -53,6 +53,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private static final String perAppProfileHandler = "perAppProfileHandler";
     private  String[] mCompleteProfiles;
     public static final String FILENAME_PROFILES = "firstrun_profiles";
+    public static final String FILENAME_PERAPP = "firstrun_perapp";
     public static final settingsHelper settings = new settingsHelper();
     private ViewGroup mDeletedChild;
     private String mDeletedProfile;
@@ -197,12 +198,28 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                         String profileTitle = editText.getText().toString();
 
                         // Add content;
-                        if(profileTitle.equals(""))
-                            Toast.makeText(getActivity(), R.string.pref_profile_enter_name , Toast.LENGTH_LONG).show();
+                        if (profileTitle.equals(""))
+                            Toast.makeText(getActivity(), R.string.pref_profile_enter_name, Toast.LENGTH_LONG).show();
                         else if (allProfiles.contains(profileTitle + ".xml"))
-                            Toast.makeText(getActivity(), R.string.pref_profile_name_exists , Toast.LENGTH_LONG).show();
-                        else
+                            Toast.makeText(getActivity(), R.string.pref_profile_name_exists, Toast.LENGTH_LONG).show();
+                        else {
                             addProfile(profileTitle, true);
+                            // Set up our file;
+                            int output = 0;
+                            final byte[] buffer = new byte[1024];
+
+                            try {
+                                FileInputStream fis = getActivity().openFileInput(FILENAME_PERAPP);
+                                output = fis.read(buffer);
+                                fis.close();
+                            } catch (IOException e) {
+                                Log.e("Aero", "Couldn't open File... " + output);
+                            }
+
+                            // Only show showcase once;
+                            if (output == 0)
+                                DrawFirstStart(R.string.showcase_perapp_profiles, R.string.showcase_perapp_profiles_sum, FILENAME_PERAPP, null);
+                        }
 
                     }
                 })
@@ -688,11 +705,11 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
         // Only show showcase once;
         if (output == 0)
-            DrawFirstStart(R.string.showcase_profile_fragment, R.string.showcase_profile_fragment_sum, FILENAME_PROFILES);
+            DrawFirstStart(R.string.showcase_profile_fragment, R.string.showcase_profile_fragment_sum, FILENAME_PROFILES,  R.id.action_add_item);
 
     }
 
-    public void DrawFirstStart(int header, int content, String filename) {
+    public void DrawFirstStart(int header, int content, String filename, Integer id) {
 
         try {
             FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
@@ -703,7 +720,10 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        mShowCase = ShowcaseView.insertShowcaseViewWithType(ShowcaseView.ITEM_ACTION_ITEM, R.id.action_add_item, getActivity(), header, content, mConfigOptions);
+        if (id == null)
+            mShowCase = ShowcaseView.insertShowcaseView(150, 200, getActivity(), header, content, mConfigOptions);
+        else
+            mShowCase = ShowcaseView.insertShowcaseViewWithType(ShowcaseView.ITEM_ACTION_ITEM, id, getActivity(), header, content, mConfigOptions);
     }
 
 

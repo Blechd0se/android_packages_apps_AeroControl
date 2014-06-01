@@ -216,6 +216,10 @@
                                             werden in diesem neuen Profil gespeichert. Wenn Du bereits Profile hinzugefügt hast, kannst Du diese mit einem Klick
                                             laden.</string>
 
+    <string name="showcase_perapp_profiles">Weise deine Profile Apps zu!</string>
+    <string name="showcase_perapp_profiles_sum">Du willst ein Profil nur für bestimmte Apps nutzen? Kein Problem, klicke auf das kleine Icon rechts und
+                                        weise dein Profil deinen Apps zu. Vergewissere dich, dass du den Service in den Einstellungen aktiviert hast.</string>
+
     <string name="showcase_statistics_fragment">Deine CPU Statistik</string>
     <string name="showcase_statistics_fragment_sum">Diese Seite zeigt dir an, wie lange dein Gerät in welcher Frequenz war. Du kannst später auf diese
                                             Seite zurückkehren, um sicherzustellen, dass dein Gerät so läuft wie Du es möchtest.</string>
