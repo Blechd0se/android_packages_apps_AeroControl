@@ -1,6 +1,7 @@
 package com.aero.control;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
@@ -49,6 +50,7 @@ import com.aero.control.helpers.shellHelper;
 import com.aero.control.lists.generatingLists;
 import com.aero.control.lists.generatingLists.PreferenceItem;
 import com.aero.control.prefs.PrefsActivity;
+import com.aero.control.service.PerAppService;
 import com.aero.control.service.PerAppServiceHelper;
 
 import java.util.ArrayList;
@@ -139,9 +141,13 @@ public class AeroActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        perAppService = new PerAppServiceHelper(getBaseContext());
-        if (perAppService.shouldBeStarted())
-            perAppService.startService();
+        // Start the service if needed;
+        if (!isServiceUp()) {
+            // Service is not running, check if it should;
+            perAppService = new PerAppServiceHelper(getBaseContext());
+            if (perAppService.shouldBeStarted())
+                perAppService.startService();
+        }
 
         // Assign action bar title;
         mActionBarTitleID = getResources().getIdentifier("action_bar_title", "id", "android");
@@ -294,6 +300,17 @@ public class AeroActivity extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
         }
+    }
+
+    private final boolean isServiceUp() {
+        final ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (PerAppService.class.getName().equals(service.service.getClassName())) {
+                // its already up and running
+                return true;
+            }
+        }
+        return false;
     }
 
 

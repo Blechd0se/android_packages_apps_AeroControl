@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.aero.control.service.PerAppServiceHelper;
+
 import java.io.File;
 
 
@@ -13,6 +15,7 @@ public class bootReceiver extends BroadcastReceiver
 {
     public static final String LAST_KMSG = "/proc/last_kmsg";
     private SharedPreferences prefs;
+    public static PerAppServiceHelper perAppService;
 
 
     public void onReceive(Context context, Intent intent) 
@@ -36,5 +39,11 @@ public class bootReceiver extends BroadcastReceiver
                 context.startActivity(trIntent);
             }
         }
+
+        // Start our service on boot-up;
+        perAppService = new PerAppServiceHelper(context);
+        if (perAppService.shouldBeStarted())
+            perAppService.startService();
+
     }
 }

@@ -52,6 +52,7 @@ public class PerAppServiceHelper {
         Calendar cal = Calendar.getInstance();
         Log.e("Aero", "Service should be started now!");
         mBackgroundIntent = new Intent(mContext, PerAppService.class);
+        mContext.startService(mBackgroundIntent);
         mPendingIntent = PendingIntent.getService(mContext, 0, mBackgroundIntent, 0);
 
         mTimer = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);

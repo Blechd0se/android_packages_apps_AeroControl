@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.service.PerAppServiceHelper;
 
 /**
  * Created by Alexander Christ on 21.09.13.
@@ -98,6 +99,9 @@ public class PrefsActivity extends PreferenceActivity {
                 if (per_app_check.isChecked()) {
 
                     // Only start if really down;
+                    if (AeroActivity.perAppService == null)
+                        AeroActivity.perAppService = new PerAppServiceHelper(getBaseContext());
+
                     if (AeroActivity.perAppService.getState() == false)
                         AeroActivity.perAppService.startService();
 
@@ -108,6 +112,9 @@ public class PrefsActivity extends PreferenceActivity {
                 } else  {
 
                     // Only stop if running;
+                    if (AeroActivity.perAppService == null)
+                        return false;
+
                     if (AeroActivity.perAppService.getState() == true)
                         AeroActivity.perAppService.stopService();
 
