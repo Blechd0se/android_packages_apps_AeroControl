@@ -150,7 +150,7 @@ public final class shellHelper {
 
         String info;
 
-        if (!new File(s).exists())
+        if (s == null || (!new File(s).exists()))
             return "Unavailable";
 
         try {
