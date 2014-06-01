@@ -30,6 +30,7 @@
     <string name="mVMinus">-25 mV</string>
     <string name="perAppAssigned">Active</string>
     <string name="notperAppAssigned">Not active</string>
+    <string name="nogpu_data">Couldn\'t find any GPU related data</string>
 
     <!-- Default Navigation Drawer entries -->
 

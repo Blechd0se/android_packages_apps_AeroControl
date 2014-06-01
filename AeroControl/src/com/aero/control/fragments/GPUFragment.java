@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
@@ -123,9 +124,12 @@ public class GPUFragment extends PreferenceFragment {
         }
 
         try  {
-            gpu_control_frequencies.setValue(AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0]);
-            gpu_control_frequencies.setSummary(AeroActivity.shell.toMHz((AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0].substring(0,
-                    AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0].length() - 3))));
+
+            if (gpu_file != null) {
+                gpu_control_frequencies.setValue(AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0]);
+                gpu_control_frequencies.setSummary(AeroActivity.shell.toMHz((AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0].substring(0,
+                        AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0].length() - 3))));
+            }
 
             // Check if enabled or not;
             if (AeroActivity.shell.getInfo(GPU_CONTROL_ACTIVE).equals("1"))
@@ -340,5 +344,10 @@ public class GPUFragment extends PreferenceFragment {
                 return false;
             }
         });
+
+        if (!(gpuCategory.getPreferenceCount() > 0)) {
+            gpuCategory.setTitle(R.string.nogpu_data);
+        }
+
     }
 }
