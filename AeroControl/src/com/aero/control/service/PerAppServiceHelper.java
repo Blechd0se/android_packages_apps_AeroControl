@@ -28,15 +28,15 @@ public class PerAppServiceHelper {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
     }
 
-    public void setState(boolean state) { mState = state; }
+    public final void setState(boolean state) { mState = state; }
 
-    public boolean getState() {
+    public final boolean getState() {
         return mState;
     }
 
-    public boolean shouldBeStarted() {
+    public final boolean shouldBeStarted() {
 
-        boolean tmp = mPrefs.getBoolean("per_app_service", false);
+        final boolean tmp = mPrefs.getBoolean("per_app_service", false);
 
         if (!tmp)
             setState(false);
@@ -46,10 +46,10 @@ public class PerAppServiceHelper {
         return getState();
     }
 
-    public void startService() {
+    public final void startService() {
 
         /* Start Service */
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         Log.e("Aero", "Service should be started now!");
         mBackgroundIntent = new Intent(mContext, PerAppService.class);
         mContext.startService(mBackgroundIntent);
@@ -61,7 +61,7 @@ public class PerAppServiceHelper {
         mState = true;
     }
 
-    public void stopService() {
+    public final void stopService() {
 
         if (mBackgroundIntent == null || mTimer == null || mPendingIntent == null) {
             // Nothing is running

@@ -78,8 +78,6 @@ public class PrefsActivity extends PreferenceActivity {
         Preference about = root.findPreference("about");
         Preference legal = root.findPreference("legal");
 
-        per_app_check.setChecked(true);
-
         checkbox_preference.setIcon(R.drawable.ic_action_warning);
         reboot_checker.setIcon(R.drawable.ic_action_phone);
         per_app_check.setIcon(R.drawable.ic_action_person);

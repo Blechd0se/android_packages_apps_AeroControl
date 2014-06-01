@@ -48,7 +48,7 @@ public class PerAppService extends Service {
 
     private void runTask() {
 
-        SharedPreferences perAppPrefs = getApplicationContext().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
+        final SharedPreferences perAppPrefs = getApplicationContext().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
 
         Looper.prepare();
         // init our data;
@@ -64,12 +64,12 @@ public class PerAppService extends Service {
                     settingsHelper.executeDefault();
                 }
 
-                Map<String,?> keys = perAppPrefs.getAll();
+                final Map<String,?> keys = perAppPrefs.getAll();
 
 
                 for (Map.Entry<String,?> entry : keys.entrySet()) {
 
-                    String savedSelectedProfiles = perAppPrefs.getString(entry.getKey(), null);
+                    final String savedSelectedProfiles = perAppPrefs.getString(entry.getKey(), null);
                     if (savedSelectedProfiles == null)
                         return;
 

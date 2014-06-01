@@ -269,7 +269,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
 
         final UndoBarStyle style = new UndoBarStyle(R.drawable.ic_action_undo, R.string.pref_profile_undo,
-                R.drawable.undobar_background, 10000).setAnim(AnimationUtils.loadAnimation(getActivity(),
+                R.drawable.undobar_background, 5000).setAnim(AnimationUtils.loadAnimation(getActivity(),
                 android.R.anim.fade_in), AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
 
         // Remove the complete ViewGroup;
@@ -335,9 +335,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
      */
     private final void getPersistentData(perAppHelper perApp, String name) {
 
-        SharedPreferences perAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
+        final SharedPreferences perAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
 
-        String savedSelectedProfiles = perAppPrefs.getString(name, null);
+        final String savedSelectedProfiles = perAppPrefs.getString(name, null);
         String systemApps = perAppPrefs.getString("systemStatus", null);
 
         //Probably a "fresh" profile;

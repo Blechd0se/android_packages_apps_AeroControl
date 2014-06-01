@@ -30,7 +30,7 @@ public class perAppHelper {
      *
      * @return String array = contains all apps
      */
-    public String[] getAllPackageNames() {
+    public final String[] getAllPackageNames() {
         return mListedApps;
     }
 
@@ -39,11 +39,11 @@ public class perAppHelper {
      *
      * @return boolean
      */
-    public boolean getSystemAppStatus() {
+    public final boolean getSystemAppStatus() {
         return mShowSystemApps;
     }
 
-    public void setSystemAppStatus(boolean showSystemApps) {
+    public final void setSystemAppStatus(boolean showSystemApps) {
         mShowSystemApps = showSystemApps;
 
         // If the system state has changed, we need to clear our previous select list;
@@ -55,7 +55,7 @@ public class perAppHelper {
      *
      * @return boolean array with checked state
      */
-    public boolean[] getCheckedState() { return mIsChecked; }
+    public final boolean[] getCheckedState() { return mIsChecked; }
 
     /**
      * Gets all currently selected packages by the real packages names
@@ -63,9 +63,9 @@ public class perAppHelper {
      *
      * @return String array = all currently selected packages
      */
-    public String[] getCurrentSelectedPackages() {
+    public final String[] getCurrentSelectedPackages() {
 
-        ArrayList<String> selectedPackages = new ArrayList<String>();
+        final ArrayList<String> selectedPackages = new ArrayList<String>();
 
         int i = 0;
 
@@ -87,9 +87,9 @@ public class perAppHelper {
      *
      * @return String array = all currently selected package names
      */
-    public String[] getCurrentSelectedPackagesByName() {
+    public final String[] getCurrentSelectedPackagesByName() {
 
-        ArrayList<String> selectedPackages = new ArrayList<String>();
+        final ArrayList<String> selectedPackages = new ArrayList<String>();
 
         int i = 0;
 
@@ -116,7 +116,7 @@ public class perAppHelper {
      *
      * @return nothing
      */
-    public void setChecked(boolean checkedState, int position) {
+    public final void setChecked(boolean checkedState, int position) {
 
         if (mIsChecked == null)
             mIsChecked = new boolean[mPackageNames.length];
@@ -131,7 +131,7 @@ public class perAppHelper {
      *
      * @return nothing
      */
-    public void findMatch(String[] selectedApps) {
+    public final void findMatch(final String[] selectedApps) {
 
         int i = 0;
         for (String a: mPackageNames) {
@@ -147,12 +147,12 @@ public class perAppHelper {
     }
 
     // Fills our arrays
-    public void getAllApps(boolean showSystemApp) {
+    public final void getAllApps(boolean showSystemApp) {
 
         final PackageManager pm = mContext.getPackageManager();
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        ArrayList<String> currentInstalledApps = new ArrayList<String>();
-        ArrayList<String> currentPackages = new ArrayList<String>();
+        final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        final ArrayList<String> currentInstalledApps = new ArrayList<String>();
+        final ArrayList<String> currentPackages = new ArrayList<String>();
 
         // We should hold info about what kind of apps this object holds;
         mShowSystemApps = showSystemApp;
