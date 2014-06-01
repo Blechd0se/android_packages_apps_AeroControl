@@ -397,7 +397,7 @@ public class CPUFragment extends PreferenceFragment {
                          * and therefore we sleep for a short interval;
                          */
                 try {
-                    Thread.sleep(350);
+                    Thread.sleep(450);
                 } catch (InterruptedException e) {
                     Log.e("Aero", "Something interrupted the main Thread, try again.", e);
                 }
@@ -531,14 +531,14 @@ public class CPUFragment extends PreferenceFragment {
                      */
 
                     for (String b : completeParamterList) {
-                        al.add("chmod 644 " + complete_path + "/" + b);
+                        al.add("chmod 0666 " + complete_path + "/" + b);
                         al.add("chown system:root " + complete_path + "/" + b);
                     }
                     String[] commands = al.toArray(new String[0]);
                     AeroActivity.shell.setRootInfo(commands);
 
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
                         Log.e("Aero", "Something interrupted the main Thread, try again.", e);
                     }

@@ -140,6 +140,9 @@ public class settingsHelper {
         ArrayList<String> governorSettings = new ArrayList<String>();
         for (int k = 0; k < mNumCpus; k++) {
             if (cpu_max != null) {
+
+                shell.queueWork("chmod 0666 " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
+
                 if (Profile != null)
                     defaultProfile.add("echo " + shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ) + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
 
@@ -147,6 +150,9 @@ public class settingsHelper {
             }
 
             if (cpu_min != null) {
+
+                shell.queueWork("chmod 0666 " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
+
                 if (Profile != null)
                     defaultProfile.add("echo " + shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ) + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
 
@@ -154,6 +160,8 @@ public class settingsHelper {
             }
 
             if (cpu_gov != null) {
+
+                governorSettings.add("chmod 0666 " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
 
                 /*
                  * Needs to be executed first, otherwise we would get a NullPointer
@@ -166,6 +174,9 @@ public class settingsHelper {
             }
         }
         if (mem_ios != null) {
+
+            governorSettings.add("chmod 0666 " + GOV_IO_FILE);
+
             if (Profile != null)
                 defaultProfile.add("echo " + shell.getInfoString(shell.getInfo(GOV_IO_FILE)) + " > " + GOV_IO_FILE);
 
@@ -187,6 +198,9 @@ public class settingsHelper {
                 }
             }
             if (gpu_file != null) {
+
+                shell.queueWork("chmod 0666 " + gpu_file);
+
                 if (Profile != null)
                     defaultProfile.add("echo " + shell.getInfo(gpu_file) + " > " + gpu_file);
 
@@ -195,6 +209,9 @@ public class settingsHelper {
         }
 
         if(new File(GPU_CONTROL_ACTIVE).exists()) {
+
+            shell.queueWork("chmod 0666 " + GPU_CONTROL_ACTIVE);
+
             if (Profile != null)
                 defaultProfile.add("echo " + shell.getInfo(GPU_CONTROL_ACTIVE) + " > " + GPU_CONTROL_ACTIVE);
 
@@ -202,6 +219,9 @@ public class settingsHelper {
         }
 
         if(new File(SWEEP2WAKE).exists()) {
+
+            shell.queueWork("chmod 0666 " + SWEEP2WAKE);
+
             if (Profile != null)
                 defaultProfile.add("echo " + shell.getInfo(SWEEP2WAKE) + " > " + SWEEP2WAKE);
 
@@ -209,6 +229,9 @@ public class settingsHelper {
         }
 
         if (display_color != null) {
+
+            shell.queueWork("chmod 0666 " + DISPLAY_COLOR);
+
             if (Profile != null)
                 defaultProfile.add("echo " + shell.getInfo(DISPLAY_COLOR) + " > " + DISPLAY_COLOR);
 
@@ -216,6 +239,9 @@ public class settingsHelper {
         }
 
         if (rgbValues != null) {
+
+            shell.queueWork("chmod 0666 " + PERF_COLOR_CONTROL);
+
             if (Profile != null)
                 defaultProfile.add("echo " + shell.getInfo(PERF_COLOR_CONTROL) + " > " + PERF_COLOR_CONTROL);
 
@@ -225,6 +251,9 @@ public class settingsHelper {
         // ADD MEM COMMANDS TO THE ARRAY
 
         if (new File(DYANMIC_FSYNC).exists()) {
+
+            shell.queueWork("chmod 0666 " + DYANMIC_FSYNC);
+
             if (Profile != null)
                 defaultProfile.add("echo " + shell.getInfo(DYANMIC_FSYNC) + " > " + DYANMIC_FSYNC);
 
@@ -232,6 +261,9 @@ public class settingsHelper {
         }
 
         if (new File(WRITEBACK).exists()) {
+
+            shell.queueWork("chmod 0666 " + WRITEBACK);
+
             if (Profile != null)
                 defaultProfile.add("echo " + shell.getInfo(WRITEBACK) + " > " + WRITEBACK);
 
@@ -240,6 +272,9 @@ public class settingsHelper {
 
         // Add misc commands to array
         if (misc_vib != null) {
+
+            shell.queueWork("chmod 0666 " + MISC_VIBRATOR_CONTROL);
+
             if (Profile != null)
                 defaultProfile.add("echo " + shell.getInfo(MISC_VIBRATOR_CONTROL) + " > " + MISC_VIBRATOR_CONTROL);
 
@@ -247,6 +282,9 @@ public class settingsHelper {
         }
 
         if (misc_thm != null) {
+
+            shell.queueWork("chmod 0666 " + MISC_THERMAL_CONTROL);
+
             if (Profile != null)
                 defaultProfile.add("echo " + shell.getInfo(MISC_THERMAL_CONTROL) + " > " + MISC_THERMAL_CONTROL);
 
@@ -270,6 +308,9 @@ public class settingsHelper {
                     final String ioSettings = prefs.getString(GOV_IO_PARAMETER + "/" + b, null);
 
                     if (ioSettings != null) {
+
+                        shell.queueWork("chmod 0666 " + GOV_IO_PARAMETER + "/" + b);
+
                         if (Profile != null)
                             defaultProfile.add("echo " + shell.getInfo(GOV_IO_PARAMETER + "/" + b) + " > " + GOV_IO_PARAMETER + "/" + b);
 
@@ -297,6 +338,9 @@ public class settingsHelper {
                     final String governorSetting = prefs.getString(CPU_GOV_BASE + cpu_gov + "/" + b, null);
 
                     if (governorSetting != null) {
+
+                        shell.queueWork("chmod 0666 " + CPU_GOV_BASE + cpu_gov + "/" + b);
+
                         if (Profile != null)
                             defaultProfile.add("echo " + shell.getInfo(CPU_GOV_BASE + cpu_gov + "/" + b) + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
 
@@ -316,6 +360,9 @@ public class settingsHelper {
                 final String vmSettings = prefs.getString(DALVIK_TWEAK + "/" + c, null);
 
                 if (vmSettings != null) {
+
+                    shell.queueWork("chmod 0666 " + DALVIK_TWEAK + "/" + c);
+
                     if (Profile != null)
                         defaultProfile.add("echo " + shell.getInfo(DALVIK_TWEAK + "/" + c) + " > " + DALVIK_TWEAK + "/" + c);
 
@@ -335,6 +382,9 @@ public class settingsHelper {
                     final String hotplugSettings = prefs.getString(PREF_HOTPLUG + "/" + d, null);
 
                     if (hotplugSettings != null) {
+
+                        shell.queueWork("chmod 0666 " + PREF_HOTPLUG + "/" + d);
+
                         if (Profile != null)
                             defaultProfile.add("echo " + shell.getInfo(PREF_HOTPLUG + "/" + d) + " > " + PREF_HOTPLUG + "/" + d);
 
@@ -355,6 +405,9 @@ public class settingsHelper {
                     final String gpugovSettings = prefs.getString(PREF_GPU_GOV + "/" + e, null);
 
                     if (gpugovSettings != null) {
+
+                        shell.queueWork("chmod 0666 " + PREF_GPU_GOV + "/" + e);
+
                         if (Profile != null)
                             defaultProfile.add("echo " + shell.getInfo(PREF_GPU_GOV + "/" + e) + " > " + PREF_GPU_GOV + "/" + e);
 

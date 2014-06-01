@@ -422,6 +422,7 @@ public final class shellHelper {
                     }
 
                     // Doing some String-puzzle;
+                    dataStream.writeBytes("chmod 0666 " + content + "\n");
                     dataStream.writeBytes("echo \"" + tmp + "\" " + "> " + content + "\n");
                     dataStream.writeBytes("exit\n");
                     dataStream.flush();
