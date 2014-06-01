@@ -1,7 +1,6 @@
 package com.aero.control.helpers;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.preference.EditTextPreference;
 import android.util.AttributeSet;

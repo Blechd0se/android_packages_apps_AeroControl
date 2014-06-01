@@ -27,8 +27,9 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.perAppHelper;
 import com.aero.control.helpers.settingsHelper;
+import com.cocosw.undobar.UndoBarController;
+import com.cocosw.undobar.UndoBarStyle;
 import com.espian.showcaseview.ShowcaseView;
-import com.cocosw.undobar.*;
 
 import java.io.File;
 import java.io.FileInputStream;

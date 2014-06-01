@@ -1,19 +1,13 @@
 package com.aero.control.fragments;
 
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
-import android.widget.TextView;
 
-import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.PreferenceHandler;
-
-import java.util.Objects;
 
 /**
  * Created by Alexander Christ on 03.04.14.

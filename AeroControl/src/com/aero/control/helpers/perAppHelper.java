@@ -2,10 +2,8 @@ package com.aero.control.helpers;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,7 +1,5 @@
 package com.aero.control.helpers;
 
-import android.content.Context;
-import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 

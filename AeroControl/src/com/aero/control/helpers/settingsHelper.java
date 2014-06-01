@@ -8,7 +8,6 @@ import android.util.Log;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
 
 /**
  * Created by Alexander Christ on 05.01.14.
