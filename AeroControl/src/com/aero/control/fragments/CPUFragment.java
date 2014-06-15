@@ -433,6 +433,7 @@ public class CPUFragment extends PreferenceFragment {
 
                 for (int k = 0; k < mNumCpus; k++) {
 
+                    array.add("echo 1 > " + CPU_BASE_PATH + k + "/online");
                     array.add("echo " + a + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
 
                     //** store preferences
@@ -462,6 +463,7 @@ public class CPUFragment extends PreferenceFragment {
 
                 for (int k = 0; k < mNumCpus; k++) {
 
+                    array.add("echo 1 > " + CPU_BASE_PATH + k + "/online");
                     array.add("echo " + a + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
 
                     //** store preferences

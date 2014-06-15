@@ -141,6 +141,7 @@ public class settingsHelper {
         for (int k = 0; k < mNumCpus; k++) {
             if (cpu_max != null) {
 
+                shell.queueWork("echo 1 > " + CPU_BASE_PATH + k + "/online");
                 shell.queueWork("chmod 0666 " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
 
                 if (Profile != null)
@@ -151,6 +152,7 @@ public class settingsHelper {
 
             if (cpu_min != null) {
 
+                shell.queueWork("echo 1 > " + CPU_BASE_PATH + k + "/online");
                 shell.queueWork("chmod 0666 " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
 
                 if (Profile != null)
