@@ -138,6 +138,14 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_item:
+
+                // Check if there are actual changes;
+                final File defaultFile = new File(sharedPrefsPath + "com.aero.control_preferences.xml");
+                if (!(defaultFile.exists())) {
+                    Toast.makeText(getActivity(), R.string.pref_profile_no_changes , Toast.LENGTH_LONG).show();
+                    break;
+                }
+
                 // Hide the "empty" view since there is now at least one item in the list.
                 mContainerView.findViewById(android.R.id.empty).setVisibility(View.GONE);
 

@@ -253,6 +253,7 @@
     <string name="pref_profile_showSystem">Zeige System Apps</string>
     <string name="pref_profile_deleted">Gelöscht</string>
     <string name="pref_profile_undo">Rückgangig</string>
+    <string name="pref_profile_no_changes">Es wurden noch keine Einstellungen vorgenommen!</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Klick mich und bewerte diese App!</string>
