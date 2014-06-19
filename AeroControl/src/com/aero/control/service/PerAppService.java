@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * Created by Alexander Christ on 17.05.14.
  */
-public class PerAppService extends Service {
+public final class PerAppService extends Service {
 
     private static String mPreviousApp = null;
     private static String mCurrentApp = null;
@@ -46,11 +46,12 @@ public class PerAppService extends Service {
         return null;
     }
 
-    private void runTask() {
+    private final void runTask() {
 
         final SharedPreferences perAppPrefs = getApplicationContext().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
 
         Looper.prepare();
+
         // init our data;
         setAppData();
 
@@ -65,7 +66,6 @@ public class PerAppService extends Service {
                 }
 
                 final Map<String,?> keys = perAppPrefs.getAll();
-
 
                 for (Map.Entry<String,?> entry : keys.entrySet()) {
 
@@ -98,7 +98,7 @@ public class PerAppService extends Service {
         Looper.loop();
 
     }
-    private void setAppData() {
+    private final void setAppData() {
 
         String PackageName = mCurrentApp;
         mPreviousApp = PackageName;

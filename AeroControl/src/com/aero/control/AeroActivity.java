@@ -55,7 +55,7 @@ import com.aero.control.service.PerAppServiceHelper;
 
 import java.util.ArrayList;
 
-public class AeroActivity extends Activity {
+public final class AeroActivity extends Activity {
 
     private static final String SELECTED_ITEM = "SelectedItem";
 
@@ -212,7 +212,7 @@ public class AeroActivity extends Activity {
 
     }
 
-    private class ItemAdapter extends ArrayAdapter<PreferenceItem> {
+    private final class ItemAdapter extends ArrayAdapter<PreferenceItem> {
 
         private ArrayList<PreferenceItem> items;
 
@@ -314,7 +314,7 @@ public class AeroActivity extends Activity {
     }
 
 
-    private void selectItem(int position) {
+    private final void selectItem(int position) {
 
         drawer: mDrawerLayout.closeDrawers();
 
@@ -397,7 +397,7 @@ public class AeroActivity extends Activity {
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    public void setTitle(CharSequence title) {
+    public final void setTitle(CharSequence title) {
         mTitle = title;
         mActionBarTitle.setText(mTitle);
     }
@@ -437,7 +437,7 @@ public class AeroActivity extends Activity {
 
     }
 
-    public void showRootDialog() {
+    public final void showRootDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -460,7 +460,7 @@ public class AeroActivity extends Activity {
         builder.show();
     }
 
-    public void switchContent(final Fragment fragment) {
+    public final void switchContent(final Fragment fragment) {
 
         // Reduce the navigation drawer delay for a smoother UI;
         mHandler.postDelayed(new Runnable()  {

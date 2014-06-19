@@ -223,7 +223,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                                 output = fis.read(buffer);
                                 fis.close();
                             } catch (IOException e) {
-                                Log.e("Aero", "Couldn't open File... " + output);
+                                Log.e(LOG_TAG, "Couldn't open File... " + output);
                             }
 
                             // Only show showcase once;
@@ -336,7 +336,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         try {
             Toast.makeText(getActivity(), R.string.successful, Toast.LENGTH_SHORT).show();
         } catch (NullPointerException e) {
-            Log.e("Aero", "Can't show a toast without context!", e);
+            Log.e(LOG_TAG, "Can't show a toast without context!", e);
         }
         mContainerView.addView(mDeletedChild);
     }
@@ -394,10 +394,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             public void onClick(DialogInterface dialogInterface, int i, boolean b) {
                 if (b) {
                     perApp.setChecked(true, i);
-                    Log.e("Aero", "Output: " + perApp.getAllPackageNames()[i].toString() + " State " + true + "Position: " + i);
                 } else {
                     perApp.setChecked(false, i);
-                    Log.e("Aero", "Output: " + perApp.getAllPackageNames()[i].toString() + " State " + false + "Position: " + i);
                 }
                 int count = 0;
 
@@ -429,7 +427,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
                         mPerAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
                         mPerAppPrefs.edit().putString(profileName, tmp).commit();
-
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -703,7 +700,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             output = fis.read(buffer);
             fis.close();
         } catch (IOException e) {
-            Log.e("Aero", "Couldn't open File... " + output);
+            Log.e(LOG_TAG, "Couldn't open File... " + output);
         }
 
         // Only show showcase once;
@@ -720,7 +717,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             fos.close();
         }
         catch (IOException e) {
-            Log.e("Aero", "Could not save file. ", e);
+            Log.e(LOG_TAG, "Could not save file. ", e);
         }
 
         if (id == null)
