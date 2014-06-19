@@ -17,6 +17,7 @@
     <orderEntry type="module" module-name="showcase" />
     <orderEntry type="module" module-name="HoloGraphLibrary" />
     <orderEntry type="module" module-name="discreetapprate" />
+    <orderEntry type="module" module-name="UndoBar" />
   </component>
 </module>
 

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="name" value="app: com.aero.control" />
+        <option name="packageNamePattern" value="com.aero.control" />
+      </filter>
+    </filters>
+  </component>
   <component name="AndroidLayoutPreviewToolWindow">
     <option name="state">
       <GlobalState />
@@ -12,7 +20,6 @@
     <layouts>
       <layout url="file://$PROJECT_DIR$/res/layout/profiles_list.xml">
         <config>
-          <device>Nexus S</device>
           <theme>@style/RedHolo</theme>
         </config>
       </layout>
@@ -20,25 +27,67 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.aero.control" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7820921b-a183-4104-97ee-16dbded86385" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/GovernorTextPreference.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/CustomTextPreference.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/AeroFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/AeroFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/CPUFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/CPUFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/DefyPartsFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/DefyPartsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/GPUFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/GPUFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/MemoryFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/MemoryFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/prefs/PrefsActivity.java" afterPath="$PROJECT_DIR$/src/com/aero/control/prefs/PrefsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/ProfileFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/ProfileFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/StatisticsFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/StatisticsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/UpdaterFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/UpdaterFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/boot/bootService.java" afterPath="$PROJECT_DIR$/src/com/aero/control/boot/bootService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/rootHelper.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/rootHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/settingsHelper.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/settingsHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/shellHelper.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/shellHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/updateHelper.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/updateHelper.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/gradle_wrapper.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/art/customize.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/art/kitkat.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/art/redo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/art/refresh.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/art/undobar.9.psd" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/art/undobar.psd" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/art/undobar_button_selector.psd" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/checkstyle.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/config/android-library.gradle" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/config/android.gradle" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/config/maven_push.gradle" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/config/sign.gradle" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/gradle/wrapper/gradle-wrapper.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/gradle/wrapper/gradle-wrapper.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/gradlew" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/gradlew.bat" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/AndroidManifest.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/build.gradle" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/gradle.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-hdpi/toast_frame_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-hdpi/toast_frame_holo_button_pressed.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-mdpi/toast_frame_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-mdpi/toast_frame_holo_button_pressed.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xhdpi/ic_retry.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xhdpi/ic_undobar_undo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xhdpi/toast_frame_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xhdpi/toast_frame_holo_button_pressed.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xhdpi/undobar.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xhdpi/undobar_background.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xhdpi/undobar_button_focused.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xhdpi/undobar_button_pressed.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xhdpi/undobar_divider.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xxhdpi/toast_frame_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable-xxhdpi/toast_frame_holo_button_pressed.9.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable/toast_frame_holo_button.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/drawable/undobar_button.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/layout/undobar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/values-he/string.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/values-hu/string.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/values-it/string.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/values-iw/string.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/values-ko/string.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/values-v19/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/values-zh/string.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/values/dimens.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/values/string.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/res/values/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/src/com/cocosw/undobar/UndoBarController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/library/src/com/cocosw/undobar/UndoBarStyle.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/UndoBar/settings.gradle" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AeroControl.iml" afterPath="$PROJECT_DIR$/AeroControl.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/UndoBar/build.gradle" afterPath="$PROJECT_DIR$/library/UndoBar/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/UndoBar/gradle.properties" afterPath="$PROJECT_DIR$/library/UndoBar/gradle.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AeroControl.iws" />
@@ -57,8 +106,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
         <option name="NOTIFY_UNCAUGHT" value="true" />
@@ -94,8 +142,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <breakpoint_rules />
-    <ui_properties />
+    <breakpoint_rules converted="true" />
+    <ui_properties converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -103,185 +151,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MemoryFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/MemoryFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="134" column="22" selection-start="5281" selection-end="5281" vertical-scroll-proportion="-25.964285" vertical-offset="556" max-vertical-offset="8460">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#5069#7058#0" expanded="true" />
-                <element signature="e#6955#6975#0" expanded="true" />
-                <element signature="e#7046#7047#0" expanded="true" />
-                <element signature="e#7118#7673#0" expanded="true" />
-                <element signature="e#7661#7662#0" expanded="true" />
-                <element signature="e#8786#8820#0" expanded="true" />
-                <element signature="e#8861#8897#0" expanded="true" />
-                <element signature="e#9039#9054#0" expanded="true" />
-                <element signature="e#9294#9309#0" expanded="true" />
-                <element signature="e#10360#12619#0" expanded="true" />
-                <element signature="e#10778#10800#0" expanded="true" />
-                <element signature="e#10900#12553#0" expanded="true" />
-                <element signature="e#11458#12346#0" expanded="true" />
-                <element signature="e#12319#12320#0" expanded="true" />
-                <element signature="e#12534#12535#0" expanded="true" />
-                <element signature="e#12606#12607#0" expanded="true" />
-                <element signature="e#12720#13197#0" expanded="true" />
-                <element signature="e#13185#13186#0" expanded="true" />
-                <element signature="e#13250#13733#0" expanded="true" />
-                <element signature="e#13721#13722#0" expanded="true" />
-                <element signature="e#13788#14258#0" expanded="true" />
-                <element signature="e#14246#14247#0" expanded="true" />
-                <element signature="e#14309#14872#0" expanded="true" />
-                <element signature="e#14860#14861#0" expanded="true" />
-                <element signature="e#14921#16127#0" expanded="true" />
-                <element signature="e#16024#16044#0" expanded="true" />
-                <element signature="e#16115#16116#0" expanded="true" />
-                <element signature="e#16915#16953#0" expanded="true" />
-                <element signature="e#16955#16997#0" expanded="true" />
-                <element signature="e#17955#17976#0" expanded="true" />
-                <element signature="e#19901#21047#0" expanded="true" />
-                <element signature="e#21031#21032#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ProfileFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/ProfileFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="325" column="22" selection-start="10790" selection-end="10790" vertical-scroll-proportion="11.464286" vertical-offset="5517" max-vertical-offset="6090">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4417#4436#0" expanded="true" />
-                <element signature="e#4466#4488#0" expanded="true" />
-                <element signature="e#4560#4573#0" expanded="true" />
-                <element signature="e#4575#5430#0" expanded="true" />
-                <element signature="e#5040#5072#0" expanded="true" />
-                <element signature="e#5238#5271#0" expanded="true" />
-                <element signature="e#5411#5412#0" expanded="true" />
-                <element signature="e#5467#5482#0" expanded="true" />
-                <element signature="e#6764#7273#0" expanded="true" />
-                <element signature="e#7262#7263#0" expanded="true" />
-                <element signature="e#10351#12541#0" expanded="true" />
-                <element signature="e#11622#11655#0" expanded="true" />
-                <element signature="e#11784#11798#0" expanded="true" />
-                <element signature="e#11800#12382#0" expanded="true" />
-                <element signature="e#12355#12356#0" expanded="true" />
-                <element signature="e#12427#12442#0" expanded="true" />
-                <element signature="e#12529#12530#0" expanded="true" />
-                <element signature="e#12627#13818#0" expanded="true" />
-                <element signature="e#13024#13057#0" expanded="true" />
-                <element signature="e#13095#13132#0" expanded="true" />
-                <element signature="e#13220#13233#0" expanded="true" />
-                <element signature="e#13235#13630#0" expanded="true" />
-                <element signature="e#13603#13604#0" expanded="true" />
-                <element signature="e#13675#13690#0" expanded="true" />
-                <element signature="e#13806#13807#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UpdaterFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/UpdaterFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="96" column="16" selection-start="3722" selection-end="3722" vertical-scroll-proportion="16.553572" vertical-offset="2367" max-vertical-offset="2940">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2611#2645#0" expanded="true" />
-                <element signature="e#2851#2885#0" expanded="true" />
-                <element signature="e#2893#2922#0" expanded="true" />
-                <element signature="e#3510#5544#0" expanded="true" />
-                <element signature="e#4067#4096#0" expanded="true" />
-                <element signature="e#4144#4181#0" expanded="true" />
-                <element signature="e#4337#4350#0" expanded="true" />
-                <element signature="e#4352#5168#0" expanded="true" />
-                <element signature="e#5062#5082#0" expanded="true" />
-                <element signature="e#5141#5142#0" expanded="true" />
-                <element signature="e#5213#5228#0" expanded="true" />
-                <element signature="e#5230#5454#0" expanded="true" />
-                <element signature="e#5427#5428#0" expanded="true" />
-                <element signature="e#5532#5533#0" expanded="true" />
-                <element signature="e#5599#7909#0" expanded="true" />
-                <element signature="e#6201#6224#0" expanded="true" />
-                <element signature="e#6311#6324#0" expanded="true" />
-                <element signature="e#6326#7519#0" expanded="true" />
-                <element signature="e#6786#6820#0" expanded="true" />
-                <element signature="e#7492#7493#0" expanded="true" />
-                <element signature="e#7564#7579#0" expanded="true" />
-                <element signature="e#7581#7805#0" expanded="true" />
-                <element signature="e#7778#7779#0" expanded="true" />
-                <element signature="e#7883#7884#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rootHelper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/rootHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="68" selection-start="957" selection-end="957" vertical-scroll-proportion="0.0" vertical-offset="16" max-vertical-offset="690">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CPUFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/CPUFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="648" column="69" selection-start="29539" selection-end="29545" vertical-scroll-proportion="0.0" vertical-offset="919" max-vertical-offset="10035">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settingsHelper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/settingsHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="24" selection-start="2388" selection-end="2388" vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="2835">
+            <state vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="10575">
+              <caret line="37" column="24" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shellHelper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/shellHelper.java">
+      <file leaf-file-name="PerAppService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/aero/control/service/PerAppService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="376" column="13" selection-start="11549" selection-end="11549" vertical-scroll-proportion="0.0" vertical-offset="4185" max-vertical-offset="6570">
+            <state vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="1800">
+              <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrefsActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/aero/control/prefs/PrefsActivity.java">
+      <file leaf-file-name="PerAppServiceHelper.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/aero/control/service/PerAppServiceHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="143" column="5" selection-start="5721" selection-end="5721" vertical-scroll-proportion="0.53733766" vertical-offset="1619" max-vertical-offset="2235">
+            <state vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="1365">
+              <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="perAppHelper.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/perAppHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.34393638" vertical-offset="97" max-vertical-offset="2670">
+              <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#850#851#0" expanded="true" />
+                <element signature="e#884#885#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="generatingLists.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/aero/control/lists/generatingLists.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="82" selection-start="726" selection-end="726" vertical-scroll-proportion="0.0" vertical-offset="55" max-vertical-offset="720">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="updateHelper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/updateHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="20" selection-start="1239" selection-end="1239" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1035">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -309,8 +218,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/aero/control/boot/bootReceiver.java" />
-        <option value="$PROJECT_DIR$/src/com/aero/control/adapter/AeroAdapter.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/fragments/GovernorListPreference.java" />
         <option value="$PROJECT_DIR$/res/menu/profiles_menu.xml" />
         <option value="$PROJECT_DIR$/res/menu/cpu_menu.xml" />
@@ -329,17 +236,14 @@
         <option value="$PROJECT_DIR$/src/com/aero/control/fragments/GovernorTextPreference.java" />
         <option value="$PROJECT_DIR$/res/values-hr/strings.xml" />
         <option value="$PROJECT_DIR$/library/HoloGraphLibrary/src/com/echo/holographlibrary/BarGraph.java" />
-        <option value="$PROJECT_DIR$/res/values-de/strings.xml" />
         <option value="$PROJECT_DIR$/src/com/aero/control/lists/generatingLists.java" />
         <option value="$PROJECT_DIR$/res/values/array.xml" />
         <option value="$PROJECT_DIR$/library/HoloGraphLibrary/src/com/echo/holographlibrary/PieGraph.java" />
         <option value="$PROJECT_DIR$/res/values/styles_redholo.xml" />
         <option value="$PROJECT_DIR$/res/values/themes_redholo.xml" />
         <option value="$PROJECT_DIR$/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/res/menu/statistic_menu.xml" />
         <option value="$PROJECT_DIR$/res/menu/statistic_menu_light.xml" />
-        <option value="$PROJECT_DIR$/src/com/aero/control/helpers/settingsHelper.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/boot/bootService.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/prefs/PrefsActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/statisticsList.xml" />
@@ -349,17 +253,22 @@
         <option value="$PROJECT_DIR$/src/com/aero/control/fragments/StatisticsFragment.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/MainActivity.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/AeroActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/aero/control/fragments/CPUFragment.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/fragments/CustomTextPreference.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/fragments/GPUFragment.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/fragments/DefyPartsFragment.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/fragments/AeroFragment.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/fragments/MemoryFragment.java" />
-        <option value="$PROJECT_DIR$/src/com/aero/control/fragments/ProfileFragment.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/helpers/updateHelper.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/fragments/UpdaterFragment.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/helpers/rootHelper.java" />
         <option value="$PROJECT_DIR$/src/com/aero/control/helpers/shellHelper.java" />
+        <option value="$PROJECT_DIR$/AeroControl.iml" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/res/values-de/strings.xml" />
+        <option value="$PROJECT_DIR$/src/com/aero/control/fragments/CPUFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/aero/control/helpers/settingsHelper.java" />
+        <option value="$PROJECT_DIR$/src/com/aero/control/fragments/ProfileFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/aero/control/helpers/perAppHelper.java" />
       </list>
     </option>
   </component>
@@ -383,7 +292,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -395,6 +304,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -410,7 +320,7 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -420,15 +330,15 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="control" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -438,19 +348,19 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="control" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="prefs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -460,41 +370,19 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="control" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lists" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="control" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="helpers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -504,155 +392,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="control" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="fragments" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="control" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="control" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adapter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values-de" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="menu" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AeroControl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -664,7 +421,7 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="false" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
@@ -672,9 +429,9 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="015d3e6388180e0d" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="TA8830NBNB" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Test1" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/library/HoloGraphLibrary/libs/annotations-12.0.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/library/UndoBar" />
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
@@ -716,6 +473,7 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -724,19 +482,6 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -764,6 +509,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -817,6 +575,7 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="false" name="AeroControl" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -836,6 +595,7 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <RunnerSettings RunnerId="AndroidDebugRunner" />
       <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
       <method />
@@ -857,22 +617,8 @@
       <AnalysisUIOptions />
     </option>
   </component>
-  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
-    <option name="USER" value="" />
-    <option name="PASSWORD" value="" />
-    <option name="mySSHConnectionTimeout" value="30000" />
-    <option name="mySSHReadTimeout" value="30000" />
-    <option name="LAST_MERGED_REVISION" />
-    <option name="MERGE_DRY_RUN" value="false" />
-    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
-    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
-    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
-    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
-    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
-    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
-    <option name="FORCE_UPDATE" value="false" />
-    <option name="IGNORE_EXTERNALS" value="false" />
-    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  <component name="SvnConfiguration" myUseAcceleration="nothing" SSL_PROTOCOLS="all">
+    <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -884,39 +630,43 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1430" y="19" width="1940" height="1071" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14635417" sideWeight="0.61538464" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47294372" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2900433" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.42391303" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18645833" sideWeight="0.61538464" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32359308" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1796875" sideWeight="0.61538464" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3228261" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14635417" sideWeight="0.61538464" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32792208" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47173914" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900432" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USERS">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
       <collection />
     </option>
   </component>
@@ -932,495 +682,398 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/res/values-pt-rBR/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="50" selection-start="793" selection-end="793" vertical-scroll-proportion="0.0" vertical-offset="88" max-vertical-offset="3090">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values-hr/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="0" selection-start="3516" selection-end="3516" vertical-scroll-proportion="0.0" vertical-offset="672" max-vertical-offset="2940">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/menu/main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="47" selection-start="247" selection-end="247" vertical-scroll-proportion="0.14150943" vertical-offset="0" max-vertical-offset="530">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/library/HoloGraphLibrary/src/com/echo/holographlibrary/Line.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="1041" selection-end="1041" vertical-scroll-proportion="0.16981132" vertical-offset="0" max-vertical-offset="660">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/library/HoloGraphLibrary/proguard-project.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/library/HoloGraphLibrary/NOTICE.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="530" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/library/HoloGraphLibrary/LICENSE.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3120" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3120">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/profile_fragment.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="420">
+          <caret line="14" column="44" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="44" selection-start="535" selection-end="535" vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="420">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/profiles_list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="525">
+          <caret line="11" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="400" selection-end="444" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="525">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/library/HoloGraphLibrary/src/com/echo/holographlibrary/PieSlice.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="37" selection-start="1349" selection-end="1354" vertical-scroll-proportion="0.29245284" vertical-offset="85" max-vertical-offset="615">
-          <folding />
+        <state vertical-scroll-proportion="0.29245284" vertical-offset="85" max-vertical-offset="615">
+          <caret line="41" column="37" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/library/HoloGraphLibrary/src/com/echo/holographlibrary/LinePoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="13" selection-start="1078" selection-end="1078" vertical-scroll-proportion="0.16981132" vertical-offset="0" max-vertical-offset="660">
-          <folding />
+        <state vertical-scroll-proportion="0.16981132" vertical-offset="0" max-vertical-offset="660">
+          <caret line="29" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/library/HoloGraphLibrary/src/com/echo/holographlibrary/LineGraph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="18" selection-start="2592" selection-end="2594" vertical-scroll-proportion="0.33267328" vertical-offset="672" max-vertical-offset="5700">
-          <folding />
+        <state vertical-scroll-proportion="0.33267328" vertical-offset="672" max-vertical-offset="5700">
+          <caret line="90" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/library/HoloGraphLibrary/src/com/echo/holographlibrary/Bar.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="13" selection-start="1075" selection-end="1075" vertical-scroll-proportion="0.16981132" vertical-offset="0" max-vertical-offset="530">
-          <folding />
+        <state vertical-scroll-proportion="0.16981132" vertical-offset="0" max-vertical-offset="530">
+          <caret line="28" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/library/HoloGraphLibrary/src/com/echo/holographlibrary/BarGraph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="45" selection-start="2819" selection-end="2822" vertical-scroll-proportion="0.33333334" vertical-offset="811" max-vertical-offset="2745">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="811" max-vertical-offset="2745">
+          <caret line="94" column="45" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/library/HoloGraphLibrary/src/com/echo/holographlibrary/PieGraph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="92" selection-start="4066" selection-end="4077" vertical-scroll-proportion="0.0" vertical-offset="1920" max-vertical-offset="2925">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1920" max-vertical-offset="2925">
+          <caret line="128" column="92" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values/themes_redholo.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="166" selection-end="166" vertical-scroll-proportion="-2.7777777" vertical-offset="0" max-vertical-offset="750">
+        <state vertical-scroll-proportion="-2.7777777" vertical-offset="0" max-vertical-offset="750">
+          <caret line="5" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/adapter_item.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="690">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="690">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="525">
+          <caret line="3" column="40" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="40" selection-start="215" selection-end="215" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="525">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/menu/cpu_menu.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="36" selection-start="255" selection-end="255" vertical-scroll-proportion="0.14150943" vertical-offset="0" max-vertical-offset="530">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="25" selection-start="1156" selection-end="1163" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3165">
-          <folding />
+        <state vertical-scroll-proportion="0.14150943" vertical-offset="0" max-vertical-offset="530">
+          <caret line="5" column="36" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/menu/statistic_menu.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="41" selection-start="94" selection-end="108" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <caret line="2" column="41" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/menu/statistic_menu_light.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="55" selection-start="205" selection-end="205" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <caret line="4" column="55" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/cpu_fragment.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="615">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="615">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/overviewlist_item.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.207547" vertical-offset="180" max-vertical-offset="780">
+          <caret line="41" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="24" selection-start="1496" selection-end="1496" vertical-scroll-proportion="-8.207547" vertical-offset="180" max-vertical-offset="780">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values-de/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="39" selection-start="1242" selection-end="1242" vertical-scroll-proportion="0.0" vertical-offset="42" max-vertical-offset="3180">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values/array.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="449" selection-end="449" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1185">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1185">
+          <caret line="14" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values/styles_redholo.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="10" selection-start="5820" selection-end="5820" vertical-scroll-proportion="0.0" vertical-offset="1396" max-vertical-offset="2025">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1396" max-vertical-offset="2025">
+          <caret line="127" column="10" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/StatisticsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="108" selection-start="1093" selection-end="1093" vertical-scroll-proportion="6.111111" vertical-offset="315" max-vertical-offset="4950">
-          <folding>
-            <element signature="e#1485#1491#0" expanded="true" />
-            <element signature="e#3640#3648#0" expanded="true" />
-            <element signature="e#9207#9224#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="6.111111" vertical-offset="315" max-vertical-offset="4950">
+          <caret line="36" column="108" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/adapter/adapterInit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="299" selection-end="299" vertical-scroll-proportion="0.35771066" vertical-offset="0" max-vertical-offset="629">
-          <folding />
+        <state vertical-scroll-proportion="0.35771066" vertical-offset="0" max-vertical-offset="629">
+          <caret line="15" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/statistics.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-24.23077" vertical-offset="180" max-vertical-offset="1095">
+          <caret line="54" column="40" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="40" selection-start="1916" selection-end="1916" vertical-scroll-proportion="-24.23077" vertical-offset="180" max-vertical-offset="1095">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/adapter/AeroAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="58" selection-start="412" selection-end="437" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1110">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1110">
+          <caret line="17" column="58" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/boot/bootReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="37" selection-start="964" selection-end="964" vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="585">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="585">
+          <caret line="31" column="37" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/AeroActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="37" selection-start="2164" selection-end="2164" vertical-scroll-proportion="0.0" vertical-offset="1021" max-vertical-offset="6255">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1021" max-vertical-offset="6255">
+          <caret line="63" column="37" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5231#5251#0" expanded="true" />
-            <element signature="e#5320#5341#0" expanded="true" />
-            <element signature="e#12461#12484#0" expanded="true" />
-            <element signature="e#12999#13018#0" expanded="true" />
-            <element signature="e#13103#13134#0" expanded="true" />
-            <element signature="e#13243#13258#0" expanded="true" />
-            <element signature="e#13260#13477#0" expanded="true" />
-            <element signature="e#13458#13459#0" expanded="true" />
-            <element signature="e#13663#14040#0" expanded="true" />
-            <element signature="e#14029#14030#0" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/boot/bootService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="25" selection-start="324" selection-end="324" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="660">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="660">
+          <caret line="18" column="25" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/boot/RebootActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="37" selection-start="1423" selection-end="1423" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <caret line="39" column="37" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/GPUFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="26" selection-start="398" selection-end="398" vertical-scroll-proportion="-3.2142856" vertical-offset="0" max-vertical-offset="2775">
-          <folding>
-            <element signature="e#2522#2555#0" expanded="true" />
-            <element signature="e#2573#2608#0" expanded="true" />
-            <element signature="e#2626#2661#0" expanded="true" />
-            <element signature="e#4551#5688#0" expanded="true" />
-            <element signature="e#5676#5677#0" expanded="true" />
-            <element signature="e#5749#6322#0" expanded="true" />
-            <element signature="e#6310#6311#0" expanded="true" />
-            <element signature="e#6380#7082#0" expanded="true" />
-            <element signature="e#7071#7072#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-3.2142856" vertical-offset="0" max-vertical-offset="2775">
+          <caret line="12" column="26" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/DefyPartsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="26" selection-start="373" selection-end="373" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1905">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4223#4243#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/CustomTextPreference.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="847" selection-end="847" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1905">
+          <caret line="11" column="26" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/AeroFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="44" selection-start="483" selection-end="483" vertical-scroll-proportion="-8.888889" vertical-offset="0" max-vertical-offset="3600">
-          <folding>
-            <element signature="e#4466#4497#0" expanded="true" />
-            <element signature="e#4499#4534#0" expanded="true" />
-            <element signature="e#5478#5512#0" expanded="true" />
-            <element signature="e#5590#5626#0" expanded="true" />
-            <element signature="e#5710#5749#0" expanded="true" />
-            <element signature="e#5836#5873#0" expanded="true" />
-            <element signature="e#5937#5974#0" expanded="true" />
-            <element signature="e#6150#6186#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-8.888889" vertical-offset="0" max-vertical-offset="3600">
+          <caret line="16" column="44" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/MemoryFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="134" column="22" selection-start="5281" selection-end="5281" vertical-scroll-proportion="-25.964285" vertical-offset="556" max-vertical-offset="8460">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5069#7058#0" expanded="true" />
-            <element signature="e#6955#6975#0" expanded="true" />
-            <element signature="e#7046#7047#0" expanded="true" />
-            <element signature="e#7118#7673#0" expanded="true" />
-            <element signature="e#7661#7662#0" expanded="true" />
-            <element signature="e#8786#8820#0" expanded="true" />
-            <element signature="e#8861#8897#0" expanded="true" />
-            <element signature="e#9039#9054#0" expanded="true" />
-            <element signature="e#9294#9309#0" expanded="true" />
-            <element signature="e#10360#12619#0" expanded="true" />
-            <element signature="e#10778#10800#0" expanded="true" />
-            <element signature="e#10900#12553#0" expanded="true" />
-            <element signature="e#11458#12346#0" expanded="true" />
-            <element signature="e#12319#12320#0" expanded="true" />
-            <element signature="e#12534#12535#0" expanded="true" />
-            <element signature="e#12606#12607#0" expanded="true" />
-            <element signature="e#12720#13197#0" expanded="true" />
-            <element signature="e#13185#13186#0" expanded="true" />
-            <element signature="e#13250#13733#0" expanded="true" />
-            <element signature="e#13721#13722#0" expanded="true" />
-            <element signature="e#13788#14258#0" expanded="true" />
-            <element signature="e#14246#14247#0" expanded="true" />
-            <element signature="e#14309#14872#0" expanded="true" />
-            <element signature="e#14860#14861#0" expanded="true" />
-            <element signature="e#14921#16127#0" expanded="true" />
-            <element signature="e#16024#16044#0" expanded="true" />
-            <element signature="e#16115#16116#0" expanded="true" />
-            <element signature="e#16915#16953#0" expanded="true" />
-            <element signature="e#16955#16997#0" expanded="true" />
-            <element signature="e#17955#17976#0" expanded="true" />
-            <element signature="e#19901#21047#0" expanded="true" />
-            <element signature="e#21031#21032#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/ProfileFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="325" column="22" selection-start="10790" selection-end="10790" vertical-scroll-proportion="11.464286" vertical-offset="5517" max-vertical-offset="6090">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4417#4436#0" expanded="true" />
-            <element signature="e#4466#4488#0" expanded="true" />
-            <element signature="e#4560#4573#0" expanded="true" />
-            <element signature="e#4575#5430#0" expanded="true" />
-            <element signature="e#5040#5072#0" expanded="true" />
-            <element signature="e#5238#5271#0" expanded="true" />
-            <element signature="e#5411#5412#0" expanded="true" />
-            <element signature="e#5467#5482#0" expanded="true" />
-            <element signature="e#6764#7273#0" expanded="true" />
-            <element signature="e#7262#7263#0" expanded="true" />
-            <element signature="e#10351#12541#0" expanded="true" />
-            <element signature="e#11622#11655#0" expanded="true" />
-            <element signature="e#11784#11798#0" expanded="true" />
-            <element signature="e#11800#12382#0" expanded="true" />
-            <element signature="e#12355#12356#0" expanded="true" />
-            <element signature="e#12427#12442#0" expanded="true" />
-            <element signature="e#12529#12530#0" expanded="true" />
-            <element signature="e#12627#13818#0" expanded="true" />
-            <element signature="e#13024#13057#0" expanded="true" />
-            <element signature="e#13095#13132#0" expanded="true" />
-            <element signature="e#13220#13233#0" expanded="true" />
-            <element signature="e#13235#13630#0" expanded="true" />
-            <element signature="e#13603#13604#0" expanded="true" />
-            <element signature="e#13675#13690#0" expanded="true" />
-            <element signature="e#13806#13807#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="2010" max-vertical-offset="6165">
+          <caret line="134" column="22" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/updateHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="20" selection-start="1239" selection-end="1239" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1035">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="630" max-vertical-offset="1170">
+          <caret line="42" column="20" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/UpdaterFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="16" selection-start="3722" selection-end="3722" vertical-scroll-proportion="16.553572" vertical-offset="2367" max-vertical-offset="2940">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2611#2645#0" expanded="true" />
-            <element signature="e#2851#2885#0" expanded="true" />
-            <element signature="e#2893#2922#0" expanded="true" />
-            <element signature="e#3510#5544#0" expanded="true" />
-            <element signature="e#4067#4096#0" expanded="true" />
-            <element signature="e#4144#4181#0" expanded="true" />
-            <element signature="e#4337#4350#0" expanded="true" />
-            <element signature="e#4352#5168#0" expanded="true" />
-            <element signature="e#5062#5082#0" expanded="true" />
-            <element signature="e#5141#5142#0" expanded="true" />
-            <element signature="e#5213#5228#0" expanded="true" />
-            <element signature="e#5230#5454#0" expanded="true" />
-            <element signature="e#5427#5428#0" expanded="true" />
-            <element signature="e#5532#5533#0" expanded="true" />
-            <element signature="e#5599#7909#0" expanded="true" />
-            <element signature="e#6201#6224#0" expanded="true" />
-            <element signature="e#6311#6324#0" expanded="true" />
-            <element signature="e#6326#7519#0" expanded="true" />
-            <element signature="e#6786#6820#0" expanded="true" />
-            <element signature="e#7492#7493#0" expanded="true" />
-            <element signature="e#7564#7579#0" expanded="true" />
-            <element signature="e#7581#7805#0" expanded="true" />
-            <element signature="e#7778#7779#0" expanded="true" />
-            <element signature="e#7883#7884#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/settingsHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="24" selection-start="2388" selection-end="2388" vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="2835">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2367" max-vertical-offset="2940">
+          <caret line="96" column="16" selection-start-line="96" selection-start-column="16" selection-end-line="96" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/shellHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="376" column="13" selection-start="11549" selection-end="11549" vertical-scroll-proportion="0.0" vertical-offset="4185" max-vertical-offset="6570">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5640" max-vertical-offset="8790">
+          <caret line="376" column="13" selection-start-line="376" selection-start-column="13" selection-end-line="376" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/lists/generatingLists.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="82" selection-start="726" selection-end="726" vertical-scroll-proportion="0.0" vertical-offset="55" max-vertical-offset="720">
+        <state vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="855">
+          <caret line="22" column="82" selection-start-line="22" selection-start-column="82" selection-end-line="22" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/rootHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7317437" vertical-offset="19" max-vertical-offset="690">
+          <caret line="34" column="68" selection-start-line="34" selection-start-column="68" selection-end-line="34" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/aero/control/prefs/PrefsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2025" max-vertical-offset="3240">
+          <caret line="143" column="5" selection-start-line="143" selection-start-column="5" selection-end-line="143" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/UndoBar/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.63492066" vertical-offset="0" max-vertical-offset="378">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/showcase/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/UndoBar/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/UndoBar/UndoBar.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/showcase/showcase.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3408" max-vertical-offset="4170">
+          <caret line="266" column="53" selection-start-line="266" selection-start-column="53" selection-end-line="266" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values-de/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3112" max-vertical-offset="4005">
+          <caret line="255" column="90" selection-start-line="255" selection-start-column="90" selection-end-line="255" selection-end-column="90" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/CPUFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="648" column="69" selection-start="29539" selection-end="29545" vertical-scroll-proportion="0.0" vertical-offset="8926" max-vertical-offset="9555">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="6975" max-vertical-offset="10800">
+          <caret line="465" column="75" selection-start-line="465" selection-start-column="75" selection-end-line="465" selection-end-column="75" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/rootHelper.java">
+    <entry file="file://$PROJECT_DIR$/AeroControl.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="68" selection-start="957" selection-end="957" vertical-scroll-proportion="0.0" vertical-offset="16" max-vertical-offset="690">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.42473918" vertical-offset="0" max-vertical-offset="671">
+          <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/aero/control/prefs/PrefsActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/settingsHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="5" selection-start="5721" selection-end="5721" vertical-scroll-proportion="0.53733766" vertical-offset="1619" max-vertical-offset="2235">
+        <state vertical-scroll-proportion="3.2041728" vertical-offset="100" max-vertical-offset="6540">
+          <caret line="160" column="91" selection-start-line="160" selection-start-column="91" selection-end-line="160" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/aero/control/service/PerAppServiceHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="1215">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/aero/control/service/PerAppService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="1545">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/ProfileFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="10575">
+          <caret line="37" column="24" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/aero/control/helpers/perAppHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34393638" vertical-offset="97" max-vertical-offset="2670">
+          <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#850#851#0" expanded="true" />
+            <element signature="e#884#885#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1477,12 +1130,11 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>HoloGraphLibrary</last-edited>
+          <last-edited>Android|UndoBar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -1502,7 +1154,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>android-support-v4</last-edited>
+          <last-edited>libs</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
