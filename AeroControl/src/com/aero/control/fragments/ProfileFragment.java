@@ -57,6 +57,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     public static final settingsHelper settings = new settingsHelper();
     private ViewGroup mDeletedChild;
     private String mDeletedProfile;
+    private SharedPreferences mPerAppPrefs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +66,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        mPerAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
         final View v = inflater.inflate(R.layout.profile_fragment, null);
 
         mContainerView = (ViewGroup)v.findViewById(R.id.container);
@@ -254,7 +256,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         if (flag) {
             // This will save the current profile as a preference and invokes a new scan;
             saveNewProfile(AeroProfile);
-            perApp.getAllApps(perApp.getSystemAppStatus());
         }
 
         // Instantiate a new "row" view.
@@ -275,6 +276,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
             for (int k = 0; k < perApp.getCurrentSelectedPackagesByName().length; k++) {
                 count++;
+                if (count > 0)
+                    break;
             }
             if (count > 0) {
                 txtViewSummary.setText(R.string.perAppAssigned);
@@ -360,20 +363,18 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
      */
     private final void getPersistentData(perAppHelper perApp, String name) {
 
-        final SharedPreferences perAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
-
-        final String savedSelectedProfiles = perAppPrefs.getString(name, null);
-        String systemApps = perAppPrefs.getString("systemStatus", null);
+        final String savedSelectedProfiles = mPerAppPrefs.getString(name, null);
+        String systemApps = mPerAppPrefs.getString("systemStatus", null);
 
         //Probably a "fresh" profile;
         if (systemApps == null)
             systemApps = "false";
 
-        if (savedSelectedProfiles == null)
-            return;
-
         perApp.setSystemAppStatus(Boolean.valueOf(systemApps));
         perApp.getAllApps(perApp.getSystemAppStatus());
+
+        if (savedSelectedProfiles == null)
+            return;
 
         String tmp[];
         tmp = savedSelectedProfiles.replace("+", " ").split(" ");
@@ -393,8 +394,10 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             public void onClick(DialogInterface dialogInterface, int i, boolean b) {
                 if (b) {
                     perApp.setChecked(true, i);
+                    Log.e("Aero", "Output: " + perApp.getAllPackageNames()[i].toString() + " State " + true + "Position: " + i);
                 } else {
                     perApp.setChecked(false, i);
+                    Log.e("Aero", "Output: " + perApp.getAllPackageNames()[i].toString() + " State " + false + "Position: " + i);
                 }
                 int count = 0;
 
@@ -415,8 +418,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
-                        SharedPreferences perAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
-
                         String[] packageNames = perApp.getCurrentSelectedPackages();
 
                         String tmp = "";
@@ -424,10 +425,10 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                         for (String a : packageNames ) {
                             tmp = tmp + a + "+";
                         }
-                        perAppPrefs.edit().remove(profileName);
+                        mPerAppPrefs.edit().remove(profileName);
 
-                        perAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
-                        perAppPrefs.edit().putString(profileName, tmp).commit();
+                        mPerAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
+                        mPerAppPrefs.edit().putString(profileName, tmp).commit();
 
                     }
                 })
@@ -445,13 +446,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                         // Invoke a new "scan";
                         perApp.getAllApps(perApp.getSystemAppStatus());
 
-                        SharedPreferences perAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
+                        mPerAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
 
-                        perAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
-
-                        // At this point in time, it can't be assigned to any apps;
-                        txtViewSummary.setText(R.string.notperAppAssigned);
-                        txtViewSummary.setTextColor(Color.parseColor("#e74c3c"));
+                        getPersistentData(perApp, profileName);
                     }
 
                 })
@@ -563,12 +560,10 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             AeroActivity.shell.setRootInfo(cmd);
         }
 
-        SharedPreferences perAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
-
         // We need to delete the "old" preference if there are profiles assigned;
-        String valueOld = perAppPrefs.getString(oldName.toString(), null);
-        perAppPrefs.edit().remove(oldName.toString()).commit();
-        perAppPrefs.edit().putString(newName.toString(), valueOld).commit();
+        final String valueOld = mPerAppPrefs.getString(oldName.toString(), null);
+        mPerAppPrefs.edit().remove(oldName.toString()).commit();
+        mPerAppPrefs.edit().putString(newName.toString(), valueOld).commit();
 
         txtView.setText(newName);
         //txtViewSummary.setText(newName);

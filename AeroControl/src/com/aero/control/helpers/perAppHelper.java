@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -153,6 +154,9 @@ public class perAppHelper {
         final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
         final ArrayList<String> currentInstalledApps = new ArrayList<String>();
         final ArrayList<String> currentPackages = new ArrayList<String>();
+
+        // Sort our freshly obtained apps;
+        Collections.sort(packages, new ApplicationInfo.DisplayNameComparator(pm));
 
         // We should hold info about what kind of apps this object holds;
         mShowSystemApps = showSystemApp;
