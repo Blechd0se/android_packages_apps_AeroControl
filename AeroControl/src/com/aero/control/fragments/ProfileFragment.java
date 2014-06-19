@@ -58,6 +58,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private ViewGroup mDeletedChild;
     private String mDeletedProfile;
     private SharedPreferences mPerAppPrefs;
+    private Context mContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +67,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        mPerAppPrefs = getActivity().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
+        mContext = getActivity();
+
+        mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
         final View v = inflater.inflate(R.layout.profile_fragment, null);
 
         mContainerView = (ViewGroup)v.findViewById(R.id.container);
@@ -75,7 +78,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         loadProfiles();
 
         // Load default profiles;
-        //addDefaultProfiles(new EditText(getActivity()));
+        //addDefaultProfiles(new EditText(mContext));
 
         return mContainerView;
     }
@@ -117,7 +120,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         String a = mPrefs.getString("app_theme", null);
 
         if (a == null)
@@ -144,14 +147,14 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                 // Check if there are actual changes;
                 final File defaultFile = new File(sharedPrefsPath + "com.aero.control_preferences.xml");
                 if (!(defaultFile.exists())) {
-                    Toast.makeText(getActivity(), R.string.pref_profile_no_changes , Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, R.string.pref_profile_no_changes , Toast.LENGTH_LONG).show();
                     break;
                 }
 
                 // Hide the "empty" view since there is now at least one item in the list.
                 mContainerView.findViewById(android.R.id.empty).setVisibility(View.GONE);
 
-                showDialog(new EditText(getActivity()));
+                showDialog(new EditText(mContext));
                 break;
             case R.id.action_reload:
                 showResetDialog();
@@ -163,7 +166,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     private void showResetDialog() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View layout = inflater.inflate(R.layout.about_screen, null);
         TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
@@ -177,11 +180,11 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Continue with resetting
-                        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
                         SharedPreferences.Editor  editor = mPrefs.edit();
                         editor.clear();
                         editor.commit();
-                        Toast.makeText(getActivity(), R.string.successful , Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, R.string.successful , Toast.LENGTH_LONG).show();
                     }
                 })
                 .setNegativeButton(R.string.maybe_later, new DialogInterface.OnClickListener() {
@@ -196,7 +199,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
         mCompleteProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
 
-        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+        AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(R.string.add_a_name)
                 .setMessage(R.string.define_a_name)
                 .setView(editText)
@@ -209,9 +212,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
                         // Add content;
                         if (profileTitle.equals(""))
-                            Toast.makeText(getActivity(), R.string.pref_profile_enter_name, Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext, R.string.pref_profile_enter_name, Toast.LENGTH_LONG).show();
                         else if (allProfiles.contains(profileTitle + ".xml"))
-                            Toast.makeText(getActivity(), R.string.pref_profile_name_exists, Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext, R.string.pref_profile_name_exists, Toast.LENGTH_LONG).show();
                         else {
                             addProfile(profileTitle, true);
                             // Set up our file;
@@ -219,7 +222,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                             final byte[] buffer = new byte[1024];
 
                             try {
-                                FileInputStream fis = getActivity().openFileInput(FILENAME_PERAPP);
+                                FileInputStream fis = mContext.openFileInput(FILENAME_PERAPP);
                                 output = fis.read(buffer);
                                 fis.close();
                             } catch (IOException e) {
@@ -242,12 +245,12 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     // Adds the object to our "list", s = Name
     private void addProfile(final String s, boolean flag) {
 
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        final SharedPreferences AeroProfile = getActivity().getSharedPreferences(s, Context.MODE_PRIVATE);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        final SharedPreferences AeroProfile = mContext.getSharedPreferences(s, Context.MODE_PRIVATE);
         final File defaultFile = new File(sharedPrefsPath + "com.aero.control_preferences.xml");
 
         // Init the perApp data here, so we can re-use it for each profile
-        final perAppHelper perApp = new perAppHelper(getActivity());
+        final perAppHelper perApp = new perAppHelper(mContext);
 
         if(!(defaultFile.exists()))
             return;
@@ -259,7 +262,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         }
 
         // Instantiate a new "row" view.
-        final ViewGroup childView = (ViewGroup) LayoutInflater.from(getActivity()).inflate(
+        final ViewGroup childView = (ViewGroup) LayoutInflater.from(mContext).inflate(
                 R.layout.profiles_list, mContainerView, false);
 
         // Create TextView, with Content and Listeners;
@@ -297,8 +300,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
 
         final UndoBarStyle style = new UndoBarStyle(R.drawable.ic_action_undo, R.string.pref_profile_undo,
-                R.drawable.undobar_background, 5000).setAnim(AnimationUtils.loadAnimation(getActivity(),
-                android.R.anim.fade_in), AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+                R.drawable.undobar_background, 5000).setAnim(AnimationUtils.loadAnimation(mContext,
+                android.R.anim.fade_in), AnimationUtils.loadAnimation(mContext, android.R.anim.fade_out));
 
         // Remove the complete ViewGroup;
         childView.findViewById(R.id.delete_button).setOnClickListener(new View.OnClickListener() {
@@ -308,7 +311,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
                 mDeletedProfile = txtView.getText().toString();
                 mDeletedChild = childView;
-                mPrefs = getActivity().getSharedPreferences(mDeletedProfile, Context.MODE_PRIVATE);
+                mPrefs = mContext.getSharedPreferences(mDeletedProfile, Context.MODE_PRIVATE);
 
 
                 mContainerView.removeView(mDeletedChild);
@@ -333,11 +336,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
      */
     @Override
     public void onUndo(final Parcelable token) {
-        try {
-            Toast.makeText(getActivity(), R.string.successful, Toast.LENGTH_SHORT).show();
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Can't show a toast without context!", e);
-        }
+        Toast.makeText(mContext, R.string.successful, Toast.LENGTH_SHORT).show();
         mContainerView.addView(mDeletedChild);
     }
 
@@ -386,7 +385,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     private final void showPerAppDialog(final perAppHelper perApp, final String profileName, final TextView txtViewSummary) {
 
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 
         dialog.setTitle(R.string.pref_profile_perApp);
         dialog.setMultiChoiceItems(perApp.getAllPackageNames(), perApp.getCheckedState(), new DialogInterface.OnMultiChoiceClickListener() {
@@ -458,8 +457,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
         final File prefFile = new File (sharedPrefsPath + ProfileName + ".xml");
 
-        //Clear it and delete it;
-        mPrefs.edit().clear().commit();
+        //Delete it;
         prefFile.delete();
 
         // Check if file is gone;
@@ -487,7 +485,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     private final void saveNewProfile(SharedPreferences AeroProfile) {
         // Just to be save, loading default again;
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = AeroProfile.edit();
 
         // Get all our preferences;
@@ -500,7 +498,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private final void applyProfile(SharedPreferences AeroProfile) {
 
         // Just to be save, loading default again;
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
 
         // Get all our preferences;
         final Map<String,?> allKeys = AeroProfile.getAll();
@@ -582,8 +580,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             @Override
             public void onClick(View view) {
 
-                final SharedPreferences AeroProfile = getActivity().getSharedPreferences(txtView.getText().toString(), Context.MODE_PRIVATE);
-                TextView profileText = new TextView(getActivity());
+                final SharedPreferences AeroProfile = mContext.getSharedPreferences(txtView.getText().toString(), Context.MODE_PRIVATE);
+                TextView profileText = new TextView(mContext);
                 String content = "";
                 String tmp;
 
@@ -619,18 +617,18 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                 profileText.setPadding(20, 20, 20, 20);
                 profileText.setTypeface(kitkatFont);
 
-                AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                AlertDialog dialog = new AlertDialog.Builder(mContext)
                         .setTitle(getText(R.string.slider_overview) + ": " + txtView.getText().toString())
                         .setView(profileText)
                         .setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                mPrefs = getActivity().getSharedPreferences("com.aero.control_preferences", Context.MODE_PRIVATE);
+                                mPrefs = mContext.getSharedPreferences("com.aero.control_preferences", Context.MODE_PRIVATE);
                                 deleteProfile("com.aero.control_preferences");
-                                SharedPreferences AeroProfile = getActivity().getSharedPreferences(txtView.getText().toString(), Context.MODE_PRIVATE);
+                                SharedPreferences AeroProfile = mContext.getSharedPreferences(txtView.getText().toString(), Context.MODE_PRIVATE);
                                 applyProfile(AeroProfile);
-                                settings.setSettings(getActivity(), null);
+                                settings.setSettings(mContext, null);
 
                             }
                         })
@@ -648,11 +646,11 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             public boolean onLongClick(View view) {
 
                 mCompleteProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
-                final EditText editText = new EditText(getActivity());
+                final EditText editText = new EditText(mContext);
                 final CharSequence oldName = txtView.getText();
                 editText.setText(oldName);
 
-                AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                AlertDialog dialog = new AlertDialog.Builder(mContext)
                         .setTitle(R.string.pref_profile_change_name)
                         .setMessage(R.string.pref_profile_change_name_sum)
                         .setView(editText)
@@ -664,7 +662,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                                 String allProfiles = Arrays.asList(mCompleteProfiles).toString();
 
                                 if (allProfiles.contains(newName + ".xml")) {
-                                    Toast.makeText(getActivity(), R.string.pref_profile_name_exists, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(mContext, R.string.pref_profile_name_exists, Toast.LENGTH_LONG).show();
                                 } else {
                                     txtView.setText(newName);
                                     renameProfile(oldName, newName, txtView, txtViewSummary);
@@ -696,7 +694,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         final byte[] buffer = new byte[1024];
 
         try {
-            FileInputStream fis = getActivity().openFileInput(FILENAME_PROFILES);
+            FileInputStream fis = mContext.openFileInput(FILENAME_PROFILES);
             output = fis.read(buffer);
             fis.close();
         } catch (IOException e) {
@@ -712,7 +710,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     public void DrawFirstStart(int header, int content, String filename, Integer id) {
 
         try {
-            FileOutputStream fos = getActivity().openFileOutput(filename, Context.MODE_PRIVATE);
+            FileOutputStream fos = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
             fos.write("1".getBytes());
             fos.close();
         }
