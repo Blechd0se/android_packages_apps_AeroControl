@@ -29,11 +29,13 @@ import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -63,6 +65,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     private CheckBoxPreference mDynFSync, mZCache, mLowMemoryPref, mWriteBackControl;
     private Preference mFSTrimToggle, mDalvikSettings;
     private ListPreference mIOScheduler;
+    private String mFileSystem;
 
     private static final String MEMORY_SETTINGS_CATEGORY = "memory_settings";
 
@@ -320,14 +323,45 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     }
 
     private void fsTrimToggleClick() {
-        final CharSequence[] system = {"/system", "/data", "/cache"};
+
+        if (mFileSystem == null)
+            mFileSystem = AeroActivity.shell.getRootInfo("mount", "");
+
+        final CharSequence[] system = {" /system ", " /data ", " /cache "};
+        final ArrayList<String> fs = new ArrayList<String>();
+
+        int tmp;
+        int count = 0;
+        String temp;
+
+        for (CharSequence a : system) {
+            if (mFileSystem.contains(a)) {
+                tmp = mFileSystem.indexOf(a.toString());
+                temp = mFileSystem.substring(tmp, tmp + a.length() + 4).replace(a, "");
+
+                if (temp.equals("ext3") || temp.equals("ext4")) {
+                    fs.add(a.toString());
+                    count++;
+                }
+            } else {
+                continue;
+            }
+        }
+        final CharSequence[] fsystem = fs.toArray(new CharSequence[0]);
+
+        // If the device doesn't support trimable filesystems;
+        if (count == 0) {
+            Toast.makeText(getActivity(), R.string.unavailable, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final ProgressDialog update = new ProgressDialog(getActivity());
         builder.setTitle(R.string.fstrim_header);
         builder.setIcon(R.drawable.gear_dark);
-        builder.setItems(system, new DialogInterface.OnClickListener() {
+        builder.setItems(fsystem, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
-                final String b = (String)system[item];
+                final String b = (String)fsystem[item];
                 update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 update.setCancelable(false);
                 update.setMax(100);

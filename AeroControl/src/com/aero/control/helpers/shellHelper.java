@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 public final class shellHelper {
 
     // Buffer length;
-    private static final int BUFF_LEN = 256;
+    private static final int BUFF_LEN = 512;
     private static final byte[] buffer = new byte[BUFF_LEN];
     private static final String LOG_TAG = shellHelper.class.getName();
     private ShellWorkqueue shWork = new ShellWorkqueue();
@@ -533,6 +533,9 @@ public final class shellHelper {
             String output = new String();
             while(true){
                 read = stdout.read(buffer);
+                if (read == -1)
+                    return "Unavailable";
+
                 output += new String(buffer, 0, read);
                 if(read<BUFF_LEN){
                     //we have read everything
