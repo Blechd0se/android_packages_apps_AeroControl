@@ -246,15 +246,15 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
         // Init the perApp data here, so we can re-use it for each profile
         final perAppHelper perApp = new perAppHelper(getActivity());
-        perApp.getAllApps(perApp.getSystemAppStatus());
 
         if(!(defaultFile.exists()))
             return;
 
         // Flag if we add a profile to the list which already exists as a file;
         if (flag) {
-            // This will save the current profile as a preference;
+            // This will save the current profile as a preference and invokes a new scan;
             saveNewProfile(AeroProfile);
+            perApp.getAllApps(perApp.getSystemAppStatus());
         }
 
         // Instantiate a new "row" view.
