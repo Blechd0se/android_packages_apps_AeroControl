@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -57,6 +58,7 @@ public class AppRate {
     private boolean fromTop = false;
     private long minimumMonitoringTime;
     private long minimumInterval;
+    private static final Typeface kitkatFont = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
 
     private AppRate(Activity activity) {
         this.activity = activity;
@@ -438,6 +440,7 @@ public class AppRate {
             container.setLayoutParams(lp);
         }
 
+        textView.setTypeface(kitkatFont);
         textView.setText(text);
 
         close.setOnClickListener(new View.OnClickListener() {

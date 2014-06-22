@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 
+import fr.nicolaspomepuy.discreetapprate.AppRate;
+
 /**
  * Created by Alexander Christ on 09.12.13.
  */
@@ -59,6 +61,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private String mDeletedProfile;
     private SharedPreferences mPerAppPrefs;
     private Context mContext;
+    private int mGlobalCounter = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,6 +115,21 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                 addProfile(s, false);
                 mContainerView.findViewById(android.R.id.empty).setVisibility(View.GONE);
             }
+        }
+        // Sometime we are just too fast and would throw a null pointer, better save than sorry
+        try {
+            // User has assigned apps, but no service is running;
+            if (mGlobalCounter > 0 && !(AeroActivity.perAppService.getState())) {
+                AppRate.with(getActivity())
+                        .text(R.string.pref_profile_service_not_running)
+                        .fromTop(false)
+                        .delay(1000)
+                        .autoHide(15000)
+                        .allowPlayLink(false)
+                        .forceShow();
+            }
+        } catch (NullPointerException e) {
+            Log.e(LOG_TAG, "Object wasn't available, we are too fast!", e);
         }
 
     }
@@ -276,9 +294,11 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         if (perApp.getCurrentSelectedPackagesByName() != null) {
 
             int count = 0;
+            mGlobalCounter = count;
 
             for (int k = 0; k < perApp.getCurrentSelectedPackagesByName().length; k++) {
                 count++;
+                mGlobalCounter = count;
                 if (count > 0)
                     break;
             }
@@ -397,9 +417,11 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                     perApp.setChecked(false, i);
                 }
                 int count = 0;
+                mGlobalCounter = count;
 
                 for (int k = 0; k < perApp.getCurrentSelectedPackagesByName().length; k++) {
                     count++;
+                    mGlobalCounter = count;
                 }
                 if (count > 0) {
                     txtViewSummary.setText(R.string.perAppAssigned);
@@ -426,6 +448,18 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
                         mPerAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
                         mPerAppPrefs.edit().putString(profileName, tmp).commit();
+
+                        // User has assigned apps, but no service is running;
+                        if (mGlobalCounter > 0 && !(AeroActivity.perAppService.getState())) {
+                            AppRate.with(getActivity())
+                                    .text(R.string.pref_profile_service_not_running)
+                                    .fromTop(false)
+                                    .delay(1000)
+                                    .autoHide(15000)
+                                    .allowPlayLink(false)
+                                    .forceShow();
+                        }
+
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -450,7 +484,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                 })
         ;
         dialog.create().show();
-
     }
 
     private final boolean deleteProfile(String ProfileName) {
