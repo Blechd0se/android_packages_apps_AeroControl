@@ -109,6 +109,7 @@ public final class AeroActivity extends Activity {
         prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String a = prefs.getString("app_theme", null);
         int actionBarHeight = 0;
+        getActionBar().setIcon(R.drawable.app_icon_actionbar);
 
         if (a == null)
             a = "";

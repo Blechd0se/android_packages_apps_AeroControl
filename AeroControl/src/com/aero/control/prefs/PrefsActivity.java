@@ -38,6 +38,7 @@ public class PrefsActivity extends PreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
         prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String a = prefs.getString("app_theme", null);
+        getActionBar().setIcon(R.drawable.app_icon_actionbar);
 
         if (a == null)
             a = "";
