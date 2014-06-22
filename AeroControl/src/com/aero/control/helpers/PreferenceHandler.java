@@ -74,7 +74,12 @@ public class PreferenceHandler {
 
         for (int j = 0; j < array.length; j++) {
 
-            generateSettings(array[j][0], array[j][1], false);
+            //TODO: Move this into the parent class
+            if (array[j][0].equals("vtg_level"))
+                generateSettings(array[j][0], array[j][1], true);
+            else
+                generateSettings(array[j][0], array[j][1], false);
+            
             i++;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             /* For better KitKat+ looks; */
