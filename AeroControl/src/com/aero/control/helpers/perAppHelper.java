@@ -3,6 +3,7 @@ package com.aero.control.helpers;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +21,7 @@ public class perAppHelper {
     private String[] mCurrentSelectedPackagesByName;
     private boolean mShowSystemApps;
     private boolean[] mIsChecked;
+    private List<ApplicationInfo> mPackages;
 
     public perAppHelper(Context context) {
         this.mContext = context;
@@ -33,6 +35,13 @@ public class perAppHelper {
      */
     public final String[] getAllPackageNames() {
         return mListedApps;
+    }
+
+    public final void setPackes(List<ApplicationInfo> packages) {
+        this.mPackages = packages;
+    }
+    public final List<ApplicationInfo>  getPackes() {
+        return mPackages;
     }
 
     /**
@@ -151,12 +160,19 @@ public class perAppHelper {
     public final void getAllApps(boolean showSystemApp) {
 
         final PackageManager pm = mContext.getPackageManager();
-        final List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        List<ApplicationInfo> packages = pm.getInstalledApplications(0);
         final ArrayList<String> currentInstalledApps = new ArrayList<String>();
         final ArrayList<String> currentPackages = new ArrayList<String>();
 
-        // Sort our freshly obtained apps;
-        Collections.sort(packages, new ApplicationInfo.DisplayNameComparator(pm));
+        // Just copy our array;
+        if (mPackages == null) {
+            // Sort our freshly obtained apps;
+            Collections.sort(packages, new ApplicationInfo.DisplayNameComparator(pm));
+            mPackages = packages;
+        } else {
+            packages = mPackages;
+            Log.e("Aero", "Zero Time!: ");
+        }
 
         // We should hold info about what kind of apps this object holds;
         mShowSystemApps = showSystemApp;

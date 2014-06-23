@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import fr.nicolaspomepuy.discreetapprate.AppRate;
@@ -62,6 +64,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private SharedPreferences mPerAppPrefs;
     private Context mContext;
     private int mGlobalCounter = 0;
+    private List<ApplicationInfo> mPackages;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -389,8 +392,14 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         if (systemApps == null)
             systemApps = "false";
 
+        if (mPackages != null)
+            perApp.setPackes(mPackages);
+
         perApp.setSystemAppStatus(Boolean.valueOf(systemApps));
         perApp.getAllApps(perApp.getSystemAppStatus());
+
+        if (mPackages == null)
+            mPackages = perApp.getPackes();
 
         if (savedSelectedProfiles == null)
             return;
