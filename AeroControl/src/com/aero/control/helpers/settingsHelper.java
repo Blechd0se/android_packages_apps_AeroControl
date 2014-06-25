@@ -138,14 +138,18 @@ public class settingsHelper {
 
         // ADD CPU COMMANDS TO THE ARRAY
         ArrayList<String> governorSettings = new ArrayList<String>();
+        String max_freq = shell.getInfo(CPU_BASE_PATH + 0 +  CPU_MAX_FREQ);
+        String min_freq = shell.getInfo(CPU_BASE_PATH + 0 +  CPU_MIN_FREQ);
         for (int k = 0; k < mNumCpus; k++) {
             if (cpu_max != null) {
 
                 shell.queueWork("echo 1 > " + CPU_BASE_PATH + k + "/online");
                 shell.queueWork("chmod 0666 " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
 
-                if (Profile != null)
-                    defaultProfile.add("echo " + shell.getInfo(CPU_BASE_PATH + k + CPU_MAX_FREQ) + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
+                if (Profile != null) {
+                    defaultProfile.add("echo 1 > " + CPU_BASE_PATH + k + "/online");
+                    defaultProfile.add("echo " + max_freq + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
+                }
 
                 shell.queueWork("echo " + cpu_max + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
             }
@@ -155,8 +159,10 @@ public class settingsHelper {
                 shell.queueWork("echo 1 > " + CPU_BASE_PATH + k + "/online");
                 shell.queueWork("chmod 0666 " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
 
-                if (Profile != null)
-                    defaultProfile.add("echo " + shell.getInfo(CPU_BASE_PATH + k + CPU_MIN_FREQ) + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
+                if (Profile != null) {
+                    defaultProfile.add("echo 1 > " + CPU_BASE_PATH + k + "/online");
+                    defaultProfile.add("echo " + min_freq + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
+                }
 
                 shell.queueWork("echo " + cpu_min + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
             }
