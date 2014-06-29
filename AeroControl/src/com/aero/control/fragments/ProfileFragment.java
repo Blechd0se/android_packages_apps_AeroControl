@@ -63,7 +63,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private String mDeletedProfile;
     private SharedPreferences mPerAppPrefs;
     private Context mContext;
-    private int mGlobalCounter = 0;
     private List<ApplicationInfo> mPackages;
 
     @Override
@@ -122,7 +121,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         // Sometime we are just too fast and would throw a null pointer, better save than sorry
         try {
             // User has assigned apps, but no service is running;
-            if (mGlobalCounter > 0 && !(AeroActivity.perAppService.getState())) {
+            if (!(AeroActivity.perAppService.getState())) {
                 AppRate.with(getActivity())
                         .text(R.string.pref_profile_service_not_running)
                         .fromTop(false)
@@ -291,31 +290,16 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         final TextView txtViewSummary = (TextView)childView.findViewById(R.id.profile_text_summary);
         txtView.setText(s);
 
-        getPersistentData(perApp, s);
+        /*
+         * Case 1; We open up our data and check, if the user has checked anything for this profile
+         * Case 2: We actually map the found data to our objects later on (checked state)
+         */
 
-        // Load our already selected apps into UI;
-        if (perApp.getCurrentSelectedPackagesByName() != null) {
-
-            int count = 0;
-            mGlobalCounter = count;
-
-            for (int k = 0; k < perApp.getCurrentSelectedPackagesByName().length; k++) {
-                count++;
-                mGlobalCounter = count;
-                if (count > 0)
-                    break;
-            }
-            if (count > 0) {
-                txtViewSummary.setText(R.string.perAppAssigned);
-                txtViewSummary.setTextColor(Color.parseColor("#1abc9c"));
-            } else {
-                txtViewSummary.setText(R.string.notperAppAssigned);
-                txtViewSummary.setTextColor(Color.parseColor("#e74c3c"));
-            }
-
+        if (checkState(s)) {
+            // he has checked something!
+            updateStatus(txtViewSummary, true);
         } else {
-            txtViewSummary.setText(R.string.notperAppAssigned);
-            txtViewSummary.setTextColor(Color.parseColor("#e74c3c"));
+            updateStatus(txtViewSummary, false);
         }
 
         txtView.setTypeface(kitkatFont);
@@ -335,7 +319,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                 mDeletedProfile = txtView.getText().toString();
                 mDeletedChild = childView;
                 mPrefs = mContext.getSharedPreferences(mDeletedProfile, Context.MODE_PRIVATE);
-
 
                 mContainerView.removeView(mDeletedChild);
 
@@ -380,7 +363,33 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     }
 
-    /* Maps the persistent data in shared_prefs to our currently
+    // Checks and returns true if the profile is assigned
+    private final boolean checkState(String name) {
+
+        final String profile = mPerAppPrefs.getString(name, null);
+
+        // No profile was created anyway, return quickly;
+        if (profile == null)
+            return false;
+
+        String tmp[];
+        tmp = profile.replace("+", " ").split(" ");
+
+        // If no assigned apps are found, set to false, otherwise update UI
+        if (tmp == null) {
+            return false;
+        } else {
+            for (final String a : tmp) {
+                if (a.equals(""))
+                    return false;
+            }
+            return true;
+        }
+
+    }
+
+    /*
+     * Maps the persistent data in shared_prefs to our currently
      * available objects
      */
     private final void getPersistentData(perAppHelper perApp, String name) {
@@ -392,14 +401,16 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         if (systemApps == null)
             systemApps = "false";
 
-        if (mPackages != null)
-            perApp.setPackes(mPackages);
-
         perApp.setSystemAppStatus(Boolean.valueOf(systemApps));
-        perApp.getAllApps(perApp.getSystemAppStatus());
 
-        if (mPackages == null)
-            mPackages = perApp.getPackes();
+        if (mPackages != null) {
+            // We are good to go, save time!
+            perApp.setPackages(mPackages);
+        } else {
+            // Worst case;
+            perApp.getAllApps(perApp.getSystemAppStatus());
+            mPackages = perApp.getPackages();
+        }
 
         if (savedSelectedProfiles == null)
             return;
@@ -412,9 +423,23 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     }
 
+    private void updateStatus(TextView txtView, boolean toggle) {
+
+        if (toggle) {
+            txtView.setText(R.string.perAppAssigned);
+            txtView.setTextColor(Color.parseColor("#1abc9c"));
+        } else {
+            txtView.setText(R.string.notperAppAssigned);
+            txtView.setTextColor(Color.parseColor("#e74c3c"));
+        }
+
+    }
+
     private final void showPerAppDialog(final perAppHelper perApp, final String profileName, final TextView txtViewSummary) {
 
         final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+
+        getPersistentData(perApp, profileName);
 
         dialog.setTitle(R.string.pref_profile_perApp);
         dialog.setMultiChoiceItems(perApp.getAllPackageNames(), perApp.getCheckedState(), new DialogInterface.OnMultiChoiceClickListener() {
@@ -424,20 +449,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                     perApp.setChecked(true, i);
                 } else {
                     perApp.setChecked(false, i);
-                }
-                int count = 0;
-                mGlobalCounter = count;
-
-                for (int k = 0; k < perApp.getCurrentSelectedPackagesByName().length; k++) {
-                    count++;
-                    mGlobalCounter = count;
-                }
-                if (count > 0) {
-                    txtViewSummary.setText(R.string.perAppAssigned);
-                    txtViewSummary.setTextColor(Color.parseColor("#1abc9c"));
-                } else {
-                    txtViewSummary.setText(R.string.notperAppAssigned);
-                    txtViewSummary.setTextColor(Color.parseColor("#e74c3c"));
                 }
             }
         })
@@ -458,8 +469,14 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                         mPerAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
                         mPerAppPrefs.edit().putString(profileName, tmp).commit();
 
+                        if (checkState(profileName)) {
+                            updateStatus(txtViewSummary, true);
+                        } else {
+                            updateStatus(txtViewSummary, false);
+                        }
+
                         // User has assigned apps, but no service is running;
-                        if (mGlobalCounter > 0 && !(AeroActivity.perAppService.getState())) {
+                        if (!(AeroActivity.perAppService.getState())) {
                             AppRate.with(getActivity())
                                     .text(R.string.pref_profile_service_not_running)
                                     .fromTop(false)
@@ -474,7 +491,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // Do Stuff
+                        // Do Nothing
 
                     }
                 })
@@ -482,9 +499,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         perApp.setSystemAppStatus(!perApp.getSystemAppStatus());
-                        // Invoke a new "scan";
-                        perApp.getAllApps(perApp.getSystemAppStatus());
-
                         mPerAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
 
                         getPersistentData(perApp, profileName);
@@ -498,6 +512,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private final boolean deleteProfile(String ProfileName) {
 
         final File prefFile = new File (sharedPrefsPath + ProfileName + ".xml");
+
+        mPerAppPrefs.edit().remove(ProfileName).commit();
 
         //Delete it;
         prefFile.delete();

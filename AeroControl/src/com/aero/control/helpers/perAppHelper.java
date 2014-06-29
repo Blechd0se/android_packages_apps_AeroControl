@@ -18,7 +18,6 @@ public class perAppHelper {
     private String[] mPackageNames; /* Real package names */
     private String[] mListedApps;
     private String[] mCurrentSelectedPackages;
-    private String[] mCurrentSelectedPackagesByName;
     private boolean mShowSystemApps;
     private boolean[] mIsChecked;
     private List<ApplicationInfo> mPackages;
@@ -37,10 +36,15 @@ public class perAppHelper {
         return mListedApps;
     }
 
-    public final void setPackes(List<ApplicationInfo> packages) {
+    public final void setPackages(List<ApplicationInfo> packages) {
+
         this.mPackages = packages;
+        // Invoke a new scan here if necessary;
+        getAllApps(getSystemAppStatus());
+
     }
-    public final List<ApplicationInfo>  getPackes() {
+
+    public final List<ApplicationInfo>  getPackages() {
         return mPackages;
     }
 
@@ -79,7 +83,7 @@ public class perAppHelper {
 
         int i = 0;
 
-        for (boolean checked : mIsChecked) {
+        for (final boolean checked : mIsChecked) {
 
             if (checked)
                 selectedPackages.add(mPackageNames[i]);
@@ -89,33 +93,6 @@ public class perAppHelper {
         mCurrentSelectedPackages = selectedPackages.toArray(new String[0]);
 
         return mCurrentSelectedPackages;
-    }
-
-    /**
-     * Gets all currently selected packages by their packages names
-     * e.g. "Aero Control"
-     *
-     * @return String array = all currently selected package names
-     */
-    public final String[] getCurrentSelectedPackagesByName() {
-
-        final ArrayList<String> selectedPackages = new ArrayList<String>();
-
-        int i = 0;
-
-        if (mIsChecked == null)
-            return null;
-
-        for (boolean checked : mIsChecked) {
-
-            if (checked)
-                selectedPackages.add(mListedApps[i]);
-
-            i++;
-        }
-        mCurrentSelectedPackagesByName = selectedPackages.toArray(new String[0]);
-
-        return mCurrentSelectedPackagesByName;
     }
 
     /**
@@ -144,9 +121,9 @@ public class perAppHelper {
     public final void findMatch(final String[] selectedApps) {
 
         int i = 0;
-        for (String a: mPackageNames) {
+        for (final String a: mPackageNames) {
 
-            for (String b : selectedApps) {
+            for (final String b : selectedApps) {
 
                 if (a.equals(b))
                     setChecked(true, i);
@@ -171,13 +148,12 @@ public class perAppHelper {
             mPackages = packages;
         } else {
             packages = mPackages;
-            Log.e("Aero", "Zero Time!: ");
         }
 
         // We should hold info about what kind of apps this object holds;
         mShowSystemApps = showSystemApp;
 
-        for (ApplicationInfo packageInfo : packages) {
+        for (final ApplicationInfo packageInfo : packages) {
 
             // If no interest in system apps;
             if (!showSystemApp) {

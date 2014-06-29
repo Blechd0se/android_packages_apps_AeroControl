@@ -67,7 +67,7 @@ public final class PerAppService extends Service {
 
                 final Map<String,?> keys = perAppPrefs.getAll();
 
-                for (Map.Entry<String,?> entry : keys.entrySet()) {
+                for (final Map.Entry<String,?> entry : keys.entrySet()) {
 
                     final String savedSelectedProfiles = perAppPrefs.getString(entry.getKey(), null);
                     if (savedSelectedProfiles == null)
@@ -77,7 +77,7 @@ public final class PerAppService extends Service {
                     tmp = savedSelectedProfiles.replace("+", " ").split(" ");
 
 
-                    for (String a : tmp) {
+                    for (final String a : tmp) {
                         if (mCurrentApp.equals(a)) {
                             mProfile = entry.getKey();
                             Log.e("Aero", "We found a match! " + mCurrentApp);
