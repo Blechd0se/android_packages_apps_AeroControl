@@ -25,34 +25,20 @@ public final class PerAppService extends Service {
     private boolean mActive;
     private String mProfile;
     private static final settingsHelper settingsHelper = new settingsHelper();
-    private static Thread mBackgroundThread;
-    private static Runnable mBackgroundRunnable;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        if (mBackgroundThread == null && mBackgroundRunnable == null) {
-            startService();
-        } else {
-            mBackgroundThread.run();
-        }
-
-        return Service.START_STICKY;
-    }
-
-    // Start our thread in question only once;
-    private final void startService() {
-
-        mBackgroundRunnable = new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
+
+                // Do work in its own thread;
                 runTask();
+
             }
-        };
+        }).start();
 
-        mBackgroundThread = new Thread(mBackgroundRunnable);
-        mBackgroundThread.start();
-
+        return Service.START_STICKY;
     }
 
     @Override
@@ -64,8 +50,7 @@ public final class PerAppService extends Service {
 
         final SharedPreferences perAppPrefs = getApplicationContext().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
 
-        if (Looper.myLooper() == null)
-            Looper.prepare();
+        Looper.prepare();
 
         // init our data;
         setAppData();

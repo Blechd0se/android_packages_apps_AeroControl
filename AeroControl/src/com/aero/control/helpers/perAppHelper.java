@@ -171,6 +171,7 @@ public class perAppHelper {
             mPackages = packages;
         } else {
             packages = mPackages;
+            Log.e("Aero", "Zero Time!: ");
         }
 
         // We should hold info about what kind of apps this object holds;
