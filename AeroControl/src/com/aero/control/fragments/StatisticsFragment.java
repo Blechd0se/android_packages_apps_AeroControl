@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -71,14 +72,14 @@ public class StatisticsFragment extends Fragment {
     public statisticInit[] mResult = new statisticInit[0];
 
     public static final String[] color_code = {
-            "#1abc9c", /* Turquoise */
-            "#FF8800", /* Orange */
-            "#2c3e50", /* Midnight Blue */
-            "#2980b9", /* Nephritis */
-            "#CF000F", /* Monza */
-            "#8e44ad", /* Wisteria */
-            "#3498db", /* Peter River */
-            "#e74c3c", /* Pomegrante */
+            "#009688", /* Turquoise */
+            "#ff5722", /* Orange */
+            "#8bc34a", /* Midnight Blue */
+            "#03a9f4", /* Nephritis */
+            "#e51c23", /* Monza */
+            "#00bcd4", /* Wisteria */
+            "#607d8b", /* Peter River */
+            "#e91e63", /* Pomegrante */
     };
 
     public static final String TIME_IN_STATE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state";
@@ -387,7 +388,12 @@ public class StatisticsFragment extends Fragment {
                 slice = new PieSlice();
                 cpuGraphValues.add(frequency + " " + time_in_state + " " + percentage + "%");
 
-                slice.setValue(percentage);
+                /*
+                 * We are setting the value here to some sort of placeholder
+                 * which will be later replaced by the animation handler
+                 */
+                slice.setValue(10);
+                slice.setGoalValue(percentage);
                 slice.setColor(Color.parseColor(color_code[j]));
                 pg.setThickness(30);
                 pg.addSlice(slice);
@@ -416,6 +422,10 @@ public class StatisticsFragment extends Fragment {
                 return false;
             }
         });
+        // Animate the slices here
+        pg.setDuration(1000);
+        pg.setInterpolator(new AccelerateDecelerateInterpolator());
+        pg.animateToGoalValues();
 
     }
 
@@ -446,9 +456,8 @@ public class StatisticsFragment extends Fragment {
         if(cpuPercentage != null)
             cpuPercentage.clear();
 
-        if (statisticView != null) {
+        if (statisticView != null)
             mResult = new statisticInit[0];
-        }
     }
 
     public final void handleOnClick(ArrayList<String> list) {

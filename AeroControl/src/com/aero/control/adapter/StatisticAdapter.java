@@ -27,14 +27,14 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
 
     // Color Code, redundant but necessary
     public static final String[] color_code = {
-            "#1abc9c", /* Turquoise */
-            "#FF8800", /* Orange */
-            "#2c3e50", /* Midnight Blue */
-            "#2980b9", /* Nephritis */
-            "#CF000F", /* Monza */
-            "#8e44ad", /* Wisteria */
-            "#3498db", /* Peter River */
-            "#e74c3c", /* Pomegrante */
+            "#009688", /* Turquoise */
+            "#ff5722", /* Orange */
+            "#8bc34a", /* Midnight Blue */
+            "#03a9f4", /* Nephritis */
+            "#e51c23", /* Monza */
+            "#00bcd4", /* Wisteria */
+            "#607d8b", /* Peter River */
+            "#e91e63", /* Pomegrante */
     };
 
     public StatisticAdapter(Context context, int layoutResourceId, statisticInit[] data) {
@@ -104,7 +104,7 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
 
         /* Small animation effect */
         int delay = (position * 200);
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.right_to_left);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_up);
         animation.setStartOffset(delay);
         row.setAnimation(animation);
 
