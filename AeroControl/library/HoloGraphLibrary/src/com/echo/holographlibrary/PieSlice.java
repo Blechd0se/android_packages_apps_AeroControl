@@ -34,6 +34,8 @@ public class PieSlice {
     private String title;
     private Path path;
     private Region region;
+    private float mOldValue;
+    private float mGoalValue;
 
     public String getTitle() {
         return title;
@@ -58,6 +60,18 @@ public class PieSlice {
     public void setValue(float value) {
         this.value = value;
     }
+
+    public float getOldValue() {
+        return mOldValue;
+    }
+
+    public void setOldValue(float oldValue) { mOldValue = oldValue; }
+
+    public float getGoalValue() {
+        return mGoalValue;
+    }
+
+    public void setGoalValue(float goalValue) { mGoalValue = goalValue; }
 
     public Path getPath() {
         return path;
