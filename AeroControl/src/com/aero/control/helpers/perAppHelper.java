@@ -79,6 +79,10 @@ public class perAppHelper {
      */
     public final String[] getCurrentSelectedPackages() {
 
+        if (mIsChecked == null) {
+            return mCurrentSelectedPackages;
+        }
+
         final ArrayList<String> selectedPackages = new ArrayList<String>();
 
         int i = 0;

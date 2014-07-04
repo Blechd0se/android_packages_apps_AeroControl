@@ -132,6 +132,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             }
         } catch (NullPointerException e) {
             Log.e(LOG_TAG, "Object wasn't available, we are too fast!", e);
+            // We should start the recovery process here if the service hasn't
+            // come up, but should be up
         }
 
     }
@@ -461,8 +463,10 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
                         String tmp = "";
 
-                        for (String a : packageNames ) {
-                            tmp = tmp + a + "+";
+                        if (packageNames != null) {
+                            for (String a : packageNames) {
+                                tmp = tmp + a + "+";
+                            }
                         }
                         mPerAppPrefs.edit().remove(profileName);
 
@@ -475,15 +479,22 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                             updateStatus(txtViewSummary, false);
                         }
 
-                        // User has assigned apps, but no service is running;
-                        if (!(AeroActivity.perAppService.getState())) {
-                            AppRate.with(getActivity())
-                                    .text(R.string.pref_profile_service_not_running)
-                                    .fromTop(false)
-                                    .delay(1000)
-                                    .autoHide(15000)
-                                    .allowPlayLink(false)
-                                    .forceShow();
+                        // Sometime we are just too fast and would throw a null pointer, better save than sorry
+                        try {
+                            // User has assigned apps, but no service is running;
+                            if (!(AeroActivity.perAppService.getState())) {
+                                AppRate.with(getActivity())
+                                        .text(R.string.pref_profile_service_not_running)
+                                        .fromTop(false)
+                                        .delay(1000)
+                                        .autoHide(15000)
+                                        .allowPlayLink(false)
+                                        .forceShow();
+                            }
+                        } catch (NullPointerException e) {
+                            Log.e(LOG_TAG, "Object wasn't available, we are too fast!", e);
+                            // We should start the recovery process here if the service hasn't
+                            // come up, but should be up
                         }
 
                     }
