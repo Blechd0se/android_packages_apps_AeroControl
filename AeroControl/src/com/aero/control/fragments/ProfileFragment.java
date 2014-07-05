@@ -121,7 +121,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         // Sometime we are just too fast and would throw a null pointer, better save than sorry
         try {
             // User has assigned apps, but no service is running;
-            if (!(AeroActivity.perAppService.getState())) {
+            if (!(AeroActivity.perAppService.getState()) && checkAllStates()) {
                 AppRate.with(getActivity())
                         .text(R.string.pref_profile_service_not_running)
                         .fromTop(false)
@@ -365,6 +365,24 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     }
 
+    // Returns true if any available profile is assigned
+    private final boolean checkAllStates() {
+
+        for (String s : mCompleteProfiles) {
+
+            // Don't take default xml;
+            if (!(s.equals("com.aero.control_preferences.xml") || s.equals("showcase_internal.xml")
+                    || s.equals("app_rate_prefs.xml") || s.equals(perAppProfileHandler + ".xml"))) {
+                // Just for the looks;
+                s = s.replace(".xml", "");
+                if (checkState(s))
+                    return true;
+            }
+        }
+        return false;
+
+    }
+
     // Checks and returns true if the profile is assigned
     private final boolean checkState(String name) {
 
@@ -482,7 +500,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                         // Sometime we are just too fast and would throw a null pointer, better save than sorry
                         try {
                             // User has assigned apps, but no service is running;
-                            if (!(AeroActivity.perAppService.getState())) {
+                            if (!(AeroActivity.perAppService.getState()) && checkAllStates()) {
                                 AppRate.with(getActivity())
                                         .text(R.string.pref_profile_service_not_running)
                                         .fromTop(false)
