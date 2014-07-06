@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 
+import java.text.ParseException;
+
 /**
  * Created by Alexander Christ on 05.03.14.
  */
@@ -41,7 +43,7 @@ public class PreferenceHandler {
      *
      * @return nothing
      */
-    public void genPrefFromDictionary(String[] array, String path) {
+    public final void genPrefFromDictionary(String[] array, String path) {
 
         int counter = array.length;
         int i = 0;
@@ -67,7 +69,7 @@ public class PreferenceHandler {
      *
      * @return nothing
      */
-    public void genPrefFromFiles(String[][] array) {
+    public final void genPrefFromFiles(String[][] array) {
 
         int counter = array.length;
         int i = 0;
@@ -101,15 +103,23 @@ public class PreferenceHandler {
      *
      * @return nothing
      */
-    private void generateSettings(final String parameter, String path, final boolean flag) {
+    private final void generateSettings(final String parameter, String path, final boolean flag) {
 
         final CustomTextPreference prefload = new CustomTextPreference(mContext);
         // Strings saves the complete path for a given governor;
         final String parameterPath = path + "/" + parameter;
-        String summary = AeroActivity.shell.getInfo(parameterPath);
+        final String summary = AeroActivity.shell.getInfo(parameterPath);
 
-        // Only show numbers in input field;
-        prefload.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+        Integer tmp = null;
+        try {
+            tmp = Integer.parseInt(summary);
+        } catch (NumberFormatException e) {
+            // Do nothing
+        }
+
+        // Only show numbers in input field if its a number;
+        if (tmp != null)
+            prefload.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 
         // Setup all things we would normally do in XML;
         prefload.setSummary(summary);
