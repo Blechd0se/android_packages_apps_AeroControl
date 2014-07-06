@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -425,9 +426,22 @@ public final class AeroActivity extends Activity {
     @Override
     public void onBackPressed() {
 
-        if (getFragmentManager().getBackStackEntryCount() == 1) {
-            getFragmentManager().popBackStack();
-            return;
+        FragmentManager fm = getFragmentManager();
+
+        if (fm.getBackStackEntryCount() == 1) {
+            try {
+                fm.popBackStackImmediate();
+                return;
+            } catch (IllegalStateException e) {
+                /*
+                 * When we are on a sub-fragment and change to a parent fragment
+                 * and then press the back button we would end up in an unexpected
+                 * state, because the fragment in question was already added previously.
+                 *
+                 * We don't have to handle this case in any special means, thanks to
+                 * the back counter logic.
+                 */
+            }
         }
 
         mBackCounter++;

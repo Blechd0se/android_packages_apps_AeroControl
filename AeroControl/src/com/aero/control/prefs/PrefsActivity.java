@@ -224,6 +224,7 @@ public class PrefsActivity extends PreferenceActivity {
                 finish();
                 Intent i = new Intent(context, AeroActivity.class);
                 context.startActivity(i);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
                 return true;
             default:
