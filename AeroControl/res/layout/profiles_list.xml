@@ -51,7 +51,7 @@
     <ImageButton android:id="@+id/assign_to_app"
         android:layout_width="64dp"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_action_person"
+        android:src="@drawable/rocket"
         android:background="?android:selectableItemBackground"
         android:contentDescription="Assign to apps" />
 

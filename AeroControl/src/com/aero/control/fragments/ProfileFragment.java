@@ -76,6 +76,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
         mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
         final View v = inflater.inflate(R.layout.profile_fragment, null);
+        final TextView empty = (TextView)v.findViewById(android.R.id.empty);
+        empty.setTypeface(kitkatFont);
 
         mContainerView = (ViewGroup)v.findViewById(R.id.container);
 
@@ -116,6 +118,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                 s = s.replace(".xml", "");
                 addProfile(s, false);
                 mContainerView.findViewById(android.R.id.empty).setVisibility(View.GONE);
+                mContainerView.findViewById(R.id.empty_image).setVisibility(View.GONE);
             }
         }
         // Sometime we are just too fast and would throw a null pointer, better save than sorry
@@ -175,6 +178,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
                 // Hide the "empty" view since there is now at least one item in the list.
                 mContainerView.findViewById(android.R.id.empty).setVisibility(View.GONE);
+                mContainerView.findViewById(R.id.empty_image).setVisibility(View.GONE);
 
                 showDialog(new EditText(mContext));
                 break;
@@ -359,8 +363,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
         // If there are no rows remaining, show
         // the empty view.
-        if (mContainerView.getChildCount() == 1) {
+        if (mContainerView.getChildCount() == 2) {
             mContainerView.findViewById(android.R.id.empty).setVisibility(View.VISIBLE);
+            mContainerView.findViewById(R.id.empty_image).setVisibility(View.VISIBLE);
         }
 
     }

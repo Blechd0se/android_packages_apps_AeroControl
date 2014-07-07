@@ -10,6 +10,13 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
+    <ImageView
+        android:id="@+id/empty_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/rocket_large"
+        android:layout_gravity="center"
+        android:padding="32dp"/>
 
     <TextView android:id="@android:id/empty"
         style="?android:textAppearanceSmall"
@@ -18,6 +25,7 @@
         android:layout_gravity="center"
         android:padding="32dp"
         android:text="@string/nothing_added_yet"
-        android:textColor="?android:textColorSecondary" />
+        android:textColor="?android:textColorSecondary"
+        android:textSize="20dp"/>
 
 </LinearLayout>
