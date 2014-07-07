@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aero.control"
-    android:versionCode="11"
-    android:versionName="1.4.2">
+    android:versionCode="12"
+    android:versionName="1.4.3">
 
     <uses-sdk
         android:minSdkVersion="14"
