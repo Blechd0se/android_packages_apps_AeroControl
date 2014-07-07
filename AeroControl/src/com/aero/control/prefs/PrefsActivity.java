@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -77,19 +79,44 @@ public class PrefsActivity extends PreferenceActivity {
         final CheckBoxPreference per_app_check = (CheckBoxPreference)root.findPreference("per_app_service");
         ListPreference appTheme = (ListPreference)root.findPreference("app_theme");
         Preference about = root.findPreference("about");
+        Preference version = root.findPreference("version");
         Preference legal = root.findPreference("legal");
+        Preference xda = root.findPreference("xda_thread");
 
         checkbox_preference.setIcon(R.drawable.ic_action_warning);
         reboot_checker.setIcon(R.drawable.ic_action_phone);
         per_app_check.setIcon(R.drawable.ic_action_person);
+        version.setIcon(R.drawable.rocket);
+        xda.setIcon(R.drawable.xda);
+
+        version.setEnabled(false);
 
         appTheme.setEntries(R.array.app_themes);
         appTheme.setEntryValues(data);
         appTheme.setEnabled(true);
         appTheme.setIcon(R.drawable.ic_action_event);
 
+        try {
+            version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+            version.setSummary("Build:" + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+
+        }
+
         about.setIcon(R.drawable.ic_action_about);
         legal.setIcon(R.drawable.ic_action_legal);
+
+
+        xda.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                Uri uri = Uri.parse("http://forum.xda-developers.com/showthread.php?t=2483827");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                return true;
+            }
+        });
 
         per_app_check.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
