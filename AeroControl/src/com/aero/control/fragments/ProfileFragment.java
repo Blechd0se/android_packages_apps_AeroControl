@@ -242,6 +242,11 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                         else if (allProfiles.contains(profileTitle + ".xml"))
                             Toast.makeText(mContext, R.string.pref_profile_name_exists, Toast.LENGTH_LONG).show();
                         else {
+
+                            /* Check here if there are path seperators, but don't interrupt the process */
+                            if (profileTitle.contains("/"))
+                                profileTitle = profileTitle.replace("/", "-");
+
                             addProfile(profileTitle, true);
                             // Set up our file;
                             int output = 0;
@@ -636,7 +641,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
         final File prefFile = new File (sharedPrefsPath + oldName.toString() + ".xml");
 
-        prefFile.renameTo(new File (sharedPrefsPath + newName.toString() + ".xml"));
+        newName = newName.replace("/", "-");
+
+        prefFile.renameTo(new File (sharedPrefsPath + newName + ".xml"));
         prefFile.delete();
 
         if (prefFile.exists()) {
@@ -650,12 +657,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         // We need to delete the "old" preference if there are profiles assigned;
         final String valueOld = mPerAppPrefs.getString(oldName.toString(), null);
         mPerAppPrefs.edit().remove(oldName.toString()).commit();
-        mPerAppPrefs.edit().putString(newName.toString(), valueOld).commit();
+        mPerAppPrefs.edit().putString(newName, valueOld).commit();
 
         txtView.setText(newName);
-        //txtViewSummary.setText(newName);
-        //loadProfiles();
-
     }
 
     /*
