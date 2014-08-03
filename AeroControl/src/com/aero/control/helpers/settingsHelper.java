@@ -25,6 +25,7 @@ public class settingsHelper {
     public static final String GPU_CONTROL_ACTIVE = "/sys/kernel/gpu_control/gpu_control_active";
     public static final String DISPLAY_COLOR = "/sys/class/misc/display_control/display_brightness_value";
     public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
+    public static final String DOUBLETAP2WAKE = "/sys/android_touch/doubletap2wake";
 
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
     public static final String GOV_IO_PARAMETER = "/sys/block/mmcblk0/queue/iosched";
@@ -41,6 +42,7 @@ public class settingsHelper {
     public static final String PREF_GPU_CONTROL_ACTIVE = "gpu_control_enable";
     public static final String PREF_DISPLAY_COLOR = "display_control";
     public static final String PREF_SWEEP2WAKE = "sweeptowake";
+    public static final String PREF_DOUBLETAP2WAKE = "doubletaptowake";
     public static final String PERF_COLOR_CONTROL = "/sys/devices/platform/kcal_ctrl.0/kcal";
 
     public static final String PREF_GOV_IO_FILE = "io_scheduler_list";
@@ -127,6 +129,7 @@ public class settingsHelper {
         String display_color = prefs.getString(PREF_DISPLAY_COLOR, null);
         Boolean gpu_enb = prefs.getBoolean(PREF_GPU_CONTROL_ACTIVE, false);
         Boolean sweep = prefs.getBoolean(PREF_SWEEP2WAKE, false);
+        Boolean doubletap = prefs.getBoolean(PREF_DOUBLETAP2WAKE, false);
         String rgbValues = prefs.getString("rgbValues", null);
         // GET MEM VALUES FROM PREFERENCES
         String mem_ios = prefs.getString(PREF_GOV_IO_FILE, null);
@@ -234,6 +237,16 @@ public class settingsHelper {
                 defaultProfile.add("echo " + shell.getInfo(SWEEP2WAKE) + " > " + SWEEP2WAKE);
 
             shell.queueWork("echo " + (sweep ? "1" : "0") + " > " + SWEEP2WAKE);
+        }
+
+        if(new File(DOUBLETAP2WAKE).exists()) {
+
+            shell.queueWork("chmod 0666 " + DOUBLETAP2WAKE);
+
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(DOUBLETAP2WAKE) + " > " + DOUBLETAP2WAKE);
+
+            shell.queueWork("echo " + (doubletap ? "1" : "0") + " > " + DOUBLETAP2WAKE);
         }
 
         if (display_color != null) {

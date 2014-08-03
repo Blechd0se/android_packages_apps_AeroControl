@@ -179,6 +179,9 @@
     <string name="pref_sweeptowake">Sweep2Wake</string>
     <string name="pref_sweeptowake_sum">May drain your battery a bit more than usual.</string>
 
+    <string name="pref_doubletaptowake">Doubletap2Wake</string>
+    <string name="pref_doubletaptowake_sum">Wake your device with a doubletap gesture.</string>
+
     <string name="perf_gpu_gov">GPU Governor</string>
     <string name="perf_gpu_gov_settings">GPU Governor Settings</string>
     <string name="perf_gpu_gov_settings_sum">Tweak the governor parameters of your gpu.</string>

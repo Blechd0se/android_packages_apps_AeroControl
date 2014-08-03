@@ -16,6 +16,11 @@
             android:title="@string/pref_sweeptowake"
             android:summary="@string/pref_sweeptowake_sum" />
 
+        <CheckBoxPreference
+            android:key="doubletaptowake"
+            android:title="@string/pref_doubletaptowake"
+            android:summary="@string/pref_doubletaptowake_sum" />
+
         <ListPreference
             android:key="gpu_max_freq"
             android:title="@string/pref_gpu_max_freq"

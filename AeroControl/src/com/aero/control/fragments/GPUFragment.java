@@ -36,6 +36,7 @@ public class GPUFragment extends PreferenceFragment {
                                             "/sys/class/kgsl/kgsl-3d0/max_gpuclk", /* Adreno GPUs */
                                             "/sys/devices/platform/omap/pvrsrvkm.0/sgx_fck_rate" /* Defy 3.0 Kernel */};
     public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
+    public static final String DOUBLETAP2WAKE = "/sys/android_touch/doubletap2wake";
     public static final String COLOR_CONTROL = "/sys/devices/platform/kcal_ctrl.0/kcal";
     public boolean checkGpuControl;
     public boolean checkSweep2wake;
@@ -57,6 +58,7 @@ public class GPUFragment extends PreferenceFragment {
         // Set our gpu control flag;
         final CheckBoxPreference gpu_control_enable = (CheckBoxPreference)root.findPreference("gpu_control_enable");
         final CheckBoxPreference sweep2wake = (CheckBoxPreference)root.findPreference("sweeptowake");
+        final CheckBoxPreference doubletaptowake = (CheckBoxPreference)root.findPreference("doubletaptowake");
         // Find our ListPreference (max_frequency);
         final ListPreference gpu_control_frequencies = (ListPreference)root.findPreference("gpu_max_freq");
         final ListPreference display_control = (ListPreference)root.findPreference("display_control");
@@ -72,6 +74,24 @@ public class GPUFragment extends PreferenceFragment {
 
         if(!(new File(SWEEP2WAKE).exists()))
             gpuCategory.removePreference(sweep2wake);
+        else {
+            String tmp = AeroActivity.shell.getInfo(SWEEP2WAKE);
+            if (tmp.equals("1"))
+                sweep2wake.setChecked(true);
+            else
+                sweep2wake.setChecked(false);
+        }
+
+        if(!(new File(DOUBLETAP2WAKE).exists()))
+            gpuCategory.removePreference(doubletaptowake);
+        else {
+            String tmp = AeroActivity.shell.getInfo(DOUBLETAP2WAKE);
+            if (tmp.equals("1"))
+                doubletaptowake.setChecked(true);
+            else
+                doubletaptowake.setChecked(false);
+        }
+
 
         if(!(new File(GPU_CONTROL_ACTIVE).exists()))
                 gpuCategory.removePreference(gpu_control_enable);
@@ -239,6 +259,23 @@ public class GPUFragment extends PreferenceFragment {
                     AeroActivity.shell.setRootInfo("1", SWEEP2WAKE);
                 else if (a.equals("false"))
                     AeroActivity.shell.setRootInfo("0", SWEEP2WAKE);
+
+                //** store preferences
+                preference.getEditor().commit();
+
+                return true;
+            }
+        });
+
+        doubletaptowake.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                String a =  o.toString();
+
+                if (a.equals("true"))
+                    AeroActivity.shell.setRootInfo("1", DOUBLETAP2WAKE);
+                else if (a.equals("false"))
+                    AeroActivity.shell.setRootInfo("0", DOUBLETAP2WAKE);
 
                 //** store preferences
                 preference.getEditor().commit();

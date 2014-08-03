@@ -168,6 +168,9 @@
     <string name="pref_sweeptowake">Sweep2Wake</string>
     <string name="pref_sweeptowake_sum">Könnte etwas auf die Akkulaufzeit gehen.</string>
 
+    <string name="pref_doubletaptowake">Doubletap2Wake</string>
+    <string name="pref_doubletaptowake_sum">Weke Dein Gerät mit einer Geste.</string>
+
     <string name="perf_gpu_gov">GPU Governor</string>
     <string name="perf_gpu_gov_settings">GPU Governor Einstellungen</string>
     <string name="perf_gpu_gov_settings_sum">Stelle hier die Parameter der GPU ein.</string>
