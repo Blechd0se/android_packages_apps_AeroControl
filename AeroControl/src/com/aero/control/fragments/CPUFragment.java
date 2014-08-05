@@ -173,7 +173,13 @@ public class CPUFragment extends PreferenceFragment {
                 value7.setText(cpufreq[3]);
 
                 // Substring is not ideal, but it gets the job done;
-                value2.setText(overclockOutput.substring(42, 44));
+                try {
+                    value2.setText(overclockOutput.substring(42, 44));
+                } catch (IndexOutOfBoundsException e) {
+                    Toast.makeText(getActivity(), "An error occured while reading the data, please try again",Toast.LENGTH_LONG).show();
+                    Log.e("Aero", "Error during OC: ", e);
+                    return false;
+                }
 
                 // In case somebody uses very high frequencies;
                 if (Integer.parseInt(cpufreq[1]) >= 1000000) {
