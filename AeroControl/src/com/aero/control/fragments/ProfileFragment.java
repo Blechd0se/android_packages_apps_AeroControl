@@ -176,10 +176,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                     break;
                 }
 
-                // Hide the "empty" view since there is now at least one item in the list.
-                mContainerView.findViewById(android.R.id.empty).setVisibility(View.GONE);
-                mContainerView.findViewById(R.id.empty_image).setVisibility(View.GONE);
-
                 showDialog(new EditText(mContext));
                 break;
             case R.id.action_reload:
@@ -263,6 +259,11 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                             // Only show showcase once;
                             if (output == 0)
                                 DrawFirstStart(R.string.showcase_perapp_profiles, R.string.showcase_perapp_profiles_sum, FILENAME_PERAPP, null);
+
+                            // Hide the "empty" view since there is now at least one item in the list.
+                            mContainerView.findViewById(android.R.id.empty).setVisibility(View.GONE);
+                            mContainerView.findViewById(R.id.empty_image).setVisibility(View.GONE);
+
                         }
 
                     }
