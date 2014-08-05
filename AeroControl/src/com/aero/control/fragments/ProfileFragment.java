@@ -701,6 +701,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                         tmp = tmp.replace("/sys/devices/virtual/timed_output/vibrator/", "vibrator -> ");
                     else if (tmp.contains("/sys/module/msm_thermal/parameters/"))
                         tmp = tmp.replace("/sys/module/msm_thermal/parameters/", "thermal_control -> ");
+                    else if (tmp.contains("/sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/devfreq/"))
+                        tmp = tmp.replace("/sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/devfreq/", "");
 
                     content = tmp + " = " + entry.getValue().toString() + "\n" + content;
 

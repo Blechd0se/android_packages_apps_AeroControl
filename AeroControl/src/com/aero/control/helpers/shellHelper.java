@@ -557,7 +557,7 @@ public final class shellHelper {
      * @return nothing
      */
 
-    public final void setOverclockAddress() {
+    public final boolean setOverclockAddress() {
 
         if (new File("/proc/overclock/omap2_clk_init_cpufreq_table_addr").exists() &&
                 new File("/proc/overclock/cpufreq_stats_update_addr").exists()) {
@@ -573,9 +573,10 @@ public final class shellHelper {
             };
 
             setRootInfo(commands);
+            return true;
         } else {
             // Return quickly;
-            return;
+            return false;
         }
     }
 

@@ -22,6 +22,7 @@ public class settingsHelper {
     public static final String[] GPU_FILES = {"/sys/kernel/gpu_control/max_freq", /* Defy 2.6 Kernel */
                                                 "/sys/class/kgsl/kgsl-3d0/max_gpuclk", /* Adreno GPUs */
                                                 "/sys/devices/platform/omap/pvrsrvkm.0/sgx_fck_rate" /* Defy 3.0 Kernel */};
+    public static final String GPU_GOV_BASE = "/sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/devfreq/";
     public static final String GPU_CONTROL_ACTIVE = "/sys/kernel/gpu_control/gpu_control_active";
     public static final String DISPLAY_COLOR = "/sys/class/misc/display_control/display_brightness_value";
     public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
@@ -38,6 +39,7 @@ public class settingsHelper {
     public static final String PREF_CPU_MIN_FREQ = "min_frequency";
     public static final String PREF_CPU_COMMANDS = "cpu_commands";
 
+    public static final String PREF_CURRENT_GPU_GOV_AVAILABLE = "set_gpu_governor";
     public static final String PREF_GPU_FREQ_MAX = "gpu_max_freq";
     public static final String PREF_GPU_CONTROL_ACTIVE = "gpu_control_enable";
     public static final String PREF_DISPLAY_COLOR = "display_control";
@@ -70,13 +72,13 @@ public class settingsHelper {
             public void run() {
 
                 // We need to sleep here for a short while for the kernel
-                shell.setOverclockAddress();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    Log.e("Aero", "Something went really wrong...", e);
+                if (shell.setOverclockAddress()) {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        Log.e("Aero", "Something went really wrong...", e);
+                    }
                 }
-
                 // Apply all our saved values;
                 doBackground(context, Profile);
 
@@ -125,6 +127,7 @@ public class settingsHelper {
             shell.queueWork("echo " + voltage + " > " + PREF_VOLTAGE_PATH);
 
         // GET GPU VALUES FROM PREFERENCES
+        String gpu_gov = prefs.getString(PREF_CURRENT_GPU_GOV_AVAILABLE, null);
         String gpu_max = prefs.getString(PREF_GPU_FREQ_MAX, null);
         String display_color = prefs.getString(PREF_DISPLAY_COLOR, null);
         Boolean gpu_enb = prefs.getBoolean(PREF_GPU_CONTROL_ACTIVE, false);
@@ -197,6 +200,17 @@ public class settingsHelper {
         if (cpu_gov != null || mem_ios != null) {
             // Seriously, we need to set this first because of dependencies;
             shell.setRootInfo(governorSettings.toArray(new String[0]));
+        }
+
+        /* GPU Governor */
+        if (gpu_gov != null) {
+
+            shell.queueWork("chmod 0666 " + GPU_GOV_BASE + "governor");
+
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(GPU_GOV_BASE + "governor") + " > " + GPU_GOV_BASE + "governor");
+
+            shell.queueWork("echo " + gpu_gov + " > " + GPU_GOV_BASE + "governor");
         }
 
         // ADD GPU COMMANDS TO THE ARRAY
@@ -435,6 +449,31 @@ public class settingsHelper {
                         shell.queueWork("echo " + gpugovSettings + " > " + PREF_GPU_GOV + "/" + e);
 
                         //Log.e("Aero", "Output: " + "echo " + gpugovSettings + " > " + PREF_GPU_GOV + "/" + e);
+                    }
+                }
+            }
+
+            /* GPU Governor Parameters */
+            if (gpu_gov != null) {
+
+                final String completeGPUGovernorSetting[] = shell.getDirInfo(GPU_GOV_BASE + gpu_gov, true);
+
+                /* Governor Specific Settings at boot */
+
+                for (String b : completeGPUGovernorSetting) {
+
+                    final String governorSetting = prefs.getString(GPU_GOV_BASE + gpu_gov + "/" + b, null);
+
+                    if (governorSetting != null) {
+
+                        shell.queueWork("chmod 0666 " + GPU_GOV_BASE + gpu_gov + "/" + b);
+
+                        if (Profile != null)
+                            defaultProfile.add("echo " + shell.getInfo(GPU_GOV_BASE + gpu_gov + "/" + b) + " > " + GPU_GOV_BASE + gpu_gov + "/" + b);
+
+                        shell.queueWork("echo " + governorSetting + " > " + GPU_GOV_BASE + gpu_gov + "/" + b);
+
+                        Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + GPU_GOV_BASE + gpu_gov + "/" + b);
                     }
                 }
             }
