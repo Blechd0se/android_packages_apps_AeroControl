@@ -11,6 +11,8 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.PreferenceHandler;
 
+import java.io.File;
+
 /**
  * Created by Alexander Christ on 09.03.14.
  */
