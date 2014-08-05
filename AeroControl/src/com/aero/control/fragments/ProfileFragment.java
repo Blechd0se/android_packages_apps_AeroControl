@@ -145,7 +145,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         String a = mPrefs.getString("app_theme", null);
 
         if (a == null)
