@@ -24,7 +24,6 @@ public class PreferenceHandler {
     public Context mContext;
     public PreferenceCategory mPrefCat;
     public PreferenceManager mPrefMan;
-    public static final Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
 
     /*
      * Default constructor to set our objects

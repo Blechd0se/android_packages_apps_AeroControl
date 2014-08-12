@@ -27,7 +27,6 @@ public class VoltageFragment extends PreferenceFragment {
 
     public PreferenceScreen root;
     public PreferenceCategory PrefCat;
-    public static final String VOLTAGE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table";
     final ArrayList<String> voltList = new ArrayList<String>();
     private SharedPreferences mPrefs;
 
@@ -92,7 +91,7 @@ public class VoltageFragment extends PreferenceFragment {
 
     public void loadVoltage() {
 
-        String completeParamterList[] = AeroActivity.shell.getInfo(VOLTAGE_PATH, false);
+        String completeParamterList[] = AeroActivity.shell.getInfo(AeroActivity.files.VOLTAGE_PATH, false);
 
         // If there are already some entries, kill them all (with fire)
         if (PrefCat != null)
@@ -157,7 +156,7 @@ public class VoltageFragment extends PreferenceFragment {
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mPrefs.edit().putString("voltage_values", exeVolt).commit();
-        AeroActivity.shell.setRootInfo(exeVolt, VOLTAGE_PATH);
+        AeroActivity.shell.setRootInfo(exeVolt, AeroActivity.files.VOLTAGE_PATH);
         updateUI();
 
     }

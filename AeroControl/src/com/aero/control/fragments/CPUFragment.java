@@ -43,18 +43,6 @@ import java.util.HashSet;
  */
 public class CPUFragment extends PreferenceFragment {
 
-
-    public static final String CPU_BASE_PATH = "/sys/devices/system/cpu/cpu";
-    public static final String CPU_AVAILABLE_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies";
-    public static final String ALL_GOV_AVAILABLE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors";
-    public static final String CURRENT_GOV_AVAILABLE = "/cpufreq/scaling_governor";
-    public static final String CPU_MAX_FREQ = "/cpufreq/scaling_max_freq";
-    public static final String CPU_MIN_FREQ = "/cpufreq/scaling_min_freq";
-    public static final String CPU_GOV_SET_BASE = "/sys/devices/system/cpu/cpufreq/";
-    public static final String CPU_VSEL = "/proc/overclock/mpu_opps";
-    public static final String CPU_VSEL_MAX = "/proc/overclock/max_vsel";
-    public static final String CPU_MAX_RATE = "/proc/overclock/max_rate";
-    public static final String CPU_FREQ_TABLE = "/proc/overclock/freq_table";
     public static final String FILENAME = "firstrun_cpu";
 
     public PreferenceScreen root;
@@ -134,7 +122,7 @@ public class CPUFragment extends PreferenceFragment {
 
         final Preference cpu_oc_uc = (Preference) root.findPreference("cpu_oc_uc");
 
-        if (AeroActivity.shell.getInfo(CPU_VSEL).equals("Unavailable")) {
+        if (AeroActivity.shell.getInfo(AeroActivity.files.CPU_VSEL).equals("Unavailable")) {
             cpu_oc_uc.setEnabled(false);
 
             cpuCategory.removePreference(cpu_oc_uc);
@@ -149,12 +137,12 @@ public class CPUFragment extends PreferenceFragment {
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 View layout = inflater.inflate(R.layout.cpu_oc_uc, null);
                 builder.setIcon(R.drawable.lightbulb_dark);
-                String[] cpufreq = AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 0, 0);
+                String[] cpufreq = AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_AVAILABLE_FREQ, 0, 0);
 
 
                 // Our cpu values list;
                 final ArrayList<String> cpu_list = new ArrayList<String>();
-                final String overclockOutput = AeroActivity.shell.getRootInfo("cat", CPU_VSEL);
+                final String overclockOutput = AeroActivity.shell.getRootInfo("cat", AeroActivity.files.CPU_VSEL);
 
                 // Set up our EditText fields;
                 final EditText value1 = (EditText) layout.findViewById(R.id.value1);
@@ -241,17 +229,17 @@ public class CPUFragment extends PreferenceFragment {
                                         if (a > 300000 && b > 300000 && c > 300000 && d >= 300000) {
                                             try {
                                                 // Set our max vsel after we changed the max freq
-                                                cpu_list.add("echo " + vsel1 + " > " + CPU_VSEL_MAX);
-                                                cpu_list.add("echo " + "4" + " " + a + "000" + " " + vsel1 + " > " + CPU_VSEL);
-                                                cpu_list.add("echo " + "3" + " " + b + "000" + " " + vsel2 + " > " + CPU_VSEL);
-                                                cpu_list.add("echo " + "2" + " " + c + "000" + " " + vsel3 + " > " + CPU_VSEL);
-                                                cpu_list.add("echo " + "1" + " " + d + "000" + " " + vsel4 + " > " + CPU_VSEL);
-                                                cpu_list.add("echo " + "0" + " " + a + " > " + CPU_FREQ_TABLE);
-                                                cpu_list.add("echo " + "1" + " " + b + " > " + CPU_FREQ_TABLE);
-                                                cpu_list.add("echo " + "2" + " " + c + " > " + CPU_FREQ_TABLE);
-                                                cpu_list.add("echo " + "3" + " " + d + " > " + CPU_FREQ_TABLE);
-                                                cpu_list.add("echo " + f + " > " + CPU_MAX_RATE);
-                                                cpu_list.add("echo " + i + " > " + CPU_BASE_PATH + 0 + CPU_MIN_FREQ);
+                                                cpu_list.add("echo " + vsel1 + " > " + AeroActivity.files.CPU_VSEL_MAX);
+                                                cpu_list.add("echo " + "4" + " " + a + "000" + " " + vsel1 + " > " + AeroActivity.files.CPU_VSEL);
+                                                cpu_list.add("echo " + "3" + " " + b + "000" + " " + vsel2 + " > " + AeroActivity.files.CPU_VSEL);
+                                                cpu_list.add("echo " + "2" + " " + c + "000" + " " + vsel3 + " > " + AeroActivity.files.CPU_VSEL);
+                                                cpu_list.add("echo " + "1" + " " + d + "000" + " " + vsel4 + " > " + AeroActivity.files.CPU_VSEL);
+                                                cpu_list.add("echo " + "0" + " " + a + " > " + AeroActivity.files.CPU_FREQ_TABLE);
+                                                cpu_list.add("echo " + "1" + " " + b + " > " + AeroActivity.files.CPU_FREQ_TABLE);
+                                                cpu_list.add("echo " + "2" + " " + c + " > " + AeroActivity.files.CPU_FREQ_TABLE);
+                                                cpu_list.add("echo " + "3" + " " + d + " > " + AeroActivity.files.CPU_FREQ_TABLE);
+                                                cpu_list.add("echo " + f + " > " + AeroActivity.files.CPU_MAX_RATE);
+                                                cpu_list.add("echo " + i + " > " + AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CPU_MIN_FREQ);
 
                                                 String[] commands = cpu_list.toArray(new String[0]);
 
@@ -304,17 +292,17 @@ public class CPUFragment extends PreferenceFragment {
                                 AeroActivity.shell.setOverclockAddress();
 
                                 // Set our max vsel after we changed the max freq
-                                cpu_list.add("echo " + "62" + " > " + CPU_VSEL_MAX);
-                                cpu_list.add("echo " + "4" + " 1000000000" + " 62" + " > " + CPU_VSEL);
-                                cpu_list.add("echo " + "3" + " 800000000" + " 58" + " > " + CPU_VSEL);
-                                cpu_list.add("echo " + "2" + " 600000000" + " 48" + " > " + CPU_VSEL);
-                                cpu_list.add("echo " + "1" + " 300000000" + " 33" + " > " + CPU_VSEL);
-                                cpu_list.add("echo " + "0" + " 1000000" + " > " + CPU_FREQ_TABLE);
-                                cpu_list.add("echo " + "1" + " 800000" + " > " + CPU_FREQ_TABLE);
-                                cpu_list.add("echo " + "2" + " 600000" + " > " + CPU_FREQ_TABLE);
-                                cpu_list.add("echo " + "3" + " 300000" + " > " + CPU_FREQ_TABLE);
-                                cpu_list.add("echo " + "1000000" + " > " + CPU_MAX_RATE);
-                                cpu_list.add("echo " + "300000" + " > " + CPU_MIN_FREQ);
+                                cpu_list.add("echo " + "62" + " > " + AeroActivity.files.CPU_VSEL_MAX);
+                                cpu_list.add("echo " + "4" + " 1000000000" + " 62" + " > " + AeroActivity.files.CPU_VSEL);
+                                cpu_list.add("echo " + "3" + " 800000000" + " 58" + " > " + AeroActivity.files.CPU_VSEL);
+                                cpu_list.add("echo " + "2" + " 600000000" + " 48" + " > " + AeroActivity.files.CPU_VSEL);
+                                cpu_list.add("echo " + "1" + " 300000000" + " 33" + " > " + AeroActivity.files.CPU_VSEL);
+                                cpu_list.add("echo " + "0" + " 1000000" + " > " + AeroActivity.files.CPU_FREQ_TABLE);
+                                cpu_list.add("echo " + "1" + " 800000" + " > " + AeroActivity.files.CPU_FREQ_TABLE);
+                                cpu_list.add("echo " + "2" + " 600000" + " > " + AeroActivity.files.CPU_FREQ_TABLE);
+                                cpu_list.add("echo " + "3" + " 300000" + " > " + AeroActivity.files.CPU_FREQ_TABLE);
+                                cpu_list.add("echo " + "1000000" + " > " + AeroActivity.files.CPU_MAX_RATE);
+                                cpu_list.add("echo " + "300000" + " > " + AeroActivity.files.CPU_MIN_FREQ);
 
                                 String[] commands = cpu_list.toArray(new String[0]);
                                 AeroActivity.shell.setRootInfo(commands);
@@ -366,10 +354,10 @@ public class CPUFragment extends PreferenceFragment {
         // Find our ListPreference (governor_settings);
         listPref = (ListPreference) root.findPreference("set_governor");
         // Just throw in our frequencies;
-        listPref.setEntries(AeroActivity.shell.getInfoArray(ALL_GOV_AVAILABLE, 0, 0));
-        listPref.setEntryValues(AeroActivity.shell.getInfoArray(ALL_GOV_AVAILABLE, 0, 0));
-        listPref.setValue(AeroActivity.shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
-        listPref.setSummary(AeroActivity.shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
+        listPref.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.ALL_GOV_AVAILABLE, 0, 0));
+        listPref.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.ALL_GOV_AVAILABLE, 0, 0));
+        listPref.setValue(AeroActivity.shell.getInfo(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CURRENT_GOV_AVAILABLE));
+        listPref.setSummary(AeroActivity.shell.getInfo(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CURRENT_GOV_AVAILABLE));
         listPref.setDialogIcon(R.drawable.cpu_dark);
 
         // If there are already some entries, kill them all (with fire)
@@ -407,7 +395,7 @@ public class CPUFragment extends PreferenceFragment {
                 } catch (InterruptedException e) {
                     Log.e("Aero", "Something interrupted the main Thread, try again.", e);
                 }
-                listPref.setSummary(AeroActivity.shell.getInfo(CPU_BASE_PATH + 0 + CURRENT_GOV_AVAILABLE));
+                listPref.setSummary(AeroActivity.shell.getInfo(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CURRENT_GOV_AVAILABLE));
 
                 // store preferences
                 preference.getEditor().commit();
@@ -439,8 +427,8 @@ public class CPUFragment extends PreferenceFragment {
 
                 for (int k = 0; k < mNumCpus; k++) {
 
-                    array.add("echo 1 > " + CPU_BASE_PATH + k + "/online");
-                    array.add("echo " + a + " > " + CPU_BASE_PATH + k + CPU_MAX_FREQ);
+                    array.add("echo 1 > " + AeroActivity.files.CPU_BASE_PATH + k + "/online");
+                    array.add("echo " + a + " > " + AeroActivity.files.CPU_BASE_PATH + k + AeroActivity.files.CPU_MAX_FREQ);
 
                     //** store preferences
                     preference.getEditor().commit();
@@ -469,8 +457,8 @@ public class CPUFragment extends PreferenceFragment {
 
                 for (int k = 0; k < mNumCpus; k++) {
 
-                    array.add("echo 1 > " + CPU_BASE_PATH + k + "/online");
-                    array.add("echo " + a + " > " + CPU_BASE_PATH + k + CPU_MIN_FREQ);
+                    array.add("echo 1 > " + AeroActivity.files.CPU_BASE_PATH + k + "/online");
+                    array.add("echo " + a + " > " + AeroActivity.files.CPU_BASE_PATH + k + AeroActivity.files.CPU_MIN_FREQ);
 
                     //** store preferences
                     preference.getEditor().commit();
@@ -513,7 +501,7 @@ public class CPUFragment extends PreferenceFragment {
         switch (item.getItemId()) {
             case R.id.action_governor_settings:
 
-                final String complete_path = CPU_GOV_SET_BASE + listPref.getValue();
+                final String complete_path = AeroActivity.files.CPU_GOV_BASE + listPref.getValue();
                 ArrayList<String> al = new ArrayList<String>();
 
                 /*
@@ -595,7 +583,7 @@ public class CPUFragment extends PreferenceFragment {
         for (int k = 0; k < mNumCpus; k++) {
             // To ensure we get proper permissions, change the governor to performance first;
             //array.add("echo " + "performance" + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
-            array.add("echo " + s + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
+            array.add("echo " + s + " > " + AeroActivity.files.CPU_BASE_PATH + k + AeroActivity.files.CURRENT_GOV_AVAILABLE);
         }
         String[] commands = array.toArray(new String[0]);
 
@@ -605,11 +593,11 @@ public class CPUFragment extends PreferenceFragment {
 
     public void updateMinFreq() {
         // Just throw in our frequencies;
-        min_frequency.setEntries(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
-        min_frequency.setEntryValues(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 0, 0));
+        min_frequency.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_AVAILABLE_FREQ, 1, 0));
+        min_frequency.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_AVAILABLE_FREQ, 0, 0));
         try {
-            min_frequency.setValue(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 0, 0)[0]);
-            min_frequency.setSummary(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MIN_FREQ, 1, 0)[0]);
+            min_frequency.setValue(AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CPU_MIN_FREQ, 0, 0)[0]);
+            min_frequency.setSummary(AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CPU_MIN_FREQ, 1, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
             min_frequency.setValue("Unavailable");
             min_frequency.setSummary("Unavailable");
@@ -622,11 +610,11 @@ public class CPUFragment extends PreferenceFragment {
 
     public void updateMaxFreq() {
         // Just throw in our frequencies;
-        max_frequency.setEntries(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 1, 0));
-        max_frequency.setEntryValues(AeroActivity.shell.getInfoArray(CPU_AVAILABLE_FREQ, 0, 0));
+        max_frequency.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_AVAILABLE_FREQ, 1, 0));
+        max_frequency.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_AVAILABLE_FREQ, 0, 0));
         try {
-            max_frequency.setValue(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 0, 0)[0]);
-            max_frequency.setSummary(AeroActivity.shell.getInfoArray(CPU_BASE_PATH + 0 + CPU_MAX_FREQ, 1, 0)[0]);
+            max_frequency.setValue(AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CPU_MAX_FREQ, 0, 0)[0]);
+            max_frequency.setSummary(AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CPU_MAX_FREQ, 1, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
             max_frequency.setValue("Unavailable");
             max_frequency.setSummary("Unavailable");

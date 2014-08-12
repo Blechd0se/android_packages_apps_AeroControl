@@ -35,9 +35,8 @@ public class UpdaterFragment extends PreferenceFragment {
     private static final String sdpath = Environment.getExternalStorageDirectory().getPath();
 
     public static final String timeStamp = new SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
-    public static final String zImage = "/system/bootstrap/2nd-boot/zImage";
     public static final File BACKUP_PATH = new File(sdpath + "/com.aero.control/" + timeStamp + "/zImage");
-    public static final File IMAGE = new File (zImage);
+    public static final File IMAGE = new File (AeroActivity.files.zImage);
 
     private static final updateHelper update = new updateHelper();
 
@@ -64,10 +63,10 @@ public class UpdaterFragment extends PreferenceFragment {
         updater_kernel.setEnabled(false);
 
         // If device doesn't have this kernel path;
-        if (AeroActivity.shell.getInfo(zImage).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(AeroActivity.files.zImage).equals("Unavailable"))
             backup_kernel.setEnabled(false);
 
-        if (AeroActivity.shell.getInfo(zImage).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(AeroActivity.files.zImage).equals("Unavailable"))
             restore_kernel.setEnabled(false);
 
         // Fresh Start, no backup found;
@@ -112,8 +111,8 @@ public class UpdaterFragment extends PreferenceFragment {
                                 // Delete old zImage first, then copy backup;
                                 String[] commands = new String[]
                                         {
-                                                "rm -f " + zImage,
-                                                "cp " + "/sdcard/com.aero.control/" + s + "/zImage" + " " + zImage,
+                                                "rm -f " + AeroActivity.files.zImage,
+                                                "cp " + "/sdcard/com.aero.control/" + s + "/zImage" + " " + AeroActivity.files.zImage,
                                         };
 
                                 AeroActivity.shell.setRootInfo(commands);

@@ -46,6 +46,7 @@ import com.aero.control.fragments.MiscSettingsFragment;
 import com.aero.control.fragments.ProfileFragment;
 import com.aero.control.fragments.StatisticsFragment;
 import com.aero.control.fragments.UpdaterFragment;
+import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.rootHelper;
 import com.aero.control.helpers.shellHelper;
 import com.aero.control.lists.generatingLists;
@@ -102,6 +103,7 @@ public final class AeroActivity extends Activity {
     private static final rootHelper rootCheck = new rootHelper();
     public static final shellHelper shell = new shellHelper();
     public static PerAppServiceHelper perAppService;
+    public static FilePath files = new FilePath();
 
 
     @Override

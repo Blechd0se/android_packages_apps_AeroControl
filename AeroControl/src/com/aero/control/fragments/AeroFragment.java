@@ -34,14 +34,6 @@ import fr.nicolaspomepuy.discreetapprate.AppRate;
  */
 public class AeroFragment extends Fragment {
 
-    // Values to read from;
-    public static final String GOV_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
-    public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
-    public static final String[] GPU_FILES = {"/sys/class/kgsl/kgsl-3d0/gpuclk", /* Adreno GPUs */
-                                                "/sys/devices/platform/omap/pvrsrvkm.0/sgx_fck_rate" /* Defy 3.0 Kernel */,
-                                                "/proc/gpu/cur_rate" /* Defy 2.6 Kernel */};
-    public static final String FILENAME_PROC_MEMINFO = "/proc/meminfo";
-
     public ListView listView1;
     public ViewGroup root;
     public AeroAdapter adapter;
@@ -130,7 +122,7 @@ public class AeroFragment extends Fragment {
         listView1 = (ListView) root.findViewById(R.id.listView1);
 
         /* Find correct gpu path */
-        for (String a : GPU_FILES) {
+        for (String a : AeroActivity.files.GPU_FILES) {
             if (new File(a).exists()) {
                 gpu_file = a;
                 break;
@@ -217,11 +209,11 @@ public class AeroFragment extends Fragment {
 
         // Default Overview Menu
         mOverviewData.add(new adapterInit(getString(R.string.kernel_version), AeroActivity.shell.getKernel()));
-        mOverviewData.add(new adapterInit(getString(R.string.current_governor), AeroActivity.shell.getInfo(GOV_FILE)));
-        mOverviewData.add(new adapterInit(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(GOV_IO_FILE)));
+        mOverviewData.add(new adapterInit(getString(R.string.current_governor), AeroActivity.shell.getInfo(AeroActivity.files.GOV_FILE)));
+        mOverviewData.add(new adapterInit(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
         mOverviewData.add(new adapterInit(getString(R.string.current_cpu_speed), getFreqPerCore()));
         mOverviewData.add(new adapterInit(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((AeroActivity.shell.getInfo(gpu_file).substring(0, AeroActivity.shell.getInfo(gpu_file).length() - 3)))));
-        mOverviewData.add(new adapterInit(getString(R.string.available_memory), AeroActivity.shell.getMemory(FILENAME_PROC_MEMINFO)));
+        mOverviewData.add(new adapterInit(getString(R.string.available_memory), AeroActivity.shell.getMemory(AeroActivity.files.FILENAME_PROC_MEMINFO)));
 
 
         if (adapter == null) {

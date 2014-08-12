@@ -52,8 +52,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     public ShowcaseView mShowCase;
     private SharedPreferences mPrefs;
     public ShowcaseView.ConfigOptions mConfigOptions;
-    public static final Typeface kitkatFont = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
-    private static final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
     private static final String perAppProfileHandler = "perAppProfileHandler";
     private  String[] mCompleteProfiles;
     public static final String FILENAME_PROFILES = "firstrun_profiles";
@@ -77,7 +75,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
         final View v = inflater.inflate(R.layout.profile_fragment, null);
         final TextView empty = (TextView)v.findViewById(android.R.id.empty);
-        empty.setTypeface(kitkatFont);
+        empty.setTypeface(AeroActivity.files.kitkatFont);
 
         mContainerView = (ViewGroup)v.findViewById(R.id.container);
 
@@ -96,7 +94,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private final void addDefaultProfiles(EditText editText) {
 
         // If the profile doesn't exist, create it;
-        final File prefFile = new File (sharedPrefsPath + "performance.xml");
+        final File prefFile = new File (AeroActivity.files.sharedPrefsPath + "performance.xml");
         if(prefFile.exists()) {
             Log.e(LOG_TAG, "Performance Profile exists already!");
         } else {
@@ -107,7 +105,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     private final void loadProfiles() {
 
-        mCompleteProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
+        mCompleteProfiles = AeroActivity.shell.getDirInfo(AeroActivity.files.sharedPrefsPath, true);
 
         for (String s : mCompleteProfiles) {
 
@@ -170,7 +168,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             case R.id.action_add_item:
 
                 // Check if there are actual changes;
-                final File defaultFile = new File(sharedPrefsPath + "com.aero.control_preferences.xml");
+                final File defaultFile = new File(AeroActivity.files.sharedPrefsPath + "com.aero.control_preferences.xml");
                 if (!(defaultFile.exists())) {
                     Toast.makeText(mContext, R.string.pref_profile_no_changes , Toast.LENGTH_LONG).show();
                     break;
@@ -219,7 +217,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     private final void showDialog(final EditText editText) {
 
-        mCompleteProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
+        mCompleteProfiles = AeroActivity.shell.getDirInfo(AeroActivity.files.sharedPrefsPath, true);
 
         AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(R.string.add_a_name)
@@ -279,7 +277,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         final SharedPreferences AeroProfile = mContext.getSharedPreferences(s, Context.MODE_PRIVATE);
-        final File defaultFile = new File(sharedPrefsPath + "com.aero.control_preferences.xml");
+        final File defaultFile = new File(AeroActivity.files.sharedPrefsPath + "com.aero.control_preferences.xml");
 
         // Init the perApp data here, so we can re-use it for each profile
         final perAppHelper perApp = new perAppHelper(mContext);
@@ -314,7 +312,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             updateStatus(txtViewSummary, false);
         }
 
-        txtView.setTypeface(kitkatFont);
+        txtView.setTypeface(AeroActivity.files.kitkatFont);
         createListener(txtView, txtViewSummary);
 
 
@@ -551,7 +549,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     private final boolean deleteProfile(String ProfileName) {
 
-        final File prefFile = new File (sharedPrefsPath + ProfileName + ".xml");
+        final File prefFile = new File (AeroActivity.files.sharedPrefsPath + ProfileName + ".xml");
 
         mPerAppPrefs.edit().remove(ProfileName).commit();
 
@@ -567,7 +565,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
             // Delete the file, not just clear the pref;
             final String[] cmd = new String[] {
-                    "rm " + "\"" + sharedPrefsPath + ProfileName + ".xml" + "\""
+                    "rm " + "\"" + AeroActivity.files.sharedPrefsPath + ProfileName + ".xml" + "\""
             };
 
             AeroActivity.shell.setRootInfo(cmd);
@@ -640,16 +638,16 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     private final void renameProfile(CharSequence oldName, String newName, TextView txtView, TextView txtViewSummary) {
 
-        final File prefFile = new File (sharedPrefsPath + oldName.toString() + ".xml");
+        final File prefFile = new File (AeroActivity.files.sharedPrefsPath + oldName.toString() + ".xml");
 
         newName = newName.replace("/", "-");
 
-        prefFile.renameTo(new File (sharedPrefsPath + newName + ".xml"));
+        prefFile.renameTo(new File (AeroActivity.files.sharedPrefsPath + newName + ".xml"));
         prefFile.delete();
 
         if (prefFile.exists()) {
             final String[] cmd = new String[] {
-                    "mv " + "\"" + sharedPrefsPath + oldName + ".xml" + "\"" + " " + "\"" + sharedPrefsPath + newName + ".xml" + "\""
+                    "mv " + "\"" + AeroActivity.files.sharedPrefsPath + oldName + ".xml" + "\"" + " " + "\"" + AeroActivity.files.sharedPrefsPath + newName + ".xml" + "\""
             };
 
             AeroActivity.shell.setRootInfo(cmd);
@@ -714,7 +712,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                 profileText.setVerticalScrollBarEnabled(true);
                 profileText.setMovementMethod(new ScrollingMovementMethod());
                 profileText.setPadding(20, 20, 20, 20);
-                profileText.setTypeface(kitkatFont);
+                profileText.setTypeface(AeroActivity.files.kitkatFont);
 
                 AlertDialog dialog = new AlertDialog.Builder(mContext)
                         .setTitle(getText(R.string.slider_overview) + ": " + txtView.getText().toString())
@@ -744,7 +742,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             @Override
             public boolean onLongClick(View view) {
 
-                mCompleteProfiles = AeroActivity.shell.getDirInfo(sharedPrefsPath, true);
+                mCompleteProfiles = AeroActivity.shell.getDirInfo(AeroActivity.files.sharedPrefsPath, true);
                 final EditText editText = new EditText(mContext);
                 final CharSequence oldName = txtView.getText();
                 editText.setText(oldName);

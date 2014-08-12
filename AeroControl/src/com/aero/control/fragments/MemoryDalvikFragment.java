@@ -19,7 +19,6 @@ public class MemoryDalvikFragment extends PreferenceFragment {
     public MemoryDalvikFragment mMemoryDalvikFragment;
     public PreferenceScreen root;
     public PreferenceCategory PrefCat;
-    public static final String DALVIK_TWEAK = "/proc/sys/vm";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class MemoryDalvikFragment extends PreferenceFragment {
 
     public void loadDalvik() {
 
-        String completeParamterList[] = AeroActivity.shell.getDirInfo(DALVIK_TWEAK, true);
+        String completeParamterList[] = AeroActivity.shell.getDirInfo(AeroActivity.files.DALVIK_TWEAK, true);
 
         // If there are already some entries, kill them all (with fire)
         if (PrefCat != null)
@@ -50,7 +49,7 @@ public class MemoryDalvikFragment extends PreferenceFragment {
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            h.genPrefFromDictionary(completeParamterList, DALVIK_TWEAK);
+            h.genPrefFromDictionary(completeParamterList, AeroActivity.files.DALVIK_TWEAK);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);

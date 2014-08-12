@@ -6,6 +6,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 
+import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.PreferenceHandler;
 
@@ -16,8 +17,6 @@ public class MiscSettingsFragment extends PreferenceFragment {
 
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;
-    private static final String MISC_VIBRATOR_CONTROL = "/sys/devices/virtual/timed_output/vibrator";
-    private static final String MISC_THERMAL_CONTROL = "/sys/module/msm_thermal/parameters";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,8 +44,8 @@ public class MiscSettingsFragment extends PreferenceFragment {
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
             String[][] array = new String[][] {
-                    {"vtg_level", MISC_VIBRATOR_CONTROL},
-                    {"temp_threshold", MISC_THERMAL_CONTROL}
+                    {"vtg_level", AeroActivity.files.MISC_VIBRATOR_CONTROL},
+                    {"temp_threshold", AeroActivity.files.MISC_THERMAL_CONTROL}
             };
             h.genPrefFromFiles(array);
 

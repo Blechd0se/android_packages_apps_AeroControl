@@ -21,9 +21,6 @@ public class DefyPartsFragment extends PreferenceFragment {
           - Add checks for different kernel settings
           - Bring in other defy part features
      */
-    private static final String PROP_CHARGE_LED_MODE = "persist.sys.charge_led";
-    private static final String PROP_TOUCH_POINTS = "persist.sys.multitouch";
-    private static final String PROP_BUTTON_BRIGHTNESS = "persist.sys.button_brightness";
 
     private ListPreference led_charging;
     private ListPreference multi_touch;
@@ -39,9 +36,9 @@ public class DefyPartsFragment extends PreferenceFragment {
 
         PreferenceScreen root = this.getPreferenceScreen();
 
-        String charger = AeroActivity.shell.getRootInfo("getprop ", PROP_CHARGE_LED_MODE);
-        String multitouch = AeroActivity.shell.getRootInfo("getprop ", PROP_TOUCH_POINTS);
-        String brightness = AeroActivity.shell.getRootInfo("getprop", PROP_BUTTON_BRIGHTNESS);
+        String charger = AeroActivity.shell.getRootInfo("getprop ", AeroActivity.files.PROP_CHARGE_LED_MODE);
+        String multitouch = AeroActivity.shell.getRootInfo("getprop ", AeroActivity.files.PROP_TOUCH_POINTS);
+        String brightness = AeroActivity.shell.getRootInfo("getprop", AeroActivity.files.PROP_BUTTON_BRIGHTNESS);
 
         led_charging = (ListPreference)root.findPreference("led_charging");
         button_brightness = (EditTextPreference)root.findPreference("button_brightness");
@@ -77,7 +74,7 @@ public class DefyPartsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
 
-                changePreference(preference, o, PROP_CHARGE_LED_MODE);
+                changePreference(preference, o, AeroActivity.files.PROP_CHARGE_LED_MODE);
 
                 led_charging.setValue(o.toString());
                 led_charging.setSummary(o.toString());
@@ -90,7 +87,7 @@ public class DefyPartsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
 
-                changePreference(preference, o, PROP_TOUCH_POINTS);
+                changePreference(preference, o, AeroActivity.files.PROP_TOUCH_POINTS);
 
                 multi_touch.setValue(o.toString());
                 multi_touch.setSummary(o.toString());
@@ -103,7 +100,7 @@ public class DefyPartsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
 
-                changePreference(preference, o, PROP_BUTTON_BRIGHTNESS);
+                changePreference(preference, o, AeroActivity.files.PROP_BUTTON_BRIGHTNESS);
 
                 button_brightness.setText(o.toString());
 

@@ -29,7 +29,6 @@ import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -42,15 +41,6 @@ import java.util.ArrayList;
  * Default Memory Fragment
  */
 public class MemoryFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
-
-    public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";
-    public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
-    public static final String CMDLINE_ZACHE = "/system/bootmenu/2nd-boot/cmdline";
-    public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
-    public static final String LOW_MEM = "/system/build.prop";
-    public static final String FILENAME = "firstrun_trim";
-    public static final String FILENAME_HIDDEN = "firstrun_hidden_feature";
-    public static final String GOV_IO_PARAMETER = "/sys/block/mmcblk0/queue/iosched";
 
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
@@ -81,27 +71,27 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
                 (PreferenceCategory) findPreference(MEMORY_SETTINGS_CATEGORY);
 
         mDynFSync = (CheckBoxPreference) findPreference("dynFsync");
-        if ("1".equals(AeroActivity.shell.getInfo(DYANMIC_FSYNC))) {
+        if ("1".equals(AeroActivity.shell.getInfo(AeroActivity.files.DYANMIC_FSYNC))) {
             mDynFSync.setChecked(true);
-        } else if ("0".equals(AeroActivity.shell.getInfo(DYANMIC_FSYNC))) {
+        } else if ("0".equals(AeroActivity.shell.getInfo(AeroActivity.files.DYANMIC_FSYNC))) {
             mDynFSync.setChecked(false);
         } else {
             if (memorySettingsCategory != null) memorySettingsCategory.removePreference(mDynFSync);
         }
 
         mZCache = (CheckBoxPreference) findPreference("zcache");
-        if ("Unavailable".equals(AeroActivity.shell.getInfo(CMDLINE_ZACHE))) {
+        if ("Unavailable".equals(AeroActivity.shell.getInfo(AeroActivity.files.CMDLINE_ZACHE))) {
             if (memorySettingsCategory != null) memorySettingsCategory.removePreference(mZCache);
         } else {
-            final String fileCMD = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
+            final String fileCMD = AeroActivity.shell.getInfo(AeroActivity.files.CMDLINE_ZACHE);
             final boolean zcacheEnabled = fileCMD.length() != 0 && fileCMD.contains("zcache");
             mZCache.setChecked(zcacheEnabled);
         }
 
         mWriteBackControl = (CheckBoxPreference) findPreference("writeback");
-        if ("1".equals(AeroActivity.shell.getInfo(WRITEBACK))) {
+        if ("1".equals(AeroActivity.shell.getInfo(AeroActivity.files.WRITEBACK))) {
             mWriteBackControl.setChecked(true);
-        } else if ("0".equals(AeroActivity.shell.getInfo(WRITEBACK))) {
+        } else if ("0".equals(AeroActivity.shell.getInfo(AeroActivity.files.WRITEBACK))) {
             mWriteBackControl.setChecked(false);
         } else {
             if (memorySettingsCategory != null)
@@ -113,10 +103,10 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         mDalvikSettings = findPreference("dalvik_settings");
 
         mIOScheduler = (ListPreference) findPreference("io_scheduler_list");
-        mIOScheduler.setEntries(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
-        mIOScheduler.setEntryValues(AeroActivity.shell.getInfoArray(GOV_IO_FILE, 0, 1));
-        mIOScheduler.setValue(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(GOV_IO_FILE)));
-        mIOScheduler.setSummary(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(GOV_IO_FILE)));
+        mIOScheduler.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.GOV_IO_FILE, 0, 1));
+        mIOScheduler.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.GOV_IO_FILE, 0, 1));
+        mIOScheduler.setValue(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
+        mIOScheduler.setSummary(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
         mIOScheduler.setDialogIcon(R.drawable.memory_dark);
         mIOScheduler.setOnPreferenceChangeListener(this);
 
@@ -177,7 +167,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         final byte[] buffer = new byte[1024];
 
         try {
-            FileInputStream fis = getActivity().openFileInput(FILENAME);
+            FileInputStream fis = getActivity().openFileInput(AeroActivity.files.FILENAME);
             output = fis.read(buffer);
             fis.close();
         } catch (IOException e) {
@@ -186,7 +176,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         // Only show showcase once;
         if (output == 0)
-            DrawFirstStart(R.string.showcase_memory_fragment_trim, R.string.showcase_memory_fragment_trim_sum, FILENAME);
+            DrawFirstStart(R.string.showcase_memory_fragment_trim, R.string.showcase_memory_fragment_trim_sum, AeroActivity.files.FILENAME);
 
     }
 
@@ -230,14 +220,14 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             lowMemoryPrefClick();
         } else if (preference == mDynFSync) {
             boolean value = mDynFSync.isChecked();
-            if (value) AeroActivity.shell.setRootInfo("1", DYANMIC_FSYNC);
-            else AeroActivity.shell.setRootInfo("0", DYANMIC_FSYNC);
+            if (value) AeroActivity.shell.setRootInfo("1", AeroActivity.files.DYANMIC_FSYNC);
+            else AeroActivity.shell.setRootInfo("0", AeroActivity.files.DYANMIC_FSYNC);
         } else if (preference == mZCache) {
             zCacheClick();
         } else if (preference == mWriteBackControl) {
             boolean value = mWriteBackControl.isChecked();
-            if (value) AeroActivity.shell.setRootInfo("1", WRITEBACK);
-            else AeroActivity.shell.setRootInfo("0", WRITEBACK);
+            if (value) AeroActivity.shell.setRootInfo("1", AeroActivity.files.WRITEBACK);
+            else AeroActivity.shell.setRootInfo("0", AeroActivity.files.WRITEBACK);
         } else if (preference == mFSTrimToggle) {
             fsTrimToggleClick();
         } else if (preference == mDalvikSettings) {
@@ -259,7 +249,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         if (preference == mIOScheduler) {
             String value = (String) newValue;
             mIOScheduler.setSummary(value);
-            AeroActivity.shell.setRootInfo(value, GOV_IO_FILE);
+            AeroActivity.shell.setRootInfo(value, AeroActivity.files.GOV_IO_FILE);
 
             // Kill everything with fire;
             if (PrefCat != null)
@@ -272,7 +262,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     }
 
     private void zCacheClick() {
-        String getState = AeroActivity.shell.getInfo(CMDLINE_ZACHE);
+        String getState = AeroActivity.shell.getInfo(AeroActivity.files.CMDLINE_ZACHE);
         boolean value = mZCache.isChecked();
         AeroActivity.shell.remountSystem();
         if (value) {
@@ -285,7 +275,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             getState = getState.replace(" zcache", "");
         }
         // Set current State to path;
-        AeroActivity.shell.setRootInfo(getState, CMDLINE_ZACHE);
+        AeroActivity.shell.setRootInfo(getState, AeroActivity.files.CMDLINE_ZACHE);
         Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
     }
 
@@ -294,7 +284,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         boolean value = mLowMemoryPref.isChecked();
         AeroActivity.shell.remountSystem();
         try {
-            final BufferedReader br = new BufferedReader(new FileReader(LOW_MEM));
+            final BufferedReader br = new BufferedReader(new FileReader(AeroActivity.files.LOW_MEM));
             try {
                 StringBuilder sb = new StringBuilder();
                 String line = br.readLine();
@@ -318,7 +308,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         } catch (FileNotFoundException ignored) {
         }
         // Set current State to path;
-        AeroActivity.shell.setRootInfo(getState, LOW_MEM);
+        AeroActivity.shell.setRootInfo(getState, AeroActivity.files.LOW_MEM);
         Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
     }
 
@@ -409,7 +399,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     private void loadIOParameter() {
 
         try {
-            String completeParamterList[] = AeroActivity.shell.getDirInfo(GOV_IO_PARAMETER, true);
+            String completeParamterList[] = AeroActivity.shell.getDirInfo(AeroActivity.files.GOV_IO_PARAMETER, true);
 
             // If there are already some entries, kill them all (with fire)
             if (PrefCat != null)
@@ -427,7 +417,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            h.genPrefFromDictionary(completeParamterList, GOV_IO_PARAMETER);
+            h.genPrefFromDictionary(completeParamterList, AeroActivity.files.GOV_IO_PARAMETER);
 
             // Probably the wrong place, should be in getDirInfo ?
         } catch (NullPointerException e) {

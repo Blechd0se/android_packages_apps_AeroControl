@@ -18,7 +18,6 @@ public class CPUHotplugFragment extends PreferenceFragment {
 
     public PreferenceScreen root;
     public PreferenceCategory PrefCat;
-    public static final String HOTPLUG_PATH = "/sys/kernel/hotplug_control";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class CPUHotplugFragment extends PreferenceFragment {
 
     public void loadHotplug() {
 
-        String completeParamterList[] = AeroActivity.shell.getDirInfo(HOTPLUG_PATH, true);
+        String completeParamterList[] = AeroActivity.shell.getDirInfo(AeroActivity.files.HOTPLUG_PATH, true);
 
         // If there are already some entries, kill them all (with fire)
         if (PrefCat != null)
@@ -49,7 +48,7 @@ public class CPUHotplugFragment extends PreferenceFragment {
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            h.genPrefFromDictionary(completeParamterList, HOTPLUG_PATH);
+            h.genPrefFromDictionary(completeParamterList, AeroActivity.files.HOTPLUG_PATH);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);
