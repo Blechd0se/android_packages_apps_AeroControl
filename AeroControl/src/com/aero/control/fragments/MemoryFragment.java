@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.CheckBoxPreference;
@@ -76,12 +77,14 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         } else if ("0".equals(AeroActivity.shell.getInfo(AeroActivity.files.DYANMIC_FSYNC))) {
             mDynFSync.setChecked(false);
         } else {
-            if (memorySettingsCategory != null) memorySettingsCategory.removePreference(mDynFSync);
+            if (memorySettingsCategory != null)
+                memorySettingsCategory.removePreference(mDynFSync);
         }
 
         mZCache = (CheckBoxPreference) findPreference("zcache");
         if ("Unavailable".equals(AeroActivity.shell.getInfo(AeroActivity.files.CMDLINE_ZACHE))) {
-            if (memorySettingsCategory != null) memorySettingsCategory.removePreference(mZCache);
+            if (memorySettingsCategory != null)
+                memorySettingsCategory.removePreference(mZCache);
         } else {
             final String fileCMD = AeroActivity.shell.getInfo(AeroActivity.files.CMDLINE_ZACHE);
             final boolean zcacheEnabled = fileCMD.length() != 0 && fileCMD.contains("zcache");
@@ -101,6 +104,9 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         mLowMemoryPref = (CheckBoxPreference) findPreference("low_mem");
         mFSTrimToggle = findPreference("fstrim_toggle");
         mDalvikSettings = findPreference("dalvik_settings");
+
+        if (!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")))
+            memorySettingsCategory.removePreference(mLowMemoryPref);
 
         mIOScheduler = (ListPreference) findPreference("io_scheduler_list");
         mIOScheduler.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.GOV_IO_FILE, 0, 1));
@@ -220,14 +226,18 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             lowMemoryPrefClick();
         } else if (preference == mDynFSync) {
             boolean value = mDynFSync.isChecked();
-            if (value) AeroActivity.shell.setRootInfo("1", AeroActivity.files.DYANMIC_FSYNC);
-            else AeroActivity.shell.setRootInfo("0", AeroActivity.files.DYANMIC_FSYNC);
+            if (value)
+                AeroActivity.shell.setRootInfo("1", AeroActivity.files.DYANMIC_FSYNC);
+            else
+                AeroActivity.shell.setRootInfo("0", AeroActivity.files.DYANMIC_FSYNC);
         } else if (preference == mZCache) {
             zCacheClick();
         } else if (preference == mWriteBackControl) {
             boolean value = mWriteBackControl.isChecked();
-            if (value) AeroActivity.shell.setRootInfo("1", AeroActivity.files.WRITEBACK);
-            else AeroActivity.shell.setRootInfo("0", AeroActivity.files.WRITEBACK);
+            if (value)
+                AeroActivity.shell.setRootInfo("1", AeroActivity.files.WRITEBACK);
+            else
+                AeroActivity.shell.setRootInfo("0", AeroActivity.files.WRITEBACK);
         } else if (preference == mFSTrimToggle) {
             fsTrimToggleClick();
         } else if (preference == mDalvikSettings) {
@@ -267,11 +277,15 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         AeroActivity.shell.remountSystem();
         if (value) {
             // If already on, we can bail out;
-            if (getState.contains("zcache")) return;
+            if (getState.contains("zcache"))
+                return;
+
             getState = getState + " zcache";
         } else {
             // bail out again, because its already how we want it;
-            if (!getState.contains("zcache")) return;
+            if (!getState.contains("zcache"))
+                return;
+
             getState = getState.replace(" zcache", "");
         }
         // Set current State to path;
@@ -296,11 +310,15 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
                 getState = sb.toString();
                 if (value) {
                     // If already on, we can bail out;
-                    if (getState.contains("ro.config.low_ram=true")) return;
+                    if (getState.contains("ro.config.low_ram=true"))
+                        return;
+
                     getState = getState.replace("ro.config.low_ram=false", "ro.config.low_ram=true");
                 } else {
                     // bail out again, because its already how we want it;
-                    if (getState.contains("ro.config.low_ram=false")) return;
+                    if (getState.contains("ro.config.low_ram=false"))
+                        return;
+
                     getState = getState.replace("ro.config.low_ram=true", "ro.config.low_ram=false");
                 }
             } catch (IOException ignored) {
@@ -378,7 +396,8 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
                     }
                 };
                 Thread trimThread = new Thread(runnable);
-                if (!trimThread.isAlive()) trimThread.start();
+                if (!trimThread.isAlive())
+                    trimThread.start();
             }
         }).show();
     }
