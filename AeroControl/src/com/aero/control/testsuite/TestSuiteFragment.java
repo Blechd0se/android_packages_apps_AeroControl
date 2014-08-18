@@ -67,11 +67,6 @@ public class TestSuiteFragment extends PreferenceFragment {
 
         mMFlops = 0;
 
-        if (mProgress >= 1) {
-            Log.e(LOG_TAG, "Returning early...");
-            return;
-        }
-
         Runnable[] runWorker = new Runnable[numThreads];
 
         for (int i = 0; i < numThreads; i++) {
@@ -104,7 +99,7 @@ public class TestSuiteFragment extends PreferenceFragment {
     public final void warmUp(Linpack lp) {
 
         // WarumUp the hardware;
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 50; i++)
             lp.run_benchmark();
     }
 
@@ -125,7 +120,7 @@ public class TestSuiteFragment extends PreferenceFragment {
     public final void gatherResults(Linpack lp) {
 
         mMFlops += lp.getMFlops();
-        // Completed antoher run;
+        // Completed another run;
         mProgress++;
 
         Log.e(LOG_TAG, "Average MFLop-Counter: " + mMFlops +
