@@ -44,6 +44,7 @@
     <string name="slider_profile">Profiles</string>
     <string name="slider_statistics">CPU Statistics</string>
     <string name="slider_misc_settings">Misc Settings</string>
+    <string name="slider_testsuite_settings">TestSuite</string>
 
     <!-- Overview Elements -->
 

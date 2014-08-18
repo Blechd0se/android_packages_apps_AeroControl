@@ -45,6 +45,7 @@ import com.aero.control.fragments.MemoryFragment;
 import com.aero.control.fragments.MiscSettingsFragment;
 import com.aero.control.fragments.ProfileFragment;
 import com.aero.control.fragments.StatisticsFragment;
+import com.aero.control.testsuite.TestSuiteFragment;
 import com.aero.control.fragments.UpdaterFragment;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.rootHelper;
@@ -79,6 +80,7 @@ public final class AeroActivity extends Activity {
     private static final int MISC = 5;
     private static final int UPDATER = 6;
     private static final int PROFILE = 7;
+    private static final int TESTSUITE = 8;
 
     // Fragments;
     private AeroFragment mAeroFragment;
@@ -90,6 +92,7 @@ public final class AeroActivity extends Activity {
     private ProfileFragment mProfileFragment;
     private StatisticsFragment mStatisticsFragment;
     private MiscSettingsFragment mMiscSettingsFragment;
+    private TestSuiteFragment mTestSuiteFragment;
 
     private SharedPreferences prefs;
 
@@ -177,7 +180,7 @@ public final class AeroActivity extends Activity {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
         // Set up lists;
-        generatingLists content = new generatingLists();
+        generatingLists content = new generatingLists(getApplicationContext());
 
         mAdapter = new ItemAdapter(this, R.layout.activity_main, content.ITEMS);
         mDrawerList.setAdapter(mAdapter);
@@ -320,7 +323,7 @@ public final class AeroActivity extends Activity {
 
     private final void selectItem(int position) {
 
-        drawer: mDrawerLayout.closeDrawers();
+        mDrawerLayout.closeDrawers();
 
         // update the main content by replacing fragments
         Fragment fragment = null;
@@ -386,6 +389,12 @@ public final class AeroActivity extends Activity {
                     mProfileFragment = new ProfileFragment();
                 }
                 fragment = mProfileFragment;
+                break;
+            case TESTSUITE:
+                if (mTestSuiteFragment == null) {
+                    mTestSuiteFragment = new TestSuiteFragment();
+                }
+                fragment = mTestSuiteFragment;
                 break;
         }
 

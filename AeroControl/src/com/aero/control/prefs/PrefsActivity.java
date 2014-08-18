@@ -15,14 +15,20 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.service.PerAppServiceHelper;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Alexander Christ on 21.09.13.
@@ -34,12 +40,15 @@ public class PrefsActivity extends PreferenceActivity {
     public static final Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     public int mActionBarTitleID;
     public TextView mActionBarTitle;
+    private int mCounter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String a = prefs.getString("app_theme", null);
         getActionBar().setIcon(R.drawable.app_icon_actionbar);
+
+        mCounter = 0;
 
         if (a == null)
             a = "";
@@ -87,8 +96,6 @@ public class PrefsActivity extends PreferenceActivity {
         per_app_check.setIcon(R.drawable.ic_action_person);
         version.setIcon(R.drawable.rocket);
         xda.setIcon(R.drawable.xda);
-
-        version.setEnabled(false);
 
         appTheme.setEntries(R.array.app_themes);
         appTheme.setEntryValues(data);
@@ -240,6 +247,27 @@ public class PrefsActivity extends PreferenceActivity {
             }
         });
 
+        version.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                mCounter++;
+
+                // Show testsuite if clicked;
+                if (mCounter >= 7) {
+                    try {
+                        FileOutputStream fos = getApplicationContext().openFileOutput("testsuite", Context.MODE_PRIVATE);
+                        fos.write("1".getBytes());
+                        fos.close();
+                    } catch (IOException e) {
+                        Log.e("Aero", "Could not save file. ", e);
+                    }
+
+                    Toast.makeText(getApplicationContext(), "You have enabled the TestSuite!", Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+        });
     }
 
     @Override

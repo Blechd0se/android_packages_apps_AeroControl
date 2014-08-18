@@ -1,0 +1,17 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory
+        android:title="@string/slider_testsuite_settings"
+        android:key="testsuite_settings">
+
+        <Preference
+            android:key="linpack_test"
+            android:title="Linpack Test"
+            android:summary="Runs the linpack test." />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

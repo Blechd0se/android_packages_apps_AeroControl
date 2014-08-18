@@ -1,9 +1,13 @@
 package com.aero.control.lists;
 
+import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import com.aero.control.R;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -13,8 +17,10 @@ import java.util.ArrayList;
 public class generatingLists {
 
     public ArrayList<PreferenceItem> ITEMS = new ArrayList<PreferenceItem>();
+    private Context mContext;
 
-    public generatingLists() {
+    public generatingLists(Context context) {
+        this.mContext = context;
         listItems();
     }
 
@@ -32,6 +38,19 @@ public class generatingLists {
 
         addItem(new PreferenceItem(R.string.slider_updater, R.drawable.update));
         addItem(new PreferenceItem(R.string.slider_profile, R.drawable.profile));
+
+        int output = 0;
+        final byte[] buffer = new byte[1024];
+
+        try {
+            FileInputStream fis = mContext.openFileInput("testsuite");
+            output = fis.read(buffer);
+            fis.close();
+        } catch (IOException e) {
+            Log.e("Aero", "Couldn't open File... " + output);
+        }
+        if (output > 0)
+            addItem(new PreferenceItem(R.string.slider_testsuite_settings, R.drawable.rocket));
     }
 
     public static class PreferenceItem {
