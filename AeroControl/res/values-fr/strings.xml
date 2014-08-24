@@ -1,7 +1,7 @@
 <resources>
 	<string name="app_name">Aero Control</string>
-	<string name="drawer_open">Ouvrir le drawer de navigation</string>
-	<string name="drawer_close">Fermer le drawer de navigation</string>
+	<string name="drawer_open">Ouvrir la barre de navigation</string>
+	<string name="drawer_close">Fermer la barre de navigation</string>
 	<string name="error_detected">Erreur ?</string>
 	<string name="cancel">Annuler</string>
 	<string name="save">Sauvegarder</string>
@@ -14,21 +14,21 @@
 
 	<!-- Default Navigation Drawer entries -->
 
-	<string name="slider_overview">Overview</string>
+	<string name="slider_overview">Vue d'ensemble</string>
 	<string name="slider_cpu_settings">Paramètres du CPU</string>
 	<string name="slider_gpu_settings">Contrôle du GPU</string>
 	<string name="slider_memory_settings">Paramètres de la mémoire</string>
-	<string name="slider_defy_parts">Defy Parts</string>
-	<string name="slider_updater">Updater</string>
+	<string name="slider_defy_parts">Defy parts</string>
+	<string name="slider_updater"> Mise à jour</string>
     <string name="slider_profile">Profiles</string>
 
 	<!-- Overview Elements -->
 
-	<string name="kernel_version">Kernel:</string>
+	<string name="kernel_version">Version du noyau:</string>
 	<string name="current_cpu_speed">Fréquence du CPU:</string>
 	<string name="current_gpu_speed">Fréquence du GPU:</string>
-	<string name="current_governor">Governor:</string>
-	<string name="current_io_governor">I/O-Scheduler:</string>
+	<string name="current_governor">Governeur:</string>
+	<string name="current_io_governor"> Ordonnanceur I/O:</string>
 	<string name="available_memory">RAM totale:</string>
 
 	<!-- Action Overflow Menu -->
@@ -60,24 +60,24 @@
 	<string name="pref_cpu_freq">Fréquences</string>
 	<string name="pref_cpu_freqmax">Fréquence Max.</string>
 	<string name="pref_cpu_freqmin">Fréquence Min.</string>
-	<string name="pref_cpu_governor">Paramètres de Governor</string>
-	<string name="perf_live_oc_uc">Live OC/UC</string>
+	<string name="pref_cpu_governor">Paramètres de Governeur</string>
+	<string name="perf_live_oc_uc">OC/UC En direct</string>
 	<string name="perf_live_oc_uc_sum">Controlez Fréquences et Voltages en temps réél !</string>
 	<!-- Here babe -->
-	<string name="pref_gov_choose">Choix du Governor</string>
-	<string name="pref_gov_choose_sum">Definissez votre governor préféré !</string>
+	<string name="pref_gov_choose">Choix du Governeur</string>
+	<string name="pref_gov_choose_sum">Definissez votre Governeur préféré !</string>
 
-	<string name="pref_gov_set">Paramètres spécifique du Governor</string>
-	<string name="pref_gov_set_sum">Réglez les paramètres spécifique du governor.</string>
+	<string name="pref_gov_set">Paramètres spécifique du Governeur</string>
+	<string name="pref_gov_set_sum">Réglez les paramètres spécifique du Governeur.</string>
 
 	<!-- Memory Fragment -->
 	<string name="pref_memory_settings">Paramètres de la mémoire</string>
 
 	<string name="pref_memory_swappiness">Swappiness</string>
-	<string name="pref_memory_swappiness_sum">Définit la valeur pour laquel le kernel utilise le swap.</string>
+	<string name="pref_memory_swappiness_sum">Définit la valeur pour laquel le noyau utilise le swap.</string>
 
 	<string name="pref_dynamic_fsync">FSync Dynamique</string>
-	<string name="pref_dynamic_fsync_sum">Active fsync uniquement quand l\'écran est éteint.</string>
+	<string name="pref_dynamic_fsync_sum">Active le fsync uniquement quand l\'écran est éteint.</string>
 
 	<string name="pref_memory_swap">Swap</string>
 	<string name="pref_memory_swap_sum">Créer une partition swap.</string>
@@ -92,38 +92,38 @@
 	<string name="fstrim_content">Trim différentes partitions de l\'appareil! Cette opération peut prendre un certain temps.</string>
 
 	<!-- IO Scheduler -->
-	<string name="io_scheduler">IO Scheduler</string>
+	<string name="io_scheduler">Ordonnanceur I/O </string>
 
 	<!-- GPU Fragment -->
 	<string name="pref_gpu_control_enable">Contrôle GPU</string>
-	<string name="pref_gpu_control_enable_sum">Active le driver qui contrôle le GPU. Il supporte overclocking/undervolting
+	<string name="pref_gpu_control_enable_sum">Active le pilote qui contrôle le GPU. Il supporte overclocking/undervolting
 											ainsi que la programmation basique du GPU.</string>
 	<string name="pref_gpu_max_freq">Fréquence Max.</string>
 	<string name="pref_gpu_max_freq_sum">Définit la fréquence maximum du GPU (200 MHz par défaut).</string>
 
 	<!-- Updater Fragment -->
-	<string name="pref_updater">Kernel Updater and Backup</string>
-	<string name="pref_backup_kernel">Sauvegarder votre Kernel</string>
-	<string name="pref_backup_kernel_content">Sauvegarde une copie de votre kernel actuel.</string>
+	<string name="pref_updater">Mise à jour du noyau et sauvegarde</string>
+	<string name="pref_backup_kernel">Sauvegarder votre noyau</string>
+	<string name="pref_backup_kernel_content">Sauvegarde une copie de votre noyau actuel.</string>
 
-	<string name="pref_updater_kernel">Mettre à jour le Kernel</string>
-	<string name="pref_updater_kernel_content">Met à jour votre kernel.</string>
+	<string name="pref_updater_kernel">Mettre à jour le noyau</string>
+	<string name="pref_updater_kernel_content">Met à jour votre noyau.</string>
 
 	<string name="pref_restore">Restaurer une sauvegarde</string>
 	<string name="pref_restore_kernel">Restaurer</string>
-	<string name="pref_restore_kernel_content">Restaurer à partir de la sauvegarde d\'un kernel.</string>
+	<string name="pref_restore_kernel_content">Restaurer à partir de la sauvegarde d\'un noyau.</string>
 
 	<string name="last_backup_from">Dernière sauvegarde : </string>
 	<string name="backup_from">Sauvegardé le </string>
 	<string name="restore_from_backup">Voulez vous restaurer la sauvegarde du </string>
-	<string name="proceed_backup">Continuer en sauvegardant? Votre kernel actuel sera sauvegardé.</string>
+	<string name="proceed_backup">Continuer en sauvegardant? Votre noyau actuel sera sauvegardé.</string>
 
 	<!-- Showcase Strings -->
 
 	<string name="showcase_aero_fragment">Bienvenu sur Aero Control!</string>
-	<string name="showcase_aero_fragment_sum">Glissez de la gauche vers la droite pour afficher le drawer de navigation.
-												La page où vous êtes est le panel d\'information.
-												Vous y retrouverez un résumé de certains réglages du kernel. Ils sont en direct,
+	<string name="showcase_aero_fragment_sum">Glissez de la gauche vers la droite pour afficher la barre de navigation.
+												La page où vous êtes est le panneau d\'information.
+												Vous y retrouverez un résumé de certains réglages du noyau. Ils sont en direct,
 												vous n\'avez pas besoin de l\'actualiser.</string>
 
 	<string name="showcase_memory_fragment_trim">Outil Trim</string>
