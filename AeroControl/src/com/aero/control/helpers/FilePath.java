@@ -16,6 +16,11 @@ public final class FilePath {
     public static final String[] GPU_FILES = {"/sys/kernel/gpu_control/max_freq", /* Defy 2.6 Kernel */
                                                 "/sys/class/kgsl/kgsl-3d0/max_gpuclk", /* Adreno GPUs */
                                                 "/sys/devices/platform/omap/pvrsrvkm.0/sgx_fck_rate" /* Defy 3.0 Kernel */};
+    public static final String[] GPU_FILES_RATE = {"/sys/class/kgsl/kgsl-3d0/gpuclk", /* Adreno GPUs */
+                                                "/sys/devices/platform/omap/pvrsrvkm.0/sgx_fck_rate" /* Defy 3.0 Kernel */,
+                                                "/proc/gpu/cur_rate" /* Defy 2.6 Kernel */};
+
+
     public static final String FILENAME_PROC_MEMINFO = "/proc/meminfo";
 
 
