@@ -122,7 +122,7 @@ public class AeroFragment extends Fragment {
         listView1 = (ListView) root.findViewById(R.id.listView1);
 
         /* Find correct gpu path */
-        for (String a : AeroActivity.files.GPU_FILES) {
+        for (String a : AeroActivity.files.GPU_FILES_RATE) {
             if (new File(a).exists()) {
                 gpu_file = a;
                 break;
@@ -181,15 +181,38 @@ public class AeroFragment extends Fragment {
     public final String getFreqPerCore() {
         final String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu";
         final String SCALE_PATH_NAME = "/cpufreq/scaling_cur_freq";
+        final String SCALE_CPU_UTIL = "/cpufreq/cpu_utilization";
         String complete_path;
         String freq_string =  "";
+        String cpu_util = "";
         int i = Runtime.getRuntime().availableProcessors();
 
+        // Get the cpu frequency for each cpu;
         for (int k = 0; k < i; k++) {
             complete_path = SCALE_CUR_FILE + k + SCALE_PATH_NAME;
             freq_string = freq_string + " " + AeroActivity.shell.toMHz(AeroActivity.shell.getInfo(complete_path));
         }
         freq_string = freq_string.replace("Unavailable", " Offline ");
+
+        // There is no point in wasting cpu cycles if no file exists;
+        if (!(new File(SCALE_CUR_FILE + 0 + SCALE_CPU_UTIL).exists()))
+            return freq_string;
+
+        // Get the last reported load for each cpu (if available);
+        for (int j = 0; j < i; j++)  {
+            complete_path = SCALE_CUR_FILE + j + SCALE_CPU_UTIL;
+
+            String tmp = AeroActivity.shell.getInfo(complete_path);
+            if (!tmp.equals("Unavailable")) {
+                if (Integer.parseInt(tmp) < 10) {
+                    tmp = " " + tmp;
+                }
+            }
+
+            cpu_util = cpu_util + "\t\t\t" + tmp + "%";
+        }
+        cpu_util = cpu_util.replace("Unavailable%", "--");
+        freq_string = freq_string + "\n" + cpu_util;
 
         return freq_string;
     }
