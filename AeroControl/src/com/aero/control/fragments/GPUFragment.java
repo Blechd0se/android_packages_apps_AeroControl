@@ -71,6 +71,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         mDisplayControl = (ListPreference)root.findPreference("display_control");
         mColorControl = root.findPreference("display_color_control");
         mGPUGovernor.setOnPreferenceChangeListener(this);
+        mGPUControlFrequencies.setOnPreferenceChangeListener(this);
 
         /* Find correct gpu path */
         for (String a : AeroActivity.files.GPU_FILES) {
