@@ -14,7 +14,7 @@
 
 	<!-- Default Navigation Drawer entries -->
 
-	<string name="slider_overview">Vue d'ensemble</string>
+	<string name="slider_overview">Vue d\'ensemble</string>
 	<string name="slider_cpu_settings">Paramètres du CPU</string>
 	<string name="slider_gpu_settings">Contrôle du GPU</string>
 	<string name="slider_memory_settings">Paramètres de la mémoire</string>
