@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.DialogPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -19,11 +20,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.CustomEditText;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
@@ -45,15 +49,16 @@ public class CPUFragment extends PreferenceFragment {
 
     public static final String FILENAME = "firstrun_cpu";
 
-    public PreferenceScreen root;
-    public PreferenceCategory PrefCat;
-    public ListPreference listPref;
-    public ListPreference min_frequency;
-    public ListPreference max_frequency;
-    public boolean mVisible = true;
+    private PreferenceScreen root;
+    private PreferenceCategory PrefCat;
+    private ListPreference listPref;
+    private ListPreference min_frequency;
+    private ListPreference max_frequency;
+    private boolean mVisible = true;
     private SharedPreferences prefs;
-    public ShowcaseView.ConfigOptions mConfigOptions;
-    public ShowcaseView mShowCase;
+    private ShowcaseView.ConfigOptions mConfigOptions;
+    private ShowcaseView mShowCase;
+    private static final ArrayList<String> mVselList = new ArrayList<String>();
 
     public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
@@ -132,220 +137,157 @@ public class CPUFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                // Set up Alert Dialog and view;
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                View layout = inflater.inflate(R.layout.cpu_oc_uc, null);
-                builder.setIcon(R.drawable.lightbulb_dark);
-                String[] cpufreq = AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_AVAILABLE_FREQ, 0, 0);
-
-
-                // Our cpu values list;
-                final ArrayList<String> cpu_list = new ArrayList<String>();
                 final String overclockOutput = AeroActivity.shell.getRootInfo("cat", AeroActivity.files.CPU_VSEL);
+                final String[] cpufreq = AeroActivity.shell.getInfoArray(AeroActivity.files.CPU_AVAILABLE_FREQ, 0, 0);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                final LayoutInflater inflater = getActivity().getLayoutInflater();
+                final View layout = inflater.inflate(R.layout.cpu_oc_uc, null);
+                final ViewGroup cpuOCGroup = (ViewGroup)layout.findViewById(R.id.cpu_container);
+                int i = 0;
 
-                // Set up our EditText fields;
-                final EditText value1 = (EditText) layout.findViewById(R.id.value1);
-                final EditText value2 = (EditText) layout.findViewById(R.id.value2);
-                final EditText value3 = (EditText) layout.findViewById(R.id.value3);
-                final EditText value4 = (EditText) layout.findViewById(R.id.value4);
-                final EditText value5 = (EditText) layout.findViewById(R.id.value5);
-                final EditText value6 = (EditText) layout.findViewById(R.id.value6);
-                final EditText value7 = (EditText) layout.findViewById(R.id.value7);
-                final EditText value8 = (EditText) layout.findViewById(R.id.value8);
+                // Maybe it was filled before, better save than sorry;
+                mVselList.clear();
 
-                // Left side (cpu frequencies);
-                value1.setText(cpufreq[0]);
-                value3.setText(cpufreq[1]);
-                value5.setText(cpufreq[2]);
-                value7.setText(cpufreq[3]);
+                CustomEditText cpuValues;
+                ViewGroup.MarginLayoutParams cpuMargins;
+                RelativeLayout.LayoutParams cpuLayout;
 
-                // Substring is not ideal, but it gets the job done;
-                try {
-                    value2.setText(overclockOutput.substring(42, 44));
-                } catch (IndexOutOfBoundsException e) {
-                    Toast.makeText(getActivity(), "An error occured while reading the data, please try again",Toast.LENGTH_LONG).show();
-                    Log.e("Aero", "Error during OC: ", e);
-                    return false;
+                // Get position and content of vsel-values;
+                for (int k = -1; (k = overclockOutput.indexOf(" vsel=", k + 1)) != -1;) {
+                    mVselList.add(overclockOutput.substring(k + 6, k + 8));
                 }
 
-                // In case somebody uses very high frequencies;
-                if (Integer.parseInt(cpufreq[1]) >= 1000000) {
-                        value4.setText(overclockOutput.substring(105, 107));
-                        value6.setText(overclockOutput.substring(167, 169));
-                        value8.setText(overclockOutput.substring(229, 231));
-                } else {
-                        value4.setText(overclockOutput.substring(104, 106));
-                        value6.setText(overclockOutput.substring(166, 168));
-                        value8.setText(overclockOutput.substring(228, 230));
+                for (String a : cpufreq) {
+                    for (int j = 0; j < 2; j++) {
+                        cpuValues = new CustomEditText(getActivity());
+
+                        if (j == 0)
+                            cpuValues.setText(a);
+                        else
+                            cpuValues.setText(mVselList.toArray(new String[0])[i]);
+
+                        // Add the view, we can change its layout afterwards;
+                        cpuOCGroup.addView(cpuValues);
+
+                        cpuMargins = new ViewGroup.MarginLayoutParams(cpuValues.getLayoutParams());
+                        // Ensure first row is bound to left, second is bound to right;
+                        cpuMargins.setMargins(0, (i * 75), (j * 30), 0);
+                        cpuLayout = new RelativeLayout.LayoutParams(cpuMargins);
+
+                        if (j > 0) {
+                            cpuLayout.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                            cpuLayout.width = 100;
+                        } else
+                            cpuLayout.width = 200;
+
+                        cpuValues.setLayoutParams(cpuLayout);
+                    }
+                    i++;
                 }
+                builder.setIcon(R.drawable.lightbulb_dark);
+                builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                    // Inflate and set the layout for the dialog
-                    // Pass null as the parent view because its going in the dialog layout
-                builder.setView(layout)
-                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
+                        ArrayList<Integer> cpuFreqs = new ArrayList<Integer>();
+                        ArrayList<Integer> vselValues = new ArrayList<Integer>();
+                        int t = cpuOCGroup.getChildCount();
 
-                            AeroActivity.shell.setOverclockAddress();
-                            // Objects;
-                            final Object f = (value1.getText());
-                            final Object g = (value3.getText());
-                            final Object h = (value5.getText());
-                            final Object i = (value7.getText());
+                        // Get Frequencies- and Vsel-Values back;
+                        for (int l = 0; l < t; l++) {
+                            CustomEditText editText = (CustomEditText)cpuOCGroup.getChildAt(l);
+                            int tmp;
 
-                            Runnable runnable = new Runnable() {
-                                int a, b, c, d;
-                                int vsel1, vsel2, vsel3, vsel4;
+                            // Check if its a valid number, if not bail out;
+                            try {
+                                tmp = Integer.parseInt(editText.getText().toString());
+                            } catch (NumberFormatException e) {
+                                Log.e("Aero", "An Error occured! ", e);
+                                return;
+                            }
 
-                                @Override
-                                public void run() {
-                                    // Cast objects to integer (frequencies;
-                                    a = Integer.parseInt(f.toString());
-                                    b = Integer.parseInt(g.toString());
-                                    c = Integer.parseInt(h.toString());
-                                    d = Integer.parseInt(i.toString());
-
-                                    try {
-                                        // Cast voltages;
-                                        vsel1 = Integer.parseInt(value2.getText().toString());
-                                        vsel2 = Integer.parseInt(value4.getText().toString());
-                                        vsel3 = Integer.parseInt(value6.getText().toString());
-                                        vsel4 = Integer.parseInt(value8.getText().toString());
-                                    } catch (NumberFormatException e) {
-
-                                        // Go back to default, if wrong values;
-                                        vsel1 = 62;
-                                        vsel2 = 58;
-                                        vsel3 = 48;
-                                        vsel4 = 33;
-                                        Log.e("Aero", "These are wrong values, back to default.", e);
-                                    }
-
-                                    // Check if there are valid values;
-                                    if (a <= 1500000 && a > b && b > c && c > d
-                                        && vsel1 < 80 && vsel1 > vsel2 && vsel2 > vsel3 && vsel3 > vsel4 && vsel4 >= 15) {
-
-                                        if (a > 300000 && b > 300000 && c > 300000 && d >= 300000) {
-                                            try {
-                                                // Set our max vsel after we changed the max freq
-                                                cpu_list.add("echo " + vsel1 + " > " + AeroActivity.files.CPU_VSEL_MAX);
-                                                cpu_list.add("echo " + "4" + " " + a + "000" + " " + vsel1 + " > " + AeroActivity.files.CPU_VSEL);
-                                                cpu_list.add("echo " + "3" + " " + b + "000" + " " + vsel2 + " > " + AeroActivity.files.CPU_VSEL);
-                                                cpu_list.add("echo " + "2" + " " + c + "000" + " " + vsel3 + " > " + AeroActivity.files.CPU_VSEL);
-                                                cpu_list.add("echo " + "1" + " " + d + "000" + " " + vsel4 + " > " + AeroActivity.files.CPU_VSEL);
-                                                cpu_list.add("echo " + "0" + " " + a + " > " + AeroActivity.files.CPU_FREQ_TABLE);
-                                                cpu_list.add("echo " + "1" + " " + b + " > " + AeroActivity.files.CPU_FREQ_TABLE);
-                                                cpu_list.add("echo " + "2" + " " + c + " > " + AeroActivity.files.CPU_FREQ_TABLE);
-                                                cpu_list.add("echo " + "3" + " " + d + " > " + AeroActivity.files.CPU_FREQ_TABLE);
-                                                cpu_list.add("echo " + f + " > " + AeroActivity.files.CPU_MAX_RATE);
-                                                cpu_list.add("echo " + i + " > " + AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CPU_MIN_FREQ);
-
-                                                String[] commands = cpu_list.toArray(new String[0]);
-
-                                                // Throw them all in!
-                                                AeroActivity.shell.setRootInfo(commands);
-
-                                                //** store preferences
-                                                //** note that this time we put to preferences commands instead of single values,
-                                                //** rebuild the commands in the bootService would have been a little expensive
-                                                SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-                                                preference.edit().putStringSet("cpu_commands", new HashSet<String>(Arrays.asList(commands))).commit();
-
-                                            } catch (Exception e) {
-                                                Log.e("Aero", "An Error occurred while setting values", e);
-                                                Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        } else {
-                                            Log.e("Aero", "The frequencies you have set are to low!");
-                                        }
-                                    } else {
-                                        Log.e("Aero", "Cannot apply values, they are not in range.");
-
+                            // Check if vsel- or frequency value;
+                            if (l % 2 > 0) {
+                                if (l > 1) {
+                                    // Run the sanity checks;
+                                    if (vselValues.get(vselValues.size() - 1) < tmp
+                                            && tmp > 15 && tmp < 80) {
+                                        // If a wrong vsel input is detected, bail out;
+                                        Log.e("Aero", "Invalid input: " + tmp + " Last input: " +
+                                                vselValues.get(vselValues.size() - 1));
+                                            return;
                                     }
                                 }
-                            };
-                            try {
-                                Thread cpuUpdateThread = new Thread(runnable);
-                                cpuUpdateThread.start();
-                            } catch (Exception e) {
-                                Log.e("Aero", "Something went completely wrong.", e);
-                            }
+                                vselValues.add(tmp);
 
-                            // Start our background refresher Task;
-                            try {
-                                // Only start if not already alive
-                                if (!mRefreshThread.isAlive()) {
-                                    mRefreshThread.start();
-                                    mRefreshThread.setPriority(Thread.MIN_PRIORITY);
+                            } else {
+                                if (l > 1) {
+                                    // Run the sanity checks;
+                                    if (cpuFreqs.get(cpuFreqs.size() - 1) < tmp
+                                            && tmp > 1500000 && tmp > 300000) {
+                                        // If a wrong vsel input is detected, bail out;
+                                        Log.e("Aero", "Invalid input: " + tmp + " Last input: "
+                                                + cpuFreqs.get(cpuFreqs.size() - 1));
+                                        return;
+                                    }
                                 }
-                            } catch (NullPointerException e) {
-                                Log.e("Aero", "Couldn't start Refresher Thread.", e);
+                                cpuFreqs.add(tmp);
                             }
                         }
-                    })
 
-                    .setNeutralButton(R.string.default_values, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            try {
+                        Integer[] newFrequencies = cpuFreqs.toArray(new Integer[0]);
+                        // Previous array is cloned, we reuse it;
+                        mVselList.clear();
+                        int listLength = newFrequencies.length;
+                        i = 0;
 
-                                AeroActivity.shell.setOverclockAddress();
+                        // Puzzle the values together;
+                        mVselList.add("echo " + vselValues.get(0) + " > " + AeroActivity.files.CPU_VSEL_MAX);
+                        for (Integer freq : newFrequencies) {
+                            mVselList.add("echo " + listLength + " " + freq + "000" + " " + vselValues.get(i) + " > " + AeroActivity.files.CPU_VSEL);
+                            mVselList.add("echo " + i + " " + freq + " > " + AeroActivity.files.CPU_FREQ_TABLE);
 
-                                // Set our max vsel after we changed the max freq
-                                cpu_list.add("echo " + "62" + " > " + AeroActivity.files.CPU_VSEL_MAX);
-                                cpu_list.add("echo " + "4" + " 1000000000" + " 62" + " > " + AeroActivity.files.CPU_VSEL);
-                                cpu_list.add("echo " + "3" + " 800000000" + " 58" + " > " + AeroActivity.files.CPU_VSEL);
-                                cpu_list.add("echo " + "2" + " 600000000" + " 48" + " > " + AeroActivity.files.CPU_VSEL);
-                                cpu_list.add("echo " + "1" + " 300000000" + " 33" + " > " + AeroActivity.files.CPU_VSEL);
-                                cpu_list.add("echo " + "0" + " 1000000" + " > " + AeroActivity.files.CPU_FREQ_TABLE);
-                                cpu_list.add("echo " + "1" + " 800000" + " > " + AeroActivity.files.CPU_FREQ_TABLE);
-                                cpu_list.add("echo " + "2" + " 600000" + " > " + AeroActivity.files.CPU_FREQ_TABLE);
-                                cpu_list.add("echo " + "3" + " 300000" + " > " + AeroActivity.files.CPU_FREQ_TABLE);
-                                cpu_list.add("echo " + "1000000" + " > " + AeroActivity.files.CPU_MAX_RATE);
-                                cpu_list.add("echo " + "300000" + " > " + AeroActivity.files.CPU_MIN_FREQ);
-
-                                String[] commands = cpu_list.toArray(new String[0]);
-                                AeroActivity.shell.setRootInfo(commands);
-
-                                try {
-                                    Thread.sleep(350);
-                                } catch (InterruptedException e) {
-                                    Log.e("Aero", "Something interrupted the main Thread, try again.", e);
-                                }
-
-                                //** store preferences
-                                //** note that this time we put to preferences commands instead of single values,
-                                //** rebuild the commands in the bootService would have been a little expensive
-                                SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-                                preference.edit().putStringSet("cpu_commands", new HashSet<String>(Arrays.asList(commands))).commit();
-
-                            } catch (Exception e) {
-                                Log.e("Aero", "An Error occurred while setting values", e);
-                                Toast.makeText(getActivity(), "An Error occurred, check logcat!", Toast.LENGTH_SHORT).show();
-                            }
-
-                            // Start our background refresher Task;
-                            try {
-                                // Only start if not already alive
-                                if (!mRefreshThread.isAlive()) {
-                                    mRefreshThread.start();
-                                    mRefreshThread.setPriority(Thread.MIN_PRIORITY);
-                                }
-                            } catch (NullPointerException e) {
-                                Log.e("Aero", "Couldn't start Refresher Thread.", e);
-                            }
-
+                            Log.e("Aero", "echo " + listLength + " " + freq + "000" + " " + vselValues.get(i) + " > " + AeroActivity.files.CPU_VSEL);
+                            listLength--;
+                            i++;
                         }
-                    })
+                        mVselList.add("echo " + newFrequencies[0] + " > " + AeroActivity.files.CPU_MAX_RATE);
+                        mVselList.add("echo " + newFrequencies[newFrequencies.length - 1] + " > "
+                                + AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CPU_MIN_FREQ);
 
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
+                        String[] commands = mVselList.toArray(new String[0]);
+                        // Throw them all in!
+                        AeroActivity.shell.setRootInfo(commands);
 
+                        /*
+                         * store preferences
+                         * note that this time we put to preferences commands instead of single values,
+                         * rebuild the commands in the bootService would have been a little expensive
+                         */
+                        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+                        preference.edit().putStringSet("cpu_commands", new HashSet<String>(Arrays.asList(commands))).commit();
+
+
+                        // Start our background refresher Task;
+                        try {
+                            // Only start if not already alive
+                            if (!mRefreshThread.isAlive()) {
+                                mRefreshThread.start();
+                                mRefreshThread.setPriority(Thread.MIN_PRIORITY);
+                            }
+                        } catch (NullPointerException e) {
+                            Log.e("Aero", "Couldn't start Refresher Thread.", e);
                         }
-                    });
-                builder.setTitle(R.string.perf_live_oc_uc).show();
 
-
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Do nothing
+                    }
+                });
+                builder.setView(layout).setTitle(R.string.perf_live_oc_uc).show();
 
                 return false;
             }
@@ -690,6 +632,8 @@ public class CPUFragment extends PreferenceFragment {
 
     private Handler mRefreshHandler = new Handler() {
 
+        boolean tableUpdate = false;
+
         @Override
         public void handleMessage(Message msg) {
 
@@ -697,6 +641,8 @@ public class CPUFragment extends PreferenceFragment {
                 if (isVisible() && mVisible) {
                     updateMaxFreq();
                     updateMinFreq();
+                    if (!tableUpdate)
+                        tableUpdate = AeroActivity.shell.setOverclockAddress();
                     mVisible = true;
                 } else {
                     // Do nothing
