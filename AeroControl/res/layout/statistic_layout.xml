@@ -12,14 +12,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/frequency"
             android:paddingLeft="7dp"
-            android:textSize="22sp"/>
+            android:textSize="19dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/timeInState"
             android:gravity="right"
-            android:textSize="22sp"
+            android:textSize="19dp"
             android:paddingLeft="60dp"/>
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/percentage"
             android:gravity="right"
-            android:textSize="22sp"
+            android:textSize="19dp"
             android:paddingRight="7dp"/>
     </LinearLayout>
 </RelativeLayout>
