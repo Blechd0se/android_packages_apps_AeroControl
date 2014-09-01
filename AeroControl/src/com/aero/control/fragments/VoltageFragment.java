@@ -111,10 +111,12 @@ public class VoltageFragment extends PreferenceFragment {
             // Generates our custom text preference
             final CustomTextPreference voltPref = new CustomTextPreference(getActivity());
             voltPref.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
-            voltPref.setSummary(volTmp);
+            voltPref.setPrefSummary(volTmp);
             voltPref.setTitle(freqTmp);
+            voltPref.setPrefText(freqTmp);
             voltPref.setText(volTmp.replace("mV", ""));
             voltPref.setDialogTitle(freqTmp);
+            voltPref.setHideOnBoot(true);
 
             PrefCat.addPreference(voltPref);
 

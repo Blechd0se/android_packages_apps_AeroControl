@@ -2,7 +2,6 @@ package com.aero.control.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Vibrator;
 import android.preference.Preference;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 
-import java.text.ParseException;
 
 /**
  * Created by Alexander Christ on 05.03.14.
@@ -24,6 +22,8 @@ public class PreferenceHandler {
     public Context mContext;
     public PreferenceCategory mPrefCat;
     public PreferenceManager mPrefMan;
+
+    private SharedPreferences mPreferences;
 
     /*
      * Default constructor to set our objects
@@ -120,16 +120,24 @@ public class PreferenceHandler {
         if (tmp != null)
             prefload.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
 
+        mPreferences = mPrefMan.getSharedPreferences();
+
+        // If no entry exists, we can be sure that we won't have to check the checkbox;
+        if (mPreferences.getString(parameterPath, null) != null) {
+            prefload.setChecked(true);
+        }
+
         // Setup all things we would normally do in XML;
-        prefload.setSummary(summary);
+        prefload.setPrefSummary(summary);
         prefload.setTitle(parameter);
         prefload.setText(summary);
+        prefload.setPrefText(parameter);
         prefload.setDialogTitle(parameter);
-        prefload.setStyle(CustomTextPreference.STYLE_NORMAL);
+        prefload.setName(parameterPath);
 
-        if (prefload.getSummary().equals("Unavailable")) {
+        if (prefload.getPrefSummary().equals("Unavailable")) {
             prefload.setEnabled(false);
-            prefload.setSummary("This value can't be changed.");
+            prefload.setPrefSummary("This value can't be changed.");
         }
 
         mPrefCat.addPreference(prefload);
@@ -140,21 +148,24 @@ public class PreferenceHandler {
             public boolean onPreferenceChange(Preference preference, Object o) {
 
                 String a = (String) o;
-                CharSequence oldValue = prefload.getSummary();
+                CharSequence oldValue = prefload.getPrefSummary();
 
                 AeroActivity.shell.setRootInfo(a, parameterPath);
 
                 if (AeroActivity.shell.checkPath(AeroActivity.shell.getInfo(parameterPath), a)) {
-                    prefload.setSummary(a);
+                    prefload.setPrefSummary(a);
                 } else {
                     Toast.makeText(mContext, "Couldn't set desired parameter" + " Old value; " +
                             AeroActivity.shell.getInfo(parameterPath) + " New Value; " + a, Toast.LENGTH_LONG).show();
-                    prefload.setSummary(oldValue);
+                    prefload.setPrefSummary(oldValue);
                 }
 
-                // Store our custom preferences if available;
-                SharedPreferences preferences = mPrefMan.getSharedPreferences();
-                preferences.edit().putString(parameterPath, o.toString()).commit();
+
+                if (prefload.isChecked() == true) {
+                    // Store our custom preferences if available;
+
+                    mPreferences.edit().putString(parameterPath, o.toString()).commit();
+                }
 
                 if (flag)
                     forceVibration();
