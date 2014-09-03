@@ -532,8 +532,7 @@ public class CPUFragment extends PreferenceFragment {
 
         // Change governor for each available CPU;
         for (int k = 0; k < mNumCpus; k++) {
-            // To ensure we get proper permissions, change the governor to performance first;
-            //array.add("echo " + "performance" + " > " + CPU_BASE_PATH + k + CURRENT_GOV_AVAILABLE);
+            array.add("echo 1 > " + AeroActivity.files.CPU_BASE_PATH + k + "/online");
             array.add("echo " + s + " > " + AeroActivity.files.CPU_BASE_PATH + k + AeroActivity.files.CURRENT_GOV_AVAILABLE);
         }
         String[] commands = array.toArray(new String[0]);
