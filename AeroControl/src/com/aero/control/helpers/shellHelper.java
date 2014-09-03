@@ -224,6 +224,10 @@ public final class shellHelper {
      */
     public final String[] getDirInfo(String s, boolean flag) {
 
+        // Return null, if the file doesn't exist
+        if (!(new File(s).exists()))
+            return null;
+
         // Handle case if files are needed;
         if (flag) {
             List<String> results = new ArrayList<String>();

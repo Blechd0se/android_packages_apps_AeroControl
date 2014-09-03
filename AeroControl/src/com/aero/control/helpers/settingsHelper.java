@@ -153,20 +153,55 @@ public class settingsHelper {
 
             if (cpu_gov != null) {
 
-                governorSettings.add("chmod 0666 " + AeroActivity.files.CPU_BASE_PATH + k + AeroActivity.files.CURRENT_GOV_AVAILABLE);
+                shell.queueWork("chmod 0666 " + AeroActivity.files.CPU_BASE_PATH + k + AeroActivity.files.CURRENT_GOV_AVAILABLE);
 
                 /*
                  * Needs to be executed first, otherwise we would get a NullPointer
                  * For safety reasons we sleep this thread later
                  */
-                if (Profile != null)
+                if (Profile != null) {
+                    defaultProfile.add("echo 1 > " + AeroActivity.files.CPU_BASE_PATH + k + "/online");
                     defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.CPU_BASE_PATH + k +
                             AeroActivity.files.CURRENT_GOV_AVAILABLE) + " > " + AeroActivity.files.CPU_BASE_PATH +
                             k + AeroActivity.files.CURRENT_GOV_AVAILABLE);
+                }
 
-                governorSettings.add("echo " + cpu_gov + " > " + AeroActivity.files.CPU_BASE_PATH + k + AeroActivity.files.CURRENT_GOV_AVAILABLE);
+                shell.queueWork("echo 1 > " + AeroActivity.files.CPU_BASE_PATH + k + "/online");
+                shell.queueWork("echo " + cpu_gov + " > " + AeroActivity.files.CPU_BASE_PATH + k + AeroActivity.files.CURRENT_GOV_AVAILABLE);
             }
         }
+
+        if (cpu_gov != null) {
+
+            final String completeGovernorSettingList[] = shell.getDirInfo(AeroActivity.files.CPU_GOV_BASE + cpu_gov, true);
+
+            /* Governor Specific Settings at boot */
+
+            if (completeGovernorSettingList != null) {
+
+                for (String b : completeGovernorSettingList) {
+
+                    final String governorSetting = prefs.getString(AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b, null);
+
+                    if (governorSetting != null) {
+
+                        shell.queueWork("sleep 1");
+                        shell.queueWork("chmod 0666 " + AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b);
+
+                        if (Profile != null) {
+                            defaultProfile.add("sleep 1");
+                            defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b) + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b);
+                        }
+
+                        shell.queueWork("echo " + governorSetting + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b);
+
+                        //Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
+                    }
+                }
+            }
+        }
+
+
         if (mem_ios != null) {
 
             governorSettings.add("chmod 0666 " + AeroActivity.files.GOV_IO_FILE);
@@ -342,36 +377,6 @@ public class settingsHelper {
                         shell.queueWork("echo " + ioSettings + " > " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
 
                         //Log.e("Aero", "Output: " + "echo " + ioSettings + " > " + GOV_IO_PARAMETER + "/" + b);
-                    }
-                }
-            }
-
-            if (cpu_gov != null) {
-
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    Log.e("Aero", "Something interrupted the main Thread, try again.", e);
-                }
-
-                final String completeGovernorSettingList[] = shell.getDirInfo(AeroActivity.files.CPU_GOV_BASE + cpu_gov, true);
-
-                /* Governor Specific Settings at boot */
-
-                for (String b : completeGovernorSettingList) {
-
-                    final String governorSetting = prefs.getString(AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b, null);
-
-                    if (governorSetting != null) {
-
-                        shell.queueWork("chmod 0666 " + AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b);
-
-                        if (Profile != null)
-                            defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b) + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b);
-
-                        shell.queueWork("echo " + governorSetting + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b);
-
-                        //Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
                     }
                 }
             }
