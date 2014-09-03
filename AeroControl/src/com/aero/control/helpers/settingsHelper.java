@@ -29,6 +29,7 @@ public class settingsHelper {
 
     public static final String PREF_GOV_IO_FILE = "io_scheduler_list";
     public static final String PREF_DYANMIC_FSYNC = "dynFsync";
+    public static final String PREF_FSYNC = "fsync";
     public static final String PREF_WRITEBACK = "writeback";
 
     private SharedPreferences prefs;
@@ -114,6 +115,7 @@ public class settingsHelper {
         String mem_ios = prefs.getString(PREF_GOV_IO_FILE, null);
         Boolean mem_dfs = prefs.getString(PREF_DYANMIC_FSYNC, "0").equals("1") ? true : false;
         Boolean mem_wrb = prefs.getString(PREF_WRITEBACK, "0").equals("1") ? true : false;
+        Boolean mem_fsy = prefs.getString(PREF_FSYNC, "Y").equals("Y") ? true : false;
         // Get Misc Settings from preferences
         String misc_vib = prefs.getString(AeroActivity.files.MISC_VIBRATOR_CONTROL, null);
         String misc_thm = prefs.getString(AeroActivity.files.MISC_THERMAL_CONTROL, null);
@@ -281,6 +283,16 @@ public class settingsHelper {
                 defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.WRITEBACK) + " > " + AeroActivity.files.WRITEBACK);
 
             shell.queueWork("echo " + (mem_wrb ? "1" : "0") + " > " + AeroActivity.files.WRITEBACK);
+        }
+
+        if (new File(AeroActivity.files.FSYNC).exists()) {
+
+            shell.queueWork("chmod 0666 " + AeroActivity.files.FSYNC);
+
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.FSYNC) + " > " + AeroActivity.files.FSYNC);
+
+            shell.queueWork("echo " + (mem_fsy ? "Y" : "N") + " > " + AeroActivity.files.FSYNC);
         }
 
         // Add misc commands to array

@@ -56,7 +56,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     public static final Handler progressHandler = new Handler();
 
     private CheckBoxPreference mZCache, mLowMemoryPref;
-    private CustomPreference mDynFSync, mWriteBackControl;
+    private CustomPreference mDynFSync, mWriteBackControl, mFsync;
     private Preference mFSTrimToggle, mDalvikSettings;
     private CustomListPreference mIOScheduler;
     private String mFileSystem;
@@ -70,6 +70,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.memory_fragment);
         setHasOptionsMenu(true);
+        String temp;
 
         root = this.getPreferenceScreen();
         final PreferenceCategory memorySettingsCategory =
@@ -95,6 +96,27 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         } else {
             if (memorySettingsCategory != null)
                 memorySettingsCategory.removePreference(mDynFSync);
+        }
+
+        mFsync = new CustomPreference(getActivity());
+        mFsync.setName("fsync");
+        mFsync.setTitle(R.string.pref_fsync);
+        mFsync.setSummary(R.string.pref_fsync_sum);
+        mFsync.setLookUpDefault(AeroActivity.files.FSYNC);
+        mFsync.setOrder(14);
+        memorySettingsCategory.addPreference(mFsync);
+
+        temp = AeroActivity.shell.getInfo(AeroActivity.files.FSYNC);
+
+        if ("Y".equals(temp) || "1".equals(temp)) {
+            mFsync.setClicked(true);
+            mFsync.setSummary(R.string.enabled);
+        } else if ("N".equals(temp) || "0".equals(temp)) {
+            mFsync.setClicked(false);
+            mFsync.setSummary(R.string.disabled);
+        } else {
+            if (memorySettingsCategory != null)
+                memorySettingsCategory.removePreference(mFsync);
         }
 
         mZCache = (CheckBoxPreference) findPreference("zcache");
@@ -270,7 +292,18 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             else
                 AeroActivity.shell.setRootInfo("0", AeroActivity.files.DYANMIC_FSYNC);
 
-            cusPref = (CustomPreference)preference;
+            cusPref = (CustomPreference) preference;
+
+        } else if (preference == mFsync) {
+
+            mFsync.setClicked(!mFsync.isClicked());
+
+            if (mFsync.isClicked())
+                AeroActivity.shell.setRootInfo("1", AeroActivity.files.FSYNC);
+            else
+                AeroActivity.shell.setRootInfo("0", AeroActivity.files.FSYNC);
+
+            cusPref = (CustomPreference) preference;
 
         } else if (preference == mZCache) {
             zCacheClick();

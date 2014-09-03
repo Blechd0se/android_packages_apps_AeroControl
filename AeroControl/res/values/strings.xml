@@ -128,6 +128,9 @@
     <string name="pref_dynamic_fsync">Dynamic FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamic FSync enables fsync only while the screen is off.</string>
 
+    <string name="pref_fsync">FSync</string>
+    <string name="pref_fsync_sum">Enables or disabled fsync completely.</string>
+
     <string name="pref_memory_swap">Swap</string>
     <string name="pref_memory_swap_sum">Create a swap device.</string>
 

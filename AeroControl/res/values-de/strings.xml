@@ -116,6 +116,9 @@
     <string name="pref_dynamic_fsync">Dynamisches FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamisches FSync aktiviert FSync nur während der Bildschirm aus ist.</string>
 
+    <string name="pref_fsync">FSync</string>
+    <string name="pref_fsync_sum">Schaltet den fsync-Aufruf an oder aus.</string>
+
     <string name="pref_memory_swap">Swap</string>
     <string name="pref_memory_swap_sum">Erstellt eine Swap-Partition.</string>
 
