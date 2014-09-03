@@ -31,6 +31,7 @@ import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -384,6 +385,12 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     }
 
     private void fsTrimToggleClick() {
+
+        // If the library doesn't exist, skip through;
+        if (!(new File("/system/xbin/fstrim").exists())) {
+            Toast.makeText(getActivity(), R.string.unavailable, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (mFileSystem == null)
             mFileSystem = AeroActivity.shell.getRootInfo("mount", "");
