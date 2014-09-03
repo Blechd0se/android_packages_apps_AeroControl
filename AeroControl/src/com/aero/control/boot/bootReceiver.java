@@ -18,14 +18,12 @@ public class bootReceiver extends BroadcastReceiver
     public static PerAppServiceHelper perAppService;
 
 
-    public void onReceive(Context context, Intent intent) 
-    {
+    public void onReceive(Context context, Intent intent) {
     	prefs = PreferenceManager.getDefaultSharedPreferences(context);
-    	Boolean setOnBoot = prefs.getBoolean("checkbox_preference", false);
-        if (setOnBoot) {
-        	Intent i = new Intent(context, bootService.class);
-        	context.startService(i);
-        }
+
+        // Always start the bootService;
+        Intent i = new Intent(context, bootService.class);
+        context.startService(i);
 
         File last_kmsg = new File (LAST_KMSG);
         Boolean rebootChecker = prefs.getBoolean("reboot_checker", false);

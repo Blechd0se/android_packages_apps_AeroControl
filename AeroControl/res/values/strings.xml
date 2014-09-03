@@ -32,6 +32,8 @@
     <string name="notperAppAssigned">Not active</string>
     <string name="nogpu_data">Couldn\'t find any GPU related data</string>
     <string name="xda">XDA Thread</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
 
     <!-- Default Navigation Drawer entries -->
 

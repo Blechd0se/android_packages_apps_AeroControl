@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -25,22 +24,13 @@ public class CustomListPreference extends ListPreference implements OnCheckedCha
     private TextView mTitle;
     private TextView mSummary;
     private CheckBox mCheckBox;
-    private View mSeperator;
 
-    private String mText;
     private String mName = super.getKey();
     private CharSequence mSummaryPref;
     private SharedPreferences mSharedPreference;
 
     private Boolean mChecked;
     private Boolean mHideOnBoot;
-
-    public CustomListPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.setContext(context);
-        setLayoutResource(R.layout.preference_enhanced);
-        mSharedPreference = PreferenceManager.getDefaultSharedPreferences(mContext);
-    }
 
     public CustomListPreference(Context context) {
         super(context);
@@ -149,17 +139,17 @@ public class CustomListPreference extends ListPreference implements OnCheckedCha
         mTitle.setText(super.getTitle());
         mSummary.setText(mSummaryPref);
 
-        mCheckBox = (CheckBox) view.findViewById(R.id.delete_button);
+        mCheckBox = (CheckBox) view.findViewById(R.id.checkbox_pref);
         mCheckBox.setOnCheckedChangeListener(this);
 
         mCheckBox.setChecked(isChecked());
 
-        mSeperator = (View) view.findViewById(R.id.separator);
+        View seperator = (View) view.findViewById(R.id.separator);
 
         // Some fragments don't need the new set on boot functionality for each element;
         if (isHidden()) {
             mCheckBox.setVisibility(View.GONE);
-            mSeperator.setVisibility(View.GONE);
+            seperator.setVisibility(View.GONE);
         }
     }
 

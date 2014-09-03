@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
@@ -88,10 +87,10 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         if ("1".equals(AeroActivity.shell.getInfo(AeroActivity.files.DYANMIC_FSYNC))) {
             mDynFSync.setClicked(true);
-            mDynFSync.setSummary("Enabled");
+            mDynFSync.setSummary(R.string.enabled);
         } else if ("0".equals(AeroActivity.shell.getInfo(AeroActivity.files.DYANMIC_FSYNC))) {
             mDynFSync.setClicked(false);
-            mDynFSync.setSummary("Disabled");
+            mDynFSync.setSummary(R.string.disabled);
         } else {
             if (memorySettingsCategory != null)
                 memorySettingsCategory.removePreference(mDynFSync);
@@ -119,10 +118,10 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         if ("1".equals(AeroActivity.shell.getInfo(AeroActivity.files.WRITEBACK))) {
             mWriteBackControl.setClicked(true);
-            mWriteBackControl.setSummary("Enabled");
+            mWriteBackControl.setSummary(R.string.enabled);
         } else if ("0".equals(AeroActivity.shell.getInfo(AeroActivity.files.WRITEBACK))) {
             mWriteBackControl.setClicked(false);
-            mWriteBackControl.setSummary("Disabled");
+            mWriteBackControl.setSummary(R.string.disabled);
         } else {
             if (memorySettingsCategory != null)
                 memorySettingsCategory.removePreference(mWriteBackControl);

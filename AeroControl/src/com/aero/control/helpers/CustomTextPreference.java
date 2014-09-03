@@ -3,9 +3,7 @@ package com.aero.control.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.EditTextPreference;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,11 +19,9 @@ public class CustomTextPreference extends EditTextPreference implements OnChecke
 
 
     private Context mContext;
-    private Preference mPref;
     private TextView mTitle;
     private TextView mSummary;
     private CheckBox mCheckBox;
-    private View mSeperator;
 
     private String mText;
     private String mName;
@@ -34,18 +30,6 @@ public class CustomTextPreference extends EditTextPreference implements OnChecke
 
     private Boolean mChecked;
     private Boolean mHideOnBoot;
-
-    public CustomTextPreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        this.setContext(context);
-        setLayoutResource(R.layout.preference_enhanced);
-    }
-
-    public CustomTextPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.setContext(context);
-        setLayoutResource(R.layout.preference_enhanced);
-    }
 
     public CustomTextPreference(Context context) {
         super(context);
@@ -167,7 +151,6 @@ public class CustomTextPreference extends EditTextPreference implements OnChecke
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
-        mPref = this;
         mSharedPreference = PreferenceManager.getDefaultSharedPreferences(mContext);
 
         mTitle = (TextView) view.findViewById(R.id.preference_title);
@@ -176,18 +159,18 @@ public class CustomTextPreference extends EditTextPreference implements OnChecke
         mTitle.setText(mText);
         mSummary.setText(mSummaryPref);
 
-        mCheckBox = (CheckBox) view.findViewById(R.id.delete_button);
+        mCheckBox = (CheckBox) view.findViewById(R.id.checkbox_pref);
         mCheckBox.setOnCheckedChangeListener(this);
 
         if (isChecked() != null)
             mCheckBox.setChecked(isChecked());
 
-        mSeperator = (View) view.findViewById(R.id.separator);
+        View seperator = (View) view.findViewById(R.id.separator);
 
         // Some fragments don't need the new set on boot functionality for each element;
         if (isHidden()) {
             mCheckBox.setVisibility(View.GONE);
-            mSeperator.setVisibility(View.GONE);
+            seperator.setVisibility(View.GONE);
         }
     }
 

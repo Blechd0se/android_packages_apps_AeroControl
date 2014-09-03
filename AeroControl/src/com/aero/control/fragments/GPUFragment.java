@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
@@ -23,13 +21,11 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.CustomEditText;
 import com.aero.control.helpers.CustomListPreference;
 import com.aero.control.helpers.CustomPreference;
 import com.aero.control.helpers.PreferenceHandler;
 
 import java.io.File;
-
 /**
  * Created by ac on 16.09.13.
  */
@@ -213,27 +209,27 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             // Check if enabled or not;
             if (AeroActivity.shell.getInfo(AeroActivity.files.GPU_CONTROL_ACTIVE).equals("1")) {
                 checkGpuControl = true;
-                mGPUControl.setSummary("Enabled");
+                mGPUControl.setSummary(R.string.enabled);
             } else {
                 checkGpuControl = false;
-                mGPUControl.setSummary("Disabled");
+                mGPUControl.setSummary(R.string.disabled);
             }
 
             // Check if enabled or not;
             if (AeroActivity.shell.getInfo(AeroActivity.files.SWEEP2WAKE).equals("1")) {
                 checkmSweep2wake = true;
-                mSweep2wake.setSummary("Enabled");
+                mSweep2wake.setSummary(R.string.enabled);
             } else {
                 checkmSweep2wake = false;
-                mSweep2wake.setSummary("Disabled");
+                mSweep2wake.setSummary(R.string.disabled);
             }
 
             if (AeroActivity.shell.getInfo(AeroActivity.files.DOUBLETAP2WAKE).equals("1")) {
                 checkDoubletap2wake = true;
-                mDoubletap2Wake.setSummary("Enabled");
+                mDoubletap2Wake.setSummary(R.string.enabled);
             } else {
                 checkDoubletap2wake = false;
-                mDoubletap2Wake.setSummary("Disabled");
+                mDoubletap2Wake.setSummary(R.string.disabled);
             }
 
             mSweep2wake.setClicked(checkmSweep2wake);

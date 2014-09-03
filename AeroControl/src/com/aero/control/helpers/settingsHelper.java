@@ -106,14 +106,14 @@ public class settingsHelper {
         String gpu_gov = prefs.getString(PREF_CURRENT_GPU_GOV_AVAILABLE, null);
         String gpu_max = prefs.getString(PREF_GPU_FREQ_MAX, null);
         String display_color = prefs.getString(PREF_DISPLAY_COLOR, null);
-        Boolean gpu_enb = prefs.getBoolean(PREF_GPU_CONTROL_ACTIVE, false);
-        Boolean sweep = prefs.getBoolean(PREF_SWEEP2WAKE, false);
-        Boolean doubletap = prefs.getBoolean(PREF_DOUBLETAP2WAKE, false);
+        Boolean gpu_enb = prefs.getString(PREF_GPU_CONTROL_ACTIVE, "0").equals("1") ? true : false;
+        Boolean sweep = prefs.getString(PREF_SWEEP2WAKE, "0").equals("1") ? true : false;
+        Boolean doubletap = prefs.getString(PREF_DOUBLETAP2WAKE, "0").equals("1") ? true : false;
         String rgbValues = prefs.getString("rgbValues", null);
         // GET MEM VALUES FROM PREFERENCES
         String mem_ios = prefs.getString(PREF_GOV_IO_FILE, null);
-        Boolean mem_dfs = prefs.getBoolean(PREF_DYANMIC_FSYNC, false);
-        Boolean mem_wrb = prefs.getBoolean(PREF_WRITEBACK, false);
+        Boolean mem_dfs = prefs.getString(PREF_DYANMIC_FSYNC, "0").equals("1") ? true : false;
+        Boolean mem_wrb = prefs.getString(PREF_WRITEBACK, "0").equals("1") ? true : false;
         // Get Misc Settings from preferences
         String misc_vib = prefs.getString(AeroActivity.files.MISC_VIBRATOR_CONTROL, null);
         String misc_thm = prefs.getString(AeroActivity.files.MISC_THERMAL_CONTROL, null);

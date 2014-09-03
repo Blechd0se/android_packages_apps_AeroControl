@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -24,13 +23,10 @@ public class CustomPreference extends Preference implements OnCheckedChangeListe
 
 
     private Context mContext;
-    private Preference mPref;
     private TextView mTitle;
     private TextView mSummary;
     private CheckBox mCheckBox;
-    private View mSeperator;
 
-    private String mText;
     private String mName = super.getKey();
     private CharSequence mSummaryPref;
     private SharedPreferences mSharedPreference;
@@ -40,6 +36,7 @@ public class CustomPreference extends Preference implements OnCheckedChangeListe
     private String mLookUpDefault;
     private Boolean mClicked;
 
+    // Needed by the generic layout inflater;
     public CustomPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setContext(context);
@@ -111,25 +108,25 @@ public class CustomPreference extends Preference implements OnCheckedChangeListe
     }
 
     /**
-     * Sets the checkbox to checked for this preference
+     * Sets the to summary text to enabled/disabled
      *
-     * @param checked Boolean. Decides whether the checkbox
-     *                should be checked or not.
+     * @param checked Boolean. Handles the summary text
+     *                transition.
      */
     public void setClicked (Boolean checked) {
         this.mClicked = checked;
 
         if (mSummary != null) {
             if (mClicked)
-                mSummary.setText("Enabled");
+                mSummary.setText(R.string.enabled);
             else
-                mSummary.setText("Disabled");
+                mSummary.setText(R.string.disabled);
         }
 
     }
 
     /**
-     * Gets the current checked state for this preference
+     * Gets the current clicked(summary) state for this preference
      *
      * @return Boolean
      */
@@ -181,7 +178,7 @@ public class CustomPreference extends Preference implements OnCheckedChangeListe
 
     private String getLookUpDefault(String name) {
 
-        String[] content = null;
+        String[] content;
         String tmp1 = "";
         String tmp2;
         int switcher;
@@ -223,15 +220,12 @@ public class CustomPreference extends Preference implements OnCheckedChangeListe
             i++;
         }
 
-        Log.e("Aero", "Content: " + tmp1);
-
         return tmp1;
     }
 
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
-        mPref = this;
 
         mTitle = (TextView) view.findViewById(R.id.preference_title);
         mSummary = (TextView) view.findViewById(R.id.preference_summary);
@@ -239,17 +233,17 @@ public class CustomPreference extends Preference implements OnCheckedChangeListe
         mTitle.setText(super.getTitle());
         mSummary.setText(mSummaryPref);
 
-        mCheckBox = (CheckBox) view.findViewById(R.id.delete_button);
+        mCheckBox = (CheckBox) view.findViewById(R.id.checkbox_pref);
         mCheckBox.setOnCheckedChangeListener(this);
 
         mCheckBox.setChecked(isChecked());
 
-        mSeperator = (View) view.findViewById(R.id.separator);
+        View seperator = (View) view.findViewById(R.id.separator);
 
         // Some fragments don't need the new set on boot functionality for each element;
         if (isHidden()) {
             mCheckBox.setVisibility(View.GONE);
-            mSeperator.setVisibility(View.GONE);
+            seperator.setVisibility(View.GONE);
         }
     }
 

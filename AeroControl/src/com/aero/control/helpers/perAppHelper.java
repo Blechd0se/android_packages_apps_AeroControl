@@ -3,7 +3,6 @@ package com.aero.control.helpers;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -6,11 +6,6 @@
     <PreferenceCategory android:title="@string/pref_appspecific">
 
         <CheckBoxPreference
-            android:key="checkbox_preference"
-            android:title="@string/pref_setatboot"
-            android:summary="@string/pref_setatboot_sum" />
-
-        <CheckBoxPreference
             android:key="reboot_checker"
             android:title="@string/pref_rebootcheck"
             android:summary="@string/pref_rebootcheck_sum" />

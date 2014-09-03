@@ -1,8 +1,6 @@
 package com.aero.control.fragments;
 
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
@@ -12,7 +10,6 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.CustomEditText;
 import com.aero.control.helpers.CustomListPreference;
 import com.aero.control.helpers.CustomTextPreference;
 

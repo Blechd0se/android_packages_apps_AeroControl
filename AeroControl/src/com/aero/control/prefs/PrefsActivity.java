@@ -26,9 +26,9 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.service.PerAppServiceHelper;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 
 /**
  * Created by Alexander Christ on 21.09.13.
@@ -82,7 +82,6 @@ public class PrefsActivity extends PreferenceActivity {
                 "red", "light", "dark"
         };
 
-        CheckBoxPreference checkbox_preference = (CheckBoxPreference)root.findPreference("checkbox_preference");
         CheckBoxPreference reboot_checker = (CheckBoxPreference)root.findPreference("reboot_checker");
         final CheckBoxPreference per_app_check = (CheckBoxPreference)root.findPreference("per_app_service");
         ListPreference appTheme = (ListPreference)root.findPreference("app_theme");
@@ -91,7 +90,6 @@ public class PrefsActivity extends PreferenceActivity {
         Preference legal = root.findPreference("legal");
         Preference xda = root.findPreference("xda_thread");
 
-        checkbox_preference.setIcon(R.drawable.ic_action_warning);
         reboot_checker.setIcon(R.drawable.ic_action_phone);
         per_app_check.setIcon(R.drawable.ic_action_person);
         version.setIcon(R.drawable.rocket);
