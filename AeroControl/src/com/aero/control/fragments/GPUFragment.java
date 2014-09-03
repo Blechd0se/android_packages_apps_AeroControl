@@ -39,9 +39,8 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     private PreferenceCategory PrefCat;
     private PreferenceScreen root;
 
-    private CustomPreference mGPUControl, mSweep2wake, mDoubletap2Wake;
+    private CustomPreference mGPUControl, mSweep2wake, mDoubletap2Wake, mColorControl;
     private CustomListPreference mGPUControlFrequencies, mGPUGovernor, mDisplayControl;
-    private CustomPreference mColorControl;
 
     public String gpu_file;
 
@@ -253,7 +252,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         }
     }
 
-    private final void showColorControl() {
+    private final void showColorControl(final SharedPreferences.Editor editor, final CustomPreference cusPref) {
 
         mColorValues = AeroActivity.shell.getInfoArray(AeroActivity.files.COLOR_CONTROL, 0, 0);
 
@@ -335,6 +334,10 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
                         String rgbValues = redValue.getText() + " " + greenValue.getText() + " " + blueValue.getText();
                         AeroActivity.shell.setRootInfo(rgbValues, AeroActivity.files.COLOR_CONTROL);
+
+                        if (cusPref.isChecked())
+                            editor.putString(cusPref.getName(), rgbValues).commit();
+
                     }
                 })
                 .setNegativeButton(R.string.maybe_later, new DialogInterface.OnClickListener() {
@@ -349,7 +352,9 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 
-        CustomPreference  cusPref = (CustomPreference)preference;
+        CustomPreference cusPref = null;
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sharedPrefs.edit();
 
         if (preference == mSweep2wake) {
 
@@ -360,6 +365,8 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             else
                 AeroActivity.shell.setRootInfo("0", AeroActivity.files.SWEEP2WAKE);
 
+            cusPref = (CustomPreference)preference;
+
         } else if (preference == mDoubletap2Wake) {
 
             mDoubletap2Wake.setClicked(!mDoubletap2Wake.isClicked());
@@ -369,8 +376,14 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             else
                 AeroActivity.shell.setRootInfo("0", AeroActivity.files.DOUBLETAP2WAKE);
 
+            cusPref = (CustomPreference)preference;
+
         } else if (preference == mColorControl) {
-            showColorControl();
+
+            cusPref = (CustomPreference)preference;
+
+            showColorControl(editor, cusPref);
+
         } else if (preference == mGPUControl) {
 
             mGPUControl.setClicked(!mGPUControl.isClicked());
@@ -379,16 +392,19 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
                 AeroActivity.shell.setRootInfo("1", AeroActivity.files.GPU_CONTROL_ACTIVE);
             else
                 AeroActivity.shell.setRootInfo("0", AeroActivity.files.GPU_CONTROL_ACTIVE);
+
+            cusPref = (CustomPreference)preference;
         }
 
         // If its checked, we want to save it;
-        if (cusPref.isChecked()) {
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            String state = cusPref.isClicked() ? "1" : "0";
-            editor.putString(cusPref.getName(), state).commit();
+        if (cusPref != null) {
+            if (cusPref.isChecked()) {
+                if (cusPref.isClicked() != null) {
+                    String state = cusPref.isClicked() ? "1" : "0";
+                    editor.putString(cusPref.getName(), state).commit();
+                }
+            }
         }
-
 
         return true;
     }

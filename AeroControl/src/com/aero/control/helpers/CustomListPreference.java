@@ -20,7 +20,6 @@ public class CustomListPreference extends ListPreference implements OnCheckedCha
 
 
     private Context mContext;
-    private Preference mPref;
     private TextView mTitle;
     private TextView mSummary;
     private CheckBox mCheckBox;
@@ -131,7 +130,6 @@ public class CustomListPreference extends ListPreference implements OnCheckedCha
     @Override
     protected void onBindView(View view) {
         super.onBindView(view);
-        mPref = this;
 
         mTitle = (TextView) view.findViewById(R.id.preference_title);
         mSummary = (TextView) view.findViewById(R.id.preference_summary);
