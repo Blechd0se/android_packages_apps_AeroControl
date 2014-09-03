@@ -6,18 +6,8 @@
         android:title="@string/pref_cpu_freq"
         android:key="cpu_settings">
 
-        <ListPreference
-            android:key="max_frequency"
-            android:title="@string/pref_cpu_freqmax"
-            android:summary="@string/pref_cpu_freqmax" />
-
-        <ListPreference
-            android:key="min_frequency"
-            android:title="@string/pref_cpu_freqmin"
-            android:summary="@string/pref_cpu_freqmin" />
-
-        <Preference
-            android:key="cpu_oc_uc"
+        <com.aero.control.helpers.CustomPreference
+            android:key="cpu_commands"
             android:title="@string/perf_live_oc_uc"
             android:summary="@string/perf_live_oc_uc_sum"
             android:inputType="number" />
@@ -27,20 +17,16 @@
             android:title="@string/perf_cpu_hotplug"
             android:summary="@string/perf_cpu_hotplug_sum" />
 
-        <Preference
-            android:key="undervolt_control"
+        <com.aero.control.helpers.CustomPreference
+            android:key="voltage_values"
             android:title="@string/perf_voltage_control"
             android:summary="@string/perf_voltage_control_sum" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_cpu_governor">
-
-        <ListPreference
-            android:key="set_governor"
-            android:title="@string/pref_gov_choose"
-            android:summary="@string/pref_gov_choose_sum" />
-
+    <PreferenceCategory
+        android:title="@string/pref_cpu_governor"
+        android:key="cpu_governor">
 
     </PreferenceCategory>
 

@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.text.InputType;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.CustomEditText;
+import com.aero.control.helpers.CustomListPreference;
+import com.aero.control.helpers.CustomTextPreference;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -22,9 +27,9 @@ public class DefyPartsFragment extends PreferenceFragment {
           - Bring in other defy part features
      */
 
-    private ListPreference led_charging;
-    private ListPreference multi_touch;
-    private EditTextPreference button_brightness;
+    private CustomListPreference led_charging;
+    private CustomListPreference multi_touch;
+    private CustomTextPreference button_brightness;
 
 
     @Override
@@ -35,14 +40,38 @@ public class DefyPartsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.layout.defy_parts);
 
         PreferenceScreen root = this.getPreferenceScreen();
+        final PreferenceCategory defyParts = (PreferenceCategory) findPreference("defy_parts");
 
         String charger = AeroActivity.shell.getRootInfo("getprop ", AeroActivity.files.PROP_CHARGE_LED_MODE);
         String multitouch = AeroActivity.shell.getRootInfo("getprop ", AeroActivity.files.PROP_TOUCH_POINTS);
         String brightness = AeroActivity.shell.getRootInfo("getprop", AeroActivity.files.PROP_BUTTON_BRIGHTNESS);
 
-        led_charging = (ListPreference)root.findPreference("led_charging");
-        button_brightness = (EditTextPreference)root.findPreference("button_brightness");
-        multi_touch = (ListPreference)root.findPreference("multi_touch");
+        led_charging = new CustomListPreference(getActivity());
+        led_charging.setName("led_charging");
+        led_charging.setSummary(R.string.pref_charging_led_sum);
+        led_charging.setTitle(R.string.pref_charging_led);
+        led_charging.setDialogTitle(R.string.pref_charging_led);
+        led_charging.setOrder(1);
+        defyParts.addPreference(led_charging);
+
+        button_brightness = new CustomTextPreference(getActivity());
+        button_brightness.setName("button_brightness");
+        button_brightness.setPrefSummary(brightness);
+        button_brightness.setPrefText(getText(R.string.pref_button_brightness).toString());
+        button_brightness.setDialogTitle(getText(R.string.pref_button_brightness).toString());
+        button_brightness.setSummary(brightness);
+        button_brightness.setTitle(getText(R.string.pref_button_brightness).toString());
+        button_brightness.getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+        button_brightness.setOrder(5);
+        defyParts.addPreference(button_brightness);
+
+        multi_touch = new CustomListPreference(getActivity());
+        multi_touch.setName("multi_touch");
+        multi_touch.setSummary(R.string.pref_multitouch_sum);
+        multi_touch.setTitle(R.string.pref_multitouch);
+        multi_touch.setDialogTitle(R.string.pref_multitouch);
+        multi_touch.setOrder(10);
+        defyParts.addPreference(multi_touch);
 
         led_charging.setEntryValues(R.array.charge_led_mode_values);
         led_charging.setEntries(R.array.charge_led_mode_entries);
@@ -103,6 +132,7 @@ public class DefyPartsFragment extends PreferenceFragment {
                 changePreference(preference, o, AeroActivity.files.PROP_BUTTON_BRIGHTNESS);
 
                 button_brightness.setText(o.toString());
+                button_brightness.setPrefSummary(o.toString());
 
                 return true;
             }
@@ -119,9 +149,5 @@ public class DefyPartsFragment extends PreferenceFragment {
         AeroActivity.shell.setRootInfo(command);
 
         Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_SHORT).show();
-
-        // Save values;
-        preference.getEditor().commit();
-
     }
 }

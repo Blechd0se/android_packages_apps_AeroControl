@@ -62,7 +62,7 @@ public final class FilePath {
 
     /* Used by; MemoryFragment */
     public static final String DYANMIC_FSYNC = "/sys/kernel/dyn_fsync/Dyn_fsync_active";
-    public static final String CMDLINE_ZACHE = "/system/bootmenu/2nd-boot/cmdline";
+    public static final String CMDLINE_ZACHE = "/system/bootstrap/2nd-boot/cmdline";
     public static final String WRITEBACK = "/sys/devices/virtual/misc/writeback/writeback_enabled";
     public static final String LOW_MEM = "/system/build.prop";
     public static final String FILENAME = "firstrun_trim";

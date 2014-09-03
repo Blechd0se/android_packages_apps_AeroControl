@@ -6,46 +6,16 @@
         android:title="@string/pref_gpu_control_enable"
         android:key="gpu_settings">
 
-        <CheckBoxPreference
-            android:key="gpu_control_enable"
-            android:title="@string/pref_gpu_control_enable"
-            android:summary="@string/pref_gpu_control_enable_sum" />
-
-        <CheckBoxPreference
-            android:key="sweeptowake"
-            android:title="@string/pref_sweeptowake"
-            android:summary="@string/pref_sweeptowake_sum" />
-
-        <CheckBoxPreference
-            android:key="doubletaptowake"
-            android:title="@string/pref_doubletaptowake"
-            android:summary="@string/pref_doubletaptowake_sum" />
-
-        <ListPreference
-            android:key="gpu_max_freq"
-            android:title="@string/pref_gpu_max_freq"
-            android:summary="@string/pref_gpu_max_freq_sum" />
-
         <Preference
             android:key="gpu_gov_settings"
             android:title="@string/perf_gpu_gov_settings"
             android:summary="@string/perf_gpu_gov_settings_sum" />
 
-        <ListPreference
-            android:key="display_control"
-            android:title="@string/pref_display_color"
-            android:summary="@string/pref_display_color_sum" />
-
-        <Preference
-            android:key="display_color_control"
+        <com.aero.control.helpers.CustomPreference
+            android:key="rgbValues"
             android:title="@string/pref_display_color"
             android:summary="@string/pref_display_color_sum"
             android:inputType="number" />
-
-        <ListPreference
-            android:key="set_gpu_governor"
-            android:title="GPU Governor"
-            android:summary="GPU Governor" />
 
     </PreferenceCategory>
 

@@ -28,6 +28,8 @@ import android.widget.Toast;
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.CustomEditText;
+import com.aero.control.helpers.CustomListPreference;
+import com.aero.control.helpers.CustomPreference;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
@@ -51,9 +53,9 @@ public class CPUFragment extends PreferenceFragment {
 
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;
-    private ListPreference listPref;
-    private ListPreference min_frequency;
-    private ListPreference max_frequency;
+    private CustomListPreference listPref;
+    private CustomListPreference min_frequency;
+    private CustomListPreference max_frequency;
     private boolean mVisible = true;
     private SharedPreferences prefs;
     private ShowcaseView.ConfigOptions mConfigOptions;
@@ -72,22 +74,36 @@ public class CPUFragment extends PreferenceFragment {
 
         root = this.getPreferenceScreen();
         // Remove until back in Kernel;
-        PreferenceCategory cpuCategory = (PreferenceCategory) findPreference("cpu_settings");
+        final PreferenceCategory cpuCategory = (PreferenceCategory) findPreference("cpu_settings");
+        final PreferenceCategory cpuGovernor = (PreferenceCategory) findPreference("cpu_governor");
 
         // I don't like the following, can we simplify it?
 
-        // Find our ListPreference (max_frequency);
-        max_frequency = (ListPreference) root.findPreference("max_frequency");
+        // Create our custom list preference (max_frequency);
+        max_frequency = new CustomListPreference(getActivity());
+        max_frequency.setName("max_frequency");
+        max_frequency.setTitle(R.string.pref_cpu_freqmax);
+        max_frequency.setDialogTitle(R.string.pref_cpu_freqmax);
+        max_frequency.setSummary(R.string.pref_cpu_freqmax);
         updateMaxFreq();
         max_frequency.setDialogIcon(R.drawable.lightning_dark);
+        max_frequency.setOrder(0);
+        cpuCategory.addPreference(max_frequency);
 
-        // Find our ListPreference (min_frequency);
-        min_frequency = (ListPreference) root.findPreference("min_frequency");
+        // Create our custom list preference (min_frequency);
+        min_frequency = new CustomListPreference(getActivity());
+        min_frequency.setName("min_frequency");
+        min_frequency.setTitle(R.string.pref_cpu_freqmin);
+        min_frequency.setDialogTitle(R.string.pref_cpu_freqmin);
+        min_frequency.setSummary(R.string.pref_cpu_freqmin);
         updateMinFreq();
         min_frequency.setDialogIcon(R.drawable.lightning_dark);
+        max_frequency.setOrder(1);
+        cpuCategory.addPreference(min_frequency);
 
         final Preference cpu_hotplug = root.findPreference("hotplug_control");
         if (new File("/sys/kernel/hotplug_control").exists()) {
+            cpu_hotplug.setOrder(10);
             cpu_hotplug.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -105,8 +121,10 @@ public class CPUFragment extends PreferenceFragment {
             cpuCategory.removePreference(cpu_hotplug);
         }
 
-        final Preference voltage_control = root.findPreference("undervolt_control");
+        final CustomPreference voltage_control = (CustomPreference)root.findPreference("voltage_values");
         if (new File("/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table").exists()) {
+            voltage_control.setOrder(15);
+            voltage_control.setLookUpDefault(AeroActivity.files.VOLTAGE_PATH);
             voltage_control.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -125,13 +143,12 @@ public class CPUFragment extends PreferenceFragment {
         }
 
 
-        final Preference cpu_oc_uc = (Preference) root.findPreference("cpu_oc_uc");
+        final Preference cpu_oc_uc = (Preference) root.findPreference("cpu_commands");
 
-        if (AeroActivity.shell.getInfo(AeroActivity.files.CPU_VSEL).equals("Unavailable")) {
-            cpu_oc_uc.setEnabled(false);
-
+        if (AeroActivity.shell.getInfo(AeroActivity.files.CPU_VSEL).equals("Unavailable"))
             cpuCategory.removePreference(cpu_oc_uc);
-        }
+        else
+            cpu_oc_uc.setOrder(20);
 
         cpu_oc_uc.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -265,6 +282,7 @@ public class CPUFragment extends PreferenceFragment {
                          * rebuild the commands in the bootService would have been a little expensive
                          */
                         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+                        // We still want to write it here, since we can disable it later;
                         preference.edit().putStringSet("cpu_commands", new HashSet<String>(Arrays.asList(commands))).commit();
 
 
@@ -294,13 +312,18 @@ public class CPUFragment extends PreferenceFragment {
         });
 
         // Find our ListPreference (governor_settings);
-        listPref = (ListPreference) root.findPreference("set_governor");
+        listPref = new CustomListPreference(getActivity());
+        listPref.setName("set_governor");
+        listPref.setTitle(R.string.pref_cpu_governor);
+        listPref.setDialogTitle(R.string.pref_cpu_governor);
         // Just throw in our frequencies;
         listPref.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.ALL_GOV_AVAILABLE, 0, 0));
         listPref.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.ALL_GOV_AVAILABLE, 0, 0));
         listPref.setValue(AeroActivity.shell.getInfo(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CURRENT_GOV_AVAILABLE));
         listPref.setSummary(AeroActivity.shell.getInfo(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CURRENT_GOV_AVAILABLE));
         listPref.setDialogIcon(R.drawable.cpu_dark);
+
+        cpuGovernor.addPreference(listPref);
 
         // If there are already some entries, kill them all (with fire)
         if (PrefCat != null)
@@ -339,9 +362,6 @@ public class CPUFragment extends PreferenceFragment {
                 }
                 listPref.setSummary(AeroActivity.shell.getInfo(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CURRENT_GOV_AVAILABLE));
 
-                // store preferences
-                preference.getEditor().commit();
-
                 return true;
             }
 
@@ -368,12 +388,8 @@ public class CPUFragment extends PreferenceFragment {
                 }
 
                 for (int k = 0; k < mNumCpus; k++) {
-
                     array.add("echo 1 > " + AeroActivity.files.CPU_BASE_PATH + k + "/online");
                     array.add("echo " + a + " > " + AeroActivity.files.CPU_BASE_PATH + k + AeroActivity.files.CPU_MAX_FREQ);
-
-                    //** store preferences
-                    preference.getEditor().commit();
                 }
                 max_frequency.setSummary(AeroActivity.shell.toMHz(a));
                 String[] commands = array.toArray(new String[0]);
@@ -398,12 +414,8 @@ public class CPUFragment extends PreferenceFragment {
                 }
 
                 for (int k = 0; k < mNumCpus; k++) {
-
                     array.add("echo 1 > " + AeroActivity.files.CPU_BASE_PATH + k + "/online");
                     array.add("echo " + a + " > " + AeroActivity.files.CPU_BASE_PATH + k + AeroActivity.files.CPU_MIN_FREQ);
-
-                    //** store preferences
-                    preference.getEditor().commit();
                 }
                 min_frequency.setSummary(AeroActivity.shell.toMHz(a));
                 String[] commands = array.toArray(new String[0]);
@@ -544,10 +556,6 @@ public class CPUFragment extends PreferenceFragment {
             min_frequency.setValue("Unavailable");
             min_frequency.setSummary("Unavailable");
         }
-
-        //** store preferences
-        min_frequency.getEditor().commit();
-
     }
 
     public void updateMaxFreq() {
@@ -561,10 +569,6 @@ public class CPUFragment extends PreferenceFragment {
             max_frequency.setValue("Unavailable");
             max_frequency.setSummary("Unavailable");
         }
-
-        //** store preferences
-        max_frequency.getEditor().commit();
-
     }
 
     @Override

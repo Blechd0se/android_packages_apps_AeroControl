@@ -26,6 +26,8 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.CustomListPreference;
+import com.aero.control.helpers.CustomPreference;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
@@ -53,12 +55,14 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
     public static final Handler progressHandler = new Handler();
 
-    private CheckBoxPreference mDynFSync, mZCache, mLowMemoryPref, mWriteBackControl;
+    private CheckBoxPreference mZCache, mLowMemoryPref;
+    private CustomPreference mDynFSync, mWriteBackControl;
     private Preference mFSTrimToggle, mDalvikSettings;
-    private ListPreference mIOScheduler;
+    private CustomListPreference mIOScheduler;
     private String mFileSystem;
 
     private static final String MEMORY_SETTINGS_CATEGORY = "memory_settings";
+    private static final String IO_SETTINGS_CATEGORY = "io_scheduler_parameter";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,17 +75,30 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         final PreferenceCategory memorySettingsCategory =
                 (PreferenceCategory) findPreference(MEMORY_SETTINGS_CATEGORY);
 
-        mDynFSync = (CheckBoxPreference) findPreference("dynFsync");
+        final PreferenceCategory ioSettingsCategory =
+                (PreferenceCategory) findPreference(IO_SETTINGS_CATEGORY);
+
+        mDynFSync = new CustomPreference(getActivity());
+        mDynFSync.setName("dynFsync");
+        mDynFSync.setTitle(R.string.pref_dynamic_fsync);
+        mDynFSync.setSummary(R.string.pref_dynamic_fsync_sum);
+        mDynFSync.setLookUpDefault(AeroActivity.files.DYANMIC_FSYNC);
+        mDynFSync.setOrder(15);
+        memorySettingsCategory.addPreference(mDynFSync);
+
         if ("1".equals(AeroActivity.shell.getInfo(AeroActivity.files.DYANMIC_FSYNC))) {
-            mDynFSync.setChecked(true);
+            mDynFSync.setClicked(true);
+            mDynFSync.setSummary("Enabled");
         } else if ("0".equals(AeroActivity.shell.getInfo(AeroActivity.files.DYANMIC_FSYNC))) {
-            mDynFSync.setChecked(false);
+            mDynFSync.setClicked(false);
+            mDynFSync.setSummary("Disabled");
         } else {
             if (memorySettingsCategory != null)
                 memorySettingsCategory.removePreference(mDynFSync);
         }
 
         mZCache = (CheckBoxPreference) findPreference("zcache");
+        mZCache.setOrder(5);
         if ("Unavailable".equals(AeroActivity.shell.getInfo(AeroActivity.files.CMDLINE_ZACHE))) {
             if (memorySettingsCategory != null)
                 memorySettingsCategory.removePreference(mZCache);
@@ -91,30 +108,47 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             mZCache.setChecked(zcacheEnabled);
         }
 
-        mWriteBackControl = (CheckBoxPreference) findPreference("writeback");
+        mWriteBackControl = new CustomPreference(getActivity());
+        mWriteBackControl.setName("writeback");
+        mWriteBackControl.setTitle(R.string.pref_dynamic_writeback);
+        mWriteBackControl.setSummary(R.string.pref_dynamic_writeback_sum);
+        mWriteBackControl.setLookUpDefault(AeroActivity.files.WRITEBACK);
+        mWriteBackControl.setOrder(20);
+        memorySettingsCategory.addPreference(mWriteBackControl);
+
+
         if ("1".equals(AeroActivity.shell.getInfo(AeroActivity.files.WRITEBACK))) {
-            mWriteBackControl.setChecked(true);
+            mWriteBackControl.setClicked(true);
+            mWriteBackControl.setSummary("Enabled");
         } else if ("0".equals(AeroActivity.shell.getInfo(AeroActivity.files.WRITEBACK))) {
-            mWriteBackControl.setChecked(false);
+            mWriteBackControl.setClicked(false);
+            mWriteBackControl.setSummary("Disabled");
         } else {
             if (memorySettingsCategory != null)
                 memorySettingsCategory.removePreference(mWriteBackControl);
         }
 
         mLowMemoryPref = (CheckBoxPreference) findPreference("low_mem");
+        mLowMemoryPref.setOrder(10);
         mFSTrimToggle = findPreference("fstrim_toggle");
+        mFSTrimToggle.setOrder(25);
         mDalvikSettings = findPreference("dalvik_settings");
+        mDalvikSettings.setOrder(30);
 
         if (!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")))
             memorySettingsCategory.removePreference(mLowMemoryPref);
 
-        mIOScheduler = (ListPreference) findPreference("io_scheduler_list");
+        mIOScheduler = new CustomListPreference(getActivity());
+        mIOScheduler.setName("io_scheduler_list");
+        mIOScheduler.setTitle(R.string.io_scheduler);
+        mIOScheduler.setDialogTitle(R.string.io_scheduler);
         mIOScheduler.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.GOV_IO_FILE, 0, 1));
         mIOScheduler.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.GOV_IO_FILE, 0, 1));
         mIOScheduler.setValue(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
         mIOScheduler.setSummary(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
         mIOScheduler.setDialogIcon(R.drawable.memory_dark);
         mIOScheduler.setOnPreferenceChangeListener(this);
+        ioSettingsCategory.addPreference(mIOScheduler);
 
         if (showDialog) {
             // Ensure only devices with this special path are checked;
@@ -222,22 +256,35 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+
+        CustomPreference cusPref = null;
+
         if (preference == mLowMemoryPref) {
             lowMemoryPrefClick();
         } else if (preference == mDynFSync) {
-            boolean value = mDynFSync.isChecked();
-            if (value)
+
+            mDynFSync.setClicked(!mDynFSync.isClicked());
+
+            if (mDynFSync.isClicked())
                 AeroActivity.shell.setRootInfo("1", AeroActivity.files.DYANMIC_FSYNC);
             else
                 AeroActivity.shell.setRootInfo("0", AeroActivity.files.DYANMIC_FSYNC);
+
+            cusPref = (CustomPreference)preference;
+
         } else if (preference == mZCache) {
             zCacheClick();
         } else if (preference == mWriteBackControl) {
-            boolean value = mWriteBackControl.isChecked();
-            if (value)
+
+            mWriteBackControl.setClicked(!mWriteBackControl.isClicked());
+
+            if (mWriteBackControl.isClicked())
                 AeroActivity.shell.setRootInfo("1", AeroActivity.files.WRITEBACK);
             else
                 AeroActivity.shell.setRootInfo("0", AeroActivity.files.WRITEBACK);
+
+            cusPref = (CustomPreference)preference;
+
         } else if (preference == mFSTrimToggle) {
             fsTrimToggleClick();
         } else if (preference == mDalvikSettings) {
@@ -247,10 +294,18 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
                     .replace(R.id.content_frame, new MemoryDalvikFragment())
                     .addToBackStack("Memory")
                     .commit();
-        } else {
-            return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
-        preference.getEditor().commit();
+
+        // If its checked, we want to save it;
+        if (cusPref != null) {
+            if (cusPref.isChecked()) {
+                SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor editor = sharedPrefs.edit();
+                String state = cusPref.isClicked() ? "1" : "0";
+                editor.putString(cusPref.getName(), state).commit();
+            }
+        }
+
         return true;
     }
 
@@ -267,7 +322,6 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         } else {
             return false;
         }
-        preference.getEditor().commit();
         return true;
     }
 

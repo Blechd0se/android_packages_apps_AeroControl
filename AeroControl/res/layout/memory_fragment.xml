@@ -7,22 +7,10 @@
         android:key="memory_settings">
 
         <CheckBoxPreference
-            android:key="dynFsync"
-            android:title="@string/pref_dynamic_fsync"
-            android:summary="@string/pref_dynamic_fsync_sum"
-            android:dialogTitle="@string/pref_dynamic_fsync" />
-
-        <CheckBoxPreference
             android:key="zcache"
             android:title="@string/pref_memory_zcache"
             android:summary="@string/pref_memory_zcache_sum"
             android:dialogTitle="@string/pref_memory_zcache" />
-
-        <CheckBoxPreference
-            android:key="writeback"
-            android:title="@string/pref_dynamic_writeback"
-            android:summary="@string/pref_dynamic_writeback_sum"
-            android:dialogTitle="@string/pref_dynamic_writeback" />
 
         <CheckBoxPreference
             android:key="low_mem"
@@ -42,12 +30,9 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/io_scheduler">
-
-        <ListPreference
-            android:key="io_scheduler_list"
-            android:title="@string/io_scheduler"
-            android:dialogTitle="@string/io_scheduler" />
+    <PreferenceCategory
+        android:title="@string/io_scheduler"
+        android:key="io_scheduler_parameter" >
 
     </PreferenceCategory>
 

@@ -2,23 +2,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <PreferenceCategory android:title="@string/pref_general_settings_defy">
+    <PreferenceCategory
+        android:title="@string/pref_general_settings_defy"
+        android:key="defy_parts" >
 
-        <ListPreference
-            android:key="led_charging"
-            android:title="@string/pref_charging_led"
-            android:summary="@string/pref_charging_led_sum"/>
-
-        <EditTextPreference
-            android:key="button_brightness"
-            android:title="@string/pref_button_brightness"
-            android:summary="@string/pref_button_brightness_sum"
-            android:inputType="number"/>
-
-        <ListPreference
-            android:key="multi_touch"
-            android:title="@string/pref_multitouch"
-            android:summary="@string/pref_multitouch_sum" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -130,6 +130,7 @@ public class VoltageFragment extends PreferenceFragment {
 
                     voltArray[preference.getOrder()] = o.toString();
                     preference.setSummary(o.toString() + "mV");
+                    voltPref.setPrefSummary(o.toString() + "mV");
 
                     // Clears our list so we can set multiple values
                     voltList.clear();
@@ -157,7 +158,6 @@ public class VoltageFragment extends PreferenceFragment {
     public void executeVolt(String exeVolt) {
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mPrefs.edit().putString("voltage_values", exeVolt).commit();
         AeroActivity.shell.setRootInfo(exeVolt, AeroActivity.files.VOLTAGE_PATH);
         updateUI();
 
