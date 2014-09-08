@@ -1,6 +1,7 @@
 package com.aero.control.fragments;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -61,6 +62,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private SharedPreferences mPerAppPrefs;
     private Context mContext;
     private List<ApplicationInfo> mPackages;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -337,8 +339,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         childView.findViewById(R.id.assign_to_app).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Stub, code for per-app profile goes here;
-                showPerAppDialog(perApp, s, txtViewSummary);
+                // Handles mapping and calls the dialog builder;
+                getPersistentData(perApp, s, txtViewSummary);
             }
         });
 
@@ -418,11 +420,11 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
 
     /*
      * Maps the persistent data in shared_prefs to our currently
-     * available objects
+     * available objects and also sets up the per app dialog
      */
-    private final void getPersistentData(perAppHelper perApp, String name) {
+    private final void getPersistentData(final perAppHelper perApp, final String profileName, final TextView txtViewSummary) {
 
-        final String savedSelectedProfiles = mPerAppPrefs.getString(name, null);
+        final String savedSelectedProfiles = mPerAppPrefs.getString(profileName, null);
         String systemApps = mPerAppPrefs.getString("systemStatus", null);
 
         //Probably a "fresh" profile;
@@ -434,21 +436,60 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         if (mPackages != null) {
             // We are good to go, save time!
             perApp.setPackages(mPackages);
+
+            // Map data if present
+            if (savedSelectedProfiles != null) {
+                String tmp[];
+                tmp = savedSelectedProfiles.replace("+", " ").split(" ");
+
+                // Finds the matches;
+                perApp.findMatch(tmp);
+            }
+
+            showPerAppDialog(perApp, profileName, txtViewSummary);
+
         } else {
+            if (mProgressDialog == null) {
+                mProgressDialog = new ProgressDialog(mContext);
+                mProgressDialog.setMessage(getText(R.string.pref_profile_loading_app_data));
+            }
+
+            mProgressDialog.show();
+
             // Worst case;
-            perApp.getAllApps(perApp.getSystemAppStatus());
-            mPackages = perApp.getPackages();
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+
+                    /*
+                     * While we are getting the relevant data, we show a spinner
+                     * and continue with our operation afterwards in the UI thread
+                     */
+                    perApp.getAllApps(perApp.getSystemAppStatus());
+                    mPackages = perApp.getPackages();
+
+                    // Map data if present
+                    if (savedSelectedProfiles != null) {
+                        String tmp[];
+                        tmp = savedSelectedProfiles.replace("+", " ").split(" ");
+
+                        // Finds the matches;
+                        perApp.findMatch(tmp);
+                    }
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            mProgressDialog.dismiss();
+
+                            showPerAppDialog(perApp, profileName, txtViewSummary);
+                        }
+                    });
+                }
+            };
+            new Thread(runnable).start();
         }
-
-        if (savedSelectedProfiles == null)
-            return;
-
-        String tmp[];
-        tmp = savedSelectedProfiles.replace("+", " ").split(" ");
-
-        // Finds the matches;
-        perApp.findMatch(tmp);
-
     }
 
     private void updateStatus(TextView txtView, boolean toggle) {
@@ -466,8 +507,6 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private final void showPerAppDialog(final perAppHelper perApp, final String profileName, final TextView txtViewSummary) {
 
         final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-
-        getPersistentData(perApp, profileName);
 
         dialog.setTitle(R.string.pref_profile_perApp);
         dialog.setMultiChoiceItems(perApp.getAllPackageNames(), perApp.getCheckedState(), new DialogInterface.OnMultiChoiceClickListener() {
@@ -538,7 +577,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                         perApp.setSystemAppStatus(!perApp.getSystemAppStatus());
                         mPerAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
 
-                        getPersistentData(perApp, profileName);
+                        getPersistentData(perApp, profileName, txtViewSummary);
                     }
 
                 })

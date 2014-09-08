@@ -263,6 +263,7 @@
     <string name="pref_profile_undo">Rückgangig</string>
     <string name="pref_profile_no_changes">Es wurden noch keine Einstellungen vorgenommen!</string>
     <string name="pref_profile_service_not_running">Per App Service ist nicht gestartet, es wurden aber Apps zu Profilen zugewiesen!</string>
+    <string name="pref_profile_loading_app_data">Ich denke darüber nach...</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Klick mich und bewerte diese App!</string>
