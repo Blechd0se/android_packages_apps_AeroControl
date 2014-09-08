@@ -3,7 +3,6 @@ package com.aero.control.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.CheckBox;
@@ -154,6 +153,9 @@ public class CustomListPreference extends ListPreference implements OnCheckedCha
     @Override
     public void onCheckedChanged(CompoundButton compButt, boolean checked) {
         SharedPreferences.Editor editor = mSharedPreference.edit();
+
+        // Update the checked state;
+        setChecked(checked);
 
         // Writes to our shared preferences or deletes the value
         if (checked) {

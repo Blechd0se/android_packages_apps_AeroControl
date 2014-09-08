@@ -178,6 +178,9 @@ public class CustomTextPreference extends EditTextPreference implements OnChecke
     public void onCheckedChanged(CompoundButton compButt, boolean checked) {
         SharedPreferences.Editor editor = mSharedPreference.edit();
 
+        // Update the checked state;
+        setChecked(checked);
+
         // Writes to our shared preferences or deletes the value
         if (checked) {
             editor.putString(this.getName(), this.getPrefSummary().toString());
