@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.Looper;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.aero.control.helpers.settingsHelper;
@@ -24,10 +23,17 @@ public final class PerAppService extends Service {
     private static final String perAppProfileHandler = "perAppProfileHandler";
     private boolean mActive;
     private String mProfile;
+    private SharedPreferences mPerAppPrefs;
+    private ActivityManager mAm;
+    private Context mContext;
     private static final settingsHelper settingsHelper = new settingsHelper();
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        if (mContext == null)
+            mContext = this;
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -48,7 +54,8 @@ public final class PerAppService extends Service {
 
     private final void runTask() {
 
-        final SharedPreferences perAppPrefs = getApplicationContext().getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
+        if (mPerAppPrefs == null)
+            mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
 
         Looper.prepare();
 
@@ -59,33 +66,30 @@ public final class PerAppService extends Service {
             if (!(mPreviousApp.equals(mCurrentApp))) {
 
                 if(mActive) {
-                    Toast.makeText(getBaseContext(), "Returning to normal usage", 2000).show();
+                    Toast.makeText(mContext, "Returning to normal usage", Toast.LENGTH_LONG).show();
                     mActive = false;
                     mProfile = null;
                     settingsHelper.executeDefault();
                 }
 
-                final Map<String,?> keys = perAppPrefs.getAll();
+                final Map<String,?> keys = mPerAppPrefs.getAll();
 
                 for (final Map.Entry<String,?> entry : keys.entrySet()) {
 
-                    final String savedSelectedProfiles = perAppPrefs.getString(entry.getKey(), null);
+                    final String savedSelectedProfiles = mPerAppPrefs.getString(entry.getKey(), null);
                     if (savedSelectedProfiles == null)
                         return;
 
-                    String tmp[];
-                    tmp = savedSelectedProfiles.replace("+", " ").split(" ");
-
+                    final String tmp[] = savedSelectedProfiles.replace("+", " ").split(" ");
 
                     for (final String a : tmp) {
                         if (mCurrentApp.equals(a)) {
                             mProfile = entry.getKey();
-                            Log.e("Aero", "We found a match! " + mCurrentApp);
-                            Toast.makeText(getBaseContext(), "Applying Per-App Profile ", 2000).show();
+                            Toast.makeText(mContext, "Applying Per-App Profile ", Toast.LENGTH_LONG).show();
                             mActive = true;
 
                             // Passing the profile to our settings helper;
-                            settingsHelper.setSettings(getBaseContext(), mProfile);
+                            settingsHelper.setSettings(mContext, mProfile);
                         }
                     }
                 }
@@ -103,9 +107,10 @@ public final class PerAppService extends Service {
         String PackageName = mCurrentApp;
         mPreviousApp = PackageName;
 
-        final ActivityManager am = (ActivityManager) PerAppService.this.getSystemService(ACTIVITY_SERVICE);
+        if (mAm == null)
+            mAm = (ActivityManager) PerAppService.this.getSystemService(ACTIVITY_SERVICE);
         // Get the first item in the list;
-        ActivityManager.RunningTaskInfo AppInfo = am.getRunningTasks(1).get(0);
+        final ActivityManager.RunningTaskInfo AppInfo = mAm.getRunningTasks(1).get(0);
 
         PackageName = AppInfo.topActivity.getPackageName();
 
