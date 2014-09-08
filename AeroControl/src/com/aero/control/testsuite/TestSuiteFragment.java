@@ -135,6 +135,7 @@ public class TestSuiteFragment extends PreferenceFragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(getActivity(), "Running Linpack","Burning your CPUs...", false);
+            progressDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.spinner_animation));
             mProgress = 0;
         }
 

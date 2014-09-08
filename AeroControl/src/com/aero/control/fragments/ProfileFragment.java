@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceFragment;
@@ -452,6 +454,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             if (mProgressDialog == null) {
                 mProgressDialog = new ProgressDialog(mContext);
                 mProgressDialog.setMessage(getText(R.string.pref_profile_loading_app_data));
+                mProgressDialog.setIndeterminate(true);
+                mProgressDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.spinner_animation));
             }
 
             mProgressDialog.show();

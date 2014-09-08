@@ -463,29 +463,30 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         builder.setItems(fsystem, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 final String b = (String)fsystem[item];
-                update.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                update.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 update.setCancelable(false);
-                update.setMax(100);
                 update.setIndeterminate(true);
+                update.setIndeterminateDrawable(getResources().getDrawable(R.drawable.spinner_animation));
+                update.setMessage(getText(R.string.pref_profile_loading_app_data));
                 update.show();
                 AeroActivity.shell.remountSystem();
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            while (update.getProgress()< 100) {
-                                // Set up the root-command;
-                                AeroActivity.shell.getRootInfo("fstrim -v", b);
-                                update.setIndeterminate(false);
-                                update.setProgress(100);
-                                progressHandler.sendMessage(progressHandler.obtainMessage());
-                                // Sleep the current thread and exit dialog;
-                                Thread.sleep(2000);
-                                update.dismiss();
-                            }
+                            // Set up the root-command;
+                            AeroActivity.shell.getRootInfo("fstrim -v", b);
+                            // Sleep the current thread and exit dialog;
+                            Thread.sleep(2000);
                         } catch (Exception e) {
                             Log.e("Aero", "An error occurred while trimming.", e);
                         }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                update.dismiss();
+                            }
+                        });
                     }
                 };
                 Thread trimThread = new Thread(runnable);
