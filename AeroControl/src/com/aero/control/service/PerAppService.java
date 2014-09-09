@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Handler;
 import android.widget.Toast;
 
 import com.aero.control.helpers.settingsHelper;
@@ -27,6 +28,8 @@ public final class PerAppService extends Service {
     private ActivityManager mAm;
     private Context mContext;
     private static final settingsHelper settingsHelper = new settingsHelper();
+    private static final Handler mHandler = new Handler(Looper.getMainLooper());
+    private Runnable mRunnable;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -34,15 +37,22 @@ public final class PerAppService extends Service {
         if (mContext == null)
             mContext = this;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        if (mRunnable == null) {
+            mRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Do work in its own thread;
+                            runTask();
+                        }
+                    });
+                }
+            };
+        }
 
-                // Do work in its own thread;
-                runTask();
-
-            }
-        }).start();
+        new Thread(mRunnable).start();
 
         return Service.START_STICKY;
     }
@@ -56,8 +66,6 @@ public final class PerAppService extends Service {
 
         if (mPerAppPrefs == null)
             mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
-
-        Looper.prepare();
 
         // init our data;
         setAppData();
@@ -99,8 +107,6 @@ public final class PerAppService extends Service {
                 return;
             }
         }
-        Looper.loop();
-
     }
     private final void setAppData() {
 
