@@ -118,8 +118,8 @@ public class settingsHelper {
         Boolean mem_wrb = prefs.getString(PREF_WRITEBACK, "0").equals("1") ? true : false;
         Boolean mem_fsy = prefs.getString(PREF_FSYNC, "Y").equals("Y") ? true : false;
         // Get Misc Settings from preferences
-        String misc_vib = prefs.getString(AeroActivity.files.MISC_VIBRATOR_CONTROL, null);
-        String misc_thm = prefs.getString(AeroActivity.files.MISC_THERMAL_CONTROL, null);
+        String misc_vib = prefs.getString(AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE, null);
+        String misc_thm = prefs.getString(AeroActivity.files.MISC_THERMAL_CONTROL_FILE, null);
 
         // ADD CPU COMMANDS TO THE ARRAY
         ArrayList<String> governorSettings = new ArrayList<String>();
@@ -303,22 +303,22 @@ public class settingsHelper {
         // Add misc commands to array
         if (misc_vib != null) {
 
-            shell.queueWork("chmod 0666 " + AeroActivity.files.MISC_VIBRATOR_CONTROL);
+            shell.queueWork("chmod 0666 " + AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE);
 
             if (Profile != null)
-                defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.MISC_VIBRATOR_CONTROL) + " > " + AeroActivity.files.MISC_VIBRATOR_CONTROL);
+                defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE) + " > " + AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE);
 
-            shell.queueWork("echo " + misc_vib + " > " + AeroActivity.files.MISC_VIBRATOR_CONTROL);
+            shell.queueWork("echo " + misc_vib + " > " + AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE);
         }
 
         if (misc_thm != null) {
 
-            shell.queueWork("chmod 0666 " + AeroActivity.files.MISC_THERMAL_CONTROL);
+            shell.queueWork("chmod 0666 " + AeroActivity.files.MISC_THERMAL_CONTROL_FILE);
 
             if (Profile != null)
-                defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.MISC_THERMAL_CONTROL) + " > " + AeroActivity.files.MISC_THERMAL_CONTROL);
+                defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.MISC_THERMAL_CONTROL_FILE) + " > " + AeroActivity.files.MISC_THERMAL_CONTROL_FILE);
 
-            shell.queueWork("echo " + misc_thm + " > " + AeroActivity.files.MISC_THERMAL_CONTROL);
+            shell.queueWork("echo " + misc_thm + " > " + AeroActivity.files.MISC_THERMAL_CONTROL_FILE);
         }
 
 

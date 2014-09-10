@@ -72,6 +72,9 @@ public final class FilePath {
     /* Used by; MiscSettingsFragment */
     public static final String MISC_VIBRATOR_CONTROL = "/sys/devices/virtual/timed_output/vibrator";
     public static final String MISC_THERMAL_CONTROL = "/sys/module/msm_thermal/parameters";
+    public static final String MISC_VIBRATOR_CONTROL_FILE = "/sys/devices/virtual/timed_output/vibrator/vtg_level";
+    public static final String MISC_THERMAL_CONTROL_FILE = "/sys/module/msm_thermal/parameters/temp_threshold";
+
 
     /* Used by; ProfileFragment */
     public static final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
