@@ -123,8 +123,8 @@
     <string name="pref_low_mem_option">Optiune memorie mică</string>
     <string name="pref_low_mem_option_sum">Activează sau dezactivează opțiunea memorie mică. Aceasta s-ar putea să ajute dispozitivele cu 4.4+ (Kitkat).</string>
 
-    <string name="fstrim_header">Opțiuni Trim</string>
-    <string name="fstrim_content">Utilizați Trim pe diverse partiții ale sistemului dvs! Aceast lucru ar putea dura câteva minute.</string>
+    <string name="pref_fstrim">Opțiuni Trim</string>
+    <string name="pref_fstrim_sum">Utilizați Trim pe diverse partiții ale sistemului dvs! Aceast lucru ar putea dura câteva minute.</string>
 
     <string name="pref_min_free_ram">Cantitatea de RAM liberă</string>
     <string name="pref_min_free_ram_sum">Aici setați cantitatea reală de RAM liberă.</string>

@@ -16,7 +16,6 @@ import com.aero.control.helpers.PreferenceHandler;
  */
 public class MemoryDalvikFragment extends PreferenceFragment {
 
-    public MemoryDalvikFragment mMemoryDalvikFragment;
     public PreferenceScreen root;
     public PreferenceCategory PrefCat;
 

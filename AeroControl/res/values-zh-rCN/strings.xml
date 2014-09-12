@@ -113,8 +113,8 @@
 
 
 
-    <string name="fstrim_header">Trim 选项</string>
-    <string name="fstrim_content">对系统的一些部分进行 Trim！需要一定的时间</string>
+    <string name="pref_fstrim">Trim 选项</string>
+    <string name="pref_fstrim_sum">对系统的一些部分进行 Trim！需要一定的时间</string>
 
     <string name="pref_min_free_ram">空余 RAM 大小</string>
     <string name="pref_min_free_ram_sum">在此设置真正空余的 RAM 的大小(以kb为单位)</string>

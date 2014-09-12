@@ -123,8 +123,8 @@
     <string name="pref_low_mem_option">Opcja "Mała ilość pamięci RAM"</string>
     <string name="pref_low_mem_option_sum">Włącz lub wyłącz tą opcję tutaj. Może ona być pomocna dla urządzeń małą ilością pamięci ram i androidem 4.4+ (KitKat).</string>
     
-    <string name="fstrim_header">Opcje Trim</string>
-    <string name="fstrim_content">Użyj Trim na kilku partycjach na twoim systemie! To może chwilę potrwać.</string>
+    <string name="pref_fstrim">Opcje Trim</string>
+    <string name="pref_fstrim_sum">Użyj Trim na kilku partycjach na twoim systemie! To może chwilę potrwać.</string>
 
     <string name="pref_min_free_ram">Ilość pamięci RAM</string>
     <string name="pref_min_free_ram_sum">Ustaw prawdziwą wolną ilość pamięci ram tutaj.</string>

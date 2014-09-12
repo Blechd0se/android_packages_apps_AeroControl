@@ -114,8 +114,8 @@
     <string name="pref_dynamic_writeback_sum">Ovdje omogućite ili onemogućite writeback kontrolu.</string>
     <string name="pref_low_mem_option">Opcija niske memorije</string>
     <string name="pref_low_mem_option_sum">Ovdje omogućite ili onemogućite opciju niske memorije. Moglo bi biti od pomoći na uređajima s 4.4+ (Kitkat).</string>
-    <string name="fstrim_header">Trim Opcija</string>
-    <string name="fstrim_content">Trim nekih dijelova vašeg sustava! Ovo bi moglo potrajati.</string>
+    <string name="pref_fstrim">Trim Opcija</string>
+    <string name="pref_fstrim_sum">Trim nekih dijelova vašeg sustava! Ovo bi moglo potrajati.</string>
     <string name="pref_min_free_ram">Količina slobodnog RAM-a</string>
     <string name="pref_min_free_ram_sum">Ovdje postavite iznos pravog slobodnog ram-a.</string>
     <string name="has_journal_dialog_header">Problem otkriven</string>

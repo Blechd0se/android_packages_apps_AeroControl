@@ -88,8 +88,8 @@
 	<string name="pref_memory_zcache_compression">Compression zCache</string>
 	<string name="pref_memory_zcache_compression_sum">Choisissez une méthode de compression pour zCache.</string>
 
-	<string name="fstrim_header">Outil Trim</string>
-	<string name="fstrim_content">Trim différentes partitions de l\'appareil! Cette opération peut prendre un certain temps.</string>
+	<string name="pref_fstrim">Outil Trim</string>
+	<string name="pref_fstrim_sum">Trim différentes partitions de l\'appareil! Cette opération peut prendre un certain temps.</string>
 
 	<!-- IO Scheduler -->
 	<string name="io_scheduler">Ordonnanceur I/O </string>

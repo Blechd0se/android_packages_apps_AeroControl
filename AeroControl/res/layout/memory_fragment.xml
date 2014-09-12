@@ -20,8 +20,8 @@
 
         <Preference
             android:key="fstrim_toggle"
-            android:title="@string/fstrim_header"
-            android:summary="@string/fstrim_content" />
+            android:title="@string/pref_fstrim"
+            android:summary="@string/pref_fstrim_sum" />
 
         <Preference
             android:key="dalvik_settings"

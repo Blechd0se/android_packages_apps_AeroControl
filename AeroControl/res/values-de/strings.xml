@@ -116,6 +116,9 @@
     <string name="pref_dynamic_fsync">Dynamisches FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamisches FSync aktiviert FSync nur während der Bildschirm aus ist.</string>
 
+    <string name="pref_ksm">KSM</string>
+    <string name="pref_ksm_sum">Enables or disabled the KSM deamon completely.</string>
+
     <string name="pref_fsync">FSync</string>
     <string name="pref_fsync_sum">Schaltet den fsync-Aufruf an oder aus.</string>
 
@@ -134,8 +137,8 @@
     <string name="pref_low_mem_option">Low Memory Option</string>
     <string name="pref_low_mem_option_sum">Low Memory optimiert das System auf Geräten mit wenig Arbeitsspeicher. Hierfür brauchst Du 4.4+ (Kitkat).</string>
 
-    <string name="fstrim_header">Trim Optionen</string>
-    <string name="fstrim_content">Mit Trim lassen sich Partition trimmen, um die Performance zu erhöhen. Das kann eine Weile dauern.</string>
+    <string name="pref_fstrim">Trim Optionen</string>
+    <string name="pref_fstrim_sum">Mit Trim lassen sich Partition trimmen, um die Performance zu erhöhen. Das kann eine Weile dauern.</string>
 
     <string name="pref_dalvik_setttings">VM Einstellungen</string>
     <string name="pref_dalvik_setttings_heading">Virtuelle Maschine</string>

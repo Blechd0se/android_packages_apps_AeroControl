@@ -121,8 +121,8 @@
     <string name="pref_low_mem_option">Opción de memoria baja</string>
     <string name="pref_low_mem_option_sum">Habilita o Deshabilita la opción de memoria de baja. Esto podría ayudar en los dispositivos con 4.4+(Kitkat).</string>
     
-    <string name="fstrim_header">Opción de Trim</string>
-    <string name="fstrim_content">Ejecutar Trim en varias partes de su sistema! Esto podría demorar un poco.</string>
+    <string name="pref_fstrim">Opción de Trim</string>
+    <string name="pref_fstrim_sum">Ejecutar Trim en varias partes de su sistema! Esto podría demorar un poco.</string>
 
     <string name="pref_dalvik_setttings">Configuración de VM</string>
     <string name="pref_dalvik_setttings_sum">Cambie los parámetros de la máquina virtual.</string>

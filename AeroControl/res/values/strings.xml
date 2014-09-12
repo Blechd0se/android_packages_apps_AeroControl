@@ -128,6 +128,9 @@
     <string name="pref_dynamic_fsync">Dynamic FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamic FSync enables fsync only while the screen is off.</string>
 
+    <string name="pref_ksm">KSM</string>
+    <string name="pref_ksm_sum">Enables or disabled the KSM deamon completely.</string>
+
     <string name="pref_fsync">FSync</string>
     <string name="pref_fsync_sum">Enables or disabled fsync completely.</string>
 
@@ -146,8 +149,8 @@
     <string name="pref_low_mem_option">Low Memory Option</string>
     <string name="pref_low_mem_option_sum">Enable or Disable the low memory option here. This might help on devices with 4.4+ (Kitkat).</string>
 
-    <string name="fstrim_header">Trim Option</string>
-    <string name="fstrim_content">Trim several parts of your system! This might take a while.</string>
+    <string name="pref_fstrim_header">Trim Option</string>
+    <string name="pref_fstrim_content">Trim several parts of your system! This might take a while.</string>
 
     <string name="pref_dalvik_setttings">VM Settings</string>
     <string name="pref_dalvik_setttings_heading">Virtual Machine</string>

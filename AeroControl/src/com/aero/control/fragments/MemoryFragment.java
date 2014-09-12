@@ -53,10 +53,8 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
     public boolean showDialog = true;
 
-    public static final Handler progressHandler = new Handler();
-
     private CheckBoxPreference mZCache, mLowMemoryPref;
-    private CustomPreference mDynFSync, mWriteBackControl, mFsync;
+    private CustomPreference mDynFSync, mWriteBackControl, mFsync, mKSMSettings;
     private Preference mFSTrimToggle, mDalvikSettings;
     private CustomListPreference mIOScheduler;
     private String mFileSystem;
@@ -98,6 +96,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
                 memorySettingsCategory.removePreference(mDynFSync);
         }
 
+        // FSync Toggle;
         mFsync = new CustomPreference(getActivity());
         mFsync.setName("fsync");
         mFsync.setTitle(R.string.pref_fsync);
@@ -117,6 +116,27 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         } else {
             if (memorySettingsCategory != null)
                 memorySettingsCategory.removePreference(mFsync);
+        }
+
+        mKSMSettings = new CustomPreference(getActivity());
+        mKSMSettings.setName("ksm");
+        mKSMSettings.setTitle(R.string.pref_ksm);
+        mKSMSettings.setSummary(R.string.pref_ksm_sum);
+        mKSMSettings.setLookUpDefault(AeroActivity.files.KSM_SETTINGS);
+        mKSMSettings.setOrder(16);
+        memorySettingsCategory.addPreference(mKSMSettings);
+
+        temp = AeroActivity.shell.getInfo(AeroActivity.files.KSM_SETTINGS);
+
+        if ("1".equals(temp)) {
+            mKSMSettings.setClicked(true);
+            mKSMSettings.setSummary(R.string.enabled);
+        } else if ("2".equals(temp) || "0".equals(temp)) {
+            mKSMSettings.setClicked(false);
+            mKSMSettings.setSummary(R.string.disabled);
+        } else {
+            if (memorySettingsCategory != null)
+                memorySettingsCategory.removePreference(mKSMSettings);
         }
 
         mZCache = (CheckBoxPreference) findPreference("zcache");
@@ -305,6 +325,17 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
             cusPref = (CustomPreference) preference;
 
+        } else if (preference == mKSMSettings) {
+
+            mKSMSettings.setClicked(!mKSMSettings.isClicked());
+
+            if (mKSMSettings.isClicked())
+                AeroActivity.shell.setRootInfo("1", AeroActivity.files.KSM_SETTINGS);
+            else
+                AeroActivity.shell.setRootInfo("0", AeroActivity.files.KSM_SETTINGS);
+
+            cusPref = (CustomPreference) preference;
+
         } else if (preference == mZCache) {
             zCacheClick();
         } else if (preference == mWriteBackControl) {
@@ -458,7 +489,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final ProgressDialog update = new ProgressDialog(getActivity());
-        builder.setTitle(R.string.fstrim_header);
+        builder.setTitle(R.string.pref_fstrim);
         builder.setIcon(R.drawable.gear_dark);
         builder.setItems(fsystem, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {

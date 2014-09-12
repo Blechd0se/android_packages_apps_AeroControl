@@ -129,8 +129,8 @@
     <string name="pref_low_mem_option">Opzione scarsa memoria</string>
     <string name="pref_low_mem_option_sum">Abilita o Disabilita l\'opzione di scarsa memoria. Potrebbe aiutare su dispositivi con 4.4+ (Kitkat).</string>
 
-    <string name="fstrim_header">Opzione Trim</string>
-    <string name="fstrim_content">Taglia delle parti del tuo sistema! Potrebbe richiedere del tempo.</string>
+    <string name="pref_fstrim">Opzione Trim</string>
+    <string name="pref_fstrim_sum">Taglia delle parti del tuo sistema! Potrebbe richiedere del tempo.</string>
 
     <string name="pref_min_free_ram">Quantità di RAM libera</string>
     <string name="pref_min_free_ram_sum">Imposta il quantitativo di ram libera (in kb).</string>

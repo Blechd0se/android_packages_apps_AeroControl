@@ -111,8 +111,8 @@
     <string name="pref_low_mem_option">Opções de baixa memória</string>
     <string name="pref_low_mem_option_sum">Ative ou desative a opção de baixa memória aqui. Isso pode ajudar em dispositivos rodando 4.4+ (Kitkat).</string>
 
-    <string name="fstrim_header">Opções de corte</string>
-    <string name="fstrim_content">Retire várias partes do seu sistema! Isso pode levar algum tempo.</string>
+    <string name="pref_fstrim">Opções de corte</string>
+    <string name="pref_fstrim_sum">Retire várias partes do seu sistema! Isso pode levar algum tempo.</string>
 
     <string name="pref_min_free_ram">Quantidade de RAM livre</string>
     <string name="pref_min_free_ram_sum">COnfigure a quantidade de RAM que deve estar livre (in kb).</string>
