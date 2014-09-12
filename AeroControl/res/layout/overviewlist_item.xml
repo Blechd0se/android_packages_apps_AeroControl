@@ -5,7 +5,6 @@
     <com.aero.control.helpers.CardLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e3e3e3"
         android:orientation="vertical">
 
     <!-- We need to set the listview element
@@ -18,7 +17,8 @@
         android:layout_height="fill_parent"
         android:divider="@null"
         android:dividerHeight="-2dp"
-        android:layout_marginTop="-1dp"/>
+        android:layout_marginTop="-1dp"
+        android:listSelector="@android:color/transparent"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
@@ -37,13 +37,13 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#7f8c8d"
-                android:layout_weight="1"></TextView>
+                android:layout_weight="1" />
 
             <TextView
                 android:textSize="14sp"
                 android:id="@+id/content"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"></TextView>
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
     </com.aero.control.helpers.CardLayout>

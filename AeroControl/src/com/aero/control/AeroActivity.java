@@ -112,6 +112,7 @@ public final class AeroActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String a = prefs.getString("app_theme", null);
@@ -146,8 +147,6 @@ public final class AeroActivity extends Activity {
 
         }
 
-        setContentView(R.layout.activity_main);
-
         // Start the service if needed;
         if (!isServiceUp()) {
             // Service is not running, check if it should;
@@ -172,7 +171,7 @@ public final class AeroActivity extends Activity {
 
         if (actionBarHeight != 0) {
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)mDrawerLayout.getLayoutParams();
-            params.setMargins(0, actionBarHeight + 50, 0, 0);
+            params.setMargins(0, actionBarHeight + (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 26, getResources().getDisplayMetrics()), 0, 0);
             mDrawerLayout.setLayoutParams(params);
         }
 

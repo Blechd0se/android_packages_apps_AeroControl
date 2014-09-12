@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:background="#e3e3e3">
+    android:orientation="horizontal">
 
     <TextView android:id="@+id/noCpuData"
         style="?android:textAppearanceMedium"
