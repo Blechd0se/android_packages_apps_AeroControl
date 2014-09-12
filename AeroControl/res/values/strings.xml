@@ -281,4 +281,19 @@
     <!-- Toast Messages -->
     <string name="rateIt">Click me and rate this app!</string>
 
+    <!-- Introduction -->
+    <string name="introduction_welcome_heading">Welcome to \n<i>Aero</i> Control</string>
+    <string name="introduction_welcome_content">We are just about to get started. If you are feeling ready, just swipe from the right to the left.
+                                                You can change all settings - which you will be changing in this assistant - later on.</string>
+    <string name="introduction_perapp_heading">PerApp Profiles</string>
+    <string name="introduction_perapp_check">Do you want to enable this service?</string>
+    <string name="introduction_perapp_content">Choose your preferences for individual apps automatically. Therefore a service checks the
+                                                foreground app every now and then and applies your desired profile automatically. \n\n
+                                                This might save you some extra juice for your battery or give you a full performance boost
+                                                on your favorite app.</string>
+    <string name="introduction_tutorial_heading">Tutorials</string>
+    <string name="introduction_tutorial_check">Do you want to enable tutorials?</string>
+    <string name="introduction_tutorial_content">Tutorials pop up during your usage of Aero Control. They might give you some insights.
+                                                If you are an advanced users, it is unlikely that you need them.</string>
+
 </resources>

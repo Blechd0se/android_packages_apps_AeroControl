@@ -268,4 +268,19 @@
     <!-- Toast Messages -->
     <string name="rateIt">Klick mich und bewerte diese App!</string>
 
+    <!-- Introduction -->
+    <string name="introduction_welcome_heading">Willkommen zu \n<i>Aero</i> Control</string>
+    <string name="introduction_welcome_content">Du bist kurz davor richtig loszulegen. Wenn Du dich bereit fühlst, swipe von rechts nach links.
+                                                Alle Einstellungen, die Du in diesem Assistent vornimmst, kannst Du später abändern.</string>
+    <string name="introduction_perapp_heading">PerApp Profile</string>
+    <string name="introduction_perapp_check">Möchtest Du diesen Service aktivieren?</string>
+    <string name="introduction_perapp_content">Lasse Profile automatisch für bestimmte Apps aktivieren. Hierfür überprüft ein Service von Zeit zu Zeit
+                                                die aktuell laufende App und aktiviert Dein gewünschtes Profil automatisch. \n\n
+                                                Das könnte dir helfen in weniger aufwändigen Apps etwas Energie zu sparen oder es gibt
+                                                Dir ein Leistungsvorteil in deinem Lieblingsspiel.</string>
+    <string name="introduction_tutorial_heading">Tutorials</string>
+    <string name="introduction_tutorial_check">Möchtest Du Tutorials aktivieren?</string>
+    <string name="introduction_tutorial_content">Tutorials erscheinen Dir beim Benutzen von Aero Control. Sie können Dir ein paar Tipps und Tricks verraten.
+                                                Wenn Du ein fortgeschrittener Benutzer bist, wirst Du sie vermutlich nicht brauchen.</string>
+
 </resources>

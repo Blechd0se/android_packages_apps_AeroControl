@@ -1,0 +1,47 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#607d8b">
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <TextView android:id="@+id/text_heading"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="26dp"
+            android:textColor="#eceff1"
+            android:textSize="42sp"
+            android:layout_marginTop="25dp" />
+
+        <TextView android:id="@+id/text_content"
+            style="?android:textAppearanceMedium"
+            android:lineSpacingMultiplier="1.2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#eceff1"
+            android:layout_gravity="center_horizontal" />
+
+        <CheckBox android:id="@+id/show_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/introduction_perapp_check"
+            android:textColor="#eceff1"
+            android:button="@drawable/onboot_selector"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="5dp" />
+
+        <ProgressBar android:id="@+id/show_progress"
+            android:layout_width="64dip"
+            android:layout_height="64dip"
+            android:layout_gravity="center_horizontal|bottom"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/spinner_animation"/>
+
+    </LinearLayout>
+
+</ScrollView>

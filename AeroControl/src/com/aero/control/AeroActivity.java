@@ -111,8 +111,9 @@ public final class AeroActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String a = prefs.getString("app_theme", null);
         int actionBarHeight = 0;
         getActionBar().setIcon(R.drawable.app_icon_actionbar);
@@ -145,13 +146,12 @@ public final class AeroActivity extends Activity {
 
         }
 
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Start the service if needed;
         if (!isServiceUp()) {
             // Service is not running, check if it should;
-            perAppService = new PerAppServiceHelper(getBaseContext());
+            perAppService = new PerAppServiceHelper(this);
             if (perAppService.shouldBeStarted())
                 perAppService.startService();
         }
@@ -180,7 +180,7 @@ public final class AeroActivity extends Activity {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
         // Set up lists;
-        generatingLists content = new generatingLists(getApplicationContext());
+        generatingLists content = new generatingLists(this);
 
         mAdapter = new ItemAdapter(this, R.layout.activity_main, content.ITEMS);
         mDrawerList.setAdapter(mAdapter);
@@ -216,7 +216,6 @@ public final class AeroActivity extends Activity {
         } else {
             selectItem(savedInstanceState.getInt(SELECTED_ITEM));
         }
-
     }
 
     private final class ItemAdapter extends ArrayAdapter<PreferenceItem> {
@@ -261,7 +260,7 @@ public final class AeroActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String a = prefs.getString("app_theme", null);
 
         if (a == null)
@@ -291,9 +290,9 @@ public final class AeroActivity extends Activity {
             case R.id.aero_settings:
 
                 Intent trIntent = new Intent("android.intent.action.PREFS");
-                trIntent.setClass(getBaseContext(), PrefsActivity.class);
+                trIntent.setClass(this, PrefsActivity.class);
                 trIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getBaseContext().startActivity(trIntent);
+                this.startActivity(trIntent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
                 break;
