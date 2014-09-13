@@ -76,7 +76,7 @@ public final class shellHelper {
      */
     public void execWork() {
         shWork.addToWork("echo ");
-        setRootInfo(shWork.execWork());
+        setRootInfo(shWork.execWork(), true);
     }
 
     /**
@@ -444,7 +444,7 @@ public final class shellHelper {
      * Generic Method for setting a bunch of commands
      * Same as setRootInfo but with an array instead of objects
      *
-     * @param array   => Commands to execute in a array
+     * @param array   => Commands to execute in an array
      *
      * @return nothing
      */
@@ -453,25 +453,48 @@ public final class shellHelper {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                try {
-
-                    Process process = Runtime.getRuntime().exec("su");
-                    DataOutputStream dataStream = new DataOutputStream(process.getOutputStream());
-                    for (String commands : array) {
-                        dataStream.writeBytes(commands + "\n");
-                        dataStream.flush();
-                    }
-                    dataStream.writeBytes("exit\n");
-                    dataStream.flush();
-
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "Do you even root, bro? :/");
-                }
+                // Run root commands;
+                runRootInfo(array);
             }
         };
         Thread rootThread = new Thread(runnable);
         rootThread.start();
+    }
 
+    /**
+     * Generic Method for setting a bunch of commands
+     * Same as setRootInfo but with an array instead of objects
+     *
+     * @param array    => Commands to execute in an array
+     * @param threaded => Should be run in its own thread?
+     *
+     * @return nothing
+     */
+    public final void setRootInfo(final String array[], boolean threaded) {
+
+        if (!threaded) {
+            setRootInfo(array);
+            return;
+        }
+        // Run the root commands;
+        runRootInfo(array);
+    }
+
+    private final void runRootInfo(final String[] array) {
+        try {
+
+            Process process = Runtime.getRuntime().exec("su");
+            DataOutputStream dataStream = new DataOutputStream(process.getOutputStream());
+            for (String commands : array) {
+                dataStream.writeBytes(commands + "\n");
+                dataStream.flush();
+            }
+            dataStream.writeBytes("exit\n");
+            dataStream.flush();
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Do you even root, bro? :/");
+        }
     }
 
     /**
