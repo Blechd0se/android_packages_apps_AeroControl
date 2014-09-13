@@ -80,7 +80,7 @@ public class PreferenceHandler {
         for (int j = 0; j < nameArray.length; j++) {
 
             //TODO: Move this into the parent class
-            if (nameArray[j].equals("vtg_level"))
+            if (nameArray[j].equals("vtg_level") || nameArray[j].equals("amp"))
                 generateSettings(nameArray[j], paraArray[j], true);
             else
                 generateSettings(nameArray[j], paraArray[j], false);

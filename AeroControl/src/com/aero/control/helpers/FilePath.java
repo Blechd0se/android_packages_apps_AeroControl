@@ -74,6 +74,7 @@ public final class FilePath {
     public static final String MISC_VIBRATOR_CONTROL = "/sys/devices/virtual/timed_output/vibrator";
     public static final String MISC_THERMAL_CONTROL = "/sys/module/msm_thermal/parameters";
     public static final String MISC_VIBRATOR_CONTROL_FILE = "/sys/devices/virtual/timed_output/vibrator/vtg_level";
+    public static final String MISC_VIBRATOR_CONTROL_FILEAMP = "/sys/devices/virtual/timed_output/vibrator/amp";
     public static final String MISC_THERMAL_CONTROL_FILE = "/sys/module/msm_thermal/parameters/temp_threshold";
 
 

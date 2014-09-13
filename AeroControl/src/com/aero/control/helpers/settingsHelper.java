@@ -121,6 +121,7 @@ public class settingsHelper {
         Boolean mem_ksm = prefs.getString(PREF_KSM, "0").equals("1") ? true : false;
         // Get Misc Settings from preferences
         String misc_vib = prefs.getString(AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE, null);
+        String misc_amp = prefs.getString(AeroActivity.files.MISC_VIBRATOR_CONTROL_FILEAMP, null);
         String misc_thm = prefs.getString(AeroActivity.files.MISC_THERMAL_CONTROL_FILE, null);
 
         // ADD CPU COMMANDS TO THE ARRAY
@@ -321,6 +322,16 @@ public class settingsHelper {
                 defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE) + " > " + AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE);
 
             shell.queueWork("echo " + misc_vib + " > " + AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE);
+        }
+
+        if (misc_amp != null) {
+
+            shell.queueWork("chmod 0666 " + AeroActivity.files.MISC_VIBRATOR_CONTROL_FILEAMP);
+
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.MISC_VIBRATOR_CONTROL_FILEAMP) + " > " + AeroActivity.files.MISC_VIBRATOR_CONTROL_FILEAMP);
+
+            shell.queueWork("echo " + misc_amp + " > " + AeroActivity.files.MISC_VIBRATOR_CONTROL_FILEAMP);
         }
 
         if (misc_thm != null) {

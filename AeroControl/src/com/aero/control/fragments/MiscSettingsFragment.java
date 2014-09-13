@@ -46,6 +46,9 @@ public class MiscSettingsFragment extends PreferenceFragment {
         mNameList.add("vtg_level");
         mParaList.add(AeroActivity.files.MISC_VIBRATOR_CONTROL);
 
+        mNameList.add("amp");
+        mParaList.add(AeroActivity.files.MISC_VIBRATOR_CONTROL);
+
         mNameList.add("temp_threshold");
         mParaList.add(AeroActivity.files.MISC_THERMAL_CONTROL);
     }
