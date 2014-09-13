@@ -68,11 +68,13 @@ public class PreferenceHandler {
     /**
      * Gets a file from a given path and adds a Preference on top of it
      *
-     * @param nameArray     => 2D Array which contains filename and path
+     * @param nameArray     => Array which contains the file names
+     * @param paraArray     => Array which contains the file path (without name)
+     * @param showEmpty     => Should we show a empty preference at the end?
      *
      * @return nothing
      */
-    public final void genPrefFromFiles(String[] nameArray, String[] paraArray) {
+    public final void genPrefFromFiles(String[] nameArray, String[] paraArray, Boolean showEmpty) {
 
         int counter = nameArray.length;
         int i = 0;
@@ -87,7 +89,8 @@ public class PreferenceHandler {
             
             i++;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
-                    !(ViewConfiguration.get(mContext).hasPermanentMenuKey())) {
+                    !(ViewConfiguration.get(mContext).hasPermanentMenuKey())
+                    && showEmpty) {
                 /* For better KitKat+ looks; */
                 if (i == counter) {
                     Preference blankedPref = new Preference(mContext);

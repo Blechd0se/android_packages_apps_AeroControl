@@ -10,8 +10,6 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.PreferenceHandler;
 
-import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -67,7 +65,7 @@ public class MiscSettingsFragment extends PreferenceFragment {
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            h.genPrefFromFiles(mNameList.toArray(new String[0]), mParaList.toArray(new String[0]));
+            h.genPrefFromFiles(mNameList.toArray(new String[0]), mParaList.toArray(new String[0]), false);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);
