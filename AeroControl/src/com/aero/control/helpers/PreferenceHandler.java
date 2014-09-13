@@ -9,9 +9,12 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ViewConfiguration;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
+
+import java.io.File;
 
 
 /**
@@ -50,8 +53,9 @@ public class PreferenceHandler {
         for (String b : array) {
             generateSettings(b, path, false);
             i++;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            /* For better KitKat+ looks; */
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
+                    !(ViewConfiguration.get(mContext).hasPermanentMenuKey())) {
+                /* For better KitKat+ looks; */
                 if (i == counter) {
                     Preference blankedPref = new Preference(mContext);
                     blankedPref.setSelectable(false);
@@ -64,26 +68,27 @@ public class PreferenceHandler {
     /**
      * Gets a file from a given path and adds a Preference on top of it
      *
-     * @param array     => 2D Array which contains filename and path
+     * @param nameArray     => 2D Array which contains filename and path
      *
      * @return nothing
      */
-    public final void genPrefFromFiles(String[][] array) {
+    public final void genPrefFromFiles(String[] nameArray, String[] paraArray) {
 
-        int counter = array.length;
+        int counter = nameArray.length;
         int i = 0;
 
-        for (int j = 0; j < array.length; j++) {
+        for (int j = 0; j < nameArray.length; j++) {
 
             //TODO: Move this into the parent class
-            if (array[j][0].equals("vtg_level"))
-                generateSettings(array[j][0], array[j][1], true);
+            if (nameArray[j].equals("vtg_level"))
+                generateSettings(nameArray[j], paraArray[j], true);
             else
-                generateSettings(array[j][0], array[j][1], false);
+                generateSettings(nameArray[j], paraArray[j], false);
             
             i++;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            /* For better KitKat+ looks; */
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
+                    !(ViewConfiguration.get(mContext).hasPermanentMenuKey())) {
+                /* For better KitKat+ looks; */
                 if (i == counter) {
                     Preference blankedPref = new Preference(mContext);
                     blankedPref.setSelectable(false);
@@ -102,12 +107,17 @@ public class PreferenceHandler {
      *
      * @return nothing
      */
-    private final void generateSettings(final String parameter, String path, final boolean flag) {
+    private final void generateSettings(final String parameter, final String path, final boolean flag) {
 
         final CustomTextPreference prefload = new CustomTextPreference(mContext);
         // Strings saves the complete path for a given governor;
         final String parameterPath = path + "/" + parameter;
         final String summary = AeroActivity.shell.getInfo(parameterPath);
+        final File checkFile = new File(parameterPath);
+
+        // If the file doesn't exist, no need to waste time;
+        if (!(checkFile.exists()))
+            return;
 
         Integer tmp = null;
         try {

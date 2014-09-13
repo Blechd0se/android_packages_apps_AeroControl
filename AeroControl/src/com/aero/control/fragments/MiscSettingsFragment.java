@@ -10,6 +10,10 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.PreferenceHandler;
 
+import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by Alexander Christ on 03.04.14.
  */
@@ -17,6 +21,8 @@ public class MiscSettingsFragment extends PreferenceFragment {
 
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;
+    private ArrayList<String> mParaList;
+    private ArrayList<String> mNameList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,8 +31,23 @@ public class MiscSettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
 
+        // Load parameter data:
+        loadParalist();
+
         // Load our custom preferences;
         loadSettings();
+    }
+
+    private void loadParalist() {
+
+        mParaList = new ArrayList<String>();
+        mNameList = new ArrayList<String>();
+
+        mNameList.add("vtg_level");
+        mParaList.add(AeroActivity.files.MISC_VIBRATOR_CONTROL);
+
+        mNameList.add("temp_threshold");
+        mParaList.add(AeroActivity.files.MISC_THERMAL_CONTROL);
     }
 
     public void loadSettings() {
@@ -43,11 +64,7 @@ public class MiscSettingsFragment extends PreferenceFragment {
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            String[][] array = new String[][] {
-                    {"vtg_level", AeroActivity.files.MISC_VIBRATOR_CONTROL},
-                    {"temp_threshold", AeroActivity.files.MISC_THERMAL_CONTROL}
-            };
-            h.genPrefFromFiles(array);
+            h.genPrefFromFiles(mNameList.toArray(new String[0]), mParaList.toArray(new String[0]));
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);
