@@ -308,6 +308,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
             public void onClick(View view) {
                 UndoBarController.show(getActivity(), getText(R.string.pref_profile_deleted), ProfileFragment.this, style);
 
+                if (mDeletedChild != null)
+                    deleteProfile(mDeletedProfile);
+
                 mDeletedProfile = txtView.getText().toString();
                 mDeletedChild = childView;
                 mPrefs = mContext.getSharedPreferences(mDeletedProfile, Context.MODE_PRIVATE);
