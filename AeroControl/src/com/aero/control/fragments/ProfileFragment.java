@@ -65,6 +65,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
     private Context mContext;
     private List<ApplicationInfo> mPackages;
     private ProgressDialog mProgressDialog;
+    private boolean mWarning;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,6 +75,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         setHasOptionsMenu(true);
 
         mContext = getActivity();
+        mWarning = false;
 
         mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
         final View v = inflater.inflate(R.layout.profile_fragment, null);
@@ -85,25 +87,7 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
         // Load all available profiles;
         loadProfiles();
 
-        // Load default profiles;
-        //addDefaultProfiles(new EditText(mContext));
-
         return mContainerView;
-    }
-
-    /*
-     * Can be used later to create default profiles, placeholder for now
-     */
-    private final void addDefaultProfiles(EditText editText) {
-
-        // If the profile doesn't exist, create it;
-        final File prefFile = new File (AeroActivity.files.sharedPrefsPath + "performance.xml");
-        if(prefFile.exists()) {
-            Log.e(LOG_TAG, "Performance Profile exists already!");
-        } else {
-            editText.setText("performance");
-            addProfile(editText.getText().toString(), true);
-        }
     }
 
     private final void loadProfiles() {
@@ -122,10 +106,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                 mContainerView.findViewById(R.id.empty_image).setVisibility(View.GONE);
             }
         }
-        // Sometime we are just too fast and would throw a null pointer, better save than sorry
-        try {
-            // User has assigned apps, but no service is running;
-            if (!(AeroActivity.perAppService.getState()) && checkAllStates()) {
+        // User has assigned apps, but no service is running;
+        if (AeroActivity.perAppService == null || !(AeroActivity.perAppService.getState())) {
+            if (checkAllStates() && !mWarning) {
                 AppRate.with(getActivity())
                         .text(R.string.pref_profile_service_not_running)
                         .fromTop(false)
@@ -133,13 +116,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                         .autoHide(15000)
                         .allowPlayLink(false)
                         .forceShow();
+                mWarning = true;
             }
-        } catch (NullPointerException e) {
-            Log.e(LOG_TAG, "Object wasn't available, we are too fast!", e);
-            // We should start the recovery process here if the service hasn't
-            // come up, but should be up
         }
-
     }
 
     // Create our options menu;
@@ -548,10 +527,9 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                             updateStatus(txtViewSummary, false);
                         }
 
-                        // Sometime we are just too fast and would throw a null pointer, better save than sorry
-                        try {
-                            // User has assigned apps, but no service is running;
-                            if (!(AeroActivity.perAppService.getState()) && checkAllStates()) {
+                        // User has assigned apps, but no service is running;
+                        if (AeroActivity.perAppService == null || !(AeroActivity.perAppService.getState())) {
+                            if (checkAllStates() && !mWarning) {
                                 AppRate.with(getActivity())
                                         .text(R.string.pref_profile_service_not_running)
                                         .fromTop(false)
@@ -559,11 +537,8 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                                         .autoHide(15000)
                                         .allowPlayLink(false)
                                         .forceShow();
+                                mWarning = true;
                             }
-                        } catch (NullPointerException e) {
-                            Log.e(LOG_TAG, "Object wasn't available, we are too fast!", e);
-                            // We should start the recovery process here if the service hasn't
-                            // come up, but should be up
                         }
 
                     }

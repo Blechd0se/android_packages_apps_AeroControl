@@ -58,14 +58,13 @@ public class PerAppServiceHelper {
         mTimer = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         mTimer.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 7 * 1000, mPendingIntent);
 
-        mState = true;
+        setState(true);
     }
 
     public final void stopService() {
 
         if (mBackgroundIntent == null || mTimer == null || mPendingIntent == null) {
             // Nothing is running
-            mState = false;
             Log.e("Aero", "Service wasn't even running!");
             return;
         } else {
@@ -77,9 +76,8 @@ public class PerAppServiceHelper {
             mTimer = null;
             mBackgroundIntent = null;
             mPendingIntent = null;
-            mState = false;
         }
+        setState(false);
         Log.e("Aero", "Service should be stopped now!");
     }
-
 }
