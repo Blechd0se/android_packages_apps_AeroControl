@@ -307,7 +307,7 @@ public final class AeroActivity extends Activity {
         }
     }
 
-    private final boolean isServiceUp() {
+    private boolean isServiceUp() {
         final ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (PerAppService.class.getName().equals(service.service.getClassName())) {

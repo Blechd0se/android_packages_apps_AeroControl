@@ -30,6 +30,7 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.perAppHelper;
 import com.aero.control.helpers.settingsHelper;
+import com.aero.control.service.PerAppServiceHelper;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarStyle;
 import com.espian.showcaseview.ShowcaseView;
@@ -106,8 +107,13 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                 mContainerView.findViewById(R.id.empty_image).setVisibility(View.GONE);
             }
         }
+
+        // If null, initiate the helper;
+        if (AeroActivity.perAppService == null)
+            AeroActivity.perAppService = new PerAppServiceHelper(mContext);
+
         // User has assigned apps, but no service is running;
-        if (AeroActivity.perAppService == null || !(AeroActivity.perAppService.getState())) {
+        if (!(AeroActivity.perAppService.getState())) {
             if (checkAllStates() && !mWarning) {
                 AppRate.with(getActivity())
                         .text(R.string.pref_profile_service_not_running)
@@ -530,8 +536,12 @@ public class ProfileFragment extends PreferenceFragment implements UndoBarContro
                             updateStatus(txtViewSummary, false);
                         }
 
+                        // If null, initiate the helper;
+                        if (AeroActivity.perAppService == null)
+                            AeroActivity.perAppService = new PerAppServiceHelper(mContext);
+
                         // User has assigned apps, but no service is running;
-                        if (AeroActivity.perAppService == null || !(AeroActivity.perAppService.getState())) {
+                        if (!(AeroActivity.perAppService.getState())) {
                             if (checkAllStates() && !mWarning) {
                                 AppRate.with(getActivity())
                                         .text(R.string.pref_profile_service_not_running)

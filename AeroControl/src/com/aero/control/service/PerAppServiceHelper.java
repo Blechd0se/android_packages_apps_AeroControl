@@ -20,7 +20,7 @@ public class PerAppServiceHelper {
     private PendingIntent mPendingIntent = null;
     private SharedPreferences mPrefs;
     private Context mContext;
-    private boolean mState;
+    private Boolean mState;
 
     public PerAppServiceHelper(Context context) {
         this.mContext = context;
@@ -31,6 +31,10 @@ public class PerAppServiceHelper {
     public final void setState(boolean state) { mState = state; }
 
     public final boolean getState() {
+
+        if (mState == null)
+            shouldBeStarted();
+
         return mState;
     }
 
