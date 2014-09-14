@@ -38,20 +38,14 @@ public class AeroFragment extends Fragment {
     public ViewGroup root;
     public AeroAdapter adapter;
     public List<adapterInit> mOverviewData= new ArrayList<adapterInit>();
-    public AeroFragment mAeroFragment;
     public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
     public boolean mVisible = true;
+    private boolean mExecuted = false;
 
     public final static String FILENAME = "firstrun";
 
     public String gpu_file;
-
-    public Fragment newInstance(Context context) {
-        mAeroFragment = new AeroFragment();
-
-        return mAeroFragment;
-    }
 
     private class RefreshThread extends Thread {
 
@@ -81,7 +75,6 @@ public class AeroFragment extends Fragment {
             public void handleMessage(Message msg) {
 
                 if (msg.what >= 1) {
-
 
                     if (isVisible() && mVisible) {
                         createList();
@@ -129,15 +122,16 @@ public class AeroFragment extends Fragment {
             }
         }
 
-        try {
+        if (!mRefreshThread.isAlive()) {
             mRefreshThread.start();
             mRefreshThread.setPriority(Thread.MIN_PRIORITY);
-        } catch (Exception e) {
         }
 
         // Generate our main ListView;
         createList();
-        setPermissions();
+
+        if (!mExecuted)
+            setPermissions();
 
         AppRate.with(getActivity())
                 .text(R.string.rateIt)
@@ -185,7 +179,7 @@ public class AeroFragment extends Fragment {
         String complete_path;
         String freq_string =  "";
         String cpu_util = "";
-        int i = Runtime.getRuntime().availableProcessors();
+        final int i = Runtime.getRuntime().availableProcessors();
 
         // Get the cpu frequency for each cpu;
         for (int k = 0; k < i; k++) {
@@ -282,7 +276,6 @@ public class AeroFragment extends Fragment {
 
     public void setPermissions() {
 
-
         final String[] commands = new String[]
                 {
                         "chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
@@ -291,6 +284,7 @@ public class AeroFragment extends Fragment {
                 };
         AeroActivity.shell.setRootInfo(commands);
 
+        mExecuted = true;
     }
 
 }
