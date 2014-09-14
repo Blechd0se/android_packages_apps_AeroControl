@@ -43,6 +43,7 @@ public class PrefsActivity extends PreferenceActivity {
     public int mActionBarTitleID;
     public TextView mActionBarTitle;
     private int mCounter;
+    private CheckBoxPreference mPer_app_check, mRebootChecker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,16 +85,21 @@ public class PrefsActivity extends PreferenceActivity {
                 "red", "light", "dark"
         };
 
-        CheckBoxPreference reboot_checker = (CheckBoxPreference)root.findPreference("reboot_checker");
-        final CheckBoxPreference per_app_check = (CheckBoxPreference)root.findPreference("per_app_service");
+        if (mRebootChecker == null)
+            mRebootChecker = (CheckBoxPreference)root.findPreference("reboot_checker");
+        if (mPer_app_check == null)
+            mPer_app_check = (CheckBoxPreference)root.findPreference("per_app_service");
+
         ListPreference appTheme = (ListPreference)root.findPreference("app_theme");
         Preference about = root.findPreference("about");
         Preference version = root.findPreference("version");
         Preference legal = root.findPreference("legal");
         Preference xda = root.findPreference("xda_thread");
 
-        reboot_checker.setIcon(R.drawable.ic_action_phone);
-        per_app_check.setIcon(R.drawable.ic_action_person);
+        mRebootChecker.setIcon(R.drawable.ic_action_phone);
+        setCheckedState(mRebootChecker);
+        mPer_app_check.setIcon(R.drawable.ic_action_person);
+        setCheckedState(mPer_app_check);
         version.setIcon(R.drawable.rocket);
         xda.setIcon(R.drawable.xda);
 
@@ -101,6 +107,8 @@ public class PrefsActivity extends PreferenceActivity {
         appTheme.setEntryValues(data);
         appTheme.setEnabled(true);
         appTheme.setIcon(R.drawable.ic_action_event);
+
+
 
         try {
             version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
@@ -124,11 +132,21 @@ public class PrefsActivity extends PreferenceActivity {
             }
         });
 
-        per_app_check.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        mRebootChecker.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                setCheckedState((CheckBoxPreference)preference);
+                return false;
+            }
+        });
+
+        mPer_app_check.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                if (per_app_check.isChecked()) {
+                setCheckedState((CheckBoxPreference)preference);
+
+                if (mPer_app_check.isChecked()) {
 
                     // Only start if really down;
                     if (AeroActivity.perAppService == null)
@@ -278,6 +296,14 @@ public class PrefsActivity extends PreferenceActivity {
                 return false;
             }
         });
+    }
+
+    private final void setCheckedState(CheckBoxPreference preference) {
+
+        if (preference.isChecked())
+            preference.setSummary(R.string.enabled);
+        else
+            preference.setSummary(R.string.disabled);
     }
 
     @Override
