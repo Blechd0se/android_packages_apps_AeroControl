@@ -109,16 +109,16 @@ public class settingsHelper {
         String gpu_gov = prefs.getString(PREF_CURRENT_GPU_GOV_AVAILABLE, null);
         String gpu_max = prefs.getString(PREF_GPU_FREQ_MAX, null);
         String display_color = prefs.getString(PREF_DISPLAY_COLOR, null);
-        Boolean gpu_enb = prefs.getString(PREF_GPU_CONTROL_ACTIVE, "0").equals("1") ? true : false;
-        Boolean sweep = prefs.getString(PREF_SWEEP2WAKE, "0").equals("1") ? true : false;
-        Boolean doubletap = prefs.getString(PREF_DOUBLETAP2WAKE, "0").equals("1") ? true : false;
+        Boolean gpu_enb = getSaveBoolean(PREF_GPU_CONTROL_ACTIVE);
+        Boolean sweep = getSaveBoolean(PREF_SWEEP2WAKE);
+        Boolean doubletap = getSaveBoolean(PREF_DOUBLETAP2WAKE);
         String rgbValues = prefs.getString("rgbValues", null);
         // GET MEM VALUES FROM PREFERENCES
         String mem_ios = prefs.getString(PREF_GOV_IO_FILE, null);
-        Boolean mem_dfs = prefs.getString(PREF_DYANMIC_FSYNC, "0").equals("1") ? true : false;
-        Boolean mem_wrb = prefs.getString(PREF_WRITEBACK, "0").equals("1") ? true : false;
-        Boolean mem_fsy = prefs.getString(PREF_FSYNC, "Y").equals("Y") ? true : false;
-        Boolean mem_ksm = prefs.getString(PREF_KSM, "0").equals("1") ? true : false;
+        Boolean mem_dfs = getSaveBoolean(PREF_DYANMIC_FSYNC);
+        Boolean mem_wrb = getSaveBoolean(PREF_WRITEBACK);
+        Boolean mem_fsy = getSaveBoolean(PREF_FSYNC) ;
+        Boolean mem_ksm = getSaveBoolean(PREF_KSM);
         // Get Misc Settings from preferences
         String misc_vib = prefs.getString(AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE, null);
         String misc_amp = prefs.getString(AeroActivity.files.MISC_VIBRATOR_CONTROL_FILEAMP, null);
@@ -521,5 +521,17 @@ public class settingsHelper {
 
         defaultProfile.clear();
 
+    }
+
+    /*
+     * Fallback-method for getting *old* boolean values
+     */
+    private Boolean getSaveBoolean(final String s) {
+
+        try {
+            return prefs.getString(s, "0").equals("1") ? true : false;
+        } catch (ClassCastException e) {
+            return prefs.getBoolean(s, false);
+        }
     }
 }
