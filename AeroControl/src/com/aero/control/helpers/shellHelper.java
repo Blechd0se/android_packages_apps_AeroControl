@@ -334,7 +334,8 @@ public final class shellHelper {
      */
     public final String toMHz(String mhzString) {
 
-        if (mhzString.equals("Unavailable"))
+        if (mhzString.equals("Unavailable") ||
+                mhzString.equals("Unavaila"))
             return "Unavailable";
 
         try {
