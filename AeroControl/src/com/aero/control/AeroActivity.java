@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,7 +34,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aero.control.fragments.AeroFragment;
 import com.aero.control.fragments.CPUFragment;
@@ -57,6 +55,7 @@ import com.aero.control.service.PerAppService;
 import com.aero.control.service.PerAppServiceHelper;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public final class AeroActivity extends Activity {
 
@@ -66,10 +65,12 @@ public final class AeroActivity extends Activity {
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private ItemAdapter mAdapter;
+    public static Stack<Fragment> mFragmentStack;
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mAeroTitle;
+    private CharSequence mPreviousTitle;
 
     // Fragment Keys;
     private static final int OVERVIEW = 0;
@@ -96,8 +97,6 @@ public final class AeroActivity extends Activity {
 
     private SharedPreferences prefs;
 
-    private int mBackCounter = 0;
-
     private static final Handler mHandler = new Handler(Looper.getMainLooper());
     public static final Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     public int mActionBarTitleID;
@@ -108,7 +107,6 @@ public final class AeroActivity extends Activity {
     public static PerAppServiceHelper perAppService;
     public static FilePath files = new FilePath();
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +116,8 @@ public final class AeroActivity extends Activity {
         String a = prefs.getString("app_theme", null);
         int actionBarHeight = 0;
         getActionBar().setIcon(R.drawable.app_icon_actionbar);
+
+        mFragmentStack = new Stack<Fragment>();
 
         if (a == null)
             a = "";
@@ -319,7 +319,7 @@ public final class AeroActivity extends Activity {
     }
 
 
-    private final void selectItem(int position) {
+    private void selectItem(int position) {
 
         mDrawerLayout.closeDrawers();
 
@@ -410,6 +410,7 @@ public final class AeroActivity extends Activity {
 
     public final void setTitle(CharSequence title) {
         mTitle = title;
+        mPreviousTitle = mTitle;
         mActionBarTitle.setText(mTitle);
     }
 
@@ -435,30 +436,10 @@ public final class AeroActivity extends Activity {
     @Override
     public void onBackPressed() {
 
-        FragmentManager fm = getFragmentManager();
-
-        if (fm.getBackStackEntryCount() == 1) {
-            try {
-                fm.popBackStackImmediate();
-                return;
-            } catch (IllegalStateException e) {
-                /*
-                 * When we are on a sub-fragment and change to a parent fragment
-                 * and then press the back button we would end up in an unexpected
-                 * state, because the fragment in question was already added previously.
-                 *
-                 * We don't have to handle this case in any special means, thanks to
-                 * the back counter logic.
-                 */
-            }
+        if (mFragmentStack.size() > 1) {
+            switchContent(mFragmentStack.lastElement());
+            setTitle(mPreviousTitle);
         }
-
-        mBackCounter++;
-        Toast.makeText(this, R.string.back_for_close, Toast.LENGTH_SHORT).show();
-
-        if (mBackCounter == 2)
-            finish();
-
     }
 
     public final void showRootDialog() {
@@ -493,10 +474,8 @@ public final class AeroActivity extends Activity {
 
                 getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
                         android.R.animator.fade_out).replace(R.id.content_frame, fragment).commit();
-
-                // Reset our BackCounter
-                mBackCounter = 0;
             }
         },250);
+        mFragmentStack.push(fragment);
     }
 }
