@@ -76,6 +76,8 @@ public final class FilePath {
     public static final String MISC_VIBRATOR_CONTROL_FILE = "/sys/devices/virtual/timed_output/vibrator/vtg_level";
     public static final String MISC_VIBRATOR_CONTROL_FILEAMP = "/sys/devices/virtual/timed_output/vibrator/amp";
     public static final String MISC_THERMAL_CONTROL_FILE = "/sys/module/msm_thermal/parameters/temp_threshold";
+    public static final String MISC_TCP_CONGESTION_AVAILABLE = "/proc/sys/net/ipv4/tcp_available_congestion_control";
+    public static final String MISC_TCP_CONGESTION_CURRENT = "/proc/sys/net/ipv4/tcp_congestion_control";
 
 
     /* Used by; ProfileFragment */

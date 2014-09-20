@@ -265,6 +265,7 @@
 
     <!-- Misc Settings -->
     <string name="pref_misc_settings">Misc Settings</string>
+    <string name="pref_misc_tcp_congestion">TCP Congestion Algorithm</string>
 
     <!-- Profile Fragment -->
     <string name="pref_profile_enter_name">You have to enter a name.</string>

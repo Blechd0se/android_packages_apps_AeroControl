@@ -252,6 +252,7 @@
 
     <!-- Misc Settings -->
     <string name="pref_misc_settings">Misc Einstellungen</string>
+    <string name="pref_misc_tcp_congestion">TCP Verdichtungsalogrithmus</string>
 
     <!-- Profile Fragment -->
     <string name="pref_profile_enter_name">Du musst einen Namen eingeben.</string>

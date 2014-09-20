@@ -1,6 +1,7 @@
 package com.aero.control.fragments;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
@@ -8,8 +9,10 @@ import android.util.Log;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.CustomListPreference;
 import com.aero.control.helpers.PreferenceHandler;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -57,6 +60,8 @@ public class MiscSettingsFragment extends PreferenceFragment {
         if (PrefCat != null)
             root.removePreference(PrefCat);
 
+        final CustomListPreference tcpPreference = new CustomListPreference(getActivity());
+
         PrefCat = new PreferenceCategory(getActivity());
         PrefCat.setTitle(R.string.pref_misc_settings);
         root.addPreference(PrefCat);
@@ -70,5 +75,30 @@ public class MiscSettingsFragment extends PreferenceFragment {
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);
         }
+
+        // Needed for set-on-boot;
+        tcpPreference.setName("tcp_congestion");
+        tcpPreference.setTitle(R.string.pref_misc_tcp_congestion);
+        tcpPreference.setDialogTitle(R.string.pref_misc_tcp_congestion);
+        tcpPreference.setSummary(AeroActivity.shell.getInfo(AeroActivity.files.MISC_TCP_CONGESTION_CURRENT));
+        tcpPreference.setValue(AeroActivity.shell.getInfo(AeroActivity.files.MISC_TCP_CONGESTION_CURRENT));
+        tcpPreference.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.MISC_TCP_CONGESTION_AVAILABLE, 0, 0));
+        tcpPreference.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.MISC_TCP_CONGESTION_AVAILABLE, 0, 0));
+
+        if (new File(AeroActivity.files.MISC_TCP_CONGESTION_AVAILABLE).exists())
+            PrefCat.addPreference(tcpPreference);
+
+        tcpPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+
+                String a = (String) o;
+
+                AeroActivity.shell.setRootInfo(a, AeroActivity.files.MISC_TCP_CONGESTION_CURRENT);
+                tcpPreference.setSummary(a);
+
+                return true;
+            }
+        });
     }
 }

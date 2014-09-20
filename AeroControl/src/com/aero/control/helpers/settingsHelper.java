@@ -32,6 +32,7 @@ public class settingsHelper {
     public static final String PREF_FSYNC = "fsync";
     public static final String PREF_KSM = "ksm";
     public static final String PREF_WRITEBACK = "writeback";
+    public static final String PREF_TCP_CONGESTION = "tcp_congestion";
 
     private SharedPreferences prefs;
     private String gpu_file;
@@ -123,6 +124,7 @@ public class settingsHelper {
         String misc_vib = prefs.getString(AeroActivity.files.MISC_VIBRATOR_CONTROL_FILE, null);
         String misc_amp = prefs.getString(AeroActivity.files.MISC_VIBRATOR_CONTROL_FILEAMP, null);
         String misc_thm = prefs.getString(AeroActivity.files.MISC_THERMAL_CONTROL_FILE, null);
+        String misc_tcp = prefs.getString(PREF_TCP_CONGESTION, null);
 
         // ADD CPU COMMANDS TO THE ARRAY
         ArrayList<String> governorSettings = new ArrayList<String>();
@@ -342,6 +344,16 @@ public class settingsHelper {
                 defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.MISC_THERMAL_CONTROL_FILE) + " > " + AeroActivity.files.MISC_THERMAL_CONTROL_FILE);
 
             shell.queueWork("echo " + misc_thm + " > " + AeroActivity.files.MISC_THERMAL_CONTROL_FILE);
+        }
+
+        if (misc_tcp != null) {
+
+            shell.queueWork("chmod 0666 " + AeroActivity.files.MISC_TCP_CONGESTION_CURRENT);
+
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.MISC_TCP_CONGESTION_CURRENT) + " > " + AeroActivity.files.MISC_TCP_CONGESTION_CURRENT);
+
+            shell.queueWork("echo " + misc_tcp + " > " + AeroActivity.files.MISC_TCP_CONGESTION_CURRENT);
         }
 
 
