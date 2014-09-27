@@ -373,7 +373,8 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
             // Don't take default xml;
             if (!(s.equals("com.aero.control_preferences.xml") || s.equals("showcase_internal.xml")
-                    || s.equals("app_rate_prefs.xml") || s.equals(perAppProfileHandler + ".xml"))) {
+                    || s.equals("app_rate_prefs.xml") || s.equals(perAppProfileHandler + ".xml")
+                    || s.equals("miscSettingsStorage.xml"))) {
                 // Just for the looks;
                 s = s.replace(".xml", "");
                 if (checkState(s))

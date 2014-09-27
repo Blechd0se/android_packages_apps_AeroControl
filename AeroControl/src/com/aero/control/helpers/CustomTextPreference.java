@@ -3,14 +3,21 @@ package com.aero.control.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.EditTextPreference;
+import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewManager;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.aero.control.R;
+import com.cocosw.undobar.UndoBarController;
 
 /**
  * Created by Alexander Christ on 30.09.13.
@@ -21,7 +28,6 @@ public class CustomTextPreference extends EditTextPreference implements OnChecke
     private Context mContext;
     private TextView mTitle;
     private TextView mSummary;
-    private CheckBox mCheckBox;
 
     private String mText;
     private String mName;
@@ -159,17 +165,17 @@ public class CustomTextPreference extends EditTextPreference implements OnChecke
         mTitle.setText(mText);
         mSummary.setText(mSummaryPref);
 
-        mCheckBox = (CheckBox) view.findViewById(R.id.checkbox_pref);
-        mCheckBox.setOnCheckedChangeListener(this);
+        CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkbox_pref);
+        checkbox.setOnCheckedChangeListener(this);
 
         if (isChecked() != null)
-            mCheckBox.setChecked(isChecked());
+            checkbox.setChecked(isChecked());
 
         View seperator = (View) view.findViewById(R.id.separator);
 
         // Some fragments don't need the new set on boot functionality for each element;
         if (isHidden()) {
-            mCheckBox.setVisibility(View.GONE);
+            checkbox.setVisibility(View.GONE);
             seperator.setVisibility(View.GONE);
         }
     }

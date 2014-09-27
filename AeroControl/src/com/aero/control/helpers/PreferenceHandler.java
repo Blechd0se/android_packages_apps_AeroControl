@@ -102,6 +102,29 @@ public class PreferenceHandler {
     }
 
     /**
+     * Gets a file from a given path and adds a Preference on top of it
+     *
+     * @param path     => Generates a single preference from a complete path
+     *
+     * @return nothing
+     */
+    public final void genPrefFromSingleFile(String path) {
+
+        String[] array = path.split("/");
+        String paraName = "";
+        int i = 0;
+
+        for (String a : array) {
+            if (array.length - 1 == i)
+                paraName = a;
+            i++;
+        }
+        path = path.replace("/" + paraName, "");
+
+        generateSettings(paraName, path, false);
+    }
+
+    /**
      * Gets all files in a given dictionary and adds Preferences on top of them
      *
      * @param parameter     => actual file to read/write
@@ -110,7 +133,7 @@ public class PreferenceHandler {
      *
      * @return nothing
      */
-    private final void generateSettings(final String parameter, final String path, final boolean flag) {
+    private void generateSettings(final String parameter, final String path, final boolean flag) {
 
         final CustomTextPreference prefload = new CustomTextPreference(mContext);
         // Strings saves the complete path for a given governor;

@@ -8,6 +8,7 @@ public class adapterInit {
 
     public String name;
     public String content;
+    public int file;
 
     public adapterInit() {
         super();
@@ -16,6 +17,12 @@ public class adapterInit {
     public adapterInit(String name, String content) {
         super();
         this.name = name;
+        this.content = content;
+    }
+
+    public adapterInit(int file, String content){
+        super();
+        this.file = file;
         this.content = content;
     }
 

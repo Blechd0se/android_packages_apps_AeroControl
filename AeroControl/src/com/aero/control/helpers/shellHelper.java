@@ -12,7 +12,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -148,10 +156,10 @@ public final class shellHelper {
      */
     public final String getInfo(String s) {
 
-        String info;
+        String info = "Unavailable";
 
-        if (s == null || (!new File(s).exists()))
-            return "Unavailable";
+        if (s == null || !(new File(s).exists()))
+            return info;
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(s), BUFF_LEN);
@@ -160,13 +168,17 @@ public final class shellHelper {
             } finally {
                 reader.close();
             }
+
+            if (info == null)
+                info = "Unavailable";
+
             return info;
         } catch (IOException e) {
             Log.e(LOG_TAG,
                     "IO Exception when trying to get information.",
                     e);
 
-            return "Unavailable";
+            return info;
         }
     }
 
@@ -313,7 +325,7 @@ public final class shellHelper {
     public final String getInfoString(String s) {
 
         int open, close;
-        String finalString;
+        String finalString = "Unavailable";
 
         open = s.indexOf("[");
         close = s.lastIndexOf("]");
@@ -321,7 +333,7 @@ public final class shellHelper {
             finalString = s.substring(open + 1, close);
             return finalString;
         } else {
-            return "Unavailable";
+            return finalString;
         }
     }
 
@@ -577,6 +589,74 @@ public final class shellHelper {
             Log.e(LOG_TAG, "Do you even root, bro? :/", e);
         }
         return "Unavailable";
+    }
+
+
+    /**
+     * This Method returns an Array, with root rights
+     *
+     * @param command   => the actual command which runs with root-rights
+     * @param split     => delimiter, which seperates the strings (mostly \n)
+     *
+     * @return String[]
+     */
+    public final String[] getRootArray(String command, String split) {
+
+        //String[] output = new String[] { "Unavailable" };
+        ArrayList<String> temp = new ArrayList();
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        try {
+            final Process rooting = Runtime.getRuntime().exec("su");
+
+            DataOutputStream stdin = new DataOutputStream(rooting.getOutputStream());
+
+            stdin.writeBytes(command + "\n");
+            final InputStream stdout = rooting.getInputStream();
+            int read;
+            String tmp = "";
+
+            Callable<Integer> readTask = new Callable<Integer>() {
+                @Override
+                public Integer call() throws Exception {
+                    return stdout.read(buffer);
+                }
+            };
+
+            while(true){
+
+                Future<Integer> future = executor.submit(readTask);
+
+                try {
+                    read = future.get(500, TimeUnit.MILLISECONDS);
+                } catch (ExecutionException e) {
+                    return null;
+                } catch (InterruptedException e) {
+                    return null;
+                } catch (TimeoutException e) {
+                    return null;
+                }
+                if (read == -1)
+                    return null;
+
+                tmp += new String(buffer, 0, read);
+
+                if(read < BUFF_LEN){
+                    //we have read everything
+                    break;
+                }
+            }
+
+            for (String a : tmp.split(split)) {
+                temp.add(a);
+            }
+
+            return temp.toArray(new String[0]);
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Do you even root, bro? :/", e);
+        }
+        return null;
     }
 
     /**
