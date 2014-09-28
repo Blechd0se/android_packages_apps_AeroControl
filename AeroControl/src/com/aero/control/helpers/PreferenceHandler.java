@@ -14,9 +14,6 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 
-import java.io.File;
-
-
 /**
  * Created by Alexander Christ on 05.03.14.
  */
@@ -139,10 +136,9 @@ public class PreferenceHandler {
         // Strings saves the complete path for a given governor;
         final String parameterPath = path + "/" + parameter;
         final String summary = AeroActivity.shell.getInfo(parameterPath);
-        final File checkFile = new File(parameterPath);
 
         // If the file doesn't exist, no need to waste time;
-        if (!(checkFile.exists()))
+        if (!(AeroActivity.genHelper.doesExist(parameterPath)))
             return;
 
         Integer tmp = null;

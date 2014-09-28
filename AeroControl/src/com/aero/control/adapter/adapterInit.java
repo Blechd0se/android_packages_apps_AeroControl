@@ -10,10 +10,6 @@ public class adapterInit {
     public String content;
     public int file;
 
-    public adapterInit() {
-        super();
-    }
-
     public adapterInit(String name, String content) {
         super();
         this.name = name;

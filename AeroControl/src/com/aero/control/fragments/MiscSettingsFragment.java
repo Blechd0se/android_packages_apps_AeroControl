@@ -300,7 +300,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
         tcpPreference.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.MISC_TCP_CONGESTION_AVAILABLE, 0, 0));
         tcpPreference.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.MISC_TCP_CONGESTION_AVAILABLE, 0, 0));
 
-        if (new File(AeroActivity.files.MISC_TCP_CONGESTION_AVAILABLE).exists())
+        if (AeroActivity.genHelper.doesExist(AeroActivity.files.MISC_TCP_CONGESTION_AVAILABLE))
             PrefCat.addPreference(tcpPreference);
 
         tcpPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {

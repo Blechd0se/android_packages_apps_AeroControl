@@ -10,10 +10,6 @@ public class statisticInit {
     public String mTimeInState;
     public String mPercentage;
 
-    public statisticInit() {
-        super();
-    }
-
     public statisticInit(String frequency, String timeInState, String percentage) {
         super();
         this.mFrequency = frequency;

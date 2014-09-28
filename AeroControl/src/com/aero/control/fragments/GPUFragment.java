@@ -25,7 +25,6 @@ import com.aero.control.helpers.CustomListPreference;
 import com.aero.control.helpers.CustomPreference;
 import com.aero.control.helpers.PreferenceHandler;
 
-import java.io.File;
 /**
  * Created by ac on 16.09.13.
  */
@@ -125,32 +124,32 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
         /* Find correct gpu path */
         for (String a : AeroActivity.files.GPU_FILES) {
-            if (new File(a).exists()) {
+            if (AeroActivity.genHelper.doesExist(a)) {
                 gpu_file = a;
                 break;
             }
         }
 
-        if(!(new File(AeroActivity.files.SWEEP2WAKE).exists()))
+        if(!(AeroActivity.genHelper.doesExist(AeroActivity.files.SWEEP2WAKE)))
             gpuCategory.removePreference(mSweep2wake);
 
-        if(!(new File(AeroActivity.files.DOUBLETAP2WAKE).exists()))
+        if(!(AeroActivity.genHelper.doesExist(AeroActivity.files.DOUBLETAP2WAKE)))
             gpuCategory.removePreference(mDoubletap2Wake);
 
-        if(!(new File(AeroActivity.files.GPU_CONTROL_ACTIVE).exists()))
+        if(!(AeroActivity.genHelper.doesExist(AeroActivity.files.GPU_CONTROL_ACTIVE)))
                 gpuCategory.removePreference(mGPUControl);
 
         if (gpu_file == null)
             gpuCategory.removePreference(mGPUControlFrequencies);
 
-        if (!(new File(AeroActivity.files.COLOR_CONTROL).exists()))
+        if (!(AeroActivity.genHelper.doesExist(AeroActivity.files.COLOR_CONTROL)))
             gpuCategory.removePreference(mColorControl);
 
         if (AeroActivity.shell.getInfo(AeroActivity.files.DISPLAY_COLOR).equals("Unavailable"))
             gpuCategory.removePreference(mDisplayControl);
 
         final Preference gpu_gov_settings = root.findPreference("gpu_gov_settings");
-        if (new File("/sys/module/msm_kgsl_core/parameters").exists()) {
+        if (AeroActivity.genHelper.doesExist(("/sys/module/msm_kgsl_core/parameters"))) {
             gpu_gov_settings.setOrder(35);
 
             gpu_gov_settings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -190,7 +189,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         mDisplayControl.setEntryValues(display_values);
 
         // Just throw in our frequencies;
-        if (new File(AeroActivity.files.GPU_FREQ_NEXUS4_VALUES).exists()) {
+        if (AeroActivity.genHelper.doesExist(AeroActivity.files.GPU_FREQ_NEXUS4_VALUES)) {
             mGPUControlFrequencies.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.GPU_FREQ_NEXUS4_VALUES, 1, 0));
             mGPUControlFrequencies.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.GPU_FREQ_NEXUS4_VALUES, 0, 0));
         } else {
@@ -198,7 +197,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             mGPUControlFrequencies.setEntryValues(R.array.gpu_frequency_list_values);
         }
 
-        if (new File(AeroActivity.files.GPU_GOV_BASE + "governor").exists()) {
+        if (AeroActivity.genHelper.doesExist(AeroActivity.files.GPU_GOV_BASE + "governor")) {
             mGPUGovernor.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.GPU_GOV_BASE + "available_governors", 0, 0));
             mGPUGovernor.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.GPU_GOV_BASE + "available_governors", 0, 0));
             mGPUGovernor.setValue(AeroActivity.shell.getInfo(AeroActivity.files.GPU_GOV_BASE + "governor"));
@@ -469,7 +468,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        if (new File(AeroActivity.files.GPU_GOV_BASE).exists()) {
+        if (AeroActivity.genHelper.doesExist(AeroActivity.files.GPU_GOV_BASE)) {
             prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
             String a = prefs.getString("app_theme", null);
 

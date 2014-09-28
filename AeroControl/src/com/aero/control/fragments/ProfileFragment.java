@@ -158,8 +158,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
             case R.id.action_add_item:
 
                 // Check if there are actual changes;
-                final File defaultFile = new File(AeroActivity.files.sharedPrefsPath + "com.aero.control_preferences.xml");
-                if (!(defaultFile.exists())) {
+                if (!(AeroActivity.genHelper.doesExist(AeroActivity.files.sharedPrefsPath + "com.aero.control_preferences.xml"))) {
                     Toast.makeText(mContext, R.string.pref_profile_no_changes , Toast.LENGTH_LONG).show();
                     break;
                 }
@@ -267,12 +266,11 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         final SharedPreferences AeroProfile = mContext.getSharedPreferences(s, Context.MODE_PRIVATE);
-        final File defaultFile = new File(AeroActivity.files.sharedPrefsPath + "com.aero.control_preferences.xml");
 
         // Init the perApp data here, so we can re-use it for each profile
         final perAppHelper perApp = new perAppHelper(mContext);
 
-        if(!(defaultFile.exists()))
+        if(!(AeroActivity.genHelper.doesExist(AeroActivity.files.sharedPrefsPath + "com.aero.control_preferences.xml")))
             return;
 
         // Flag if we add a profile to the list which already exists as a file;
@@ -585,7 +583,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
     private boolean deleteProfile(String ProfileName) {
 
-        final File prefFile = new File (AeroActivity.files.sharedPrefsPath + ProfileName + ".xml");
+        final File prefFile = new File(AeroActivity.files.sharedPrefsPath + ProfileName + ".xml");
 
         mPerAppPrefs.edit().remove(ProfileName).commit();
 
@@ -674,11 +672,11 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
     private  void renameProfile(CharSequence oldName, String newName, TextView txtView, TextView txtViewSummary) {
 
-        final File prefFile = new File (AeroActivity.files.sharedPrefsPath + oldName.toString() + ".xml");
+        final File prefFile = new File(AeroActivity.files.sharedPrefsPath + oldName.toString() + ".xml");
 
         newName = newName.replace("/", "-");
 
-        prefFile.renameTo(new File (AeroActivity.files.sharedPrefsPath + newName + ".xml"));
+        prefFile.renameTo(AeroActivity.genHelper.getNewFile(AeroActivity.files.sharedPrefsPath + newName + ".xml"));
         prefFile.delete();
 
         if (prefFile.exists()) {

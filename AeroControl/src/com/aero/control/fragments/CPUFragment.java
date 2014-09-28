@@ -30,7 +30,6 @@ import com.aero.control.helpers.CustomPreference;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -101,7 +100,7 @@ public class CPUFragment extends PreferenceFragment {
         cpuCategory.addPreference(min_frequency);
 
         final Preference cpu_hotplug = root.findPreference("hotplug_control");
-        if (new File("/sys/kernel/hotplug_control").exists()) {
+        if (AeroActivity.genHelper.doesExist("/sys/kernel/hotplug_control")) {
             cpu_hotplug.setOrder(10);
             cpu_hotplug.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
@@ -130,7 +129,7 @@ public class CPUFragment extends PreferenceFragment {
         }
 
         final CustomPreference voltage_control = (CustomPreference)root.findPreference("voltage_values");
-        if (new File("/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table").exists()) {
+        if (AeroActivity.genHelper.doesExist("/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table")) {
             voltage_control.setOrder(15);
             voltage_control.setLookUpDefault(AeroActivity.files.VOLTAGE_PATH);
             voltage_control.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

@@ -18,7 +18,6 @@ import com.aero.control.adapter.AeroAdapter;
 import com.aero.control.adapter.adapterInit;
 import com.espian.showcaseview.ShowcaseView;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -116,7 +115,7 @@ public class AeroFragment extends Fragment {
 
         /* Find correct gpu path */
         for (String a : AeroActivity.files.GPU_FILES_RATE) {
-            if (new File(a).exists()) {
+            if (AeroActivity.genHelper.doesExist(a)) {
                 gpu_file = a;
                 break;
             }
@@ -189,7 +188,7 @@ public class AeroFragment extends Fragment {
         freq_string = freq_string.replace("Unavailable", " Offline ");
 
         // There is no point in wasting cpu cycles if no file exists;
-        if (!(new File(SCALE_CUR_FILE + 0 + SCALE_CPU_UTIL).exists()))
+        if (!(AeroActivity.genHelper.doesExist(SCALE_CUR_FILE + 0 + SCALE_CPU_UTIL)))
             return freq_string;
 
         // Get the last reported load for each cpu (if available);

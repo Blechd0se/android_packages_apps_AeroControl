@@ -537,9 +537,7 @@ public class StatisticsFragment extends Fragment {
 
     public final int getCpuData() {
 
-        File cpu_stats = new File(AeroActivity.files.TIME_IN_STATE_PATH);
-
-        if (!cpu_stats.exists())
+        if (!(AeroActivity.genHelper.doesExist(AeroActivity.files.TIME_IN_STATE_PATH)))
             return 0;
 
         data = AeroActivity.shell.getInfo(AeroActivity.files.TIME_IN_STATE_PATH, true);
