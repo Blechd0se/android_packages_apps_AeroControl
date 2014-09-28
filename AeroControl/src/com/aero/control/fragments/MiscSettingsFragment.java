@@ -45,7 +45,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
     private Dialog mFileDialog;
     private Context mContext;
 
-    private static final String mMiscSettingsStorage = "miscSettingsStorage";
+    private static final String MISC_SETTINGS_STORAGE = "miscSettingsStorage";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
         this.mContext = getActivity();
 
         // Always rebuild;
-        mMiscSettings = mContext.getSharedPreferences(mMiscSettingsStorage, mContext.MODE_PRIVATE);
+        mMiscSettings = mContext.getSharedPreferences(MISC_SETTINGS_STORAGE, mContext.MODE_PRIVATE);
 
         // Load parameter data:
         loadParalist();
@@ -150,10 +150,11 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
                             public void onClick(DialogInterface dialog, int id) {
 
                                 SharedPreferences.Editor editor = mMiscSettings.edit();
+                                SharedPreferences.Editor aero_editor = mPrefs.edit();
                                 final Map<String,?> keys = mMiscSettings.getAll();
 
                                 int i = 0;
-                                for (String s : allMiscSettings) {
+                                for (String s : preferenceData) {
                                     if (miscSettingsDelete.get(i)) {
                                         for (final Map.Entry<String,?> entry : keys.entrySet()) {
 
@@ -164,6 +165,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
 
                                             if (preferenceData[i].equals(value)) {
                                                 editor.remove(key).commit();
+                                                aero_editor.remove(key).commit();
                                             }
                                         }
                                     }

@@ -10,6 +10,7 @@ import com.aero.control.AeroActivity;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Created by Alexander Christ on 05.01.14.
@@ -33,8 +34,10 @@ public class settingsHelper {
     public static final String PREF_KSM = "ksm";
     public static final String PREF_WRITEBACK = "writeback";
     public static final String PREF_TCP_CONGESTION = "tcp_congestion";
+    private static final String MISC_SETTINGS_STORAGE = "miscSettingsStorage";
 
     private SharedPreferences prefs;
+    private SharedPreferences mMiscSettings;
     private String gpu_file;
     public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
@@ -73,7 +76,9 @@ public class settingsHelper {
         if (Profile == null)
             prefs = PreferenceManager.getDefaultSharedPreferences(context);
         else
-            prefs = context.getSharedPreferences(Profile, Context.MODE_PRIVATE);
+            prefs = context.getSharedPreferences(Profile, context.MODE_PRIVATE);
+
+        mMiscSettings = context.getSharedPreferences(MISC_SETTINGS_STORAGE, context.MODE_PRIVATE);
 
         // GET CPU VALUES AND COMMANDS FROM PREFERENCES
         String cpu_max = prefs.getString(PREF_CPU_MAX_FREQ, null);
@@ -354,6 +359,28 @@ public class settingsHelper {
                 defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.MISC_TCP_CONGESTION_CURRENT) + " > " + AeroActivity.files.MISC_TCP_CONGESTION_CURRENT);
 
             shell.queueWork("echo " + misc_tcp + " > " + AeroActivity.files.MISC_TCP_CONGESTION_CURRENT);
+        }
+
+        // Generic Misc Settings;
+        if (mMiscSettings != null) {
+            final Map<String,?> misc_keys = mMiscSettings.getAll();
+            final Map<String,?> aero_keys = prefs.getAll();
+            for (final Map.Entry<String,?> a : misc_keys.entrySet()) {
+
+                for (final Map.Entry<String,?> b : aero_keys.entrySet()) {
+
+                    if (a.getKey().equals(b.getKey())) {
+                        shell.queueWork("chmod 0666 " + b.getKey());
+
+                        if (Profile != null)
+                            defaultProfile.add("echo " + shell.getInfo(b.getKey()) + " > " + b.getKey());
+
+                        shell.queueWork("echo " + b.getValue() + " > " + b.getKey());
+                    }
+
+                }
+
+            }
         }
 
 
