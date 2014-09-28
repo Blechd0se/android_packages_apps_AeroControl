@@ -16,8 +16,9 @@ import com.aero.control.helpers.PreferenceHandler;
  */
 public class MemoryDalvikFragment extends PreferenceFragment {
 
-    public PreferenceScreen root;
-    public PreferenceCategory PrefCat;
+    private PreferenceScreen root;
+    private PreferenceCategory PrefCat;
+    private TextView mActionBarTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,11 +26,16 @@ public class MemoryDalvikFragment extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
-        TextView mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
-        mActionBarTitle.setText(R.string.pref_dalvik_setttings);
+        mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
+        setTitle();
 
         // Load our custom preferences;
         loadDalvik();
+    }
+
+    public final void setTitle() {
+        if (mActionBarTitle != null)
+            mActionBarTitle.setText(R.string.pref_dalvik_setttings);
     }
 
     public void loadDalvik() {

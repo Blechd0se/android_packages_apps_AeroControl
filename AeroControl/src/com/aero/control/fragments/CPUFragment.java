@@ -41,8 +41,6 @@ import java.util.HashSet;
 /**
  * Created by ac on 03.10.13.
  *
- * TODO: Simplify those static strings
- *
  */
 public class CPUFragment extends PreferenceFragment {
 
@@ -57,6 +55,10 @@ public class CPUFragment extends PreferenceFragment {
     private SharedPreferences prefs;
     private ShowcaseView.ConfigOptions mConfigOptions;
     private ShowcaseView mShowCase;
+
+    private CPUHotplugFragment mHotplugFragment;
+    private VoltageFragment mVoltageFragment;
+
     private static final ArrayList<String> mVselList = new ArrayList<String>();
 
     public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
@@ -104,13 +106,22 @@ public class CPUFragment extends PreferenceFragment {
             cpu_hotplug.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    getFragmentManager()
-                        .beginTransaction()
-                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                            .replace(R.id.content_frame, new CPUHotplugFragment())
-                            .addToBackStack("Hotplug")
-                            .commit();
 
+                    if (mHotplugFragment == null)
+                            mHotplugFragment = new CPUHotplugFragment();
+
+                    AeroActivity.mHandler.postDelayed(new Runnable()  {
+                        @Override
+                        public void run() {
+                            getFragmentManager()
+                                    .beginTransaction()
+                                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                                    .replace(R.id.content_frame, mHotplugFragment)
+                                    .addToBackStack("Hotplug")
+                                    .commit();
+                            mHotplugFragment.setTitle();
+                        }
+                    },AeroActivity.genHelper.getDefaultDelay());
                     return true;
                 }
             });
@@ -125,13 +136,22 @@ public class CPUFragment extends PreferenceFragment {
             voltage_control.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    getFragmentManager()
-                            .beginTransaction()
-                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                            .replace(R.id.content_frame, new VoltageFragment())
-                            .addToBackStack("Voltage")
-                            .commit();
 
+                    if (mVoltageFragment == null)
+                        mVoltageFragment = new VoltageFragment();
+
+                    AeroActivity.mHandler.postDelayed(new Runnable()  {
+                        @Override
+                        public void run() {
+                            getFragmentManager()
+                                    .beginTransaction()
+                                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                                    .replace(R.id.content_frame, mVoltageFragment)
+                                    .addToBackStack("Voltage")
+                                    .commit();
+                            mVoltageFragment.setTitle();
+                        }
+                    },AeroActivity.genHelper.getDefaultDelay());
                     return true;
                 }
             });

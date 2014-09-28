@@ -1,5 +1,6 @@
 package com.aero.control.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
@@ -16,8 +17,9 @@ import com.aero.control.helpers.PreferenceHandler;
  */
 public class CPUHotplugFragment extends PreferenceFragment {
 
-    public PreferenceScreen root;
-    public PreferenceCategory PrefCat;
+    private PreferenceScreen root;
+    private PreferenceCategory PrefCat;
+    private TextView mActionBarTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,11 +27,16 @@ public class CPUHotplugFragment extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
-        TextView mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
-        mActionBarTitle.setText(R.string.perf_cpu_hotplug_driver);
+        mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
+        setTitle();
 
         // Load our custom preferences;
         loadHotplug();
+    }
+
+    public final void setTitle() {
+        if (mActionBarTitle != null)
+            mActionBarTitle.setText(R.string.perf_cpu_hotplug_driver);
     }
 
     public void loadHotplug() {

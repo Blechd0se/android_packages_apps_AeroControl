@@ -43,6 +43,7 @@ import com.aero.control.fragments.MemoryFragment;
 import com.aero.control.fragments.MiscSettingsFragment;
 import com.aero.control.fragments.ProfileFragment;
 import com.aero.control.fragments.StatisticsFragment;
+import com.aero.control.helpers.GenericHelper;
 import com.aero.control.testsuite.TestSuiteFragment;
 import com.aero.control.fragments.UpdaterFragment;
 import com.aero.control.helpers.FilePath;
@@ -97,7 +98,7 @@ public final class AeroActivity extends Activity {
 
     private SharedPreferences prefs;
 
-    private static final Handler mHandler = new Handler(Looper.getMainLooper());
+    public static final Handler mHandler = new Handler(Looper.getMainLooper());
     public static final Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     public int mActionBarTitleID;
     public TextView mActionBarTitle;
@@ -106,6 +107,7 @@ public final class AeroActivity extends Activity {
     public static final shellHelper shell = new shellHelper();
     public static PerAppServiceHelper perAppService;
     public static FilePath files = new FilePath();
+    public static GenericHelper genHelper = new GenericHelper();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -475,7 +477,7 @@ public final class AeroActivity extends Activity {
                 getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
                         android.R.animator.fade_out).replace(R.id.content_frame, fragment).commit();
             }
-        },250);
+        },genHelper.getDefaultDelay());
         mFragmentStack.push(fragment);
     }
 }

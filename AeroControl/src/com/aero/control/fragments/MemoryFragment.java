@@ -45,19 +45,20 @@ import java.util.ArrayList;
  */
 public class MemoryFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
-    public ShowcaseView.ConfigOptions mConfigOptions;
-    public ShowcaseView mShowCase;
-    public PreferenceCategory PrefCat;
-    public PreferenceScreen root;
+    private ShowcaseView.ConfigOptions mConfigOptions;
+    private ShowcaseView mShowCase;
+    private PreferenceCategory PrefCat;
+    private PreferenceScreen root;
     private SharedPreferences prefs;
 
-    public boolean showDialog = true;
+    private boolean showDialog = true;
 
     private CheckBoxPreference mZCache, mLowMemoryPref;
     private CustomPreference mDynFSync, mWriteBackControl, mFsync, mKSMSettings;
     private Preference mFSTrimToggle, mDalvikSettings;
     private CustomListPreference mIOScheduler;
     private String mFileSystem;
+    private MemoryDalvikFragment mMemoryDalvikFragment;
 
     private static final String MEMORY_SETTINGS_CATEGORY = "memory_settings";
     private static final String IO_SETTINGS_CATEGORY = "io_scheduler_parameter";
@@ -352,12 +353,22 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         } else if (preference == mFSTrimToggle) {
             fsTrimToggleClick();
         } else if (preference == mDalvikSettings) {
-            getFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                    .replace(R.id.content_frame, new MemoryDalvikFragment())
-                    .addToBackStack("Memory")
-                    .commit();
+
+            if (mMemoryDalvikFragment == null)
+                mMemoryDalvikFragment = new MemoryDalvikFragment();
+
+            AeroActivity.mHandler.postDelayed(new Runnable()  {
+                @Override
+                public void run() {
+                    getFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                            .replace(R.id.content_frame, mMemoryDalvikFragment)
+                            .addToBackStack("Memory")
+                            .commit();
+                    mMemoryDalvikFragment.setTitle();
+                }
+            },AeroActivity.genHelper.getDefaultDelay());
         }
 
         // If its checked, we want to save it;

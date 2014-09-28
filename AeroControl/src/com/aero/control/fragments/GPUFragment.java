@@ -39,6 +39,8 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     private PreferenceCategory PrefCat;
     private PreferenceScreen root;
 
+    private GPUGovernorFragment mGPUGovernorFragment;
+
     private CustomPreference mGPUControl, mSweep2wake, mDoubletap2Wake, mColorControl;
     private CustomListPreference mGPUControlFrequencies, mGPUGovernor, mDisplayControl;
 
@@ -154,13 +156,22 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             gpu_gov_settings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    getFragmentManager()
-                            .beginTransaction()
-                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                            .replace(R.id.content_frame, new GPUGovernorFragment())
-                            .addToBackStack("GPU Governor")
-                            .commit();
 
+                    if (mGPUGovernorFragment == null)
+                        mGPUGovernorFragment = new GPUGovernorFragment();
+
+                    AeroActivity.mHandler.postDelayed(new Runnable()  {
+                        @Override
+                        public void run() {
+                            getFragmentManager()
+                                    .beginTransaction()
+                                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                                    .replace(R.id.content_frame, mGPUGovernorFragment)
+                                    .addToBackStack("GPU Governor")
+                                    .commit();
+                            mGPUGovernorFragment.setTitle();
+                        }
+                    },AeroActivity.genHelper.getDefaultDelay());
                     return true;
                 }
             });

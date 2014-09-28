@@ -25,10 +25,11 @@ import java.util.ArrayList;
  */
 public class VoltageFragment extends PreferenceFragment {
 
-    public PreferenceScreen root;
-    public PreferenceCategory PrefCat;
-    final ArrayList<String> voltList = new ArrayList<String>();
+    private PreferenceScreen root;
+    private PreferenceCategory PrefCat;
+    private final ArrayList<String> voltList = new ArrayList<String>();
     private SharedPreferences mPrefs;
+    private TextView mActionBarTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,12 +38,18 @@ public class VoltageFragment extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
-        TextView mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
-        mActionBarTitle.setText(R.string.perf_voltage_control);
+        mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
+        setTitle();
 
         // Load our custom preferences;
         loadVoltage();
     }
+
+    public final void setTitle() {
+        if (mActionBarTitle != null)
+            mActionBarTitle.setText(R.string.perf_voltage_control);
+    }
+
     // Create our options menu;
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

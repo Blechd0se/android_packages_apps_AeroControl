@@ -17,8 +17,9 @@ import com.aero.control.helpers.PreferenceHandler;
  */
 public class GPUGovernorFragment extends PreferenceFragment {
 
-    public PreferenceScreen root;
-    public PreferenceCategory PrefCat;
+    private PreferenceScreen root;
+    private PreferenceCategory PrefCat;
+    private TextView mActionBarTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,11 +27,16 @@ public class GPUGovernorFragment extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
-        TextView mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
-        mActionBarTitle.setText(R.string.perf_gpu_gov);
+        mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
+        setTitle();
 
         // Load our custom preferences;
         loadGPUGov();
+    }
+
+    public final void setTitle() {
+        if (mActionBarTitle != null)
+            mActionBarTitle.setText(R.string.perf_gpu_gov);
     }
 
     public void loadGPUGov() {
