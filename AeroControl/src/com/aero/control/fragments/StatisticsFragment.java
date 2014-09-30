@@ -99,20 +99,7 @@ public class StatisticsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String a = prefs.getString("app_theme", null);
-
-        if (a == null)
-            a = "";
-
-        if (a.equals("red"))
-            inflater.inflate(R.menu.statistic_menu, menu);
-        else if (a.equals("light"))
-            inflater.inflate(R.menu.statistic_menu, menu);
-        else if (a.equals("dark"))
-            inflater.inflate(R.menu.statistic_menu_light, menu);
-        else
-            inflater.inflate(R.menu.statistic_menu, menu);
+        inflater.inflate(R.menu.statistic_menu, menu);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -180,6 +167,7 @@ public class StatisticsFragment extends Fragment {
         TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 
         builder.setTitle(R.string.proceed_with_reset);
+        builder.setIcon(R.drawable.warning);
 
         aboutText.setText(R.string.delete_statistics);
 

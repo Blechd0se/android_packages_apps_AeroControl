@@ -72,19 +72,8 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
-        String a = mPrefs.getString("app_theme", null);
 
-        if (a == null)
-            a = "";
-
-        if (a.equals("red"))
-            inflater.inflate(R.menu.misc_menu, menu);
-        else if (a.equals("light"))
-            inflater.inflate(R.menu.misc_menu, menu);
-        else if (a.equals("dark"))
-            inflater.inflate(R.menu.profiles_menu_light, menu);
-        else
-            inflater.inflate(R.menu.misc_menu, menu);
+        inflater.inflate(R.menu.misc_menu, menu);
 
         super.onCreateOptionsMenu(menu, inflater);
 
@@ -134,6 +123,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
                 final String[] preferenceData = allMiscSettings.toArray(new String[0]);
 
                 dialog.setTitle(R.string.pref_misc_delete_misc);
+                dialog.setIcon(R.drawable.warning);
                 dialog.setMultiChoiceItems(preferenceData, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {

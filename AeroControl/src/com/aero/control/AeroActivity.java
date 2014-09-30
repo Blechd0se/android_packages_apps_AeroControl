@@ -7,14 +7,12 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -96,8 +94,6 @@ public final class AeroActivity extends Activity {
     private MiscSettingsFragment mMiscSettingsFragment;
     private TestSuiteFragment mTestSuiteFragment;
 
-    private SharedPreferences prefs;
-
     public static final Handler mHandler = new Handler(Looper.getMainLooper());
     public static final Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     public int mActionBarTitleID;
@@ -114,24 +110,10 @@ public final class AeroActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String a = prefs.getString("app_theme", null);
         int actionBarHeight = 0;
         getActionBar().setIcon(R.drawable.app_icon_actionbar);
 
         mFragmentStack = new Stack<Fragment>();
-
-        if (a == null)
-            a = "";
-
-        if (a.equals("red"))
-            setTheme(R.style.RedHolo);
-        else if (a.equals("light"))
-            setTheme(android.R.style.Theme_Holo_Light);
-        else if (a.equals("dark"))
-            setTheme(android.R.style.Theme_Holo_Light_DarkActionBar);
-        else
-            setTheme(R.style.RedHolo);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
                 !(ViewConfiguration.get(getBaseContext()).hasPermanentMenuKey())) {
@@ -173,7 +155,7 @@ public final class AeroActivity extends Activity {
 
         if (actionBarHeight != 0) {
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)mDrawerLayout.getLayoutParams();
-            params.setMargins(0, actionBarHeight + (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 26, getResources().getDisplayMetrics()), 0, 0);
+            params.setMargins(0, actionBarHeight + (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics()), 0, 0);
             mDrawerLayout.setLayoutParams(params);
         }
 
@@ -261,20 +243,7 @@ public final class AeroActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String a = prefs.getString("app_theme", null);
-
-        if (a == null)
-            a = "";
-
-        if (a.equals("red"))
-            inflater.inflate(R.menu.main, menu);
-        else if (a.equals("light"))
-            inflater.inflate(R.menu.main, menu);
-        else if (a.equals("dark"))
-            inflater.inflate(R.menu.main_light, menu);
-        else
-            inflater.inflate(R.menu.main, menu);
+        inflater.inflate(R.menu.main, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -452,7 +421,7 @@ public final class AeroActivity extends Activity {
         TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 
         builder.setTitle(R.string.not_rooted);
-        builder.setIcon(R.drawable.ic_action_warning);
+        builder.setIcon(R.drawable.warning);
 
         aboutText.setText(getText(R.string.root_required));
         builder.setCancelable(false);

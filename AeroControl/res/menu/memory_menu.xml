@@ -2,7 +2,7 @@
 
     <item android:id="@+id/action_io_settings"
         android:title="@string/pref_io_scheduler"
-        android:icon="@drawable/ic_action_phone"
+        android:icon="@drawable/ic_action_phone_light"
         android:showAsAction="always" />
 
 </menu>

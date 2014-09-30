@@ -34,7 +34,6 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     public boolean checkmSweep2wake;
     public boolean checkDoubletap2wake;
     public String[] mColorValues;
-    private SharedPreferences prefs;
     private PreferenceCategory PrefCat;
     private PreferenceScreen root;
 
@@ -202,7 +201,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             mGPUGovernor.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.GPU_GOV_BASE + "available_governors", 0, 0));
             mGPUGovernor.setValue(AeroActivity.shell.getInfo(AeroActivity.files.GPU_GOV_BASE + "governor"));
             mGPUGovernor.setSummary(AeroActivity.shell.getInfo(AeroActivity.files.GPU_GOV_BASE + "governor"));
-            mGPUGovernor.setDialogIcon(R.drawable.gpu_dark);
+            mGPUGovernor.setDialogIcon(R.drawable.device_old);
         } else {
             gpuCategory.removePreference(mGPUGovernor);
         }
@@ -255,7 +254,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
             Toast.makeText(getActivity(), "GPU Control is not supported with your kernel.", Toast.LENGTH_LONG).show();
         }
-        mGPUControlFrequencies.setDialogIcon(R.drawable.gpu_dark);
+        mGPUControlFrequencies.setDialogIcon(R.drawable.gpu);
 
         if (!(gpuCategory.getPreferenceCount() > 0)) {
             gpuCategory.setTitle(R.string.nogpu_data);
@@ -267,6 +266,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         mColorValues = AeroActivity.shell.getInfoArray(AeroActivity.files.COLOR_CONTROL, 0, 0);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setIcon(R.drawable.flower);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View layout = inflater.inflate(R.layout.gpu_color_control, null);
         final SeekBar redValues = (SeekBar)layout.findViewById(R.id.redValues);
@@ -467,25 +467,10 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     // Create our options menu;
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
         if (AeroActivity.genHelper.doesExist(AeroActivity.files.GPU_GOV_BASE)) {
-            prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String a = prefs.getString("app_theme", null);
-
-            if (a == null)
-                a = "";
-
-            if (a.equals("red"))
-                inflater.inflate(R.menu.cpu_menu, menu);
-            else if (a.equals("light"))
-                inflater.inflate(R.menu.cpu_menu, menu);
-            else if (a.equals("dark"))
-                inflater.inflate(R.menu.cpu_menu_light, menu);
-            else
-                inflater.inflate(R.menu.cpu_menu, menu);
+            inflater.inflate(R.menu.cpu_menu, menu);
+            super.onCreateOptionsMenu(menu, inflater);
         }
-
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

@@ -32,9 +32,9 @@ public class generatingLists {
         addItem(new PreferenceItem(R.string.slider_memory_settings, R.drawable.memory));
 
         if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526"))
-            addItem(new PreferenceItem(R.string.slider_defy_parts, R.drawable.gear));
+            addItem(new PreferenceItem(R.string.slider_defy_parts, R.drawable.mixer));
         else
-            addItem(new PreferenceItem(R.string.slider_misc_settings, R.drawable.gear));
+            addItem(new PreferenceItem(R.string.slider_misc_settings, R.drawable.mixer));
 
         addItem(new PreferenceItem(R.string.slider_updater, R.drawable.update));
         addItem(new PreferenceItem(R.string.slider_profile, R.drawable.profile));
@@ -50,7 +50,7 @@ public class generatingLists {
             Log.e("Aero", "Couldn't open File... " + output);
         }
         if (output > 0)
-            addItem(new PreferenceItem(R.string.slider_testsuite_settings, R.drawable.rocket));
+            addItem(new PreferenceItem(R.string.slider_testsuite_settings, R.drawable.dashboard));
     }
 
     public static class PreferenceItem {

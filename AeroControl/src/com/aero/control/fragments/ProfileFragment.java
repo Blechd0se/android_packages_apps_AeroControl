@@ -134,19 +134,8 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        String a = mPrefs.getString("app_theme", null);
 
-        if (a == null)
-            a = "";
-
-        if (a.equals("red"))
-            inflater.inflate(R.menu.profiles_menu, menu);
-        else if (a.equals("light"))
-            inflater.inflate(R.menu.profiles_menu, menu);
-        else if (a.equals("dark"))
-            inflater.inflate(R.menu.profiles_menu_light, menu);
-        else
-            inflater.inflate(R.menu.profiles_menu, menu);
+        inflater.inflate(R.menu.profiles_menu, menu);
 
         super.onCreateOptionsMenu(menu, inflater);
 
@@ -176,6 +165,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
     private void showResetDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setIcon(R.drawable.warning);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View layout = inflater.inflate(R.layout.about_screen, null);
         TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
@@ -210,6 +200,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
         AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(R.string.add_a_name)
+                .setIcon(R.drawable.profile_new)
                 .setMessage(R.string.define_a_name)
                 .setView(editText)
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {

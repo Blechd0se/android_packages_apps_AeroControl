@@ -2,7 +2,7 @@
 
     <item android:id="@+id/action_governor_settings"
         android:title="@string/pref_cpu_governor"
-        android:icon="@drawable/ic_action_phone"
+        android:icon="@drawable/ic_action_phone_light"
         android:showAsAction="ifRoom" />
 
 </menu>

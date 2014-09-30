@@ -47,7 +47,6 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     private ShowcaseView mShowCase;
     private PreferenceCategory PrefCat;
     private PreferenceScreen root;
-    private SharedPreferences prefs;
 
     private boolean showDialog = true;
 
@@ -187,7 +186,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         mIOScheduler.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.GOV_IO_FILE, 0, 1));
         mIOScheduler.setValue(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
         mIOScheduler.setSummary(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
-        mIOScheduler.setDialogIcon(R.drawable.memory_dark);
+        mIOScheduler.setDialogIcon(R.drawable.device_drive);
         mIOScheduler.setOnPreferenceChangeListener(this);
         ioSettingsCategory.addPreference(mIOScheduler);
 
@@ -265,20 +264,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String a = prefs.getString("app_theme", null);
-
-        if (a == null)
-            a = "";
-
-        if (a.equals("red"))
-            inflater.inflate(R.menu.memory_menu, menu);
-        else if (a.equals("light"))
-            inflater.inflate(R.menu.memory_menu, menu);
-        else if (a.equals("dark"))
-            inflater.inflate(R.menu.memory_menu_light, menu);
-        else
-            inflater.inflate(R.menu.memory_menu, menu);
+        inflater.inflate(R.menu.memory_menu, menu);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -499,7 +485,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final ProgressDialog update = new ProgressDialog(getActivity());
         builder.setTitle(R.string.pref_fstrim);
-        builder.setIcon(R.drawable.gear_dark);
+        builder.setIcon(R.drawable.file_exe);
         builder.setItems(fsystem, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
                 final String b = (String)fsystem[item];

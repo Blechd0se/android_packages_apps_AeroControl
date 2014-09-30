@@ -85,7 +85,7 @@ public class UpdaterFragment extends PreferenceFragment {
 
         restore_kernel.setEntries(AeroActivity.shell.getDirInfo(sdpath + File.separator + "/com.aero.control/", false));
         restore_kernel.setEntryValues(AeroActivity.shell.getDirInfo(sdpath + "/com.aero.control/", false));
-        restore_kernel.setDialogIcon(R.drawable.restore_dark);
+        restore_kernel.setDialogIcon(R.drawable.restore);
 
         restore_kernel.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -145,7 +145,7 @@ public class UpdaterFragment extends PreferenceFragment {
                 TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 
                 builder.setTitle("Backup");
-                builder.setIcon(R.drawable.backup_dark);
+                builder.setIcon(R.drawable.backup);
 
                 aboutText.setText(R.string.proceed_backup);
 

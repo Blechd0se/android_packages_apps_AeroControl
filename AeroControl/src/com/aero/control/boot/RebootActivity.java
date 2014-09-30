@@ -28,7 +28,7 @@ public class RebootActivity extends Activity {
             TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 
             builder.setCancelable(false);
-            builder.setIcon(R.drawable.power_dark);
+            builder.setIcon(R.drawable.warning);
             builder.setTitle(R.string.reboot_notifier_header);
             aboutText.setText(getText(R.string.reboot_notifier));
             aboutText.setTextSize(14);

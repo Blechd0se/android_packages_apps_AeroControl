@@ -7,7 +7,7 @@ import java.io.File;
  */
 public class GenericHelper {
 
-    private static final int DEFAULT_DELAY = 100;
+    private static final int DEFAULT_DELAY = 200;
 
     public GenericHelper() { }
 

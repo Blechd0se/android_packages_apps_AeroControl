@@ -51,7 +51,6 @@ public class CPUFragment extends PreferenceFragment {
     private CustomListPreference min_frequency;
     private CustomListPreference max_frequency;
     private boolean mVisible = true;
-    private SharedPreferences prefs;
     private ShowcaseView.ConfigOptions mConfigOptions;
     private ShowcaseView mShowCase;
 
@@ -84,7 +83,7 @@ public class CPUFragment extends PreferenceFragment {
         max_frequency.setDialogTitle(R.string.pref_cpu_freqmax);
         max_frequency.setSummary(R.string.pref_cpu_freqmax);
         updateMaxFreq();
-        max_frequency.setDialogIcon(R.drawable.lightning_dark);
+        max_frequency.setDialogIcon(R.drawable.lightning);
         max_frequency.setOrder(0);
         cpuCategory.addPreference(max_frequency);
 
@@ -95,7 +94,7 @@ public class CPUFragment extends PreferenceFragment {
         min_frequency.setDialogTitle(R.string.pref_cpu_freqmin);
         min_frequency.setSummary(R.string.pref_cpu_freqmin);
         updateMinFreq();
-        min_frequency.setDialogIcon(R.drawable.lightning_dark);
+        min_frequency.setDialogIcon(R.drawable.lightning);
         max_frequency.setOrder(1);
         cpuCategory.addPreference(min_frequency);
 
@@ -217,7 +216,7 @@ public class CPUFragment extends PreferenceFragment {
                     }
                     i++;
                 }
-                builder.setIcon(R.drawable.lightbulb_dark);
+                builder.setIcon(R.drawable.calculator);
                 builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -337,7 +336,7 @@ public class CPUFragment extends PreferenceFragment {
         listPref.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.ALL_GOV_AVAILABLE, 0, 0));
         listPref.setValue(AeroActivity.shell.getInfo(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CURRENT_GOV_AVAILABLE));
         listPref.setSummary(AeroActivity.shell.getInfo(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CURRENT_GOV_AVAILABLE));
-        listPref.setDialogIcon(R.drawable.cpu_dark);
+        listPref.setDialogIcon(R.drawable.cpu);
 
         cpuGovernor.addPreference(listPref);
 
@@ -448,20 +447,7 @@ public class CPUFragment extends PreferenceFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String a = prefs.getString("app_theme", null);
-
-        if (a == null)
-            a = "";
-
-        if (a.equals("red"))
-            inflater.inflate(R.menu.cpu_menu, menu);
-        else if (a.equals("light"))
-            inflater.inflate(R.menu.cpu_menu, menu);
-        else if (a.equals("dark"))
-            inflater.inflate(R.menu.cpu_menu_light, menu);
-        else
-            inflater.inflate(R.menu.cpu_menu, menu);
+        inflater.inflate(R.menu.cpu_menu, menu);
 
         super.onCreateOptionsMenu(menu, inflater);
     }

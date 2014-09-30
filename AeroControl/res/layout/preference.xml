@@ -15,11 +15,6 @@
             android:title="@string/pref_per_app_service"
             android:summary="@string/pref_per_app_service_sum" />
 
-        <ListPreference
-            android:key="app_theme"
-            android:title="@string/pref_app_theme"
-            android:summary="@string/pref_app_theme_sum" />
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/app_name">

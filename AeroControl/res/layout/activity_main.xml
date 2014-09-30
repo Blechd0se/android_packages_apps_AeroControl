@@ -20,13 +20,13 @@
          with the content view. -->
     <ListView
         android:id="@+id/left_drawer"
-        android:layout_width="240dp"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:background="#111"
+        android:background="#D8D8D8"
         />
 
 </android.support.v4.widget.DrawerLayout>

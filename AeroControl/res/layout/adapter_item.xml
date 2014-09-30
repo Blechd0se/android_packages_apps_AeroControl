@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textColor="#FFFFFF"
+            android:textColor="@drawable/textview_drawer"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:ellipsize="end"
             android:fadingEdge="horizontal" />
