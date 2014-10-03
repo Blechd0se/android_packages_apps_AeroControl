@@ -1,8 +1,6 @@
 package com.aero.control.fragments;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,19 +30,17 @@ import java.util.Locale;
  */
 public class UpdaterFragment extends PreferenceFragment {
 
-    private static final String sdpath = Environment.getExternalStorageDirectory().getPath();
+    private static final String SDPATH = Environment.getExternalStorageDirectory().getPath();
 
-    public static final String timeStamp = new SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
-    public static final File BACKUP_PATH = new File(sdpath + "/com.aero.control/" + timeStamp + "/zImage");
-    public static final File IMAGE = new File (AeroActivity.files.zImage);
+    private static final String timeStamp = new SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
+    private static final File BACKUP_PATH = new File(SDPATH + "/com.aero.control/" + timeStamp + "/zImage");
+    private static final File IMAGE = new File (AeroActivity.files.zImage);
+    private static final String AERO_PATH = SDPATH + "/com.aero.control";
 
     private static final updateHelper update = new updateHelper();
-
-    public static Fragment newInstance(Context context) {
-        UpdaterFragment f = new UpdaterFragment();
-
-        return f;
-    }
+    private Preference mBackupKernel;
+    private ListPreference mRestoreKernel;
+    private String mBackup = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,39 +51,43 @@ public class UpdaterFragment extends PreferenceFragment {
 
         PreferenceScreen root = this.getPreferenceScreen();
 
-        final Preference backup_kernel = root.findPreference("backup_kernel");
-        final Preference updater_kernel = root.findPreference("updater_kernel");
-        final ListPreference restore_kernel = (ListPreference) root.findPreference("restore_kernel");
+        mBackupKernel = root.findPreference("backup_kernel");
+        mRestoreKernel = (ListPreference) root.findPreference("restore_kernel");
 
-        // Disable them all;
-        updater_kernel.setEnabled(false);
+        for (String s : AeroActivity.files.BACKUPPATH) {
+            if (AeroActivity.genHelper.doesExist(s)) {
+                mBackup = s;
+            }
+        }
 
         // If device doesn't have this kernel path;
         if (AeroActivity.shell.getInfo(AeroActivity.files.zImage).equals("Unavailable"))
-            backup_kernel.setEnabled(false);
+            mBackupKernel.setEnabled(false);
+
+        if (mBackup != null)
+            mBackupKernel.setEnabled(true);
 
         if (AeroActivity.shell.getInfo(AeroActivity.files.zImage).equals("Unavailable"))
-            restore_kernel.setEnabled(false);
+            mRestoreKernel.setEnabled(false);
 
         // Fresh Start, no backup found;
         try {
-            backup_kernel.setSummary(getText(R.string.last_backup_from)+ " " + AeroActivity.shell.getDirInfo(sdpath + "/com.aero.control/", false)[0]);
-            restore_kernel.setEnabled(true);
+            mBackupKernel.setSummary(getText(R.string.last_backup_from)+ " " + AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/", false)[0]);
+            mRestoreKernel.setEnabled(true);
         } catch (NullPointerException e) {
-            backup_kernel.setSummary(getText(R.string.last_backup_from)+ " " + getText(R.string.unavailable));
-            restore_kernel.setEnabled(false);
+            mBackupKernel.setSummary(getText(R.string.last_backup_from)+ " " + getText(R.string.unavailable));
+            mRestoreKernel.setEnabled(false);
         }
 
-        backup_kernel.setIcon(R.drawable.ic_action_copy);
-        updater_kernel.setIcon(R.drawable.ic_action_download);
-        restore_kernel.setIcon(R.drawable.ic_action_time);
+        mBackupKernel.setIcon(R.drawable.ic_action_copy);
+        mRestoreKernel.setIcon(R.drawable.ic_action_time);
 
 
-        restore_kernel.setEntries(AeroActivity.shell.getDirInfo(sdpath + File.separator + "/com.aero.control/", false));
-        restore_kernel.setEntryValues(AeroActivity.shell.getDirInfo(sdpath + "/com.aero.control/", false));
-        restore_kernel.setDialogIcon(R.drawable.restore);
+        mRestoreKernel.setEntries(AeroActivity.shell.getDirInfo(SDPATH + File.separator + "/com.aero.control/", false));
+        mRestoreKernel.setEntryValues(AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/", false));
+        mRestoreKernel.setDialogIcon(R.drawable.restore);
 
-        restore_kernel.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        mRestoreKernel.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
 
@@ -103,22 +103,18 @@ public class UpdaterFragment extends PreferenceFragment {
                 aboutText.setText(getText(R.string.restore_from_backup) + " " + s + " ?");
                 AeroActivity.shell.remountSystem();
 
+                // Remove it;
+                preference.getEditor().remove(preference.getKey()).commit();
+
                 builder.setView(layout)
-                        .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
 
-                                // Delete old zImage first, then copy backup;
-                                String[] commands = new String[]
-                                        {
-                                                "rm -f " + AeroActivity.files.zImage,
-                                                "cp " + "/sdcard/com.aero.control/" + s + "/zImage" + " " + AeroActivity.files.zImage,
-                                        };
-
-                                AeroActivity.shell.setRootInfo(commands);
-
-                                Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
-
+                                if (mBackup != null)
+                                    restoreBoot(s);
+                                else
+                                    restorezImage(s);
 
                             }
                         })
@@ -135,7 +131,7 @@ public class UpdaterFragment extends PreferenceFragment {
             };
         });
 
-        backup_kernel.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        mBackupKernel.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
@@ -154,21 +150,19 @@ public class UpdaterFragment extends PreferenceFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
 
-                                try {
-                                    update.copyFile(IMAGE, BACKUP_PATH, false);
-                                    Toast.makeText(getActivity(), "Backup was successful!", Toast.LENGTH_LONG).show();
+                                if (mBackup != null)
+                                    backupBoot();
+                                else
+                                    backupzImage();
 
-                                    backup_kernel.setSummary(getText(R.string.last_backup_from) + " " + timeStamp);
+                                mBackupKernel.setSummary(getText(R.string.last_backup_from) + " " + timeStamp);
 
-                                    // Prepare the UI, otherwise it would throw a Exception;
-                                    restore_kernel.setEntries(AeroActivity.shell.getDirInfo(sdpath + "/com.aero.control/", false));
-                                    restore_kernel.setEntryValues(AeroActivity.shell.getDirInfo(sdpath + "/com.aero.control/", false));
+                                // Prepare the UI, otherwise it would throw a Exception;
+                                mRestoreKernel.setEntries(AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/", false));
+                                mRestoreKernel.setEntryValues(AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/", false));
 
-                                    restore_kernel.setEnabled(true);
+                                mRestoreKernel.setEnabled(true);
 
-                                } catch (IOException e) {
-                                    Log.e("Aero", "A problem occured while saving a backup.", e);
-                                }
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -186,4 +180,65 @@ public class UpdaterFragment extends PreferenceFragment {
             ;
         });
     }
+
+    private void backupzImage() {
+        try {
+            update.copyFile(IMAGE, BACKUP_PATH, false);
+            Toast.makeText(getActivity(), "Backup was successful!", Toast.LENGTH_LONG).show();
+
+        } catch (IOException e) {
+            Log.e("Aero", "A problem occured while saving a backup.", e);
+        }
+    }
+
+    private void backupBoot() {
+
+        String backuppath = AERO_PATH + "/" + timeStamp;
+
+        // Create file-structure if necessary;
+        if (!(AeroActivity.genHelper.doesExist(AERO_PATH))) {
+            if (!(new File(AERO_PATH).mkdir()))
+                if (!(new File(AERO_PATH).mkdirs()))
+                    Log.e("Aero", "Couldn't create file: " + AERO_PATH);
+        }
+        if (!(AeroActivity.genHelper.doesExist(backuppath))) {
+            if (!(new File(backuppath).mkdir()))
+                if (!(new File(backuppath).mkdirs()))
+                    Log.e("Aero", "Couldn't create file: " + backuppath);
+        }
+
+        String[] commands = new String[] {
+                "dd if=" + mBackup + " " + "of=" + backuppath + "/boot.img",
+                "chmod 777 " + backuppath + "/boot.img"
+        };
+
+        AeroActivity.shell.setRootInfo(commands);
+    }
+
+    private void restorezImage(String s) {
+
+        // Delete old zImage first, then copy backup;
+        String[] commands = new String[] {
+                        "rm -f " + AeroActivity.files.zImage,
+                        "cp " + "/sdcard/com.aero.control/" + s + "/zImage" + " " + AeroActivity.files.zImage,
+                };
+
+        AeroActivity.shell.setRootInfo(commands);
+
+        Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
+    }
+
+    private void restoreBoot(String s) {
+
+        String filepath = new File("/sdcard/com.aero.control/" + s + "/boot.img").getPath();
+
+        String[] commands = new String[] {
+                "chmod 0777 " + filepath,
+                "dd if=" + filepath + " of=" + mBackup
+        };
+
+        AeroActivity.shell.setRootInfo(commands);
+        Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
+    }
+
 }

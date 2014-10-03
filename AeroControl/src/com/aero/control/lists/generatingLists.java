@@ -36,7 +36,7 @@ public class generatingLists {
         else
             addItem(new PreferenceItem(R.string.slider_misc_settings, R.drawable.mixer));
 
-        addItem(new PreferenceItem(R.string.slider_updater, R.drawable.update));
+        addItem(new PreferenceItem(R.string.slider_backup_restore, R.drawable.update));
         addItem(new PreferenceItem(R.string.slider_profile, R.drawable.profile));
 
         int output = 0;

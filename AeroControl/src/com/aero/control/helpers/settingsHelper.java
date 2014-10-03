@@ -449,7 +449,7 @@ public class settingsHelper {
                         defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.GOV_IO_PARAMETER + "/" + b) + " > " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
 
                     shellPara.queueWork("echo " + ioSettings + " > " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
-                    Log.e("Aero", "Output: " + "echo " + ioSettings + " > " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
+                    //Log.e("Aero", "Output: " + "echo " + ioSettings + " > " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
                 }
             }
         }
@@ -465,7 +465,7 @@ public class settingsHelper {
                     defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.DALVIK_TWEAK + "/" + c) + " > " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
 
                 shell.queueWork("echo " + vmSettings + " > " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
-                Log.e("Aero", "Output: " + "echo " + vmSettings + " > " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
+                //Log.e("Aero", "Output: " + "echo " + vmSettings + " > " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
             }
         }
 
@@ -485,7 +485,7 @@ public class settingsHelper {
 
                     shellPara.queueWork("echo " + hotplugSettings + " > " + AeroActivity.files.HOTPLUG_PATH + "/" + d);
 
-                    Log.e("Aero", "Output: " + "echo " + hotplugSettings + " > " + AeroActivity.files.HOTPLUG_PATH + "/" + d);
+                    //Log.e("Aero", "Output: " + "echo " + hotplugSettings + " > " + AeroActivity.files.HOTPLUG_PATH + "/" + d);
                 }
             }
         }
@@ -503,7 +503,7 @@ public class settingsHelper {
                         defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.GPU_GOV_PATH + "/" + e) + " > " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
 
                     shellPara.queueWork("echo " + gpugovSettings + " > " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
-                    Log.e("Aero", "Output: " + "echo " + gpugovSettings + " > " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
+                    //Log.e("Aero", "Output: " + "echo " + gpugovSettings + " > " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
                 }
             }
         }
@@ -525,7 +525,7 @@ public class settingsHelper {
                     }
 
                     shellPara.queueWork("echo " + governorSetting + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_governor + "/" + b);
-                    Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_governor + "/" + b);
+                    //Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_governor + "/" + b);
                 }
             }
         }
@@ -545,7 +545,7 @@ public class settingsHelper {
                         defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b) + " > " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
 
                     shellPara.queueWork("echo " + governorSetting + " > " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
-                    Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
+                    //Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
                 }
             }
         }

@@ -9,11 +9,6 @@
             android:title="@string/pref_backup_kernel"
             android:summary="@string/pref_backup_kernel_sum" />
 
-        <Preference
-            android:key="updater_kernel"
-            android:title="@string/pref_updater_kernel"
-            android:summary="@string/pref_updater_kernel_sum" />
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_restore">

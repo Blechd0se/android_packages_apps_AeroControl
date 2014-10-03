@@ -100,6 +100,10 @@ public final class FilePath {
 
     /* Used by; UpdaterFragment */
     public static final String zImage = "/system/bootstrap/2nd-boot/zImage";
+    public static final String[] BACKUPPATH = { "/dev/block/platform/msm_sdcc.1/by-name/boot", // MSM devices
+                                                "/dev/block/platform/sdhci-tegra.3/by-name/LNX", // Tegra devices
+                                                "/dev/block/platform/omap/omap_hsmmc.0/by-name/boot" // OMAP devices
+    };
 
     /* Used by; VoltageFrament */
     public static final String VOLTAGE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table";

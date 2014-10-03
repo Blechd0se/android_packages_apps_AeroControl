@@ -8,7 +8,7 @@
         <item>@string/slider_gpu_settings</item>
         <item>@string/slider_memory_settings</item>
         <item>@string/slider_defy_parts</item>
-        <item>@string/slider_updater</item>
+        <item>@string/slider_backup_restore</item>
         <item>@string/slider_profile</item>
         <item>@string/slider_misc_settings</item>
         <item>@string/slider_testsuite_settings</item>
