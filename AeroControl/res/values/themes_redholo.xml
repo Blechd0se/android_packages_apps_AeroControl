@@ -8,6 +8,9 @@
       <item name="android:listViewWhiteStyle">@style/ListViewAeroTheme.White</item>
 
       <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_light</item>
+
+      <item name="android:actionMenuTextColor">@android:color/white</item>
+
   </style>
 
 </resources>
