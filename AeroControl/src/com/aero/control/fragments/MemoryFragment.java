@@ -147,6 +147,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             final boolean zcacheEnabled = fileCMD.length() != 0 && fileCMD.contains("zcache");
             mZCache.setChecked(zcacheEnabled);
         }
+        mZCache.getEditor().remove(mZCache.getKey()).commit();
 
         mWriteBackControl = new CustomPreference(getActivity());
         mWriteBackControl.setName("writeback");
@@ -177,6 +178,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         if (!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")))
             memorySettingsCategory.removePreference(mLowMemoryPref);
+        mLowMemoryPref.getEditor().remove(mLowMemoryPref.getKey()).commit();
 
         mIOScheduler = new CustomListPreference(getActivity());
         mIOScheduler.setName("io_scheduler_list");
