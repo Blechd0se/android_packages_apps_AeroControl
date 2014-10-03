@@ -398,161 +398,10 @@ public class settingsHelper {
         }
 
         try {
-            shellPara.queueWork("sleep 1");
-
-            if (mem_ios != null) {
-
-                String completeIOSchedulerSettings[] = shellPara.getDirInfo(AeroActivity.files.GOV_IO_PARAMETER, true);
-
-                /* IO Scheduler Specific Settings at boot */
-
-                for (String b : completeIOSchedulerSettings) {
-
-                    final String ioSettings = prefs.getString(AeroActivity.files.GOV_IO_PARAMETER + "/" + b, null);
-
-                    if (ioSettings != null) {
-
-                        shellPara.queueWork("chmod 0666 " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
-
-                        if (Profile != null)
-                            defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.GOV_IO_PARAMETER + "/" + b) + " > " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
-
-                        shellPara.queueWork("echo " + ioSettings + " > " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
-
-                        //Log.e("Aero", "Output: " + "echo " + ioSettings + " > " + GOV_IO_PARAMETER + "/" + b);
-                    }
-                }
-            }
-
-            final String completeVMSettings[] = shellPara.getDirInfo(AeroActivity.files.DALVIK_TWEAK, true);
-
-            /* VM specific settings at boot */
-
-            for (String c : completeVMSettings) {
-
-                final String vmSettings = prefs.getString(AeroActivity.files.DALVIK_TWEAK + "/" + c, null);
-
-                if (vmSettings != null) {
-
-                    shellPara.queueWork("chmod 0666 " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
-
-                    if (Profile != null)
-                        defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.DALVIK_TWEAK + "/" + c) + " > " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
-
-                    shell.queueWork("echo " + vmSettings + " > " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
-
-                    //Log.e("Aero", "Output: " + "echo " + vmSettings + " > " + DALVIK_TWEAK + "/" + c);
-                }
-            }
-
-            if (AeroActivity.genHelper.doesExist(AeroActivity.files.HOTPLUG_PATH)) {
-                final String completeHotplugSettings[] = shellPara.getDirInfo(AeroActivity.files.HOTPLUG_PATH, true);
-
-                /* Hotplug specific settings at boot */
-
-                for (String d : completeHotplugSettings) {
-
-                    final String hotplugSettings = prefs.getString(AeroActivity.files.HOTPLUG_PATH + "/" + d, null);
-
-                    if (hotplugSettings != null) {
-
-                        shellPara.queueWork("chmod 0666 " + AeroActivity.files.HOTPLUG_PATH + "/" + d);
-
-                        if (Profile != null)
-                            defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.HOTPLUG_PATH + "/" + d) + " > " + AeroActivity.files.HOTPLUG_PATH + "/" + d);
-
-                        shellPara.queueWork("echo " + hotplugSettings + " > " + AeroActivity.files.HOTPLUG_PATH + "/" + d);
-
-                        //Log.e("Aero", "Output: " + "echo " + hotplugSettings + " > " + PREF_HOTPLUG + "/" + d);
-                    }
-                }
-            }
-
-            if (AeroActivity.genHelper.doesExist(AeroActivity.files.GPU_GOV_PATH)) {
-                final String completeGPUGovSettings[] = shellPara.getDirInfo(AeroActivity.files.GPU_GOV_PATH, true);
-
-                /* GPU Governor specific settings at boot */
-
-                for (String e : completeGPUGovSettings) {
-
-                    final String gpugovSettings = prefs.getString(AeroActivity.files.GPU_GOV_PATH + "/" + e, null);
-
-                    if (gpugovSettings != null) {
-
-                        shellPara.queueWork("chmod 0666 " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
-
-                        if (Profile != null)
-                            defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.GPU_GOV_PATH + "/" + e) + " > " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
-
-                        shellPara.queueWork("echo " + gpugovSettings + " > " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
-
-                        //Log.e("Aero", "Output: " + "echo " + gpugovSettings + " > " + PREF_GPU_GOV + "/" + e);
-                    }
-                }
-            }
-
-            if (cpu_gov != null) {
-
-                final String completeGovernorSettingList[] = shellPara.getDirInfo(AeroActivity.files.CPU_GOV_BASE + cpu_gov, true);
-
-                /* Governor Specific Settings at boot */
-
-                if (completeGovernorSettingList != null) {
-
-                    for (String b : completeGovernorSettingList) {
-
-                        final String governorSetting = prefs.getString(AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b, null);
-
-                        if (governorSetting != null) {
-
-                            shellPara.queueWork("sleep 1");
-                            shellPara.queueWork("chmod 0666 " + AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b);
-
-                            if (Profile != null) {
-                                defaultProfile.add("sleep 1");
-                                defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b) + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b);
-                            }
-
-                            shellPara.queueWork("echo " + governorSetting + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_gov + "/" + b);
-
-                            //Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + CPU_GOV_BASE + cpu_gov + "/" + b);
-                        }
-                    }
-                }
-            }
-
-            /* GPU Governor Parameters */
-            if (gpu_gov != null) {
-
-                final String completeGPUGovernorSetting[] = shell.getDirInfo(AeroActivity.files.GPU_GOV_BASE + gpu_gov, true);
-
-                /* Governor Specific Settings at boot */
-
-                for (String b : completeGPUGovernorSetting) {
-
-                    final String governorSetting = prefs.getString(AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b, null);
-
-                    if (governorSetting != null) {
-
-                        shellPara.queueWork("chmod 0666 " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
-
-                        if (Profile != null)
-                            defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b) + " > " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
-
-                        shellPara.queueWork("echo " + governorSetting + " > " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
-
-                        Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
-                    }
-                }
-            }
-
+            setSubParameters(mem_ios, Profile, gpu_gov);
         } catch (NullPointerException e) {
             Log.e("Aero", "This shouldn't happen.. Maybe a race condition. ", e);
         }
-
-        // EXECUTE ALL THE COMMANDS COLLECTED
-        shellPara.execWork();
-        shellPara.flushWork();
     }
 
     public void executeDefault() {
@@ -575,4 +424,136 @@ public class settingsHelper {
             return prefs.getBoolean(s, false);
         }
     }
+
+
+    private void setSubParameters(String mem_ios, String Profile, String gpu_gov) throws NullPointerException {
+
+        shellPara.queueWork("sleep 1");
+        final String completeVMSettings[] = shellPara.getDirInfo(AeroActivity.files.DALVIK_TWEAK, true);
+        final String cpu_governor = AeroActivity.shell.getInfo(AeroActivity.files.CPU_BASE_PATH + 0 + AeroActivity.files.CURRENT_GOV_AVAILABLE);
+        final String completeGovernorSettingList[] = shellPara.getDirInfo(AeroActivity.files.CPU_GOV_BASE + cpu_governor, true);
+
+
+        if (mem_ios != null) {
+            String completeIOSchedulerSettings[] = shellPara.getDirInfo(AeroActivity.files.GOV_IO_PARAMETER, true);
+
+            /* IO Scheduler Specific Settings at boot */
+            for (String b : completeIOSchedulerSettings) {
+
+                final String ioSettings = prefs.getString(AeroActivity.files.GOV_IO_PARAMETER + "/" + b, null);
+                if (ioSettings != null) {
+
+                    shellPara.queueWork("chmod 0666 " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
+
+                    if (Profile != null)
+                        defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.GOV_IO_PARAMETER + "/" + b) + " > " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
+
+                    shellPara.queueWork("echo " + ioSettings + " > " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
+                    Log.e("Aero", "Output: " + "echo " + ioSettings + " > " + AeroActivity.files.GOV_IO_PARAMETER + "/" + b);
+                }
+            }
+        }
+
+        /* VM specific settings at boot */
+        for (String c : completeVMSettings) {
+
+            final String vmSettings = prefs.getString(AeroActivity.files.DALVIK_TWEAK + "/" + c, null);
+            if (vmSettings != null) {
+                shellPara.queueWork("chmod 0666 " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
+
+                if (Profile != null)
+                    defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.DALVIK_TWEAK + "/" + c) + " > " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
+
+                shell.queueWork("echo " + vmSettings + " > " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
+                Log.e("Aero", "Output: " + "echo " + vmSettings + " > " + AeroActivity.files.DALVIK_TWEAK + "/" + c);
+            }
+        }
+
+        if (AeroActivity.genHelper.doesExist(AeroActivity.files.HOTPLUG_PATH)) {
+            final String completeHotplugSettings[] = shellPara.getDirInfo(AeroActivity.files.HOTPLUG_PATH, true);
+
+            /* Hotplug specific settings at boot */
+            for (String d : completeHotplugSettings) {
+
+                final String hotplugSettings = prefs.getString(AeroActivity.files.HOTPLUG_PATH + "/" + d, null);
+                if (hotplugSettings != null) {
+
+                    shellPara.queueWork("chmod 0666 " + AeroActivity.files.HOTPLUG_PATH + "/" + d);
+
+                    if (Profile != null)
+                        defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.HOTPLUG_PATH + "/" + d) + " > " + AeroActivity.files.HOTPLUG_PATH + "/" + d);
+
+                    shellPara.queueWork("echo " + hotplugSettings + " > " + AeroActivity.files.HOTPLUG_PATH + "/" + d);
+
+                    Log.e("Aero", "Output: " + "echo " + hotplugSettings + " > " + AeroActivity.files.HOTPLUG_PATH + "/" + d);
+                }
+            }
+        }
+
+        if (AeroActivity.genHelper.doesExist(AeroActivity.files.GPU_GOV_PATH)) {
+            final String completeGPUGovSettings[] = shellPara.getDirInfo(AeroActivity.files.GPU_GOV_PATH, true);
+
+            /* GPU Governor specific settings at boot */
+            for (String e : completeGPUGovSettings) {
+                final String gpugovSettings = prefs.getString(AeroActivity.files.GPU_GOV_PATH + "/" + e, null);
+                if (gpugovSettings != null) {
+                    shellPara.queueWork("chmod 0666 " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
+
+                    if (Profile != null)
+                        defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.GPU_GOV_PATH + "/" + e) + " > " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
+
+                    shellPara.queueWork("echo " + gpugovSettings + " > " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
+                    Log.e("Aero", "Output: " + "echo " + gpugovSettings + " > " + AeroActivity.files.GPU_GOV_PATH + "/" + e);
+                }
+            }
+        }
+
+        /* Governor Specific Settings at boot */
+
+        if (completeGovernorSettingList != null) {
+
+            for (String b : completeGovernorSettingList) {
+                final String governorSetting = prefs.getString(AeroActivity.files.CPU_GOV_BASE + cpu_governor + "/" + b, null);
+                if (governorSetting != null) {
+
+                    shellPara.queueWork("sleep 1");
+                    shellPara.queueWork("chmod 0666 " + AeroActivity.files.CPU_GOV_BASE + cpu_governor + "/" + b);
+
+                    if (Profile != null) {
+                        defaultProfile.add("sleep 1");
+                        defaultProfile.add("echo " + shell.getInfo(AeroActivity.files.CPU_GOV_BASE + cpu_governor + "/" + b) + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_governor + "/" + b);
+                    }
+
+                    shellPara.queueWork("echo " + governorSetting + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_governor + "/" + b);
+                    Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + AeroActivity.files.CPU_GOV_BASE + cpu_governor + "/" + b);
+                }
+            }
+        }
+
+        /* GPU Governor Parameters */
+        if (gpu_gov != null) {
+            final String completeGPUGovernorSetting[] = shell.getDirInfo(AeroActivity.files.GPU_GOV_BASE + gpu_gov, true);
+
+            /* Governor Specific Settings at boot */
+            for (String b : completeGPUGovernorSetting) {
+                final String governorSetting = prefs.getString(AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b, null);
+                if (governorSetting != null) {
+
+                    shellPara.queueWork("chmod 0666 " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
+
+                    if (Profile != null)
+                        defaultProfile.add("echo " + shellPara.getInfo(AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b) + " > " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
+
+                    shellPara.queueWork("echo " + governorSetting + " > " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
+                    Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + AeroActivity.files.GPU_GOV_BASE + gpu_gov + "/" + b);
+                }
+            }
+        }
+
+        // EXECUTE ALL THE COMMANDS COLLECTED
+        shellPara.execWork();
+        shellPara.flushWork();
+
+    }
+
 }
