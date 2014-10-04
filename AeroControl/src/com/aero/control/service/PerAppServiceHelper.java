@@ -60,7 +60,7 @@ public class PerAppServiceHelper {
         mPendingIntent = PendingIntent.getService(mContext, 0, mBackgroundIntent, 0);
 
         mTimer = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        mTimer.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 7 * 1000, mPendingIntent);
+        mTimer.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 5 * 1000, mPendingIntent);
 
         setState(true);
     }
