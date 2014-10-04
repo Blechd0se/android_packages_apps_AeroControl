@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.PerAppManager;
 import com.aero.control.helpers.perAppHelper;
 import com.aero.control.helpers.settingsHelper;
 import com.aero.control.service.PerAppServiceHelper;
@@ -493,62 +494,57 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
         final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 
+        final PerAppManager pam = new PerAppManager(mContext, null, perApp);
+
+        dialog.setView(pam);
         dialog.setTitle(R.string.pref_profile_perApp);
-        dialog.setMultiChoiceItems(perApp.getAllPackageNames(), perApp.getCheckedState(), new DialogInterface.OnMultiChoiceClickListener() {
+        dialog.setIcon(R.drawable.rocket);
+        dialog.setCancelable(false);
+
+        dialog.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                if (b) {
-                    perApp.setChecked(true, i);
-                } else {
-                    perApp.setChecked(false, i);
+            public void onClick(DialogInterface dialog, int id) {
+
+                String[] packageNames = perApp.getCurrentSelectedPackages();
+
+                String tmp = "";
+
+                if (packageNames != null) {
+                    for (String a : packageNames) {
+                        tmp = tmp + a + "+";
+                    }
                 }
+                mPerAppPrefs.edit().remove(profileName);
+
+                mPerAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
+                mPerAppPrefs.edit().putString(profileName, tmp).commit();
+
+                if (checkState(profileName)) {
+                    updateStatus(txtViewSummary, true);
+                } else {
+                    updateStatus(txtViewSummary, false);
+                }
+
+                // If null, initiate the helper;
+                if (AeroActivity.perAppService == null)
+                    AeroActivity.perAppService = new PerAppServiceHelper(mContext);
+
+                // User has assigned apps, but no service is running;
+                if (!(AeroActivity.perAppService.getState())) {
+                    if (checkAllStates() && !mWarning) {
+                        AppRate.with(getActivity())
+                                .text(R.string.pref_profile_service_not_running)
+                                .fromTop(false)
+                                .delay(1000)
+                                .autoHide(15000)
+                                .allowPlayLink(false)
+                                .forceShow();
+                        mWarning = true;
+                    }
+                }
+                mPerAppDialogVisible = false;
             }
         })
-                // Set the action buttons
-                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        String[] packageNames = perApp.getCurrentSelectedPackages();
-
-                        String tmp = "";
-
-                        if (packageNames != null) {
-                            for (String a : packageNames) {
-                                tmp = tmp + a + "+";
-                            }
-                        }
-                        mPerAppPrefs.edit().remove(profileName);
-
-                        mPerAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
-                        mPerAppPrefs.edit().putString(profileName, tmp).commit();
-
-                        if (checkState(profileName)) {
-                            updateStatus(txtViewSummary, true);
-                        } else {
-                            updateStatus(txtViewSummary, false);
-                        }
-
-                        // If null, initiate the helper;
-                        if (AeroActivity.perAppService == null)
-                            AeroActivity.perAppService = new PerAppServiceHelper(mContext);
-
-                        // User has assigned apps, but no service is running;
-                        if (!(AeroActivity.perAppService.getState())) {
-                            if (checkAllStates() && !mWarning) {
-                                AppRate.with(getActivity())
-                                        .text(R.string.pref_profile_service_not_running)
-                                        .fromTop(false)
-                                        .delay(1000)
-                                        .autoHide(15000)
-                                        .allowPlayLink(false)
-                                        .forceShow();
-                                mWarning = true;
-                            }
-                        }
-                        mPerAppDialogVisible = false;
-                    }
-                })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -567,8 +563,8 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                         getPersistentData(perApp, profileName, txtViewSummary);
                     }
 
-                })
-        ;
+                });
+
         dialog.create().show();
     }
 
@@ -742,6 +738,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                 AlertDialog dialog = new AlertDialog.Builder(mContext)
                         .setTitle(getText(R.string.slider_overview) + ": " + txtView.getText().toString())
                         .setView(profileText)
+                        .setIcon(R.drawable.profile)
                         .setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

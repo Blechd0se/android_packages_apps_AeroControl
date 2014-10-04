@@ -22,7 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by root on 21.09.14.
+ * Created by Alexander Christ on 21.09.14.
  */
 public class FileManager extends LinearLayout implements OnItemClickListener {
 

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
+import com.aero.control.adapter.adapterInit;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,25 +17,16 @@ public class perAppHelper {
 
     private Context mContext;
     private String[] mPackageNames; /* Real package names */
-    private String[] mListedApps;
     private String[] mCurrentSelectedPackages;
     private boolean mShowSystemApps;
     private boolean[] mIsChecked;
     private List<ApplicationInfo> mPackages;
+    private List<adapterInit> mPerAppData= new ArrayList<adapterInit>();
 
     public perAppHelper(Context context) {
         this.mContext = context;
     }
 
-    /**
-     * Gets the android packages names
-     * e.g. "Aero Control"
-     *
-     * @return String array = contains all apps
-     */
-    public final String[] getAllPackageNames() {
-        return mListedApps;
-    }
 
     public final void setPackages(List<ApplicationInfo> packages) {
 
@@ -41,6 +34,16 @@ public class perAppHelper {
         // Invoke a new scan here if necessary;
         getAllApps(getSystemAppStatus());
 
+    }
+
+    /**
+     * Gets the android packages names and their icons
+     * e.g. "Aero Control"
+     *
+     * @return List<adapterInit> = contains all apps + icons
+     */
+    public final List<adapterInit>  getFullPackages() {
+        return mPerAppData;
     }
 
     public final List<ApplicationInfo>  getPackages() {
@@ -141,7 +144,6 @@ public class perAppHelper {
 
         final PackageManager pm = mContext.getPackageManager();
         List<ApplicationInfo> packages = pm.getInstalledApplications(0);
-        final ArrayList<String> currentInstalledApps = new ArrayList<String>();
         final ArrayList<String> currentPackages = new ArrayList<String>();
 
         // Just copy our array;
@@ -152,6 +154,10 @@ public class perAppHelper {
         } else {
             packages = mPackages;
         }
+
+        // Clear the old data;
+        if(mPerAppData != null)
+            mPerAppData.clear();
 
         // We should hold info about what kind of apps this object holds;
         mShowSystemApps = showSystemApp;
@@ -165,11 +171,11 @@ public class perAppHelper {
                 }
             }
 
-            currentInstalledApps.add(packageInfo.loadLabel(mContext.getPackageManager()).toString());
             currentPackages.add(packageInfo.packageName);
+
+            mPerAppData.add(new adapterInit(packageInfo.loadIcon(pm), packageInfo.loadLabel(mContext.getPackageManager()).toString()));
         }
 
-        mListedApps = currentInstalledApps.toArray(new String[0]);
         mPackageNames = currentPackages.toArray(new String[0]);
     }
 }

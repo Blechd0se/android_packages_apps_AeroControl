@@ -28,8 +28,8 @@
     <string name="successful">Successful!</string>
     <string name="mVPlus">+25 mV</string>
     <string name="mVMinus">-25 mV</string>
-    <string name="perAppAssigned">Active</string>
-    <string name="notperAppAssigned">Not active</string>
+    <string name="perAppAssigned">PerApp: Active</string>
+    <string name="notperAppAssigned">PerApp: Not active</string>
     <string name="nogpu_data">Couldn\'t find any GPU related data</string>
     <string name="xda">XDA Thread</string>
     <string name="enabled">Enabled</string>
@@ -278,7 +278,7 @@
     <string name="pref_profile_reset">Reset your current profile</string>
     <string name="pref_profile_reset_sum">This will completely reset your current profile. Just like if you freshly installed Aero Control.</string>
     <string name="pref_profile_perApp">Choose your apps</string>
-    <string name="pref_profile_showSystem">Show system apps</string>
+    <string name="pref_profile_showSystem">Toggle system apps</string>
     <string name="pref_profile_deleted">Deleted</string>
     <string name="pref_profile_undo">Undo</string>
     <string name="pref_profile_no_changes">You haven\'t changed any settings yet!</string>

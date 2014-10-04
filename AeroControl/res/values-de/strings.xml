@@ -26,8 +26,8 @@
     <string name="nocpu_data">Konnte keine CPU Daten finden.</string>
     <string name="maybe_later">Vielleicht später</string>
     <string name="successful">Erfolg!</string>
-    <string name="perAppAssigned">Aktiv</string>
-    <string name="notperAppAssigned">Nicht aktiv</string>
+    <string name="perAppAssigned">PerApp: Aktiv</string>
+    <string name="notperAppAssigned">PerApp: Nicht aktiv</string>
     <string name="nogpu_data">Konnte keine GPU relevanten Daten finden</string>
     <string name="enabled">Aktiviert</string>
     <string name="disabled">Deaktiviert</string>
