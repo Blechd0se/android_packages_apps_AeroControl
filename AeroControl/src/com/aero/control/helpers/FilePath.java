@@ -1,6 +1,7 @@
 package com.aero.control.helpers;
 
 import android.graphics.Typeface;
+import android.os.Environment;
 
 /**
  * Created by Alexander Christ on 05.08.14.
@@ -82,6 +83,7 @@ public final class FilePath {
 
     /* Used by; ProfileFragment */
     public static final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";
+    public static final String EXTERNAL_PATH = Environment.getExternalStorageDirectory().getPath();
 
     /* Used by; StatisticsFragment */
     public static final String[] color_code = {

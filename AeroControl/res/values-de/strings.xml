@@ -271,6 +271,9 @@
     <string name="pref_profile_no_changes">Es wurden noch keine Einstellungen vorgenommen!</string>
     <string name="pref_profile_service_not_running">Per App Service ist nicht gestartet, es wurden aber Apps zu Profilen zugewiesen!</string>
     <string name="pref_profile_loading_app_data">Programmierung des Flux-Kompensators...</string>
+    <string name="pref_profile_export">Exportieren</string>
+    <string name="pref_profile_import">Importieren</string>
+    <string name="pref_profile_import_select">Profile für Import auswählen</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Klick mich und bewerte diese App!</string>

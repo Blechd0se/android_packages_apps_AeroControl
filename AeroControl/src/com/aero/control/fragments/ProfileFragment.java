@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -248,6 +250,73 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
+                .setNeutralButton(R.string.pref_profile_import, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+
+                        final String dir = AeroActivity.files.EXTERNAL_PATH + "/com.aero.control/profiles";
+
+                        if (!(AeroActivity.genHelper.doesExist(dir)))
+                            return;
+
+
+                        final String[] strings = AeroActivity.shell.getDirInfo(dir, true);
+                        final ArrayList<Boolean> importProfiles = new ArrayList<Boolean>();
+
+                        for (String s : strings)
+                            importProfiles.add(false);
+
+                        dialog.setTitle(R.string.pref_profile_import_select);
+                        dialog.setIcon(R.drawable.restore);
+                        dialog.setMultiChoiceItems(strings, null, new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                                if (b) {
+                                    importProfiles.add(i, true);
+                                } else {
+                                    importProfiles.add(i, false);
+                                }
+                            }
+                        })
+                                // Set the action buttons
+                                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        int i = 0;
+                                        for (String s : strings) {
+                                            if (importProfiles.get(i)) {
+                                                // Do the import;
+                                                try {
+                                                    AeroActivity.genHelper.copyFile(AeroActivity.genHelper.getNewFile(dir + "/" + s),
+                                                            AeroActivity.genHelper.getNewFile(AeroActivity.files.sharedPrefsPath + s));
+                                                } catch (IOException e) {
+                                                    Log.e(LOG_TAG, "Couldn't copy file: " + dir + "/" + s, e);
+                                                }
+
+                                                if (AeroActivity.genHelper.doesExist(AeroActivity.files.sharedPrefsPath + s))
+                                                    Toast.makeText(mContext, R.string.successful, Toast.LENGTH_SHORT).show();
+                                            }
+                                            i++;
+                                        }
+                                        // Reload UI;
+                                        for (int j = 0; j < mContainerView.getChildCount(); j++) {
+                                            mContainerView.getChildAt(j).setVisibility(View.GONE);
+                                        }
+                                        loadProfiles();
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // Do Nothing
+
+                                    }
+                                })
+                        ;
+                        dialog.create().show();
+                    }
+                })
                 .create();
 
         dialog.show();
@@ -752,6 +821,30 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                             }
                         })
                         .setNegativeButton(R.string.cancel, null)
+                        .setNeutralButton(R.string.pref_profile_export, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                String dir = AeroActivity.files.EXTERNAL_PATH + "/com.aero.control/profiles";
+                                String title = txtView.getText().toString() + ".xml";
+
+                                if (!(AeroActivity.genHelper.doesExist(dir)))
+                                    if (!(new File(dir).mkdirs()))
+                                        Log.e(LOG_TAG, "Couldn't create path: " + dir);
+
+                                try {
+                                    AeroActivity.genHelper.copyFile(AeroActivity.genHelper.getNewFile(AeroActivity.files.sharedPrefsPath
+                                            + title), AeroActivity.genHelper.getNewFile(dir + "/" + title));
+                                } catch (IOException e) {
+                                    Log.e(LOG_TAG, "Couldn't copy file: " + AeroActivity.files.sharedPrefsPath
+                                            + title, e);
+                                }
+
+                                if (AeroActivity.genHelper.doesExist(dir + "/" + title))
+                                    Toast.makeText(mContext, R.string.successful, Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
                         .create();
                 dialog.show();
 

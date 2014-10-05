@@ -284,6 +284,9 @@
     <string name="pref_profile_no_changes">You haven\'t changed any settings yet!</string>
     <string name="pref_profile_service_not_running">Per App Service not running, but you have associated apps to profiles!</string>
     <string name="pref_profile_loading_app_data">Programming the flux capacitor...</string>
+    <string name="pref_profile_export">Export</string>
+    <string name="pref_profile_import">Import</string>
+    <string name="pref_profile_import_select">Select profiles for import</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Click me and rate this app!</string>
