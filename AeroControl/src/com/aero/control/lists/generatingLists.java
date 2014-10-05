@@ -30,11 +30,11 @@ public class generatingLists {
         addItem(new PreferenceItem(R.string.slider_statistics, R.drawable.clock));
         addItem(new PreferenceItem(R.string.slider_gpu_settings, R.drawable.gpu));
         addItem(new PreferenceItem(R.string.slider_memory_settings, R.drawable.memory));
+        addItem(new PreferenceItem(R.string.slider_misc_settings, R.drawable.mixer));
 
         if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526"))
-            addItem(new PreferenceItem(R.string.slider_defy_parts, R.drawable.mixer));
-        else
-            addItem(new PreferenceItem(R.string.slider_misc_settings, R.drawable.mixer));
+            addItem(new PreferenceItem(R.string.slider_defy_parts, R.drawable.gear));
+
 
         addItem(new PreferenceItem(R.string.slider_backup_restore, R.drawable.update));
         addItem(new PreferenceItem(R.string.slider_profile, R.drawable.profile));

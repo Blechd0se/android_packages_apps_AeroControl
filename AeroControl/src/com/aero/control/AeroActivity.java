@@ -78,9 +78,10 @@ public final class AeroActivity extends Activity {
     private static final int GPU = 3;
     private static final int MEMORY = 4;
     private static final int MISC = 5;
-    private static final int UPDATER = 6;
-    private static final int PROFILE = 7;
-    private static final int TESTSUITE = 8;
+    private static final int DEFY = 6;
+    private static final int UPDATER = 7;
+    private static final int PROFILE = 8;
+    private static final int TESTSUITE = 9;
 
     // Fragments;
     private AeroFragment mAeroFragment;
@@ -292,14 +293,18 @@ public final class AeroActivity extends Activity {
 
     private void selectItem(int position) {
 
+        int j = position;
         mDrawerLayout.closeDrawers();
 
         // update the main content by replacing fragments
         Fragment fragment = null;
 
+        if (!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526"))
+                && position >= DEFY)
+            j++;
 
         // Switch to show different fragments;
-        switch (position) {
+        switch (j) {
             case OVERVIEW:
                 if (mAeroFragment == null) {
                     mAeroFragment = new AeroFragment();
@@ -332,20 +337,16 @@ public final class AeroActivity extends Activity {
                 fragment = mMemoryFragment;
                 break;
             case MISC:
-                /* Defy parts for defy, misc settings for the rest.
-                 * Notice; we override position later for different headings
-                 */
-                if (Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")) {
-                    if (mDefyPartsFragment == null) {
-                        mDefyPartsFragment = new DefyPartsFragment();
-                    }
-                    fragment = mDefyPartsFragment;
-                } else {
-                    if (mMiscSettingsFragment == null) {
-                        mMiscSettingsFragment = new MiscSettingsFragment();
-                    }
-                    fragment = mMiscSettingsFragment;
+                if (mMiscSettingsFragment == null) {
+                    mMiscSettingsFragment = new MiscSettingsFragment();
                 }
+                fragment = mMiscSettingsFragment;
+                break;
+            case DEFY:
+                if (mDefyPartsFragment == null) {
+                    mDefyPartsFragment = new DefyPartsFragment();
+                }
+                fragment = mDefyPartsFragment;
                 break;
             case UPDATER:
                 if (mUpdaterFragement == null) {
@@ -372,9 +373,7 @@ public final class AeroActivity extends Activity {
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
-        if (!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")) && position == 5)
-            position = 8;
-        setTitle(mAeroTitle[position]);
+        setTitle(mAeroTitle[j]);
 
         mDrawerLayout.closeDrawer(mDrawerList);
     }
