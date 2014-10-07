@@ -23,8 +23,12 @@ import com.aero.control.helpers.CustomListPreference;
 import com.aero.control.helpers.FileManagerListener;
 import com.aero.control.helpers.FileManager;
 import com.aero.control.helpers.PreferenceHandler;
+import com.espian.showcaseview.ShowcaseView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -33,6 +37,7 @@ import java.util.Map;
  */
 public class MiscSettingsFragment extends PreferenceFragment implements FileManagerListener {
 
+    public static final String FILENAME_MISC = "firstrun_misc";
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;
     private PreferenceCategory mMiscCat;
@@ -44,6 +49,9 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
     private FileManager mLocalFolders;
     private Dialog mFileDialog;
     private Context mContext;
+    private ShowcaseView.ConfigOptions mConfigOptions;
+    private ShowcaseView mShowCase;
+
 
     private static final String MISC_SETTINGS_STORAGE = "miscSettingsStorage";
 
@@ -180,6 +188,47 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+        // Prepare Showcase;
+        mConfigOptions = new ShowcaseView.ConfigOptions();
+        mConfigOptions.hideOnClickOutside = false;
+        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
+
+        // Set up our file;
+        int output = 0;
+        final byte[] buffer = new byte[1024];
+
+        try {
+            final FileInputStream fis = getActivity().openFileInput(FILENAME_MISC);
+            output = fis.read(buffer);
+            fis.close();
+        } catch (IOException e) {
+            Log.e("Aero", "Couldn't open File... " + output);
+        }
+
+        // Only show showcase once;
+        if (output == 0)
+            DrawFirstStart(R.string.showcase_your_settings, R.string.showcase_your_settings_sum);
+
+    }
+
+    public void DrawFirstStart(int header, int content) {
+
+        try {
+            final FileOutputStream fos = getActivity().openFileOutput(FILENAME_MISC, Context.MODE_PRIVATE);
+            fos.write("1".getBytes());
+            fos.close();
+        }
+        catch (IOException e) {
+            Log.e("Aero", "Could not save file. ", e);
+        }
+
+        mShowCase = ShowcaseView.insertShowcaseViewWithType(ShowcaseView.ITEM_ACTION_ITEM , R.id.action_add_item, getActivity(), header, content, mConfigOptions);
     }
 
     public void OnCannotFileRead(File file) { }
