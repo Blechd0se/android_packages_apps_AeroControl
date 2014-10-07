@@ -33,9 +33,9 @@ public class UpdaterFragment extends PreferenceFragment {
     private static final String SDPATH = Environment.getExternalStorageDirectory().getPath();
 
     private static final String timeStamp = new SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
-    private static final File BACKUP_PATH = new File(SDPATH + "/com.aero.control/" + timeStamp + "/zImage");
+    private static final File BACKUP_PATH = new File(SDPATH + "/com.aero.control/backup/" + timeStamp + "/zImage");
     private static final File IMAGE = new File (AeroActivity.files.zImage);
-    private static final String AERO_PATH = SDPATH + "/com.aero.control";
+    private static final String AERO_PATH = "/sdcard/com.aero.control/backup";
 
     private static final updateHelper update = new updateHelper();
     private Preference mBackupKernel;
@@ -72,7 +72,7 @@ public class UpdaterFragment extends PreferenceFragment {
 
         // Fresh Start, no backup found;
         try {
-            mBackupKernel.setSummary(getText(R.string.last_backup_from)+ " " + AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/", false)[0]);
+            mBackupKernel.setSummary(getText(R.string.last_backup_from)+ " " + AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/backup", false)[0]);
             mRestoreKernel.setEnabled(true);
         } catch (NullPointerException e) {
             mBackupKernel.setSummary(getText(R.string.last_backup_from)+ " " + getText(R.string.unavailable));
@@ -83,8 +83,8 @@ public class UpdaterFragment extends PreferenceFragment {
         mRestoreKernel.setIcon(R.drawable.ic_action_time);
 
 
-        mRestoreKernel.setEntries(AeroActivity.shell.getDirInfo(SDPATH + File.separator + "/com.aero.control/", false));
-        mRestoreKernel.setEntryValues(AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/", false));
+        mRestoreKernel.setEntries(AeroActivity.shell.getDirInfo(SDPATH + File.separator + "/com.aero.control/backup/", false));
+        mRestoreKernel.setEntryValues(AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/backup/", false));
         mRestoreKernel.setDialogIcon(R.drawable.restore);
 
         mRestoreKernel.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -158,8 +158,8 @@ public class UpdaterFragment extends PreferenceFragment {
                                 mBackupKernel.setSummary(getText(R.string.last_backup_from) + " " + timeStamp);
 
                                 // Prepare the UI, otherwise it would throw a Exception;
-                                mRestoreKernel.setEntries(AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/", false));
-                                mRestoreKernel.setEntryValues(AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/", false));
+                                mRestoreKernel.setEntries(AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/backup/", false));
+                                mRestoreKernel.setEntryValues(AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/backup/", false));
 
                                 mRestoreKernel.setEnabled(true);
 
@@ -220,7 +220,7 @@ public class UpdaterFragment extends PreferenceFragment {
         // Delete old zImage first, then copy backup;
         String[] commands = new String[] {
                         "rm -f " + AeroActivity.files.zImage,
-                        "cp " + "/sdcard/com.aero.control/" + s + "/zImage" + " " + AeroActivity.files.zImage,
+                        "cp " + "/sdcard/com.aero.control/backup/" + s + "/zImage" + " " + AeroActivity.files.zImage,
                 };
 
         AeroActivity.shell.setRootInfo(commands);
@@ -230,7 +230,7 @@ public class UpdaterFragment extends PreferenceFragment {
 
     private void restoreBoot(String s) {
 
-        String filepath = new File("/sdcard/com.aero.control/" + s + "/boot.img").getPath();
+        String filepath = new File("/sdcard/com.aero.control/backup/" + s + "/boot.img").getPath();
 
         String[] commands = new String[] {
                 "chmod 0777 " + filepath,
