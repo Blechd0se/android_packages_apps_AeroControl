@@ -76,6 +76,9 @@
     <string name="pref_app_theme_sum">Defines the default app theme.</string>
     <string name="pref_per_app_service">Per-App Profile Service</string>
     <string name="pref_per_app_service_sum">Enable or disable the per-app profile service.</string>
+    <string name="pref_reset_tutorials">Reset Tutorials</string>
+    <string name="pref_reset_tutorials_title">There is no way back</string>
+    <string name="pref_reset_tutorials_dialog">You are going to reset the tutorials.</string>
 
     <string name="app_theme_red">Red - Light Holo with red accent</string>
     <string name="app_theme_light">Light - Light Holo with blue accent</string>
@@ -249,7 +252,7 @@
                                         each CPU frequency. You might to want to check this later and see if your device performs as it should.</string>
 
     <string name="showcase_your_settings">Your Settings</string>
-    <string name="showcase_your_settings_sum">Click this symbol to get a simple filemanager. You can choose any file you wish and add 
+    <string name="showcase_your_settings_sum">Click this symbol to get a simple filemanager. You can choose any file you wish and add
                                         your very own tunables. With the left icon you can delete those settings.</string>
 
     <!-- Defy Parts -->

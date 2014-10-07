@@ -72,6 +72,10 @@
     <string name="pref_app_theme_sum">Setzt den Style der App fest.</string>
     <string name="pref_per_app_service">Per-App Profil Service</string>
     <string name="pref_per_app_service_sum">Aktiviere oder deaktiviere hier den Per-App Profil Service.</string>
+    <string name="pref_reset_tutorials">Tutorials zurücksetzen</string>
+    <string name="pref_reset_tutorials_title">Es gibt kein zurück</string>
+    <string name="pref_reset_tutorials_dialog">Das wird deine Tutorials zurücksetzen.</string>
+
 
     <string name="app_theme_red">Rot - Light Holo mit rotem Akzent</string>
     <string name="app_theme_light">Light - Light Holo mit blauem Akzent</string>

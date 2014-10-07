@@ -15,6 +15,11 @@
             android:title="@string/pref_per_app_service"
             android:summary="@string/pref_per_app_service_sum" />
 
+        <Preference
+            android:key="reset_tutorials"
+            android:title="@string/pref_reset_tutorials"
+            android:summary="" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/app_name">

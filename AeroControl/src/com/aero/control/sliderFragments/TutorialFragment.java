@@ -87,6 +87,8 @@ public class TutorialFragment extends Fragment {
                         fos.write("1".getBytes());
                         fos = getActivity().openFileOutput("firstrun_trim", Context.MODE_PRIVATE);
                         fos.write("1".getBytes());
+                        fos = getActivity().openFileOutput("firstrun_misc", Context.MODE_PRIVATE);
+                        fos.write("1".getBytes());
                     }
                     fos.close();
                 }

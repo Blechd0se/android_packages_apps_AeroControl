@@ -73,6 +73,7 @@ public class PrefsActivity extends PreferenceActivity {
         if (mPer_app_check == null)
             mPer_app_check = (CheckBoxPreference)root.findPreference("per_app_service");
 
+        Preference resetTutorials = root.findPreference("reset_tutorials");
         Preference about = root.findPreference("about");
         Preference version = root.findPreference("version");
         Preference legal = root.findPreference("legal");
@@ -81,6 +82,7 @@ public class PrefsActivity extends PreferenceActivity {
         mRebootChecker.setIcon(R.drawable.ic_action_phone);
         setCheckedState(mRebootChecker);
         mPer_app_check.setIcon(R.drawable.ic_action_person);
+        resetTutorials.setIcon(R.drawable.ic_action_warning);
         setCheckedState(mPer_app_check);
         version.setIcon(R.drawable.rocket);
         xda.setIcon(R.drawable.xda);
@@ -110,7 +112,7 @@ public class PrefsActivity extends PreferenceActivity {
         mRebootChecker.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                setCheckedState((CheckBoxPreference)preference);
+                setCheckedState((CheckBoxPreference) preference);
                 return false;
             }
         });
@@ -145,6 +147,35 @@ public class PrefsActivity extends PreferenceActivity {
 
                     return false;
                 }
+            }
+        });
+
+        resetTutorials.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+
+                dialog.setTitle(R.string.pref_reset_tutorials_title);
+                dialog.setMessage(R.string.pref_reset_tutorials_dialog);
+                dialog.setIcon(R.drawable.warning);
+                dialog.setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        // Going to reset..
+                        String[] fileArray = AeroActivity.shell.getDirInfo(getApplicationInfo().dataDir + "/files/", true);
+                        for (String s : fileArray) {
+                            if (!(new File(getApplicationInfo().dataDir + "/files/" + s).delete()))
+                                Log.e("Aero", "Couldn't delete: " + s);
+                        }
+                    }
+                });
+                dialog.setNegativeButton(R.string.cancel, null);
+
+                dialog.create().show();
+
+                return false;
             }
         });
 
