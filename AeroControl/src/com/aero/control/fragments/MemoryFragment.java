@@ -534,7 +534,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        mShowCase = ShowcaseView.insertShowcaseView(150, 730, getActivity(), header, content, mConfigOptions);
+        mShowCase = ShowcaseView.insertShowcaseView(200, 200, getActivity(), header, content, mConfigOptions);
     }
 
     private void loadIOParameter() {
