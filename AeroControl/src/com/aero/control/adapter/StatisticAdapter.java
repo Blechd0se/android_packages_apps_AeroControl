@@ -24,6 +24,7 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
     private statisticInit data[];
     private final static Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     private int mIndex = 0;
+    private boolean[] mIsVisible;
 
     // Color Code, redundant but necessary
     public static final String[] color_code = {
@@ -42,6 +43,15 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
+        this.mIsVisible = new boolean[data.length];
+
+        int i = 0;
+
+        for (boolean b : mIsVisible) {
+            mIsVisible[i] = false;
+            i++;
+        }
+
     }
 
     public static class Holder {
@@ -102,11 +112,14 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
                     "No Data found for adapter.");
         }
 
-        /* Small animation effect */
-        int delay = (position * 200);
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_up);
-        animation.setStartOffset(delay);
-        row.setAnimation(animation);
+        if (!mIsVisible[position]) {
+            /* Small animation effect */
+            int delay = (position * 50);
+            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_up);
+            animation.setStartOffset(delay);
+            row.setAnimation(animation);
+            mIsVisible[position] = true;
+        }
 
         return row;
     }

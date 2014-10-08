@@ -269,6 +269,7 @@ public class PrefsActivity extends PreferenceActivity {
                 // Show testsuite if clicked;
                 if (mCounter >= 7) {
 
+                    mCounter = 0;
                     ContextWrapper cw = new ContextWrapper(getBaseContext());
                     File testsuite = new File(cw.getFilesDir() + "/testsuite");
 

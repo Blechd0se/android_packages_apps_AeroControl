@@ -24,7 +24,7 @@
         android:layout_marginTop="65dp"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:textSize="28dp"/>
+        android:textSize="26dp"/>
     <TextView
         android:id="@+id/statisticTime"
         style="?android:textAppearanceLarge"
@@ -47,6 +47,7 @@
         android:id="@+id/statisticListView"
         android:layout_marginTop="240dp"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="48dp"/>
 
 </RelativeLayout>
