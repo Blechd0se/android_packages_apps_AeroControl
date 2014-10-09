@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 
 import com.aero.control.sliderFragments.IntroductionFragment;
 import com.aero.control.sliderFragments.PerAppFragment;
+import com.aero.control.sliderFragments.SetOnBootFragment;
 import com.aero.control.sliderFragments.TutorialFragment;
 import com.aero.control.helpers.ZoomOutPageTransformer;
 
@@ -22,7 +23,7 @@ import java.io.File;
  */
 public class SplashScreen extends FragmentActivity {
 
-    private static int NUM_PAGES = 3;
+    private static int NUM_PAGES = 4;
     public static final String FIRSTRUN_AERO = "firstrun_aero";
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -71,6 +72,9 @@ public class SplashScreen extends FragmentActivity {
                     fragment = new PerAppFragment();
                     break;
                 case 2:
+                    fragment = new SetOnBootFragment();
+                    break;
+                case 3:
                     fragment = new TutorialFragment();
                     break;
                 default:

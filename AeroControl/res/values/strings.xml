@@ -307,6 +307,9 @@
                                                 foreground app every now and then and applies your desired profile automatically. \n\n
                                                 This might save you some extra juice for your battery or give you a full performance boost
                                                 on your favorite app.</string>
+    <string name="introduction_setonboot_heading">Set on boot!</string>
+    <string name="introduction_setonboot_content">With the little checkbox besides each settings you can set your values on boot individually. Just check it
+                                                and your settings will be saved. This also defines your current profile values.</string>
     <string name="introduction_tutorial_heading">Tutorials</string>
     <string name="introduction_tutorial_check">Do you want to enable tutorials?</string>
     <string name="introduction_tutorial_content">Tutorials pop up during your usage of Aero Control. They might give you some insights.
