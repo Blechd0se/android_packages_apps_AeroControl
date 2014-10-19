@@ -103,7 +103,6 @@ public final class AeroActivity extends Activity {
     private static final rootHelper rootCheck = new rootHelper();
     public static final shellHelper shell = new shellHelper();
     public static PerAppServiceHelper perAppService;
-    public static FilePath files = new FilePath();
     public static GenericHelper genHelper = new GenericHelper();
 
     @Override

@@ -25,6 +25,7 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.adapter.StatisticAdapter;
 import com.aero.control.adapter.statisticInit;
+import com.aero.control.helpers.FilePath;
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieSlice;
 import com.espian.showcaseview.ShowcaseView;
@@ -233,12 +234,12 @@ public class StatisticsFragment extends Fragment {
          * Second Case; user resetted statistics once, but rebooted
          */
 
-        File a = new File(AeroActivity.files.OFFSET_STAT);
+        File a = new File(FilePath.OFFSET_STAT);
 
         // Handle First case;
         if (a.exists() && cpuResetTime == null) {
             cpuResetTime = new ArrayList<Long>();
-            String[] array = AeroActivity.shell.getInfoArray(AeroActivity.files.OFFSET_STAT, 0, 0);
+            String[] array = AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0);
 
             for (String b : array) {
                 cpuResetTime.add(Long.parseLong(b));
@@ -289,7 +290,7 @@ public class StatisticsFragment extends Fragment {
 
         // Handle Uptime here, maybe we don't want to reset it anyway...
         if (cpuResetTime != null) {
-            String resetUptime = (AeroActivity.shell.getInfoArray(AeroActivity.files.OFFSET_STAT, 0, 0))[(AeroActivity.shell.getInfoArray(AeroActivity.files.OFFSET_STAT, 0, 0)).length - 1];
+            String resetUptime = (AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0))[(AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0)).length - 1];
             long mResetTime = Long.parseLong(resetUptime);
             mCompleteTime = mCompleteTime - mResetTime;
         }
@@ -309,14 +310,14 @@ public class StatisticsFragment extends Fragment {
             if(i == 0) {
                 cpuFreq.add((long)0);
                 if (cpuResetTime != null) {
-                    cpuTime.add((long) Integer.parseInt(c[0]) - Long.parseLong(AeroActivity.shell.getInfoArray(AeroActivity.files.OFFSET_STAT, 0, 0)[i]));
+                    cpuTime.add((long) Integer.parseInt(c[0]) - Long.parseLong(AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0)[i]));
                 } else {
                     cpuTime.add((long)Integer.parseInt(c[0]));
                 }
             } else {
                 cpuFreq.add((long)Integer.parseInt(c[0]));
                 if (cpuResetTime != null) {
-                    cpuTime.add((long)Integer.parseInt(c[1]) - Long.parseLong(AeroActivity.shell.getInfoArray(AeroActivity.files.OFFSET_STAT, 0, 0)[i]));
+                    cpuTime.add((long)Integer.parseInt(c[1]) - Long.parseLong(AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0)[i]));
                 } else {
                     cpuTime.add((long)Integer.parseInt(c[1]));
                 }
@@ -360,7 +361,7 @@ public class StatisticsFragment extends Fragment {
                  */
                 slice.setValue(10);
                 slice.setGoalValue(percentage);
-                slice.setColor(Color.parseColor(AeroActivity.files.color_code[j]));
+                slice.setColor(Color.parseColor(FilePath.color_code[j]));
                 pg.setThickness(30);
                 pg.addSlice(slice);
 
@@ -461,13 +462,13 @@ public class StatisticsFragment extends Fragment {
             txtTime.setText(tmp[1]);
             txtPercentage.setText(tmp[2]);
 
-            txtFreq.setTypeface(AeroActivity.files.kitkatFont);
-            txtTime.setTypeface(AeroActivity.files.kitkatFont);
-            txtPercentage.setTypeface(AeroActivity.files.kitkatFont);
+            txtFreq.setTypeface(FilePath.kitkatFont);
+            txtTime.setTypeface(FilePath.kitkatFont);
+            txtPercentage.setTypeface(FilePath.kitkatFont);
 
-            txtFreq.setTextColor(Color.parseColor(AeroActivity.files.color_code[mColorIndex]));
-            txtTime.setTextColor(Color.parseColor(AeroActivity.files.color_code[mColorIndex]));
-            txtPercentage.setTextColor(Color.parseColor(AeroActivity.files.color_code[mColorIndex]));
+            txtFreq.setTextColor(Color.parseColor(FilePath.color_code[mColorIndex]));
+            txtTime.setTextColor(Color.parseColor(FilePath.color_code[mColorIndex]));
+            txtPercentage.setTextColor(Color.parseColor(FilePath.color_code[mColorIndex]));
         }
         mColorIndex++;
         mIndex++;
@@ -519,10 +520,10 @@ public class StatisticsFragment extends Fragment {
 
     public final int getCpuData() {
 
-        if (!(AeroActivity.genHelper.doesExist(AeroActivity.files.TIME_IN_STATE_PATH)))
+        if (!(AeroActivity.genHelper.doesExist(FilePath.TIME_IN_STATE_PATH)))
             return 0;
 
-        data = AeroActivity.shell.getInfo(AeroActivity.files.TIME_IN_STATE_PATH, true);
+        data = AeroActivity.shell.getInfo(FilePath.TIME_IN_STATE_PATH, true);
 
         return data.length;
     }

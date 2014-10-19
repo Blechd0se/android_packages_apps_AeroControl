@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PerApp.PerAppManager;
 import com.aero.control.helpers.PerApp.perAppHelper;
 import com.aero.control.helpers.settingsHelper;
@@ -84,7 +85,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
         mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
         final View v = inflater.inflate(R.layout.profile_fragment, null);
         final TextView empty = (TextView)v.findViewById(android.R.id.empty);
-        empty.setTypeface(AeroActivity.files.kitkatFont);
+        empty.setTypeface(FilePath.kitkatFont);
 
         mContainerView = (ViewGroup)v.findViewById(R.id.container);
 
@@ -96,7 +97,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
     private void loadProfiles() {
 
-        mCompleteProfiles = AeroActivity.shell.getDirInfo(AeroActivity.files.sharedPrefsPath, true);
+        mCompleteProfiles = AeroActivity.shell.getDirInfo(FilePath.sharedPrefsPath, true);
 
         for (String s : mCompleteProfiles) {
 
@@ -149,7 +150,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
             case R.id.action_add_item:
 
                 // Check if there are actual changes;
-                if (!(AeroActivity.genHelper.doesExist(AeroActivity.files.sharedPrefsPath + "com.aero.control_preferences.xml"))) {
+                if (!(AeroActivity.genHelper.doesExist(FilePath.sharedPrefsPath + "com.aero.control_preferences.xml"))) {
                     Toast.makeText(mContext, R.string.pref_profile_no_changes , Toast.LENGTH_LONG).show();
                     break;
                 }
@@ -198,7 +199,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
     private void showDialog(final EditText editText) {
 
-        mCompleteProfiles = AeroActivity.shell.getDirInfo(AeroActivity.files.sharedPrefsPath, true);
+        mCompleteProfiles = AeroActivity.shell.getDirInfo(FilePath.sharedPrefsPath, true);
 
         AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(R.string.add_a_name)
@@ -254,7 +255,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                     public void onClick(DialogInterface dialogInterface, int i) {
                         final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
 
-                        final String dir = AeroActivity.files.EXTERNAL_PATH + "/com.aero.control/profiles";
+                        final String dir = FilePath.EXTERNAL_PATH + "/com.aero.control/profiles";
 
                         if (!(AeroActivity.genHelper.doesExist(dir)))
                             return;
@@ -288,12 +289,12 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                                                 // Do the import;
                                                 try {
                                                     AeroActivity.genHelper.copyFile(AeroActivity.genHelper.getNewFile(dir + "/" + s),
-                                                            AeroActivity.genHelper.getNewFile(AeroActivity.files.sharedPrefsPath + s));
+                                                            AeroActivity.genHelper.getNewFile(FilePath.sharedPrefsPath + s));
                                                 } catch (IOException e) {
                                                     Log.e(LOG_TAG, "Couldn't copy file: " + dir + "/" + s, e);
                                                 }
 
-                                                if (AeroActivity.genHelper.doesExist(AeroActivity.files.sharedPrefsPath + s))
+                                                if (AeroActivity.genHelper.doesExist(FilePath.sharedPrefsPath + s))
                                                     Toast.makeText(mContext, R.string.successful, Toast.LENGTH_SHORT).show();
                                             }
                                             i++;
@@ -330,7 +331,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
         // Init the perApp data here, so we can re-use it for each profile
         final perAppHelper perApp = new perAppHelper(mContext);
 
-        if(!(AeroActivity.genHelper.doesExist(AeroActivity.files.sharedPrefsPath + "com.aero.control_preferences.xml")))
+        if(!(AeroActivity.genHelper.doesExist(FilePath.sharedPrefsPath + "com.aero.control_preferences.xml")))
             return;
 
         // Flag if we add a profile to the list which already exists as a file;
@@ -360,7 +361,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
             updateStatus(txtViewSummary, false);
         }
 
-        txtView.setTypeface(AeroActivity.files.kitkatFont);
+        txtView.setTypeface(FilePath.kitkatFont);
         createListener(txtView, txtViewSummary);
 
 
@@ -638,7 +639,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
     private boolean deleteProfile(String ProfileName) {
 
-        final File prefFile = new File(AeroActivity.files.sharedPrefsPath + ProfileName + ".xml");
+        final File prefFile = new File(FilePath.sharedPrefsPath + ProfileName + ".xml");
 
         mPerAppPrefs.edit().remove(ProfileName).commit();
 
@@ -654,7 +655,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
             // Delete the file, not just clear the pref;
             final String[] cmd = new String[] {
-                    "rm " + "\"" + AeroActivity.files.sharedPrefsPath + ProfileName + ".xml" + "\""
+                    "rm " + "\"" + FilePath.sharedPrefsPath + ProfileName + ".xml" + "\""
             };
 
             AeroActivity.shell.setRootInfo(cmd);
@@ -727,16 +728,16 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
     private  void renameProfile(CharSequence oldName, String newName, TextView txtView, TextView txtViewSummary) {
 
-        final File prefFile = new File(AeroActivity.files.sharedPrefsPath + oldName.toString() + ".xml");
+        final File prefFile = new File(FilePath.sharedPrefsPath + oldName.toString() + ".xml");
 
         newName = newName.replace("/", "-");
 
-        prefFile.renameTo(AeroActivity.genHelper.getNewFile(AeroActivity.files.sharedPrefsPath + newName + ".xml"));
+        prefFile.renameTo(AeroActivity.genHelper.getNewFile(FilePath.sharedPrefsPath + newName + ".xml"));
         prefFile.delete();
 
         if (prefFile.exists()) {
             final String[] cmd = new String[] {
-                    "mv " + "\"" + AeroActivity.files.sharedPrefsPath + oldName + ".xml" + "\"" + " " + "\"" + AeroActivity.files.sharedPrefsPath + newName + ".xml" + "\""
+                    "mv " + "\"" + FilePath.sharedPrefsPath + oldName + ".xml" + "\"" + " " + "\"" + FilePath.sharedPrefsPath + newName + ".xml" + "\""
             };
 
             AeroActivity.shell.setRootInfo(cmd);
@@ -801,7 +802,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                 profileText.setVerticalScrollBarEnabled(true);
                 profileText.setMovementMethod(new ScrollingMovementMethod());
                 profileText.setPadding(20, 20, 20, 20);
-                profileText.setTypeface(AeroActivity.files.kitkatFont);
+                profileText.setTypeface(FilePath.kitkatFont);
 
                 AlertDialog dialog = new AlertDialog.Builder(mContext)
                         .setTitle(getText(R.string.slider_overview) + ": " + txtView.getText().toString())
@@ -824,7 +825,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                String dir = AeroActivity.files.EXTERNAL_PATH + "/com.aero.control/profiles";
+                                String dir = FilePath.EXTERNAL_PATH + "/com.aero.control/profiles";
                                 String title = txtView.getText().toString() + ".xml";
 
                                 if (!(AeroActivity.genHelper.doesExist(dir)))
@@ -832,10 +833,10 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                                         Log.e(LOG_TAG, "Couldn't create path: " + dir);
 
                                 try {
-                                    AeroActivity.genHelper.copyFile(AeroActivity.genHelper.getNewFile(AeroActivity.files.sharedPrefsPath
+                                    AeroActivity.genHelper.copyFile(AeroActivity.genHelper.getNewFile(FilePath.sharedPrefsPath
                                             + title), AeroActivity.genHelper.getNewFile(dir + "/" + title));
                                 } catch (IOException e) {
-                                    Log.e(LOG_TAG, "Couldn't copy file: " + AeroActivity.files.sharedPrefsPath
+                                    Log.e(LOG_TAG, "Couldn't copy file: " + FilePath.sharedPrefsPath
                                             + title, e);
                                 }
 
@@ -856,7 +857,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
             @Override
             public boolean onLongClick(View view) {
 
-                mCompleteProfiles = AeroActivity.shell.getDirInfo(AeroActivity.files.sharedPrefsPath, true);
+                mCompleteProfiles = AeroActivity.shell.getDirInfo(FilePath.sharedPrefsPath, true);
                 final EditText editText = new EditText(mContext);
                 final CharSequence oldName = txtView.getText();
                 editText.setText(oldName);

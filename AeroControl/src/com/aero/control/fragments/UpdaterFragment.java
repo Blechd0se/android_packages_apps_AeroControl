@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.updateHelper;
 
 import java.io.File;
@@ -34,7 +35,7 @@ public class UpdaterFragment extends PreferenceFragment {
 
     private static final String timeStamp = new SimpleDateFormat("ddMMyyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
     private static final File BACKUP_PATH = new File(SDPATH + "/com.aero.control/backup/" + timeStamp + "/zImage");
-    private static final File IMAGE = new File (AeroActivity.files.zImage);
+    private static final File IMAGE = new File (FilePath.zImage);
     private static final String AERO_PATH = "/sdcard/com.aero.control/backup";
 
     private static final updateHelper update = new updateHelper();
@@ -54,25 +55,25 @@ public class UpdaterFragment extends PreferenceFragment {
         mBackupKernel = root.findPreference("backup_kernel");
         mRestoreKernel = (ListPreference) root.findPreference("restore_kernel");
 
-        for (String s : AeroActivity.files.BACKUPPATH) {
+        for (String s : FilePath.BACKUPPATH) {
             if (AeroActivity.genHelper.doesExist(s)) {
                 mBackup = s;
             }
         }
 
         // If device doesn't have this kernel path;
-        if (AeroActivity.shell.getInfo(AeroActivity.files.zImage).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(FilePath.zImage).equals("Unavailable"))
             mBackupKernel.setEnabled(false);
 
         if (mBackup != null)
             mBackupKernel.setEnabled(true);
 
-        if (AeroActivity.shell.getInfo(AeroActivity.files.zImage).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(FilePath.zImage).equals("Unavailable"))
             mRestoreKernel.setEnabled(false);
 
         // Fresh Start, no backup found;
         try {
-            mBackupKernel.setSummary(getText(R.string.last_backup_from)+ " " + AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/backup", false)[0]);
+            mBackupKernel.setSummary(getText(R.string.last_backup_from)+ " " + AeroActivity.shell.getDirInfo(SDPATH + "/com.aero.control/backup/", false)[0]);
             mRestoreKernel.setEnabled(true);
         } catch (NullPointerException e) {
             mBackupKernel.setSummary(getText(R.string.last_backup_from)+ " " + getText(R.string.unavailable));
@@ -219,8 +220,8 @@ public class UpdaterFragment extends PreferenceFragment {
 
         // Delete old zImage first, then copy backup;
         String[] commands = new String[] {
-                        "rm -f " + AeroActivity.files.zImage,
-                        "cp " + "/sdcard/com.aero.control/backup/" + s + "/zImage" + " " + AeroActivity.files.zImage,
+                        "rm -f " + FilePath.zImage,
+                        "cp " + "/sdcard/com.aero.control/backup/" + s + "/zImage" + " " + FilePath.zImage,
                 };
 
         AeroActivity.shell.setRootInfo(commands);

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.Android.CustomTextPreference;
+import com.aero.control.helpers.FilePath;
 
 import java.util.ArrayList;
 
@@ -98,7 +99,7 @@ public class VoltageFragment extends PreferenceFragment {
 
     public void loadVoltage() {
 
-        String completeParamterList[] = AeroActivity.shell.getInfo(AeroActivity.files.VOLTAGE_PATH, false);
+        String completeParamterList[] = AeroActivity.shell.getInfo(FilePath.VOLTAGE_PATH, false);
 
         // If there are already some entries, kill them all (with fire)
         if (PrefCat != null)
@@ -165,7 +166,7 @@ public class VoltageFragment extends PreferenceFragment {
     public void executeVolt(String exeVolt) {
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        AeroActivity.shell.setRootInfo(exeVolt, AeroActivity.files.VOLTAGE_PATH);
+        AeroActivity.shell.setRootInfo(exeVolt, FilePath.VOLTAGE_PATH);
         updateUI();
 
     }

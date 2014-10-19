@@ -22,6 +22,7 @@ import com.aero.control.R;
 import com.aero.control.helpers.Android.CustomListPreference;
 import com.aero.control.helpers.FileManager.FileManagerListener;
 import com.aero.control.helpers.FileManager.FileManager;
+import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
@@ -63,7 +64,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
 
-        this.mContext = getActivity();
+        mContext = getActivity();
 
         // Always rebuild;
         mMiscSettings = mContext.getSharedPreferences(MISC_SETTINGS_STORAGE, mContext.MODE_PRIVATE);
@@ -297,13 +298,13 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
         mNameList = new ArrayList<String>();
 
         mNameList.add("vtg_level");
-        mParaList.add(AeroActivity.files.MISC_VIBRATOR_CONTROL);
+        mParaList.add(FilePath.MISC_VIBRATOR_CONTROL);
 
         mNameList.add("amp");
-        mParaList.add(AeroActivity.files.MISC_VIBRATOR_CONTROL);
+        mParaList.add(FilePath.MISC_VIBRATOR_CONTROL);
 
         mNameList.add("temp_threshold");
-        mParaList.add(AeroActivity.files.MISC_THERMAL_CONTROL);
+        mParaList.add(FilePath.MISC_THERMAL_CONTROL);
     }
 
     public void loadSettings() {
@@ -334,12 +335,12 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
         tcpPreference.setName("tcp_congestion");
         tcpPreference.setTitle(R.string.pref_misc_tcp_congestion);
         tcpPreference.setDialogTitle(R.string.pref_misc_tcp_congestion);
-        tcpPreference.setSummary(AeroActivity.shell.getInfo(AeroActivity.files.MISC_TCP_CONGESTION_CURRENT));
-        tcpPreference.setValue(AeroActivity.shell.getInfo(AeroActivity.files.MISC_TCP_CONGESTION_CURRENT));
-        tcpPreference.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.MISC_TCP_CONGESTION_AVAILABLE, 0, 0));
-        tcpPreference.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.MISC_TCP_CONGESTION_AVAILABLE, 0, 0));
+        tcpPreference.setSummary(AeroActivity.shell.getInfo(FilePath.MISC_TCP_CONGESTION_CURRENT));
+        tcpPreference.setValue(AeroActivity.shell.getInfo(FilePath.MISC_TCP_CONGESTION_CURRENT));
+        tcpPreference.setEntries(AeroActivity.shell.getInfoArray(FilePath.MISC_TCP_CONGESTION_AVAILABLE, 0, 0));
+        tcpPreference.setEntryValues(AeroActivity.shell.getInfoArray(FilePath.MISC_TCP_CONGESTION_AVAILABLE, 0, 0));
 
-        if (AeroActivity.genHelper.doesExist(AeroActivity.files.MISC_TCP_CONGESTION_AVAILABLE))
+        if (AeroActivity.genHelper.doesExist(FilePath.MISC_TCP_CONGESTION_AVAILABLE))
             PrefCat.addPreference(tcpPreference);
 
         tcpPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -348,7 +349,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
 
                 String a = (String) o;
 
-                AeroActivity.shell.setRootInfo(a, AeroActivity.files.MISC_TCP_CONGESTION_CURRENT);
+                AeroActivity.shell.setRootInfo(a, FilePath.MISC_TCP_CONGESTION_CURRENT);
                 tcpPreference.setSummary(a);
 
                 return true;

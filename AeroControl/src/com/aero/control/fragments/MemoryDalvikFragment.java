@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
 
 /**
@@ -40,7 +41,7 @@ public class MemoryDalvikFragment extends PreferenceFragment {
 
     public void loadDalvik() {
 
-        String completeParamterList[] = AeroActivity.shell.getDirInfo(AeroActivity.files.DALVIK_TWEAK, true);
+        String completeParamterList[] = AeroActivity.shell.getDirInfo(FilePath.DALVIK_TWEAK, true);
 
         // If there are already some entries, kill them all (with fire)
         if (PrefCat != null)
@@ -54,7 +55,7 @@ public class MemoryDalvikFragment extends PreferenceFragment {
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            h.genPrefFromDictionary(completeParamterList, AeroActivity.files.DALVIK_TWEAK);
+            h.genPrefFromDictionary(completeParamterList, FilePath.DALVIK_TWEAK);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);

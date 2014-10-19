@@ -26,6 +26,7 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.Android.CustomListPreference;
 import com.aero.control.helpers.Android.CustomPreference;
+import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 
@@ -79,14 +80,14 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         mDynFSync.setName("dynFsync");
         mDynFSync.setTitle(R.string.pref_dynamic_fsync);
         mDynFSync.setSummary(R.string.pref_dynamic_fsync_sum);
-        mDynFSync.setLookUpDefault(AeroActivity.files.DYANMIC_FSYNC);
+        mDynFSync.setLookUpDefault(FilePath.DYANMIC_FSYNC);
         mDynFSync.setOrder(15);
         memorySettingsCategory.addPreference(mDynFSync);
 
-        if ("1".equals(AeroActivity.shell.getInfo(AeroActivity.files.DYANMIC_FSYNC))) {
+        if ("1".equals(AeroActivity.shell.getInfo(FilePath.DYANMIC_FSYNC))) {
             mDynFSync.setClicked(true);
             mDynFSync.setSummary(R.string.enabled);
-        } else if ("0".equals(AeroActivity.shell.getInfo(AeroActivity.files.DYANMIC_FSYNC))) {
+        } else if ("0".equals(AeroActivity.shell.getInfo(FilePath.DYANMIC_FSYNC))) {
             mDynFSync.setClicked(false);
             mDynFSync.setSummary(R.string.disabled);
         } else {
@@ -99,11 +100,11 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         mFsync.setName("fsync");
         mFsync.setTitle(R.string.pref_fsync);
         mFsync.setSummary(R.string.pref_fsync_sum);
-        mFsync.setLookUpDefault(AeroActivity.files.FSYNC);
+        mFsync.setLookUpDefault(FilePath.FSYNC);
         mFsync.setOrder(14);
         memorySettingsCategory.addPreference(mFsync);
 
-        temp = AeroActivity.shell.getInfo(AeroActivity.files.FSYNC);
+        temp = AeroActivity.shell.getInfo(FilePath.FSYNC);
 
         if ("Y".equals(temp) || "1".equals(temp)) {
             mFsync.setClicked(true);
@@ -120,11 +121,11 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         mKSMSettings.setName("ksm");
         mKSMSettings.setTitle(R.string.pref_ksm);
         mKSMSettings.setSummary(R.string.pref_ksm_sum);
-        mKSMSettings.setLookUpDefault(AeroActivity.files.KSM_SETTINGS);
+        mKSMSettings.setLookUpDefault(FilePath.KSM_SETTINGS);
         mKSMSettings.setOrder(16);
         memorySettingsCategory.addPreference(mKSMSettings);
 
-        temp = AeroActivity.shell.getInfo(AeroActivity.files.KSM_SETTINGS);
+        temp = AeroActivity.shell.getInfo(FilePath.KSM_SETTINGS);
 
         if ("1".equals(temp)) {
             mKSMSettings.setClicked(true);
@@ -139,11 +140,11 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         mZCache = (CheckBoxPreference) findPreference("zcache");
         mZCache.setOrder(5);
-        if ("Unavailable".equals(AeroActivity.shell.getInfo(AeroActivity.files.CMDLINE_ZACHE))) {
+        if ("Unavailable".equals(AeroActivity.shell.getInfo(FilePath.CMDLINE_ZACHE))) {
             if (memorySettingsCategory != null)
                 memorySettingsCategory.removePreference(mZCache);
         } else {
-            final String fileCMD = AeroActivity.shell.getInfo(AeroActivity.files.CMDLINE_ZACHE);
+            final String fileCMD = AeroActivity.shell.getInfo(FilePath.CMDLINE_ZACHE);
             final boolean zcacheEnabled = fileCMD.length() != 0 && fileCMD.contains("zcache");
             mZCache.setChecked(zcacheEnabled);
         }
@@ -153,15 +154,15 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         mWriteBackControl.setName("writeback");
         mWriteBackControl.setTitle(R.string.pref_dynamic_writeback);
         mWriteBackControl.setSummary(R.string.pref_dynamic_writeback_sum);
-        mWriteBackControl.setLookUpDefault(AeroActivity.files.WRITEBACK);
+        mWriteBackControl.setLookUpDefault(FilePath.WRITEBACK);
         mWriteBackControl.setOrder(20);
         memorySettingsCategory.addPreference(mWriteBackControl);
 
 
-        if ("1".equals(AeroActivity.shell.getInfo(AeroActivity.files.WRITEBACK))) {
+        if ("1".equals(AeroActivity.shell.getInfo(FilePath.WRITEBACK))) {
             mWriteBackControl.setClicked(true);
             mWriteBackControl.setSummary(R.string.enabled);
-        } else if ("0".equals(AeroActivity.shell.getInfo(AeroActivity.files.WRITEBACK))) {
+        } else if ("0".equals(AeroActivity.shell.getInfo(FilePath.WRITEBACK))) {
             mWriteBackControl.setClicked(false);
             mWriteBackControl.setSummary(R.string.disabled);
         } else {
@@ -184,10 +185,10 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         mIOScheduler.setName("io_scheduler_list");
         mIOScheduler.setTitle(R.string.io_scheduler);
         mIOScheduler.setDialogTitle(R.string.io_scheduler);
-        mIOScheduler.setEntries(AeroActivity.shell.getInfoArray(AeroActivity.files.GOV_IO_FILE, 0, 1));
-        mIOScheduler.setEntryValues(AeroActivity.shell.getInfoArray(AeroActivity.files.GOV_IO_FILE, 0, 1));
-        mIOScheduler.setValue(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
-        mIOScheduler.setSummary(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
+        mIOScheduler.setEntries(AeroActivity.shell.getInfoArray(FilePath.GOV_IO_FILE, 0, 1));
+        mIOScheduler.setEntryValues(AeroActivity.shell.getInfoArray(FilePath.GOV_IO_FILE, 0, 1));
+        mIOScheduler.setValue(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(FilePath.GOV_IO_FILE)));
+        mIOScheduler.setSummary(AeroActivity.shell.getInfoString(AeroActivity.shell.getInfo(FilePath.GOV_IO_FILE)));
         mIOScheduler.setDialogIcon(R.drawable.device_drive);
         mIOScheduler.setOnPreferenceChangeListener(this);
         ioSettingsCategory.addPreference(mIOScheduler);
@@ -249,7 +250,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         final byte[] buffer = new byte[1024];
 
         try {
-            FileInputStream fis = getActivity().openFileInput(AeroActivity.files.FILENAME);
+            FileInputStream fis = getActivity().openFileInput(FilePath.FILENAME);
             output = fis.read(buffer);
             fis.close();
         } catch (IOException e) {
@@ -258,7 +259,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         // Only show showcase once;
         if (output == 0)
-            DrawFirstStart(R.string.showcase_memory_fragment_trim, R.string.showcase_memory_fragment_trim_sum, AeroActivity.files.FILENAME);
+            DrawFirstStart(R.string.showcase_memory_fragment_trim, R.string.showcase_memory_fragment_trim_sum, FilePath.FILENAME);
 
     }
 
@@ -295,9 +296,9 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             mDynFSync.setClicked(!mDynFSync.isClicked());
 
             if (mDynFSync.isClicked())
-                AeroActivity.shell.setRootInfo("1", AeroActivity.files.DYANMIC_FSYNC);
+                AeroActivity.shell.setRootInfo("1", FilePath.DYANMIC_FSYNC);
             else
-                AeroActivity.shell.setRootInfo("0", AeroActivity.files.DYANMIC_FSYNC);
+                AeroActivity.shell.setRootInfo("0", FilePath.DYANMIC_FSYNC);
 
             cusPref = (CustomPreference) preference;
 
@@ -306,9 +307,9 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             mFsync.setClicked(!mFsync.isClicked());
 
             if (mFsync.isClicked())
-                AeroActivity.shell.setRootInfo("1", AeroActivity.files.FSYNC);
+                AeroActivity.shell.setRootInfo("1", FilePath.FSYNC);
             else
-                AeroActivity.shell.setRootInfo("0", AeroActivity.files.FSYNC);
+                AeroActivity.shell.setRootInfo("0", FilePath.FSYNC);
 
             cusPref = (CustomPreference) preference;
 
@@ -317,9 +318,9 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             mKSMSettings.setClicked(!mKSMSettings.isClicked());
 
             if (mKSMSettings.isClicked())
-                AeroActivity.shell.setRootInfo("1", AeroActivity.files.KSM_SETTINGS);
+                AeroActivity.shell.setRootInfo("1", FilePath.KSM_SETTINGS);
             else
-                AeroActivity.shell.setRootInfo("0", AeroActivity.files.KSM_SETTINGS);
+                AeroActivity.shell.setRootInfo("0", FilePath.KSM_SETTINGS);
 
             cusPref = (CustomPreference) preference;
 
@@ -330,9 +331,9 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             mWriteBackControl.setClicked(!mWriteBackControl.isClicked());
 
             if (mWriteBackControl.isClicked())
-                AeroActivity.shell.setRootInfo("1", AeroActivity.files.WRITEBACK);
+                AeroActivity.shell.setRootInfo("1", FilePath.WRITEBACK);
             else
-                AeroActivity.shell.setRootInfo("0", AeroActivity.files.WRITEBACK);
+                AeroActivity.shell.setRootInfo("0", FilePath.WRITEBACK);
 
             cusPref = (CustomPreference)preference;
 
@@ -375,7 +376,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         if (preference == mIOScheduler) {
             String value = (String) newValue;
             mIOScheduler.setSummary(value);
-            AeroActivity.shell.setRootInfo(value, AeroActivity.files.GOV_IO_FILE);
+            AeroActivity.shell.setRootInfo(value, FilePath.GOV_IO_FILE);
 
             // Kill everything with fire;
             if (PrefCat != null)
@@ -387,7 +388,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     }
 
     private void zCacheClick() {
-        String getState = AeroActivity.shell.getInfo(AeroActivity.files.CMDLINE_ZACHE);
+        String getState = AeroActivity.shell.getInfo(FilePath.CMDLINE_ZACHE);
         boolean value = mZCache.isChecked();
         AeroActivity.shell.remountSystem();
         if (value) {
@@ -404,7 +405,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             getState = getState.replace(" zcache", "");
         }
         // Set current State to path;
-        AeroActivity.shell.setRootInfo(getState, AeroActivity.files.CMDLINE_ZACHE);
+        AeroActivity.shell.setRootInfo(getState, FilePath.CMDLINE_ZACHE);
         Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
     }
 
@@ -413,7 +414,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         boolean value = mLowMemoryPref.isChecked();
         AeroActivity.shell.remountSystem();
         try {
-            final BufferedReader br = new BufferedReader(new FileReader(AeroActivity.files.LOW_MEM));
+            final BufferedReader br = new BufferedReader(new FileReader(FilePath.LOW_MEM));
             try {
                 StringBuilder sb = new StringBuilder();
                 String line = br.readLine();
@@ -441,7 +442,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         } catch (FileNotFoundException ignored) {
         }
         // Set current State to path;
-        AeroActivity.shell.setRootInfo(getState, AeroActivity.files.LOW_MEM);
+        AeroActivity.shell.setRootInfo(getState, FilePath.LOW_MEM);
         Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
     }
 
@@ -540,7 +541,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     private void loadIOParameter() {
 
         try {
-            String completeParamterList[] = AeroActivity.shell.getDirInfo(AeroActivity.files.GOV_IO_PARAMETER, true);
+            String completeParamterList[] = AeroActivity.shell.getDirInfo(FilePath.GOV_IO_PARAMETER, true);
 
             // If there are already some entries, kill them all (with fire)
             if (PrefCat != null)
@@ -558,7 +559,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            h.genPrefFromDictionary(completeParamterList, AeroActivity.files.GOV_IO_PARAMETER);
+            h.genPrefFromDictionary(completeParamterList, FilePath.GOV_IO_PARAMETER);
 
             // Probably the wrong place, should be in getDirInfo ?
         } catch (NullPointerException e) {

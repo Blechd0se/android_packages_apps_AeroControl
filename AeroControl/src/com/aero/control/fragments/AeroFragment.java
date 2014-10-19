@@ -16,6 +16,7 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.adapter.AeroAdapter;
 import com.aero.control.adapter.AeroData;
+import com.aero.control.helpers.FilePath;
 import com.espian.showcaseview.ShowcaseView;
 
 import java.io.FileInputStream;
@@ -109,7 +110,7 @@ public class AeroFragment extends Fragment {
         mOverView = (ListView) root.findViewById(R.id.listView1);
 
         /* Find correct gpu path */
-        for (String a : AeroActivity.files.GPU_FILES_RATE) {
+        for (String a : FilePath.GPU_FILES_RATE) {
             if (AeroActivity.genHelper.doesExist(a)) {
                 gpu_file = a;
                 break;
@@ -220,11 +221,11 @@ public class AeroFragment extends Fragment {
 
         // Default Overview Menu
         mOverviewData.add(new AeroData(getString(R.string.kernel_version), AeroActivity.shell.getKernel()));
-        mOverviewData.add(new AeroData(getString(R.string.current_governor), AeroActivity.shell.getInfo(AeroActivity.files.GOV_FILE)));
-        mOverviewData.add(new AeroData(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
+        mOverviewData.add(new AeroData(getString(R.string.current_governor), AeroActivity.shell.getInfo(FilePath.GOV_FILE)));
+        mOverviewData.add(new AeroData(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(FilePath.GOV_IO_FILE)));
         mOverviewData.add(new AeroData(getString(R.string.current_cpu_speed), getFreqPerCore()));
         mOverviewData.add(new AeroData(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((AeroActivity.shell.getInfo(gpu_file).substring(0, AeroActivity.shell.getInfo(gpu_file).length() - 3)))));
-        mOverviewData.add(new AeroData(getString(R.string.available_memory), AeroActivity.shell.getMemory(AeroActivity.files.FILENAME_PROC_MEMINFO)));
+        mOverviewData.add(new AeroData(getString(R.string.available_memory), AeroActivity.shell.getMemory(FilePath.FILENAME_PROC_MEMINFO)));
 
 
         if (mAdapter == null) {

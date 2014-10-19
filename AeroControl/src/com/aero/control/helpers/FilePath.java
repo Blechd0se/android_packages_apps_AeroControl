@@ -11,6 +11,8 @@ import android.os.Environment;
  */
 public final class FilePath {
 
+    private FilePath() {}
+
     /* Used by; AeroFragment, GPUFragment, MemoryFragment */
     public static final String GOV_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
     public static final String GOV_IO_FILE = "/sys/block/mmcblk0/queue/scheduler";

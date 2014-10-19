@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
 
 /**
@@ -41,7 +42,7 @@ public class CPUHotplugFragment extends PreferenceFragment {
 
     public void loadHotplug() {
 
-        String completeParamterList[] = AeroActivity.shell.getDirInfo(AeroActivity.files.HOTPLUG_PATH, true);
+        String completeParamterList[] = AeroActivity.shell.getDirInfo(FilePath.HOTPLUG_PATH, true);
 
         // If there are already some entries, kill them all (with fire)
         if (PrefCat != null)
@@ -55,7 +56,7 @@ public class CPUHotplugFragment extends PreferenceFragment {
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            h.genPrefFromDictionary(completeParamterList, AeroActivity.files.HOTPLUG_PATH);
+            h.genPrefFromDictionary(completeParamterList, FilePath.HOTPLUG_PATH);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);
