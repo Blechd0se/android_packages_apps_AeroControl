@@ -13,6 +13,7 @@ import android.view.ViewConfiguration;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
+import com.aero.control.helpers.Android.CustomTextPreference;
 
 /**
  * Created by Alexander Christ on 05.03.14.

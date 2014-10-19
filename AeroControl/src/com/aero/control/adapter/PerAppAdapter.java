@@ -13,23 +13,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aero.control.R;
-import com.aero.control.helpers.PerAppListener;
+import com.aero.control.helpers.PerApp.PerAppListener;
 
 import java.util.List;
 
 /**
  * Created by Alexander Christ on 05.10.13.
  */
-public class PerAppAdapter extends ArrayAdapter<adapterInit> {
+public class PerAppAdapter extends ArrayAdapter<AeroData> {
 
     private Context context;
     private int layoutResourceId;
     private PerAppListener mPerAppListener;
-    private List<adapterInit> data;
+    private List<AeroData> data;
     private final static Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     private boolean[] mCheckedState;
 
-    public PerAppAdapter(Context context, int layoutResourceId, List<adapterInit> data, boolean[] checkedState) {
+    public PerAppAdapter(Context context, int layoutResourceId, List<AeroData> data, boolean[] checkedState) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -101,7 +101,7 @@ public class PerAppAdapter extends ArrayAdapter<adapterInit> {
             holder = (Holder) row.getTag();
         }
 
-        final adapterInit overview = data.get(position);
+        final AeroData overview = data.get(position);
 
         if (data != null) {
 

@@ -1,4 +1,4 @@
-package com.aero.control.lists;
+package com.aero.control.navItems;
 
 import android.content.Context;
 import android.os.Build;
@@ -14,12 +14,12 @@ import java.util.ArrayList;
  * Created by Alexander Christ on 17.09.13.
  * Adds items to the Navigation Drawer (with icons)
  */
-public class generatingLists {
+public class NavBarItems {
 
     public ArrayList<PreferenceItem> ITEMS = new ArrayList<PreferenceItem>();
     private Context mContext;
 
-    public generatingLists(Context context) {
+    public NavBarItems(Context context) {
         this.mContext = context;
         listItems();
     }

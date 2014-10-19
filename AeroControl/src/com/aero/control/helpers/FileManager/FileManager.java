@@ -1,4 +1,4 @@
-package com.aero.control.helpers;
+package com.aero.control.helpers.FileManager;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,8 +12,8 @@ import android.widget.ListView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.adapter.AeroData;
 import com.aero.control.adapter.FileAdapter;
-import com.aero.control.adapter.adapterInit;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -148,7 +148,7 @@ public class FileManager extends LinearLayout implements OnItemClickListener {
     }
 
     public void setItemList(List<FileData> item){
-        List<adapterInit> mOverviewData= new ArrayList<adapterInit>();
+        List<AeroData> mOverviewData= new ArrayList<AeroData>();
 
         File checkFile;
         for (FileData a : item) {
@@ -157,9 +157,9 @@ public class FileManager extends LinearLayout implements OnItemClickListener {
             checkFile = new File(mCurrentPath + "/" + a.item);
 
             if (checkFile.isDirectory())
-                mOverviewData.add(new adapterInit(R.drawable.file_folder, a.item));
+                mOverviewData.add(new AeroData(R.drawable.file_folder, a.item));
             else
-                mOverviewData.add(new adapterInit(R.drawable.file_document, a.item));
+                mOverviewData.add(new AeroData(R.drawable.file_document, a.item));
         }
 
         FileAdapter adapter = new FileAdapter(mContext,

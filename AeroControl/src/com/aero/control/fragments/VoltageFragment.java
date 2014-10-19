@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.CustomTextPreference;
+import com.aero.control.helpers.Android.CustomTextPreference;
 
 import java.util.ArrayList;
 

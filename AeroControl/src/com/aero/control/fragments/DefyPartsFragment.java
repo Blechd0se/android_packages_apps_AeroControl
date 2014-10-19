@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.CustomListPreference;
-import com.aero.control.helpers.CustomTextPreference;
+import com.aero.control.helpers.Android.CustomListPreference;
+import com.aero.control.helpers.Android.CustomTextPreference;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -37,7 +37,7 @@ public class DefyPartsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.layout.defy_parts);
 
         PreferenceScreen root = this.getPreferenceScreen();
-        final PreferenceCategory defyParts = (PreferenceCategory) findPreference("defy_parts");
+        final PreferenceCategory defyParts = (PreferenceCategory) root.findPreference("defy_parts");
 
         String charger = AeroActivity.shell.getRootInfo("getprop ", AeroActivity.files.PROP_CHARGE_LED_MODE);
         String multitouch = AeroActivity.shell.getRootInfo("getprop ", AeroActivity.files.PROP_TOUCH_POINTS);

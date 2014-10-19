@@ -1,10 +1,10 @@
-package com.aero.control.helpers;
+package com.aero.control.helpers.PerApp;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
-import com.aero.control.adapter.adapterInit;
+import com.aero.control.adapter.AeroData;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,7 @@ public class perAppHelper {
     private boolean mShowSystemApps;
     private boolean[] mIsChecked;
     private List<ApplicationInfo> mPackages;
-    private List<adapterInit> mPerAppData= new ArrayList<adapterInit>();
+    private List<AeroData> mPerAppData= new ArrayList<AeroData>();
 
     public perAppHelper(Context context) {
         this.mContext = context;
@@ -42,7 +42,7 @@ public class perAppHelper {
      *
      * @return List<adapterInit> = contains all apps + icons
      */
-    public final List<adapterInit>  getFullPackages() {
+    public final List<AeroData>  getFullPackages() {
         return mPerAppData;
     }
 
@@ -173,7 +173,7 @@ public class perAppHelper {
 
             currentPackages.add(packageInfo.packageName);
 
-            mPerAppData.add(new adapterInit(packageInfo.loadIcon(pm), packageInfo.loadLabel(mContext.getPackageManager()).toString()));
+            mPerAppData.add(new AeroData(packageInfo.loadIcon(pm), packageInfo.loadLabel(mContext.getPackageManager()).toString()));
         }
 
         mPackageNames = currentPackages.toArray(new String[0]);

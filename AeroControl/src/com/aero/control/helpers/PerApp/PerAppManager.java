@@ -1,4 +1,4 @@
-package com.aero.control.helpers;
+package com.aero.control.helpers.PerApp;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.aero.control.R;
+import com.aero.control.adapter.AeroData;
 import com.aero.control.adapter.PerAppAdapter;
-import com.aero.control.adapter.adapterInit;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class PerAppManager extends LinearLayout implements PerAppListener {
 
     public void setItemList(){
 
-        List<adapterInit> mData = mPerApp.getFullPackages();
+        List<AeroData> mData = mPerApp.getFullPackages();
 
         mAdapter = new PerAppAdapter(mContext,
                 R.layout.perapp_row, mData, mPerApp.getCheckedState());

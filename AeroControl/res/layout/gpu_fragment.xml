@@ -11,7 +11,7 @@
             android:title="@string/perf_gpu_gov_settings"
             android:summary="@string/perf_gpu_gov_settings_sum" />
 
-        <com.aero.control.helpers.CustomPreference
+        <com.aero.control.helpers.Android.CustomPreference
             android:key="rgbValues"
             android:title="@string/pref_display_color"
             android:summary="@string/pref_display_color_sum"

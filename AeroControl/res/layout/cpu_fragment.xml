@@ -6,7 +6,7 @@
         android:title="@string/pref_cpu_freq"
         android:key="cpu_settings">
 
-        <com.aero.control.helpers.CustomPreference
+        <com.aero.control.helpers.Android.CustomPreference
             android:key="cpu_commands"
             android:title="@string/perf_live_oc_uc"
             android:summary="@string/perf_live_oc_uc_sum"
@@ -17,7 +17,7 @@
             android:title="@string/perf_cpu_hotplug"
             android:summary="@string/perf_cpu_hotplug_sum" />
 
-        <com.aero.control.helpers.CustomPreference
+        <com.aero.control.helpers.Android.CustomPreference
             android:key="voltage_values"
             android:title="@string/perf_voltage_control"
             android:summary="@string/perf_voltage_control_sum" />

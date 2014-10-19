@@ -47,7 +47,6 @@ public class StatisticsFragment extends Fragment {
     TODO: - Take time from other cores in account as well (not critical, governors keep freqs mostly synced)
           - Unify listview and holograph data (?)
      */
-    public StatisticsFragment mStatisticsFragment;
     public int mIndex = 0;
     private int mColorIndex = 0;
     public ViewGroup root;
@@ -70,11 +69,6 @@ public class StatisticsFragment extends Fragment {
 
     public statisticInit[] mResult = new statisticInit[0];
 
-    public Fragment newInstance(Context context) {
-        mStatisticsFragment = new StatisticsFragment();
-
-        return mStatisticsFragment;
-    }
 
     // Override for custom view;
     @Override

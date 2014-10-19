@@ -7,8 +7,7 @@ import android.os.IBinder;
 
 import com.aero.control.helpers.settingsHelper;
 
-public class bootService extends Service
-{
+public class bootService extends Service {
 
     private static final settingsHelper settings = new settingsHelper();
 
@@ -19,15 +18,13 @@ public class bootService extends Service
     }
 
 
-    public void onDestroy()
-    {
+    public void onDestroy() {
         // service stopped
     }
 
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId)
-    {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         // service started
 
         settings.setSettings(getBaseContext(), null);

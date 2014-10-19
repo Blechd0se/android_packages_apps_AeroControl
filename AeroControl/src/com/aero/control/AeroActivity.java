@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.aero.control.navItems.NavBarItems;
 import com.aero.control.fragments.AeroFragment;
 import com.aero.control.fragments.CPUFragment;
 import com.aero.control.fragments.DefyPartsFragment;
@@ -47,9 +48,8 @@ import com.aero.control.fragments.UpdaterFragment;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.rootHelper;
 import com.aero.control.helpers.shellHelper;
-import com.aero.control.lists.generatingLists;
-import com.aero.control.lists.generatingLists.PreferenceItem;
-import com.aero.control.prefs.PrefsActivity;
+import com.aero.control.navItems.NavBarItems.PreferenceItem;
+import com.aero.control.settings.PrefsActivity;
 import com.aero.control.service.PerAppService;
 import com.aero.control.service.PerAppServiceHelper;
 
@@ -164,7 +164,7 @@ public final class AeroActivity extends Activity {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
         // Set up lists;
-        generatingLists content = new generatingLists(this);
+        NavBarItems content = new NavBarItems(this);
 
         mAdapter = new ItemAdapter(this, R.layout.activity_main, content.ITEMS);
         mDrawerList.setAdapter(mAdapter);

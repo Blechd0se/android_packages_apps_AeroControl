@@ -4,9 +4,10 @@ import android.graphics.drawable.Drawable;
 
 /**
  * Created by Alexander Christ on 18.09.13.
- * Adapter Init. Determines which Parameter AeroAdapter has.
+ * Used on various places and defines the
+ * aero data objects.
  */
-public class adapterInit {
+public class AeroData {
 
     public String name;
     public String content;
@@ -14,19 +15,19 @@ public class adapterInit {
     public Drawable image;
     public boolean isChecked = false;
 
-    public adapterInit(String name, String content) {
+    public AeroData(String name, String content) {
         super();
         this.name = name;
         this.content = content;
     }
 
-    public adapterInit(int file, String content){
+    public AeroData(int file, String content){
         super();
         this.file = file;
         this.content = content;
     }
 
-    public adapterInit(Drawable image, String name){
+    public AeroData(Drawable image, String name){
         super();
         this.image = image;
         this.name = name;

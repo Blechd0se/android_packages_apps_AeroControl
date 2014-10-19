@@ -11,15 +11,12 @@ import com.aero.control.service.PerAppServiceHelper;
 import java.io.File;
 
 
-public class bootReceiver extends BroadcastReceiver 
-{
-    public static final String LAST_KMSG = "/proc/last_kmsg";
-    private SharedPreferences prefs;
-    public static PerAppServiceHelper perAppService;
+public class bootReceiver extends BroadcastReceiver {
 
+    private static final String LAST_KMSG = "/proc/last_kmsg";
 
     public void onReceive(Context context, Intent intent) {
-    	prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         // Always start the bootService;
         Intent i = new Intent(context, bootService.class);
@@ -39,7 +36,7 @@ public class bootReceiver extends BroadcastReceiver
         }
 
         // Start our service on boot-up;
-        perAppService = new PerAppServiceHelper(context);
+        PerAppServiceHelper perAppService = new PerAppServiceHelper(context);
         if (perAppService.shouldBeStarted())
             perAppService.startService();
 

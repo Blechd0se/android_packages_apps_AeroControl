@@ -17,14 +17,14 @@ import java.util.List;
 /**
  * Created by ac on 18.09.13.
  */
-public class FileAdapter extends ArrayAdapter<adapterInit> {
+public class FileAdapter extends ArrayAdapter<AeroData> {
 
     private Context context;
     private int layoutResourceId;
-    private List<adapterInit> data;
+    private List<AeroData> data;
     private final static Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
 
-    public FileAdapter(Context context, int layoutResourceId, List<adapterInit> data) {
+    public FileAdapter(Context context, int layoutResourceId, List<AeroData> data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -68,7 +68,7 @@ public class FileAdapter extends ArrayAdapter<adapterInit> {
             holder = (Holder) row.getTag();
         }
 
-        final adapterInit overview = data.get(position);
+        final AeroData overview = data.get(position);
         if (data != null) {
 
             holder.header.setImageResource(overview.file);

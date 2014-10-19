@@ -19,9 +19,9 @@ import android.view.ViewGroup;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.CustomListPreference;
-import com.aero.control.helpers.FileManagerListener;
-import com.aero.control.helpers.FileManager;
+import com.aero.control.helpers.Android.CustomListPreference;
+import com.aero.control.helpers.FileManager.FileManagerListener;
+import com.aero.control.helpers.FileManager.FileManager;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 

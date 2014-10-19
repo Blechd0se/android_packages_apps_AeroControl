@@ -21,8 +21,8 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.CustomListPreference;
-import com.aero.control.helpers.CustomPreference;
+import com.aero.control.helpers.Android.CustomListPreference;
+import com.aero.control.helpers.Android.CustomPreference;
 import com.aero.control.helpers.PreferenceHandler;
 
 /**
@@ -30,10 +30,7 @@ import com.aero.control.helpers.PreferenceHandler;
  */
 public class GPUFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
-    public boolean checkGpuControl;
-    public boolean checkmSweep2wake;
-    public boolean checkDoubletap2wake;
-    public String[] mColorValues;
+    private String[] mColorValues;
     private PreferenceCategory PrefCat;
     private PreferenceScreen root;
 
@@ -42,12 +39,16 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     private CustomPreference mGPUControl, mSweep2wake, mDoubletap2Wake, mColorControl;
     private CustomListPreference mGPUControlFrequencies, mGPUGovernor, mDisplayControl;
 
-    public String gpu_file;
+    private String mGPUFile;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        boolean checkGpuControl;
+        boolean checkmSweep2wake;
+        boolean checkDoubletap2wake;
 
         // We have to load the xml layout first;
         addPreferencesFromResource(R.layout.gpu_fragment);
@@ -124,7 +125,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         /* Find correct gpu path */
         for (String a : AeroActivity.files.GPU_FILES) {
             if (AeroActivity.genHelper.doesExist(a)) {
-                gpu_file = a;
+                mGPUFile = a;
                 break;
             }
         }
@@ -138,7 +139,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         if(!(AeroActivity.genHelper.doesExist(AeroActivity.files.GPU_CONTROL_ACTIVE)))
                 gpuCategory.removePreference(mGPUControl);
 
-        if (gpu_file == null)
+        if (mGPUFile == null)
             gpuCategory.removePreference(mGPUControlFrequencies);
 
         if (!(AeroActivity.genHelper.doesExist(AeroActivity.files.COLOR_CONTROL)))
@@ -208,10 +209,10 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
         try  {
 
-            if (gpu_file != null) {
-                mGPUControlFrequencies.setValue(AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0]);
-                mGPUControlFrequencies.setSummary(AeroActivity.shell.toMHz((AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0].substring(0,
-                        AeroActivity.shell.getInfoArray(gpu_file, 0, 0)[0].length() - 3))));
+            if (mGPUFile != null) {
+                mGPUControlFrequencies.setValue(AeroActivity.shell.getInfoArray(mGPUFile, 0, 0)[0]);
+                mGPUControlFrequencies.setSummary(AeroActivity.shell.toMHz((AeroActivity.shell.getInfoArray(mGPUFile, 0, 0)[0].substring(0,
+                        AeroActivity.shell.getInfoArray(mGPUFile, 0, 0)[0].length() - 3))));
             }
 
             // Check if enabled or not;
@@ -261,7 +262,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         }
     }
 
-    private final void showColorControl(final SharedPreferences.Editor editor, final CustomPreference cusPref) {
+    private void showColorControl(final SharedPreferences.Editor editor, final CustomPreference cusPref) {
 
         mColorValues = AeroActivity.shell.getInfoArray(AeroActivity.files.COLOR_CONTROL, 0, 0);
 
@@ -428,7 +429,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
         if (preference == mGPUControlFrequencies) {
 
-            path = gpu_file;
+            path = mGPUFile;
             newSummary = AeroActivity.shell.toMHz((a.substring(0, a.length() - 3)));
 
         } else if (preference == mGPUGovernor) {

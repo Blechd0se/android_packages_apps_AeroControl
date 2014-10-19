@@ -19,10 +19,10 @@ import com.aero.control.R;
  */
 public class StatisticAdapter extends ArrayAdapter<statisticInit> {
 
-    private Context context;
-    private int layoutResourceId;
-    private statisticInit data[];
-    private final static Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+    private Context mContext;
+    private int mLayoutResourceId;
+    private statisticInit mData[];
+    private final static Typeface mFont = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     private int mIndex = 0;
     private boolean[] mIsVisible;
 
@@ -40,18 +40,16 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
 
     public StatisticAdapter(Context context, int layoutResourceId, statisticInit[] data) {
         super(context, layoutResourceId, data);
-        this.layoutResourceId = layoutResourceId;
-        this.context = context;
-        this.data = data;
+        this.mLayoutResourceId = layoutResourceId;
+        this.mContext = context;
+        this.mData = data;
         this.mIsVisible = new boolean[data.length];
 
         int i = 0;
-
         for (boolean b : mIsVisible) {
             mIsVisible[i] = false;
             i++;
         }
-
     }
 
     public static class Holder {
@@ -65,21 +63,21 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
         View row = convertView;
         Holder holder;
 
-        if (mIndex == 8)
+        if (mIndex == color_code.length)
             mIndex = 0;
 
         if (row == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(layoutResourceId, parent, false);
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = inflater.inflate(mLayoutResourceId, parent, false);
 
             holder = new Holder();
             holder.frequency = (TextView) row.findViewById(R.id.frequency);
             holder.timeInState = (TextView) row.findViewById(R.id.timeInState);
             holder.percentage = (TextView) row.findViewById((R.id.percentage));
 
-            holder.frequency.setTypeface(font);
-            holder.timeInState.setTypeface(font);
-            holder.percentage.setTypeface(font);
+            holder.frequency.setTypeface(mFont);
+            holder.timeInState.setTypeface(mFont);
+            holder.percentage.setTypeface(mFont);
 
             holder.frequency.setTextColor(Color.parseColor(color_code[mIndex]));
             holder.timeInState.setTextColor(Color.parseColor(color_code[mIndex]));
@@ -92,11 +90,11 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
             holder = (Holder) row.getTag();
         }
 
-        final statisticInit overview = data[position];
+        final statisticInit overview = mData[position];
         if(overview == null)
             return row;
 
-        if (data != null) {
+        if (mData != null) {
 
             if(overview.mFrequency != null)
                 holder.frequency.setText(overview.mFrequency);

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,8 +26,8 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.PerAppManager;
-import com.aero.control.helpers.perAppHelper;
+import com.aero.control.helpers.PerApp.PerAppManager;
+import com.aero.control.helpers.PerApp.perAppHelper;
 import com.aero.control.helpers.settingsHelper;
 import com.aero.control.service.PerAppServiceHelper;
 import com.cocosw.undobar.UndoBarController;

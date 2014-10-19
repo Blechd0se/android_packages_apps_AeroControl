@@ -15,7 +15,7 @@ import android.widget.ListView;
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.adapter.AeroAdapter;
-import com.aero.control.adapter.adapterInit;
+import com.aero.control.adapter.AeroData;
 import com.espian.showcaseview.ShowcaseView;
 
 import java.io.FileInputStream;
@@ -33,18 +33,18 @@ import fr.nicolaspomepuy.discreetapprate.AppRate;
  */
 public class AeroFragment extends Fragment {
 
-    public ListView listView1;
-    public ViewGroup root;
-    public AeroAdapter adapter;
-    public List<adapterInit> mOverviewData= new ArrayList<adapterInit>();
-    public ShowcaseView.ConfigOptions mConfigOptions;
-    public ShowcaseView mShowCase;
-    public boolean mVisible = true;
+    private ListView mOverView;
+    private ViewGroup root;
+    private AeroAdapter mAdapter;
+    private List<AeroData> mOverviewData= new ArrayList<AeroData>();
+    private ShowcaseView.ConfigOptions mConfigOptions;
+    private ShowcaseView mShowCase;
+    private boolean mVisible = true;
     private boolean mExecuted = false;
 
-    public final static String FILENAME = "firstrun";
+    private final static String FILENAME = "firstrun";
 
-    public String gpu_file;
+    private String gpu_file;
 
     private class RefreshThread extends Thread {
 
@@ -60,11 +60,9 @@ public class AeroFragment extends Fragment {
                         sleep(1000);
                         mRefreshHandler.sendEmptyMessage(1);
                     }
-                } catch (InterruptedException e) {
-
-                }
+                } catch (InterruptedException e) {}
             }
-        };
+        }
 
         private RefreshThread mRefreshThread = new RefreshThread();
 
@@ -78,10 +76,7 @@ public class AeroFragment extends Fragment {
                     if (isVisible() && mVisible) {
                         createList();
                         mVisible = true;
-                    } else {
-                        // Do nothing
                     }
-
                 }
             }
         };
@@ -99,7 +94,7 @@ public class AeroFragment extends Fragment {
 
         mVisible = true;
         // onPause we need to reset our adapter;
-        adapter = null;
+        mAdapter = null;
     }
 
     // Override for custom view;
@@ -111,7 +106,7 @@ public class AeroFragment extends Fragment {
          * Start the refresh Thread at startup;
          */
 
-        listView1 = (ListView) root.findViewById(R.id.listView1);
+        mOverView = (ListView) root.findViewById(R.id.listView1);
 
         /* Find correct gpu path */
         for (String a : AeroActivity.files.GPU_FILES_RATE) {
@@ -218,35 +213,35 @@ public class AeroFragment extends Fragment {
         if (mOverviewData != null) {
             mOverviewData.clear();
         }
-        if (adapter != null) {
-            adapter.clear();
-            adapter.notifyDataSetChanged();
+        if (mAdapter != null) {
+            mAdapter.clear();
+            mAdapter.notifyDataSetChanged();
         }
 
         // Default Overview Menu
-        mOverviewData.add(new adapterInit(getString(R.string.kernel_version), AeroActivity.shell.getKernel()));
-        mOverviewData.add(new adapterInit(getString(R.string.current_governor), AeroActivity.shell.getInfo(AeroActivity.files.GOV_FILE)));
-        mOverviewData.add(new adapterInit(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
-        mOverviewData.add(new adapterInit(getString(R.string.current_cpu_speed), getFreqPerCore()));
-        mOverviewData.add(new adapterInit(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((AeroActivity.shell.getInfo(gpu_file).substring(0, AeroActivity.shell.getInfo(gpu_file).length() - 3)))));
-        mOverviewData.add(new adapterInit(getString(R.string.available_memory), AeroActivity.shell.getMemory(AeroActivity.files.FILENAME_PROC_MEMINFO)));
+        mOverviewData.add(new AeroData(getString(R.string.kernel_version), AeroActivity.shell.getKernel()));
+        mOverviewData.add(new AeroData(getString(R.string.current_governor), AeroActivity.shell.getInfo(AeroActivity.files.GOV_FILE)));
+        mOverviewData.add(new AeroData(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(AeroActivity.files.GOV_IO_FILE)));
+        mOverviewData.add(new AeroData(getString(R.string.current_cpu_speed), getFreqPerCore()));
+        mOverviewData.add(new AeroData(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((AeroActivity.shell.getInfo(gpu_file).substring(0, AeroActivity.shell.getInfo(gpu_file).length() - 3)))));
+        mOverviewData.add(new AeroData(getString(R.string.available_memory), AeroActivity.shell.getMemory(AeroActivity.files.FILENAME_PROC_MEMINFO)));
 
 
-        if (adapter == null) {
+        if (mAdapter == null) {
             /*
              * Create our ArrayAdapter and bound it to our listview.
              * Notice; we can only set our Adapter if it is freshly new,
              * otherwise we can just fall through and execute a
              * notifyDataSetChange() of our Adapter in the main UI Thread.
              */
-            adapter = new AeroAdapter(getActivity(),
+            mAdapter = new AeroAdapter(getActivity(),
                     R.layout.overviewlist_item, mOverviewData);
-            listView1.setAdapter(adapter);
+            mOverView.setAdapter(mAdapter);
         } else {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    adapter.notifyDataSetChanged();
+                    mAdapter.notifyDataSetChanged();
                 }
             });
         }
@@ -275,8 +270,7 @@ public class AeroFragment extends Fragment {
 
     public void setPermissions() {
 
-        final String[] commands = new String[]
-                {
+        final String[] commands = new String[] {
                         "chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
                         "chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
                         "chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",

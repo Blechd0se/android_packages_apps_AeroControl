@@ -24,8 +24,8 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.helpers.CustomListPreference;
-import com.aero.control.helpers.CustomPreference;
+import com.aero.control.helpers.Android.CustomListPreference;
+import com.aero.control.helpers.Android.CustomPreference;
 import com.aero.control.helpers.PreferenceHandler;
 import com.espian.showcaseview.ShowcaseView;
 

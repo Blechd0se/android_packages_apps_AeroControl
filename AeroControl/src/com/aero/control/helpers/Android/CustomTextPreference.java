@@ -1,23 +1,16 @@
-package com.aero.control.helpers;
+package com.aero.control.helpers.Android;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewManager;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.aero.control.R;
-import com.cocosw.undobar.UndoBarController;
 
 /**
  * Created by Alexander Christ on 30.09.13.

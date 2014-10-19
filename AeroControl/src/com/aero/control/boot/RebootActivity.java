@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.aero.control.R;
 
 /**
- * Created by root on 30.11.13.
+ * Created by Alexander Christ on 30.11.13.
  */
 public class RebootActivity extends Activity {
 

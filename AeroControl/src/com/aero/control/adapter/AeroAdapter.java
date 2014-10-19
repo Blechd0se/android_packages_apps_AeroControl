@@ -16,14 +16,14 @@ import java.util.List;
 /**
  * Created by ac on 18.09.13.
  */
-public class AeroAdapter extends ArrayAdapter<adapterInit> {
+public class AeroAdapter extends ArrayAdapter<AeroData> {
 
     private Context context;
     private int layoutResourceId;
-    private List<adapterInit> data;
+    private List<AeroData> data;
     private final static Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
 
-    public AeroAdapter(Context context, int layoutResourceId, List<adapterInit> data) {
+    public AeroAdapter(Context context, int layoutResourceId, List<AeroData> data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -68,7 +68,7 @@ public class AeroAdapter extends ArrayAdapter<adapterInit> {
             holder = (Holder) row.getTag();
         }
 
-        final adapterInit overview = data.get(position);
+        final AeroData overview = data.get(position);
         if (data != null) {
 
             // To ensure we can use this adapter for different things, make some hooks;
