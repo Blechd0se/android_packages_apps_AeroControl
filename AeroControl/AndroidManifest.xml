@@ -45,7 +45,7 @@
             android:theme="@style/RebootDialog" />
 
         <activity
-            android:name=".prefs.PrefsActivity">
+            android:name=".settings.PrefsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.aero.control.AeroActivity" />

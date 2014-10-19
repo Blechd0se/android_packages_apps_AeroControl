@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.TypedValue;
@@ -45,13 +44,14 @@ import com.aero.control.fragments.StatisticsFragment;
 import com.aero.control.helpers.GenericHelper;
 import com.aero.control.testsuite.TestSuiteFragment;
 import com.aero.control.fragments.UpdaterFragment;
-import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.rootHelper;
 import com.aero.control.helpers.shellHelper;
 import com.aero.control.navItems.NavBarItems.PreferenceItem;
 import com.aero.control.settings.PrefsActivity;
 import com.aero.control.service.PerAppService;
 import com.aero.control.service.PerAppServiceHelper;
+import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
+import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -67,6 +67,7 @@ public final class AeroActivity extends Activity {
     public static Stack<Fragment> mFragmentStack;
 
     private CharSequence mDrawerTitle;
+    private DrawerArrowDrawable mDrawerArrow;
     private CharSequence mTitle;
     private String[] mAeroTitle;
     private CharSequence mPreviousTitle;
@@ -103,6 +104,7 @@ public final class AeroActivity extends Activity {
     private static final rootHelper rootCheck = new rootHelper();
     public static final shellHelper shell = new shellHelper();
     public static PerAppServiceHelper perAppService;
+
     public static GenericHelper genHelper = new GenericHelper();
 
     @Override
@@ -111,7 +113,10 @@ public final class AeroActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         int actionBarHeight = 0;
-        getActionBar().setIcon(R.drawable.app_icon_actionbar);
+
+        if (getActionBar() != null) {
+            getActionBar().setIcon(android.R.color.transparent);
+        }
 
         mFragmentStack = new Stack<Fragment>();
 
@@ -175,24 +180,33 @@ public final class AeroActivity extends Activity {
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description for accessibility */
-                R.string.drawer_close  /* "close drawer" description for accessibility */
-        ) {
+
+        mDrawerArrow = new DrawerArrowDrawable(this) {
+            @Override
+            public boolean isLayoutRtl() {
+                return false;
+            }
+        };
+
+        // Navigation Drawer with toggle and animation;
+        mDrawerToggle = new ActionBarDrawerToggle(this,
+                mDrawerLayout,
+                mDrawerArrow,
+                R.string.drawer_open,
+                R.string.drawer_close) {
             public void onDrawerClosed(View view) {
-                setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
-                setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
             }
         };
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
 
         if (savedInstanceState == null) {
             selectItem(0);

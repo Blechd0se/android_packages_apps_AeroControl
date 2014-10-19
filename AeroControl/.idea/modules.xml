@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/library/HoloGraphLibrary/HoloGraphLibrary.iml" filepath="$PROJECT_DIR$/library/HoloGraphLibrary/HoloGraphLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/UndoBar/UndoBar.iml" filepath="$PROJECT_DIR$/library/UndoBar/UndoBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/discreetapprate/discreetapprate.iml" filepath="$PROJECT_DIR$/library/discreetapprate/discreetapprate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/ldrawer/src/main/ldrawer.iml" filepath="$PROJECT_DIR$/library/ldrawer/src/main/ldrawer.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/showcase/showcase.iml" filepath="$PROJECT_DIR$/library/showcase/showcase.iml" />
     </modules>
   </component>
