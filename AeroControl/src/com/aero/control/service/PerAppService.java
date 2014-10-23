@@ -11,6 +11,7 @@ import android.os.Looper;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.aero.control.AeroActivity;
 import com.aero.control.helpers.settingsHelper;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public final class PerAppService extends Service {
     private Runnable mRunnable;
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public void onCreate() {
 
         if (mContext == null)
             mContext = this;
@@ -53,8 +54,21 @@ public final class PerAppService extends Service {
                 }
             };
         }
-
         new Thread(mRunnable).start();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        // Be super paranoid and let the service kill itself;
+        if (AeroActivity.perAppService != null) {
+            if (!AeroActivity.perAppService.getState())
+                stopSelf();
+        }
+
+        // Do work in its own thread;
+        if (mRunnable != null)
+            new Thread(mRunnable).start();
 
         return Service.START_STICKY;
     }
@@ -64,7 +78,7 @@ public final class PerAppService extends Service {
         return null;
     }
 
-    private final void runTask() {
+    private void runTask() {
 
         if (mPerAppPrefs == null)
             mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);

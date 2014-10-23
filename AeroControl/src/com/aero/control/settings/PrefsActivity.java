@@ -128,7 +128,7 @@ public class PrefsActivity extends PreferenceActivity {
                     if (AeroActivity.perAppService == null)
                         AeroActivity.perAppService = new PerAppServiceHelper(getBaseContext());
 
-                    if (AeroActivity.perAppService.getState() == false)
+                    if (!AeroActivity.perAppService.getState())
                         AeroActivity.perAppService.startService();
 
 
@@ -138,11 +138,13 @@ public class PrefsActivity extends PreferenceActivity {
                 } else  {
 
                     // Only stop if running;
-                    if (AeroActivity.perAppService == null)
+                    if (AeroActivity.perAppService == null) {
                         return false;
+                    }
 
-                    if (AeroActivity.perAppService.getState() == true)
+                    if (AeroActivity.perAppService.getState()) {
                         AeroActivity.perAppService.stopService();
+                    }
 
                     return false;
                 }

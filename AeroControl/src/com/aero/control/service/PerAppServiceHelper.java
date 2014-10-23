@@ -67,20 +67,20 @@ public class PerAppServiceHelper {
 
     public final void stopService() {
 
-        if (mBackgroundIntent == null || mTimer == null || mPendingIntent == null) {
-            // Nothing is running
-            Log.e("Aero", "Service wasn't even running!");
-            return;
-        } else {
+        // Start over if something went wrong;
+        if (mPendingIntent == null || mTimer == null)
+            startService();
 
-            // Cleanup;
-            mContext.stopService(mBackgroundIntent);
-            mTimer.cancel(mPendingIntent);
+        // Cleanup;
+        mContext.stopService(mBackgroundIntent);
 
-            mTimer = null;
-            mBackgroundIntent = null;
-            mPendingIntent = null;
-        }
+        mPendingIntent.cancel();
+        mTimer.cancel(mPendingIntent);
+
+        mTimer = null;
+        mBackgroundIntent = null;
+        mPendingIntent = null;
+
         setState(false);
         Log.e("Aero", "Service should be stopped now!");
     }
