@@ -193,8 +193,6 @@ public final class shellHelper {
     public final String[] getInfo(String s, boolean deepsleep) {
 
         String info;
-        // Just make some gerneric error-code
-        String[] error = new String[0];
         ArrayList<String> al = new ArrayList<String>();
 
         if (deepsleep) {
@@ -222,7 +220,7 @@ public final class shellHelper {
                     "IO Exception when trying to get information.",
                     e);
 
-            return error;
+            return null;
         }
     }
 

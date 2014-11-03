@@ -259,7 +259,7 @@ public class StatisticsFragment extends Fragment {
      * also calculated here. HoloSlices will be added according to found
      * data.
      */
-    private final void loadUI(boolean firstView) {
+    private void loadUI(boolean firstView) {
 
         final ArrayList<String> cpuGraphValues = new ArrayList<String>();
         Long[] cpuFreqArray;
@@ -396,7 +396,7 @@ public class StatisticsFragment extends Fragment {
 
     }
 
-    private final void clearUI() {
+    private void clearUI() {
 
         /*
          * Cleanup the whole UI.
@@ -524,6 +524,9 @@ public class StatisticsFragment extends Fragment {
             return 0;
 
         data = AeroActivity.shell.getInfo(FilePath.TIME_IN_STATE_PATH, true);
+
+        if (data == null)
+            return 0;
 
         return data.length;
     }
