@@ -61,6 +61,7 @@ public class CPUFragment extends PreferenceFragment {
     private static final ArrayList<String> mVselList = new ArrayList<String>();
 
     private static final int mNumCpus = Runtime.getRuntime().availableProcessors();
+    private final static String NO_DATA_FOUND = "Unavailable";
 
     @Override
     final public void onCreate(Bundle savedInstanceState) {
@@ -161,7 +162,7 @@ public class CPUFragment extends PreferenceFragment {
 
         final Preference cpu_oc_uc = (Preference) root.findPreference("cpu_commands");
 
-        if (AeroActivity.shell.getInfo(FilePath.CPU_VSEL).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(FilePath.CPU_VSEL).equals(NO_DATA_FOUND))
             cpuCategory.removePreference(cpu_oc_uc);
         else
             cpu_oc_uc.setOrder(20);
@@ -555,8 +556,8 @@ public class CPUFragment extends PreferenceFragment {
             mMinFrequency.setValue(AeroActivity.shell.getInfoArray(FilePath.CPU_BASE_PATH + 0 + FilePath.CPU_MIN_FREQ, 0, 0)[0]);
             mMinFrequency.setSummary(AeroActivity.shell.getInfoArray(FilePath.CPU_BASE_PATH + 0 + FilePath.CPU_MIN_FREQ, 1, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
-            mMinFrequency.setValue("Unavailable");
-            mMinFrequency.setSummary("Unavailable");
+            mMinFrequency.setValue(NO_DATA_FOUND);
+            mMinFrequency.setSummary(NO_DATA_FOUND);
         }
     }
 
@@ -568,8 +569,8 @@ public class CPUFragment extends PreferenceFragment {
             mMaxFrequency.setValue(AeroActivity.shell.getInfoArray(FilePath.CPU_BASE_PATH + 0 + FilePath.CPU_MAX_FREQ, 0, 0)[0]);
             mMaxFrequency.setSummary(AeroActivity.shell.getInfoArray(FilePath.CPU_BASE_PATH + 0 + FilePath.CPU_MAX_FREQ, 1, 0)[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
-            mMaxFrequency.setValue("Unavailable");
-            mMaxFrequency.setSummary("Unavailable");
+            mMaxFrequency.setValue(NO_DATA_FOUND);
+            mMaxFrequency.setSummary(NO_DATA_FOUND);
         }
     }
 

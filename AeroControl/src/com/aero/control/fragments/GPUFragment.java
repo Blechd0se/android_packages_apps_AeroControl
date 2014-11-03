@@ -42,6 +42,8 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
     private String mGPUFile;
 
+    private final static String NO_DATA_FOUND = "Unavailable";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +148,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         if (!(AeroActivity.genHelper.doesExist(FilePath.COLOR_CONTROL)))
             gpuCategory.removePreference(mColorControl);
 
-        if (AeroActivity.shell.getInfo(FilePath.DISPLAY_COLOR).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(FilePath.DISPLAY_COLOR).equals(NO_DATA_FOUND))
             gpuCategory.removePreference(mDisplayControl);
 
         final Preference gpu_gov_settings = root.findPreference("gpu_gov_settings");
@@ -250,7 +252,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             /*
              * If the folder is missing, disable this feature completely;
              */
-            mGPUControlFrequencies.setSummary("Unavailable");
+            mGPUControlFrequencies.setSummary(NO_DATA_FOUND);
             mGPUControlFrequencies.setEnabled(false);
             mGPUControl.setEnabled(false);
 

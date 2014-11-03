@@ -35,6 +35,7 @@ public final class shellHelper {
     private static final String LOG_TAG = shellHelper.class.getName();
     private ShellWorkqueue shWork = new ShellWorkqueue();
 
+    private final static String NO_DATA_FOUND = "Unavailable";
 
     /*
      * Allows to simply query up commands to execute by the root process
@@ -127,11 +128,11 @@ public final class shellHelper {
 
             if (!m.matches()) {
                 Log.e(LOG_TAG, "Regex did not match on /proc/version: " + procVersionStr);
-                return "Unavailable";
+                return NO_DATA_FOUND;
             } else if (m.groupCount() < 4) {
                 Log.e(LOG_TAG, "Regex match on /proc/version only returned " + m.groupCount()
                         + " groups");
-                return "Unavailable";
+                return NO_DATA_FOUND;
             } else {
                 return (new StringBuilder(m.group(1)).append("\n").append(
                         m.group(2)).append(" ").append(m.group(3)).append("\n")
@@ -142,7 +143,7 @@ public final class shellHelper {
                     "IO Exception when getting kernel version for Device Info screen",
                     e);
 
-            return "Unavailable";
+            return NO_DATA_FOUND;
         }
     }
 
@@ -155,7 +156,7 @@ public final class shellHelper {
      */
     public final String getInfo(String s) {
 
-        String info = "Unavailable";
+        String info = NO_DATA_FOUND;
 
         if (s == null || !(new File(s).exists()))
             return info;
@@ -169,7 +170,7 @@ public final class shellHelper {
             }
 
             if (info == null)
-                info = "Unavailable";
+                info = NO_DATA_FOUND;
 
             return info;
         } catch (IOException e) {
@@ -283,7 +284,7 @@ public final class shellHelper {
     public final String[] getInfoArray(String s, int flag, int flag_io) {
 
         String[] completeString = new String[0];
-        String[] output = new String[] { "Unavailable" };
+        String[] output = new String[] { NO_DATA_FOUND };
 
         try {
             // Try to read the given Path, if not available -> throw exception
@@ -324,7 +325,7 @@ public final class shellHelper {
     public final String getInfoString(String s) {
 
         int open, close;
-        String finalString = "Unavailable";
+        String finalString = NO_DATA_FOUND;
 
         open = s.indexOf("[");
         close = s.lastIndexOf("]");
@@ -345,9 +346,9 @@ public final class shellHelper {
      */
     public final String toMHz(String mhzString) {
 
-        if (mhzString.equals("Unavailable") ||
+        if (mhzString.equals(NO_DATA_FOUND) ||
                 mhzString.equals("Unavaila"))
-            return "Unavailable";
+            return NO_DATA_FOUND;
 
         try {
             if (mhzString.length() < 8)
@@ -360,7 +361,7 @@ public final class shellHelper {
             Log.e(LOG_TAG,
                     "Tried to add something to a non existing string.",
                     e);
-            return "Unavailable";
+            return NO_DATA_FOUND;
         }
     }
 
@@ -402,7 +403,7 @@ public final class shellHelper {
             Log.e(LOG_TAG,
                     "Yep, i can't read your memory stats :( .",
                     e);
-            return "Unavailable";
+            return NO_DATA_FOUND;
         }
 
         return totalFreeMemory + " / " + totalMemory;
@@ -573,7 +574,7 @@ public final class shellHelper {
             while(true){
                 read = stdout.read(buffer);
                 if (read == -1)
-                    return "Unavailable";
+                    return NO_DATA_FOUND;
 
                 output += new String(buffer, 0, read);
                 if(read<BUFF_LEN){
@@ -587,7 +588,7 @@ public final class shellHelper {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Do you even root, bro? :/", e);
         }
-        return "Unavailable";
+        return NO_DATA_FOUND;
     }
 
 
@@ -601,7 +602,6 @@ public final class shellHelper {
      */
     public final String[] getRootArray(String command, String split) {
 
-        //String[] output = new String[] { "Unavailable" };
         ArrayList<String> temp = new ArrayList();
         ExecutorService executor = Executors.newFixedThreadPool(2);
 

@@ -26,6 +26,8 @@ public class PreferenceHandler {
 
     private SharedPreferences mPreferences;
 
+    private final static String NO_DATA_FOUND = "Unavailable";
+
     /*
      * Default constructor to set our objects
      */
@@ -168,7 +170,7 @@ public class PreferenceHandler {
         prefload.setDialogTitle(parameter);
         prefload.setName(parameterPath);
 
-        if (prefload.getPrefSummary().equals("Unavailable")) {
+        if (prefload.getPrefSummary().equals(NO_DATA_FOUND)) {
             prefload.setEnabled(false);
             prefload.setPrefSummary("This value can't be changed.");
         }

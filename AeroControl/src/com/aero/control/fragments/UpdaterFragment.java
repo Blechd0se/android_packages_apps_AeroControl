@@ -43,6 +43,8 @@ public class UpdaterFragment extends PreferenceFragment {
     private ListPreference mRestoreKernel;
     private String mBackup = null;
 
+    private final static String NO_DATA_FOUND = "Unavailable";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +64,13 @@ public class UpdaterFragment extends PreferenceFragment {
         }
 
         // If device doesn't have this kernel path;
-        if (AeroActivity.shell.getInfo(FilePath.zImage).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(FilePath.zImage).equals(NO_DATA_FOUND))
             mBackupKernel.setEnabled(false);
 
         if (mBackup != null)
             mBackupKernel.setEnabled(true);
 
-        if (AeroActivity.shell.getInfo(FilePath.zImage).equals("Unavailable"))
+        if (AeroActivity.shell.getInfo(FilePath.zImage).equals(NO_DATA_FOUND))
             mRestoreKernel.setEnabled(false);
 
         // Fresh Start, no backup found;

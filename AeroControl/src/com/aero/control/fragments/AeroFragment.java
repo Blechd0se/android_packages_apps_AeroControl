@@ -44,6 +44,7 @@ public class AeroFragment extends Fragment {
     private boolean mExecuted = false;
 
     private final static String FILENAME = "firstrun";
+    private final static String NO_DATA_FOUND = "Unavailable";
 
     private String gpu_file;
 
@@ -181,7 +182,7 @@ public class AeroFragment extends Fragment {
             complete_path = SCALE_CUR_FILE + k + SCALE_PATH_NAME;
             freq_string = freq_string + " " + AeroActivity.shell.toMHz(AeroActivity.shell.getInfo(complete_path));
         }
-        freq_string = freq_string.replace("Unavailable", " Offline ");
+        freq_string = freq_string.replace(NO_DATA_FOUND, " Offline ");
 
         // There is no point in wasting cpu cycles if no file exists;
         if (!(AeroActivity.genHelper.doesExist(SCALE_CUR_FILE + 0 + SCALE_CPU_UTIL)))
@@ -192,7 +193,7 @@ public class AeroFragment extends Fragment {
             complete_path = SCALE_CUR_FILE + j + SCALE_CPU_UTIL;
 
             String tmp = AeroActivity.shell.getInfo(complete_path);
-            if (!tmp.equals("Unavailable")) {
+            if (!tmp.equals(NO_DATA_FOUND)) {
                 if (Integer.parseInt(tmp) < 10) {
                     tmp = " " + tmp;
                 }
@@ -200,7 +201,7 @@ public class AeroFragment extends Fragment {
 
             cpu_util = cpu_util + "\t\t\t" + tmp + "%";
         }
-        cpu_util = cpu_util.replace("Unavailable%", "--");
+        cpu_util = cpu_util.replace(NO_DATA_FOUND + "%", "--");
         freq_string = freq_string + "\n" + cpu_util;
 
         return freq_string;
@@ -224,7 +225,7 @@ public class AeroFragment extends Fragment {
         gpu_freq = AeroActivity.shell.getInfo(gpu_file);
 
         if (gpu_freq.length() <= 3)
-            gpu_freq = "Unavailable";
+            gpu_freq = NO_DATA_FOUND;
 
         // Default Overview Menu
         mOverviewData.add(new AeroData(getString(R.string.kernel_version), AeroActivity.shell.getKernel()));

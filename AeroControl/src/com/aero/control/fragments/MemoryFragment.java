@@ -61,6 +61,8 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     private static final String MEMORY_SETTINGS_CATEGORY = "memory_settings";
     private static final String IO_SETTINGS_CATEGORY = "io_scheduler_parameter";
 
+    private final static String NO_DATA_FOUND = "Unavailable";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +142,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         mZCache = (CheckBoxPreference) findPreference("zcache");
         mZCache.setOrder(5);
-        if ("Unavailable".equals(AeroActivity.shell.getInfo(FilePath.CMDLINE_ZACHE))) {
+        if (NO_DATA_FOUND.equals(AeroActivity.shell.getInfo(FilePath.CMDLINE_ZACHE))) {
             if (memorySettingsCategory != null)
                 memorySettingsCategory.removePreference(mZCache);
         } else {
