@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,6 +32,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aero.control.navItems.NavBarItems;
 import com.aero.control.fragments.AeroFragment;
@@ -66,11 +68,11 @@ public final class AeroActivity extends Activity {
     private ItemAdapter mAdapter;
     public static Stack<Fragment> mFragmentStack;
 
-    private CharSequence mDrawerTitle;
     private DrawerArrowDrawable mDrawerArrow;
     private CharSequence mTitle;
     private String[] mAeroTitle;
     private CharSequence mPreviousTitle;
+    private int mBackCounter = 0;
 
     // Fragment Keys;
     private static final int OVERVIEW = 0;
@@ -153,7 +155,7 @@ public final class AeroActivity extends Activity {
         if (!rootCheck.isDeviceRooted())
             showRootDialog();
 
-        mTitle = mDrawerTitle = getTitle();
+        mTitle = getTitle();
         mAeroTitle = getResources().getStringArray(R.array.aero_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -387,6 +389,7 @@ public final class AeroActivity extends Activity {
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         setTitle(mAeroTitle[j]);
+        mBackCounter = 0;
 
         mDrawerLayout.closeDrawer(mDrawerList);
     }
@@ -423,6 +426,13 @@ public final class AeroActivity extends Activity {
             switchContent(mFragmentStack.lastElement());
             setTitle(mPreviousTitle);
         }
+
+        // Back-Button logic;
+        mBackCounter++;
+        if (mBackCounter == 1)
+            Toast.makeText(this, R.string.back_for_close, Toast.LENGTH_LONG).show();
+        if (mBackCounter == 2)
+            finish();
     }
 
     public final void showRootDialog() {
