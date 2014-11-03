@@ -79,8 +79,6 @@ public class StatisticsFragment extends Fragment {
 
         // Clear UI:
         clearUI();
-        mIndex = 0;
-        mColorIndex = 0;
 
         loadResetState();
 
@@ -104,7 +102,7 @@ public class StatisticsFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 clearUI();
-                loadUI(false);
+                loadUI(true);
                 break;
             case R.id.action_reload:
                 showResetDialog();
@@ -373,6 +371,7 @@ public class StatisticsFragment extends Fragment {
 
         // Fill our listview with final values and load TextViews;
         createList(cpuFreq, cpuTime, cpuPercentage);
+
         if (firstView)
             handleOnClick(cpuGraphValues);
 
@@ -425,6 +424,9 @@ public class StatisticsFragment extends Fragment {
 
         if (statisticView != null)
             mResult = new statisticInit[0];
+
+        mColorIndex = 0;
+        mIndex = 0;
     }
 
     public final void handleOnClick(ArrayList<String> list) {
