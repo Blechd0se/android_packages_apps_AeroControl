@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
@@ -59,7 +60,6 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
@@ -121,8 +121,10 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
                 for (int i = 0; i < mMiscCat.getPreferenceCount(); i++) {
                     allMiscSettings.add(mMiscCat.getPreference(i).getTitle().toString());
                 }
-                if (allMiscSettings.size() == 0)
+                if (allMiscSettings.size() == 0) {
+                    Toast.makeText(mContext, R.string.pref_misc_no_settings, Toast.LENGTH_LONG).show();
                     break;
+                }
 
                 // Fill with default data;
                 for (String a : allMiscSettings) {
@@ -305,6 +307,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
 
         mNameList.add("temp_threshold");
         mParaList.add(FilePath.MISC_THERMAL_CONTROL);
+        setHasOptionsMenu(true);
     }
 
     public void loadSettings() {

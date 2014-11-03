@@ -275,6 +275,7 @@
     <string name="pref_misc_tcp_congestion">TCP Congestion Algorithm</string>
     <string name="pref_misc_delete_misc">Delete your settings</string>
     <string name="pref_misc_your_settings">Your Settings</string>
+    <string name="pref_misc_no_settings">You haven\'t added any settings yet!</string>
 
     <!-- Profile Fragment -->
     <string name="pref_profile_enter_name">You have to enter a name.</string>
