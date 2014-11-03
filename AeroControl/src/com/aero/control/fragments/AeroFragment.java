@@ -208,6 +208,8 @@ public class AeroFragment extends Fragment {
 
     public void createList() {
 
+        String gpu_freq;
+
         /*
          * Cleanup all data, if there are any;
          */
@@ -219,12 +221,17 @@ public class AeroFragment extends Fragment {
             mAdapter.notifyDataSetChanged();
         }
 
+        gpu_freq = AeroActivity.shell.getInfo(gpu_file);
+
+        if (gpu_freq.length() <= 3)
+            gpu_freq = "Unavailable";
+
         // Default Overview Menu
         mOverviewData.add(new AeroData(getString(R.string.kernel_version), AeroActivity.shell.getKernel()));
         mOverviewData.add(new AeroData(getString(R.string.current_governor), AeroActivity.shell.getInfo(FilePath.GOV_FILE)));
         mOverviewData.add(new AeroData(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(FilePath.GOV_IO_FILE)));
         mOverviewData.add(new AeroData(getString(R.string.current_cpu_speed), getFreqPerCore()));
-        mOverviewData.add(new AeroData(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((AeroActivity.shell.getInfo(gpu_file).substring(0, AeroActivity.shell.getInfo(gpu_file).length() - 3)))));
+        mOverviewData.add(new AeroData(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((gpu_freq.substring(0, gpu_freq.length() - 3)))));
         mOverviewData.add(new AeroData(getString(R.string.available_memory), AeroActivity.shell.getMemory(FilePath.FILENAME_PROC_MEMINFO)));
 
 
