@@ -72,17 +72,6 @@ public class PerAppAdapter extends ArrayAdapter<AeroData> {
             holder.header = (ImageView) row.findViewById(R.id.rowfolder);
             holder.content = (TextView) row.findViewById((R.id.rowtext));
             holder.check = (CheckBox) row.findViewById(R.id.rowcheck);
-
-            row.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    holder.check.setChecked(!(holder.check.isChecked()));
-                    int row_id = (Integer) holder.check.getTag();
-                    data.get(row_id).isChecked = holder.check.isChecked();
-                    mPerAppListener.OnAppItemClicked(row_id, holder.check.isChecked());
-                }
-            });
-
             holder.content.setTypeface(font);
 
             holder.check.setOnClickListener(new View.OnClickListener() {
@@ -107,9 +96,7 @@ public class PerAppAdapter extends ArrayAdapter<AeroData> {
 
             holder.header.setImageDrawable(overview.image);
 
-            if (!overview.name.equals("A"))
-                holder.content.setText(overview.name);
-
+            holder.content.setText(overview.name);
 
             // Set the tag before checking for existing data;
             holder.check.setTag(position);

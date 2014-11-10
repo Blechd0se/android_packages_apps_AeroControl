@@ -2,6 +2,7 @@
 <resources>
 
     <color name="grey">#607d8b</color>
+    <color name="dark_grey">#37474F</color>
     <color name="light_grey">#3D3D3D</color>
 
 </resources>

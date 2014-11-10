@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.aero.control"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="5dp">
+    android:layout_height="match_parent">
 
-
-    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rowfolder"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:padding="2dp"
-        android:layout_alignParentLeft="true" />
-
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rowtext"
+    <com.aero.control.helpers.RippleView
         android:layout_width="wrap_content"
-        android:textSize="16sp"
-        android:padding="10dp"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/rowfolder" />
+        android:layout_height="wrap_content"
+        app:rv_type="rectangle"
+        app:rv_rippleDuration="200"
+        android:padding="5dp">
 
-    <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rowcheck"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:focusable="false"
-        android:padding="10dp" />
+        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/rowfolder"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:padding="2dp"
+            android:layout_alignParentLeft="true" />
 
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/rowtext"
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/rowfolder" />
+
+        <CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/rowcheck"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:focusable="false"
+            android:padding="10dp" />
+    </com.aero.control.helpers.RippleView>
 </RelativeLayout>
