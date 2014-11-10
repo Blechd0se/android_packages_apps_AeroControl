@@ -37,7 +37,7 @@ public class AeroFragment extends Fragment {
     private ListView mOverView;
     private ViewGroup root;
     private AeroAdapter mAdapter;
-    private List<AeroData> mOverviewData= new ArrayList<AeroData>();
+    private List<AeroData> mOverviewData = new ArrayList<AeroData>();
     private ShowcaseView.ConfigOptions mConfigOptions;
     private ShowcaseView mShowCase;
     private boolean mVisible = true;

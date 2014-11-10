@@ -314,6 +314,6 @@
     <string name="introduction_tutorial_heading">Tutorials</string>
     <string name="introduction_tutorial_check">Do you want to enable tutorials?</string>
     <string name="introduction_tutorial_content">Tutorials pop up during your usage of Aero Control. They might give you some insights.
-                                                If you are an advanced users, it is unlikely that you need them.</string>
+                                                If you are an advanced user, it is unlikely that you need them.</string>
 
 </resources>
