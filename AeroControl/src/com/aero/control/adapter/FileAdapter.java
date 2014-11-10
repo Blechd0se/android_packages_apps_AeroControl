@@ -73,8 +73,7 @@ public class FileAdapter extends ArrayAdapter<AeroData> {
 
             holder.header.setImageResource(overview.file);
 
-            if (!overview.content.equals("A"))
-                holder.content.setText(overview.content);
+            holder.content.setText(overview.content);
 
         } else {
             Log.e("Aero",

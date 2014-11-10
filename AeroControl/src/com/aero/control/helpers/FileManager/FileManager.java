@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
@@ -24,12 +24,14 @@ import java.util.List;
 /**
  * Created by Alexander Christ on 21.09.14.
  */
-public class FileManager extends LinearLayout implements OnItemClickListener {
+public class FileManager extends RelativeLayout implements OnItemClickListener {
 
     Context mContext;
     FileManagerListener mFolderListener;
     private static final String mRoot = "/";
     private ListView mListView;
+    private final static List<AeroData> mData = new ArrayList<AeroData>();
+    private FileAdapter mAdapter;
     private String mCurrentPath;
     private Dialog mDialog;
     private List<FileData> mFileData = null;
@@ -148,7 +150,7 @@ public class FileManager extends LinearLayout implements OnItemClickListener {
     }
 
     public void setItemList(List<FileData> item){
-        List<AeroData> mOverviewData= new ArrayList<AeroData>();
+        mData.clear();
 
         File checkFile;
         for (FileData a : item) {
@@ -157,16 +159,19 @@ public class FileManager extends LinearLayout implements OnItemClickListener {
             checkFile = new File(mCurrentPath + "/" + a.item);
 
             if (checkFile.isDirectory())
-                mOverviewData.add(new AeroData(R.drawable.file_folder, a.item));
+                mData.add(new AeroData(R.drawable.file_folder, a.item));
             else
-                mOverviewData.add(new AeroData(R.drawable.file_document, a.item));
+                mData.add(new AeroData(R.drawable.file_document, a.item));
         }
 
-        FileAdapter adapter = new FileAdapter(mContext,
-                R.layout.file_row, mOverviewData);
+        if (mAdapter == null) {
+            mAdapter = new FileAdapter(mContext, R.layout.file_row, mData);
 
-        mListView.setAdapter(adapter);
-        mListView.setOnItemClickListener(this);
+            mListView.setAdapter(mAdapter);
+            mListView.setOnItemClickListener(this);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
 
