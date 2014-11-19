@@ -11,7 +11,6 @@ import android.os.Looper;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.aero.control.AeroActivity;
 import com.aero.control.helpers.settingsHelper;
 
 import java.util.List;
@@ -59,12 +58,6 @@ public final class PerAppService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        // Be super paranoid and let the service kill itself;
-        if (AeroActivity.perAppService != null) {
-            if (!AeroActivity.perAppService.getState())
-                stopSelf();
-        }
 
         // Do work in its own thread;
         if (mRunnable != null)

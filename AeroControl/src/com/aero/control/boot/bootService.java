@@ -17,12 +17,6 @@ public class bootService extends Service {
         return null;
     }
 
-
-    public void onDestroy() {
-        // service stopped
-    }
-
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // service started

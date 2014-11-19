@@ -40,5 +40,6 @@ public class bootReceiver extends BroadcastReceiver {
         if (perAppService.shouldBeStarted())
             perAppService.startService();
 
+        context.stopService(i);
     }
 }
