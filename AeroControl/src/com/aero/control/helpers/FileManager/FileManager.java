@@ -30,7 +30,7 @@ public class FileManager extends RelativeLayout implements OnItemClickListener {
     FileManagerListener mFolderListener;
     private static final String mRoot = "/";
     private ListView mListView;
-    private final static List<AeroData> mData = new ArrayList<AeroData>();
+    private List<AeroData> mData = new ArrayList<AeroData>();
     private FileAdapter mAdapter;
     private String mCurrentPath;
     private Dialog mDialog;
@@ -145,15 +145,17 @@ public class FileManager extends RelativeLayout implements OnItemClickListener {
         mFileData.addAll(MetaDirectory);
         mFileData.addAll(MetaFiles);
 
-        setItemList(mFileData);
+        setItemList();
 
     }
 
-    public void setItemList(List<FileData> item){
-        mData.clear();
+    public void setItemList(){
+
+        if (mData != null)
+            mData.clear();
 
         File checkFile;
-        for (FileData a : item) {
+        for (FileData a : mFileData) {
 
             // Get the full path;
             checkFile = new File(mCurrentPath + "/" + a.item);
