@@ -24,7 +24,12 @@ import com.aero.control.R;
 import com.aero.control.helpers.Android.CustomListPreference;
 import com.aero.control.helpers.Android.CustomPreference;
 import com.aero.control.helpers.FilePath;
+import com.aero.control.helpers.GenericHelper;
 import com.aero.control.helpers.PreferenceHandler;
+import com.aero.control.helpers.Shell;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * Created by ac on 16.09.13.
@@ -41,6 +46,8 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     private CustomListPreference mGPUControlFrequencies, mGPUGovernor, mDisplayControl;
 
     private String mGPUFile;
+
+    private Shell mShell;
 
     private final static String NO_DATA_FOUND = "Unavailable";
 
@@ -267,6 +274,9 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
     private void showColorControl(final SharedPreferences.Editor editor, final CustomPreference cusPref) {
 
+        if (mShell == null)
+            mShell = new Shell("su", true);
+
         mColorValues = AeroActivity.shell.getInfoArray(FilePath.COLOR_CONTROL, 0, 0);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -293,6 +303,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 redValue.setText("" + i);
+                setColorValues(redValue, greenValue, blueValue, cusPref, editor);
             }
 
             @Override
@@ -305,6 +316,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 greenValue.setText("" + i);
+                setColorValues(redValue, greenValue, blueValue, cusPref, editor);
             }
 
             @Override
@@ -317,6 +329,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 blueValue.setText("" + i);
+                setColorValues(redValue, greenValue, blueValue, cusPref, editor);
             }
 
             @Override
@@ -329,38 +342,49 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
         builder.setTitle(R.string.pref_display_color);
 
-        builder.setView(layout)
-                .setPositiveButton(R.string.apply, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
+        builder.setView(layout);
 
-                        int red = Integer.parseInt(redValue.getText().toString());
-                        int green = Integer.parseInt(greenValue.getText().toString());
-                        int blue = Integer.parseInt(blueValue.getText().toString());
-
-                        if (red > 255 || blue > 255 || green > 255 ) {
-                            Toast.makeText(getActivity(), "The values are out of range!", Toast.LENGTH_LONG).show();
-                            return;
-                        } else if (red < 10 && blue < 10 && green < 10) {
-                            Toast.makeText(getActivity(), "Those values are pretty low, are you sure?", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        String rgbValues = redValue.getText() + " " + greenValue.getText() + " " + blueValue.getText();
-                        AeroActivity.shell.setRootInfo(rgbValues, FilePath.COLOR_CONTROL);
-
-                        if (cusPref.isChecked())
-                            editor.putString(cusPref.getName(), rgbValues).commit();
-
-                    }
-                })
-                .setNegativeButton(R.string.maybe_later, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
 
         builder.show();
+    }
+
+
+    private void setColorValues(EditText redValue, EditText greenValue, EditText blueValue,
+                                CustomPreference cusPref, SharedPreferences.Editor editor) {
+
+        int red = Integer.parseInt(redValue.getText().toString());
+        int green = Integer.parseInt(greenValue.getText().toString());
+        int blue = Integer.parseInt(blueValue.getText().toString());
+
+        if (red > 255 || blue > 255 || green > 255 ) {
+            Toast.makeText(getActivity(), "The values are out of range!", Toast.LENGTH_LONG).show();
+            return;
+        } else if (red < 10 && blue < 10 && green < 10) {
+            Toast.makeText(getActivity(), "Those values are pretty low, are you sure?", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String rgbValues = redValue.getText() + " " + greenValue.getText() + " " + blueValue.getText();
+
+        mShell.addCommand("echo " + rgbValues + " > " + FilePath.COLOR_CONTROL);
+
+        if (new File(FilePath.COLOR_CONTROL_BIT).exists())
+            mShell.addCommand("echo 1 > " + FilePath.COLOR_CONTROL_BIT);
+
+        mShell.runInteractive();
+
+        if (cusPref.isChecked())
+            editor.putString(cusPref.getName(), rgbValues).commit();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mShell != null) {
+            mShell.closeInteractive();
+            mShell = null;
+        }
     }
 
     @Override

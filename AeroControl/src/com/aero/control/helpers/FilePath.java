@@ -56,6 +56,7 @@ public final class FilePath {
     public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
     public static final String DOUBLETAP2WAKE = "/sys/android_touch/doubletap2wake";
     public static final String COLOR_CONTROL = "/sys/devices/platform/kcal_ctrl.0/kcal";
+    public static final String COLOR_CONTROL_BIT = "/sys/devices/platform/kcal_ctrl.0/kcal_ctrl";
 
     /* Used by; GPUGovernorFragment */
     public static final String GPU_GOV_PATH = "/sys/module/msm_kgsl_core/parameters";
