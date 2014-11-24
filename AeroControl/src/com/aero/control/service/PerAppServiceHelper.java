@@ -67,15 +67,19 @@ public class PerAppServiceHelper {
 
     public final void stopService() {
 
-        // Start over if something went wrong;
+        // Stop the service via intent;
         mContext.stopService(new Intent(mContext, PerAppService.class));
 
         // Cleanup;
         if (mBackgroundIntent != null)
             mContext.stopService(mBackgroundIntent);
 
-        mPendingIntent.cancel();
-        mTimer.cancel(mPendingIntent);
+        if (mPendingIntent != null) {
+            mPendingIntent.cancel();
+
+            if (mTimer != null)
+                mTimer.cancel(mPendingIntent);
+        }
 
         mTimer = null;
         mBackgroundIntent = null;
