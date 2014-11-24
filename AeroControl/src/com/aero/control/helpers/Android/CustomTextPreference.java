@@ -5,17 +5,16 @@ import android.content.SharedPreferences;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import com.aero.control.helpers.CheckBox;
+import com.aero.control.helpers.CheckBox.OnCheckListener;
 import android.widget.TextView;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.aero.control.R;
 
 /**
  * Created by Alexander Christ on 30.09.13.
  */
-public class CustomTextPreference extends EditTextPreference implements OnCheckedChangeListener {
+public class CustomTextPreference extends EditTextPreference implements OnCheckListener {
 
 
     private Context mContext;
@@ -159,7 +158,7 @@ public class CustomTextPreference extends EditTextPreference implements OnChecke
         mSummary.setText(mSummaryPref);
 
         CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkbox_pref);
-        checkbox.setOnCheckedChangeListener(this);
+        checkbox.setOncheckListener(this);
 
         if (isChecked() != null)
             checkbox.setChecked(isChecked());
@@ -174,7 +173,7 @@ public class CustomTextPreference extends EditTextPreference implements OnChecke
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton compButt, boolean checked) {
+    public void onCheck(boolean checked) {
         SharedPreferences.Editor editor = mSharedPreference.edit();
 
         // Update the checked state;

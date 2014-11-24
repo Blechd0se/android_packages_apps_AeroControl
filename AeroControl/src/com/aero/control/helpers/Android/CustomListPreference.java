@@ -5,17 +5,18 @@ import android.content.SharedPreferences;
 import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
+
+import com.aero.control.helpers.CheckBox;
+import com.aero.control.helpers.CheckBox.OnCheckListener;
 import android.widget.TextView;
 
 import com.aero.control.R;
 
+
 /**
  * Created by Alexander Christ on 30.09.13.
  */
-public class CustomListPreference extends ListPreference implements OnCheckedChangeListener {
+public class CustomListPreference extends ListPreference implements OnCheckListener {
 
 
     private Context mContext;
@@ -137,7 +138,7 @@ public class CustomListPreference extends ListPreference implements OnCheckedCha
         mSummary.setText(mSummaryPref);
 
         mCheckBox = (CheckBox) view.findViewById(R.id.checkbox_pref);
-        mCheckBox.setOnCheckedChangeListener(this);
+        mCheckBox.setOncheckListener(this);
 
         mCheckBox.setChecked(isChecked());
 
@@ -151,7 +152,7 @@ public class CustomListPreference extends ListPreference implements OnCheckedCha
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton compButt, boolean checked) {
+    public void onCheck(boolean checked) {
         SharedPreferences.Editor editor = mSharedPreference.edit();
 
         // Update the checked state;

@@ -2,13 +2,13 @@ package com.aero.control.helpers.Android;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
+import com.aero.control.helpers.CheckBox;
+import com.aero.control.helpers.CheckBox.OnCheckListener;
 import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * Created by Alexander Christ on 30.09.13.
  */
-public class CustomPreference extends Preference implements OnCheckedChangeListener {
+public class CustomPreference extends Preference implements OnCheckListener {
 
 
     private Context mContext;
@@ -234,7 +234,7 @@ public class CustomPreference extends Preference implements OnCheckedChangeListe
         mSummary.setText(mSummaryPref);
 
         mCheckBox = (CheckBox) view.findViewById(R.id.checkbox_pref);
-        mCheckBox.setOnCheckedChangeListener(this);
+        mCheckBox.setOncheckListener(this);
 
         mCheckBox.setChecked(isChecked());
 
@@ -248,7 +248,7 @@ public class CustomPreference extends Preference implements OnCheckedChangeListe
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton compButt, boolean checked) {
+    public void onCheck(boolean checked) {
         SharedPreferences.Editor editor = mSharedPreference.edit();
 
         // In order to find the already set voltage value;
