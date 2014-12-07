@@ -299,6 +299,10 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         greenValue.setText(mColorValues[1]);
         blueValue.setText(mColorValues[2]);
 
+        redValue.setEnabled(false);
+        greenValue.setEnabled(false);
+        blueValue.setEnabled(false);
+
         redValues.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
