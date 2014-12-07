@@ -43,7 +43,6 @@ public final class shellHelper {
     private class ShellWorkqueue {
 
         private ArrayList<String> mWorkItems;
-        public Shell mShell;
 
         private void addToWork(String work) {
 
@@ -58,17 +57,14 @@ public final class shellHelper {
 
         private void initWork() {
             mWorkItems = new ArrayList<String>();
-            mShell = new Shell("su", false);
         }
 
         private void flushWork() {
             mWorkItems.clear();
             mWorkItems = null;
-            mShell.closeInteractive();
-            mShell = null;
         }
 
-    };
+    }
 
     /**
      * Adds a work item to the current workqueue
@@ -87,8 +83,8 @@ public final class shellHelper {
      * @return nothing
      */
     public void execWork() {
-        shWork.mShell.addCommand(shWork.execWork());
-        shWork.mShell.runInteractive();
+        shWork.addToWork("echo ");
+        setRootInfo(shWork.execWork(), true);
     }
 
     /**
