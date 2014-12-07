@@ -39,7 +39,5 @@ public class bootReceiver extends BroadcastReceiver {
         PerAppServiceHelper perAppService = new PerAppServiceHelper(context);
         if (perAppService.shouldBeStarted())
             perAppService.startService();
-
-        context.stopService(i);
     }
 }
