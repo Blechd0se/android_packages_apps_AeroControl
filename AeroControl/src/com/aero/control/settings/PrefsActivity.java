@@ -92,7 +92,7 @@ public class PrefsActivity extends PreferenceActivity {
         xda.setIcon(R.drawable.xda);
 
         try {
-            version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+            version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " Beta 1");
             version.setSummary("Build:" + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
         } catch (PackageManager.NameNotFoundException e) {}
 
