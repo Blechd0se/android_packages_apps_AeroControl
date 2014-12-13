@@ -1,8 +1,10 @@
 package com.aero.control.testsuite;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -24,6 +26,7 @@ public class TestSuiteFragment extends PreferenceFragment {
     private double mStartTime, mTargetTime;
     private double mMFlops = 0;
     private int mProgress;
+    private ActionBar mActionBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,8 +36,13 @@ public class TestSuiteFragment extends PreferenceFragment {
         addPreferencesFromResource(R.layout.testsuite_fragment);
         root = this.getPreferenceScreen();
 
-        TextView mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
-        mActionBarTitle.setText(R.string.slider_testsuite_settings);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mActionBar = getActivity().getActionBar();
+            mActionBar.setTitle(getText(R.string.slider_testsuite_settings));
+        } else {
+            TextView mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
+            mActionBarTitle.setText(R.string.slider_testsuite_settings);
+        }
 
         // Load our custom preferences;
         loadSettings();
