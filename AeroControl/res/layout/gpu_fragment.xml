@@ -6,7 +6,7 @@
         android:title="@string/pref_gpu_control_enable"
         android:key="gpu_settings">
 
-        <Preference
+        <com.aero.control.helpers.Android.CustomPreference
             android:key="gpu_gov_settings"
             android:title="@string/perf_gpu_gov_settings"
             android:summary="@string/perf_gpu_gov_settings_sum" />

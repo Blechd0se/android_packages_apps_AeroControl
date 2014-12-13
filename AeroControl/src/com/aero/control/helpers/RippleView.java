@@ -32,8 +32,8 @@ import java.util.concurrent.ExecutionException;
 public class RippleView extends RelativeLayout {
     private int WIDTH;
     private int HEIGHT;
-    private int FRAME_RATE = 10;
-    private int DURATION = 400;
+    private int FRAME_RATE = 8;
+    private int DURATION = 300;
     private int PAINT_ALPHA = 120;
     private Handler canvasHandler;
     private float radiusMax = 0;

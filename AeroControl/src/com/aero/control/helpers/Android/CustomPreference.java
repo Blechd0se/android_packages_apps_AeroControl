@@ -42,6 +42,7 @@ public class CustomPreference extends Preference implements OnCheckListener {
         this.setContext(context);
         setLayoutResource(R.layout.preference_enhanced);
         mSharedPreference = PreferenceManager.getDefaultSharedPreferences(mContext);
+        this.setSummary(super.getSummary());
     }
 
     public CustomPreference(Context context) {
@@ -57,6 +58,16 @@ public class CustomPreference extends Preference implements OnCheckListener {
 
     public void setContext(Context context) {
         this.mContext = context;
+    }
+
+    /**
+     * Sets the checkbox visible or invisible.
+     *
+     * @param checked Boolean. Decides whether the checkbox
+     *                should be visible or not.
+     */
+    public void setHideOnBoot (Boolean checked) {
+        this.mHideOnBoot = checked;
     }
 
     /**

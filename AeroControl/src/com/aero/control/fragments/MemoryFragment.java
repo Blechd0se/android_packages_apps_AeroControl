@@ -53,7 +53,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
     private CheckBoxPreference mZCache, mLowMemoryPref;
     private CustomPreference mDynFSync, mWriteBackControl, mFsync, mKSMSettings;
-    private Preference mFSTrimToggle, mDalvikSettings;
+    private CustomPreference mFSTrimToggle, mDalvikSettings;
     private CustomListPreference mIOScheduler;
     private String mFileSystem;
     private MemoryDalvikFragment mMemoryDalvikFragment;
@@ -174,10 +174,12 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         mLowMemoryPref = (CheckBoxPreference) findPreference("low_mem");
         mLowMemoryPref.setOrder(10);
-        mFSTrimToggle = findPreference("fstrim_toggle");
+        mFSTrimToggle = (CustomPreference)findPreference("fstrim_toggle");
         mFSTrimToggle.setOrder(25);
-        mDalvikSettings = findPreference("dalvik_settings");
+        mFSTrimToggle.setHideOnBoot(true);
+        mDalvikSettings = (CustomPreference)findPreference("dalvik_settings");
         mDalvikSettings.setOrder(30);
+        mDalvikSettings.setHideOnBoot(true);
 
         if (!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")))
             memorySettingsCategory.removePreference(mLowMemoryPref);

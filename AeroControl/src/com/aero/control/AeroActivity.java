@@ -1,5 +1,6 @@
 package com.aero.control;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -101,6 +102,7 @@ public final class AeroActivity extends Activity {
     public static final Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     public int mActionBarTitleID;
     public TextView mActionBarTitle;
+    private ActionBar mActionBar;
 
     private static final rootHelper rootCheck = new rootHelper();
     public static final shellHelper shell = new shellHelper();
@@ -146,9 +148,13 @@ public final class AeroActivity extends Activity {
         }
 
         // Assign action bar title;
-        mActionBarTitleID = getResources().getIdentifier("action_bar_title", "id", "android");
-        mActionBarTitle = (TextView) findViewById(mActionBarTitleID);
-        mActionBarTitle.setTypeface(font);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mActionBar = getActionBar();
+        } else {
+            mActionBarTitleID = getResources().getIdentifier("action_bar_title", "id", "android");
+            mActionBarTitle = (TextView) findViewById(mActionBarTitleID);
+            mActionBarTitle.setTypeface(font);
+        }
 
         // Check if system has root;
         if (!rootCheck.isDeviceRooted())
@@ -396,7 +402,11 @@ public final class AeroActivity extends Activity {
     public final void setTitle(CharSequence title) {
         mTitle = title;
         mPreviousTitle = mTitle;
-        mActionBarTitle.setText(mTitle);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mActionBar.setTitle(mTitle);
+        } else {
+            mActionBarTitle.setText(mTitle);
+        }
     }
 
     /**

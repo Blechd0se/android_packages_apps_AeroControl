@@ -1,5 +1,6 @@
 package com.aero.control.settings;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -38,19 +40,25 @@ public class PrefsActivity extends PreferenceActivity {
     public static final Typeface font = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     public int mActionBarTitleID;
     public TextView mActionBarTitle;
+    private ActionBar mActionBar;
     private int mCounter;
     private CheckBoxPreference mPer_app_check, mRebootChecker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        getActionBar().setIcon(R.drawable.app_icon_actionbar);
 
         mCounter = 0;
 
         super.onCreate(savedInstanceState);
-        mActionBarTitleID = getResources().getIdentifier("action_bar_title", "id", "android");
-        mActionBarTitle = (TextView) findViewById(mActionBarTitleID);
-        mActionBarTitle.setTypeface(font);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mActionBar = getActionBar();
+            mActionBar.setIcon(android.R.color.transparent);
+        } else {
+            getActionBar().setIcon(R.drawable.app_icon_actionbar);
+            mActionBarTitleID = getResources().getIdentifier("action_bar_title", "id", "android");
+            mActionBarTitle = (TextView) findViewById(mActionBarTitleID);
+            mActionBarTitle.setTypeface(font);
+        }
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.preference);
@@ -63,9 +71,6 @@ public class PrefsActivity extends PreferenceActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         final PreferenceScreen root = this.getPreferenceScreen();
-        String[] data = {
-                "red", "light", "dark"
-        };
 
         if (mRebootChecker == null)
             mRebootChecker = (CheckBoxPreference)root.findPreference("reboot_checker");
@@ -89,9 +94,7 @@ public class PrefsActivity extends PreferenceActivity {
         try {
             version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
             version.setSummary("Build:" + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
-        } catch (PackageManager.NameNotFoundException e) {
-
-        }
+        } catch (PackageManager.NameNotFoundException e) {}
 
         about.setIcon(R.drawable.ic_action_about);
         legal.setIcon(R.drawable.ic_action_legal);

@@ -158,9 +158,10 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         if (AeroActivity.shell.getInfo(FilePath.DISPLAY_COLOR).equals(NO_DATA_FOUND))
             gpuCategory.removePreference(mDisplayControl);
 
-        final Preference gpu_gov_settings = root.findPreference("gpu_gov_settings");
+        final CustomPreference gpu_gov_settings = (CustomPreference)root.findPreference("gpu_gov_settings");
         if (AeroActivity.genHelper.doesExist(("/sys/module/msm_kgsl_core/parameters"))) {
             gpu_gov_settings.setOrder(35);
+            gpu_gov_settings.setHideOnBoot(true);
 
             gpu_gov_settings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override

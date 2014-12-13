@@ -12,7 +12,7 @@
             android:summary="@string/perf_live_oc_uc_sum"
             android:inputType="number" />
 
-        <Preference
+        <com.aero.control.helpers.Android.CustomPreference
             android:key="hotplug_control"
             android:title="@string/perf_cpu_hotplug"
             android:summary="@string/perf_cpu_hotplug_sum" />

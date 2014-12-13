@@ -101,8 +101,9 @@ public class CPUFragment extends PreferenceFragment {
         mMaxFrequency.setOrder(1);
         cpuCategory.addPreference(mMinFrequency);
 
-        final Preference cpu_hotplug = root.findPreference("hotplug_control");
+        final CustomPreference cpu_hotplug = (CustomPreference)root.findPreference("hotplug_control");
         if (AeroActivity.genHelper.doesExist("/sys/kernel/hotplug_control")) {
+            cpu_hotplug.setHideOnBoot(true);
             cpu_hotplug.setOrder(10);
             cpu_hotplug.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
