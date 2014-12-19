@@ -1,3 +1,5 @@
+    <resources>
+    
     <string name="app_name">Aero Control</string>
     <string name="drawer_open">Abrir cajón de navegación</string>
     <string name="drawer_close">Cerrar cajón de navegación</string>
@@ -314,6 +316,5 @@
     <string name="introduction_tutorial_check">Quieres habilitar los tutoriales?</string>
     <string name="introduction_tutorial_content">Los tutoriales aparecen mientras usas Aero Control. Ellos te pueden dar algunas ideas.
                                                  Si eres un usuario avanzado, no los vas a necesitar.</string>
-
 
 </resources>
