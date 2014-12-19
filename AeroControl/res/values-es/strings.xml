@@ -1,4 +1,4 @@
-<resources>
+<<resources>
     <string name="app_name">Aero Control</string>
     <string name="drawer_open">Abrir cajón de navegación</string>
     <string name="drawer_close">Cerrar cajón de navegación</string>
@@ -20,9 +20,21 @@
     <string name="not_rooted">¿Sin Root?</string>
     <string name="apply">Aplicar</string>
     <string name="refresh">Actualizar</string>
+    <string name="reload">Reiniciar</string>
     <string name="legal">Avisos legales</string>
     <string name="send_email">Enviar Email</string>
     <string name="nocpu_data">No se pudo encontrar datos de la CPU.</string>
+    <string name="maybe_later">Tal vez despues</string>
+    <string name="successful">Exito!</string>
+    <string name="mVPlus">+25 mV</string>
+    <string name="mVMinus">-25 mV</string>
+    <string name="perAppAssigned">PerApp: Activo</string>
+    <string name="notperAppAssigned">PerApp: No esta activo</string>
+    <string name="nogpu_data">No se pudo encontrar datos de la GPU</string>
+    <string name="xda">Hilo en XDA</string>
+    <string name="enabled">Habilitado</string>
+    <string name="disabled">Deshabilitado</string>
+    <string name="folder_empty">La caperta esta vacia</string>
     
     <!-- Default Navigation Drawer entries -->
 
@@ -34,6 +46,8 @@
     <string name="slider_updater">Actualizador</string>
     <string name="slider_profile">Perfiles</string>
     <string name="slider_statistics">Estadísticas de la CPU</string>
+    <string name="slider_misc_settings">Ajustes varios</string>
+    <string name="slider_testsuite_settings">TestSuite</string>
 
     <!-- Overview Elements -->
 
@@ -58,12 +72,17 @@
     <string name="pref_rebootcheck_sum">Se informará si el dispositivo tuvo un reinicio repentino.</string>
     <string name="pref_updatepath">Ubicación de actualizaciones:</string>
     <string name="pref_updatepath_sum">Coloque su ubicación de actualizaciones preferida.</string>
-    <string name="pref_app_theme">Tema de la Aplicación</string>
+    <string name="pref_app_theme">Tema de la Aplicación.</string>
     <string name="pref_app_theme_sum">Define el tema por defecto para la Aplicación.</string>
-    
-    <string name="app_theme_red">Red - Light Holo with red accent</string>
-    <string name="app_theme_light">Light - Light Holo with blue accent</string>
-    <string name="app_theme_dark">Dark - Light Holo with blue accent and black action bar</string>
+    <string name="pref_per_app_service">Servicio de Perfil por Aplicacion.</string>
+    <string name="pref_per_app_service_sum">Habilitar o Deshabilitar el servicio de Perfil por aplicacion.</string>
+    <string name="pref_reset_tutorials">Resetear Tutoriales</string>
+    <string name="pref_reset_tutorials_title">No hay vuelta atras</string>
+    <string name="pref_reset_tutorials_dialog">Vas a resetear los tutoriales.</string>    
+
+    <string name="app_theme_red">Rojo - Light Holo con detalles rojos</string>
+    <string name="app_theme_light">Lijero - Light Holo con detalles azules</string>
+    <string name="app_theme_dark">Oscuro - Light Holo con detalles azules y barra de accion negra</string>
     
     <!-- About -->
     <string name="about_dialog">Hola. Gracias por usar ésta aplicación. Mi nombre es
@@ -76,14 +95,14 @@
      <!-- Legal Notices -->
     <string name="legal_dialog">
     Esta aplicación está disponible bajo la licencia Apache. Una copia de esta se puede descargar aquí:\n 
-                             <b>http://www.apache.org/licenses/LICENSE-2.0</b>\n 
-                         ShowCase Library by Alex Curran está licenciado bajo la licencia Apache 2.0.\n 
-                         HoloGraph Library by Daniel Nadeau está licenciado bajo la licencia Apache 2.0.
+                             <b>http://www.apache.org/licenses/LICENSE-2.0</b>\n 
+                         ShowCase Library by Alex Curran está licenciado bajo la licencia Apache 2.0.\n 
+                         HoloGraph Library by Daniel Nadeau está licenciado bajo la licencia Apache 2.0.
     </string>
 
     <!-- Root Check -->
     <string name="root_required">Parece que su dispositivo no está rooteado. Esta aplicación no puede funcionar sin root. 
-                                 Si crees que esto es un error, por favor hágamelo saber y envíenme un correo electrónico!</string>
+                                 Si crees que esto es un error, por favor hágamelo saber y envíenme un correo electrónico!</string>
 
     <!-- CPU Fragment -->
 
@@ -100,11 +119,24 @@
     <string name="pref_gov_set">Ajustes específicos de Patrones de CPU</string>
     <string name="pref_gov_set_sum">Ajuste los valores específicos del Patrones de CPU aquí.</string>
 
+    <string name="perf_cpu_hotplug">Ajustes del Hotplug</string>
+    <string name="perf_cpu_hotplug_driver">Driver del Hotplug</string>
+    <string name="perf_cpu_hotplug_sum">Ajustá el driver del Hotplug aqui</string>
+
+    <string name="perf_voltage_control">Control del Voltaje</string>
+    <string name="perf_voltage_control_sum">Ajusta el voltaje de la CPU aqui</string>
+
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Ajustes de Memoria</string>
 
     <string name="pref_dynamic_fsync">FSync Dinámico</string>
     <string name="pref_dynamic_fsync_sum">FSync Dinámico habilita fsync sólo cuando la pantalla está apagada.</string>
+
+    <string name="pref_ksm">KSM</string>
+    <string name="pref_ksm_sum">Habilita o Deshabilita el Daemon KSM completamente.</string>
+ 
+    <string name="pref_fsync">FSync</string>
+    <string name="pref_fsync_sum">Habilita o Deshabilita FSync completamente.</string>
     
     <string name="pref_memory_swap">Espacio de Intercambio</string>
     <string name="pref_memory_swap_sum">Crear un dispositivo de Espacio de Intercambio (swap).</string>
@@ -130,24 +162,25 @@
     <string name="has_journal_dialog_header">Problema detectado</string>
 
     <string name="has_journal_dialog">Parece que la partición /data no tiene la opción <b>has_journal</b> habilitada. 
-                             Por favor, reiniciar en el recovery y ejecute el siguiente comando vía adb shell: <br /> <br /> 
-                             <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
+                             Por favor, reiniciar en el recovery y ejecute el siguiente comando vía adb shell: <br /> <br /> 
+                             <b>tune2fs -O has_journal /dev/block/mmcblk1p25</b>
     </string>
 
     <string name="reboot_notifier_header">Oops, esto no debería ocurrir</string>
     <string name="reboot_notifier">Parece que hubo un problema con el kernel. Asegúrese de revisar 
-                     la salida \n <b>/proc/last_kmsg</b>\n y enviar este archivo a su desarrollador favorito. En serio, envíela! \n 
-                     Pedimos disculpas por las molestias!
+                     la salida \n <b>/proc/last_kmsg</b>\n y enviar este archivo a su desarrollador favorito. En serio, envíela! \n 
+                     Pedimos disculpas por las molestias!
     </string>
                     
     <!-- IO Scheduler -->
     <string name="io_scheduler">Planificador de E/S</string>
+    <string name="pref_io_scheduler">Parametros del Planificador de E/S </string>
 
     <!-- GPU Fragment -->
     <string name="pref_gpu_control_enable">Control de la GPU</string>
     <string name="pref_gpu_control_enable_sum">Habilita el driver de Control de la GPU. Maneja frecuencias y voltajes
                                             así como planificación básica de la GPU.</string>
-    <string name="pref_gpu_max_freq">Frecuencia Max.</string>
+    <string name="pref_gpu_max_freq">Frecuencia Maxima.</string>
     <string name="pref_gpu_max_freq_sum">Modifica la frecuencia máxima de la GPU. El valor por defecto es 200 MHz.</string>
 
     <string name="pref_display_color">Color de la pantalla</string>
@@ -158,7 +191,14 @@
 
     <string name="pref_sweeptowake">Sweep2Wake</string>
     <string name="pref_sweeptowake_sum">Puede agotar la batería un poco más de lo habitual.</string>
-    
+ 
+    <string name="pref_doubletaptowake">Doubletap2Wake</string>
+    <string name="pref_doubletaptowake_sum">Despierta el dispositivo con un gesto de doble toque.</string>
+
+    <string name="perf_gpu_gov">Patrones de GPU</string>
+    <string name="perf_gpu_gov_settings">Ajustes de los Patrones de GPU </string>
+    <string name="perf_gpu_gov_settings_sum">Modificar los parametros de los patrones de la GPU.</string>
+
     <!-- Updater Fragment -->
     <string name="pref_updater">Actualización y respaldo del núcleo</string>
     <string name="pref_backup_kernel">Respaldar el núcleo</string>
@@ -176,12 +216,16 @@
     <string name="restore_from_backup">Desea restaurar el respaldo de </string>
     <string name="proceed_backup">Proceder con el respaldo? Esto respaldará su núcleo actual.</string>
 
+    <!-- Statistics Fragment -->
+    <string name="proceed_with_reset">Estas seguro que quieres proceder?</string>
+    <string name="delete_statistics">Esto va a restablecer tus estadisticas actuales. Es como si reiniciaras el telefono.</string>
+
     <!-- Showcase Strings -->
     <string name="showcase_aero_fragment">Bienvenido a Aero Control!</string>
     <string name="showcase_aero_fragment_sum">Deslice desde la izquierda hacia la derecha para mostrar el menú de navegación. 
-                                                 La página que está viendo es el panel principal de resumen. 
-                                                 Hay un pequeño resumen de algunas configuraciones del kernel. Es en tiempo real, 
-                                                 no es necesario actualizar nada!</string>
+                                                 La página que está viendo es el panel principal de resumen. 
+                                                 Hay un pequeño resumen de algunas configuraciones del kernel. Es en tiempo real, 
+                                                 no es necesario actualizar nada!</string>
 
     <string name="showcase_memory_fragment_trim">Trim Options</string>
     <string name="showcase_memory_fragment_trim_sum">Con el fin de mantener el rendimiento del dispositivo, puede recortar
@@ -193,15 +237,23 @@
                                                 cada parámetro de cada governor para ganar performance.</string>
     <string name="showcase_hidden_feature">¡Felicitaciones!</string>
     <string name="showcase_hidden_feature_sum">Ha encontrado una función secreto! Asegúrese de no decirle a nadie sobre esto y si tiene 
-                                          algún problema utilizándolo, no te preocupes. Es nuestro pequeño secreto.</string>
+                                          algún problema utilizándolo, no te preocupes. Es nuestro pequeño secreto.</string>
 
     <string name="showcase_profile_fragment">Añadir Perfiles!</string>
     <string name="showcase_profile_fragment_sum">Simplemente haga clic en este pequeño botón y agregue un perfil. Todas sus configuraciones actuales serán guardadas en este 
-                                         nuevo perfil. Si ha agregado varios perfiles simplemente puede cargarlo haciendo clic sobre ellos.</string>
+                                         nuevo perfil. Si ha agregado varios perfiles simplemente puede cargarlo haciendo clic sobre ellos.</string>
+
+    <string name="showcase_perapp_profiles">Añadir Perfiles a tus aplicaciones!</string>
+    <string name="showcase_perapp_profiles_sum"> Quieres un perfil especifico solamente en algunas aplicaciones? No hay problema! Haz click en la derecha, en el pequeño icono y 
+                                          asigna tu perfil en tus aplicaciones favoritas. Asegurate de habilitar el servicio en los ajustes.</string>
 
     <string name="showcase_statistics_fragment">Actualizar estadísticas</string>
     <string name="showcase_statistics_fragment_sum">Este panel le mostrará las estadísticas de consumo de la CPU. Muestra el tiempo que el dispositivo utilizó 
-                                         cada frecuencia de la CPU. Usted puede querer comprobar esto más adelante y ver si el dispositivo funciona como debería.</string>
+                                         cada frecuencia de la CPU. Usted puede querer comprobar esto más adelante y ver si el dispositivo funciona como debería.</string>
+
+    <string name="showcase_your_settings">Tus ajustes</string>
+    <string name="showcase_your_settings_sum">Haz click en este simbolo para acceder a gestor de archivos simple. Puedes elegir cualquier archivo que desees y añadir
+                                         tus propios modificaciones. Con el icono izquierdo puedes eliminar esos ajustes.</string>
 
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">Configuraciones Generales</string>
@@ -218,10 +270,51 @@
     <string name="pref_charge_led_mode_rgb">LED Combinado (Rojo/Verde)</string>
     <string name="pref_charge_led_mode_off">Off</string>
 
+     <!-- Misc Settings -->
+     <string name="pref_misc_settings">Ajustes Varios</string>
+     <string name="pref_misc_tcp_congestion">Algoritmo de Congestión TCP</string>
+     <string name="pref_misc_delete_misc">Eliminar tus ajustes</string>
+     <string name="pref_misc_your_settings">Tus ajustes</string>
+     <string name="pref_misc_no_settings">No haz añadido ningun ajuste todavia!</string>
+
+
     <!-- Profile Fragment -->
     <string name="pref_profile_enter_name">Debe ingresar un nombre.</string>
     <string name="pref_profile_name_exists">Ya existe un perfil con ese nombre.</string>
     <string name="pref_profile_change_name">Cambiar nombre</string>
     <string name="pref_profile_change_name_sum">Cambiar el nombre del perfil.</string>
+    <string name="pref_profile_reset_sum">Esto restablecerá por completo su perfil actual. Justo como si recien hubieras instalado Aero Control.</string>
+    <string name="pref_profile_perApp">Elige tus aplicaciones</string>
+    <string name="pref_profile_showSystem">Aplicaciones del sistema</string>
+    <string name="pref_profile_deleted">Eliminado</string>
+    <string name="pref_profile_undo">Deshacer</string>
+    <string name="pref_profile_no_changes">Todavia no haz cambiado ningun ajuste!</string>
+    <string name="pref_profile_service_not_running">El Servicio de Perfil por Aplicacion no esta activado, pero tienes aplicaciones asociadas a perfiles!</string>
+    <string name="pref_profile_loading_app_data">Programando del condensador de flujo...</string>
+    <string name="pref_profile_export">Exportar</string>
+    <string name="pref_profile_import">Importar</string>
+    <string name="pref_profile_import_select">Seleciona los perfiles para importar</string>
+
+    <!-- Toast Messages -->
+    <string name="rateIt">Clickeame y calfica la aplicacion!</string>
+
+    <!-- Introduction -->
+    <string name="introduction_welcome_heading">Bienvenido a\n<i>Aero</i> Control</string>
+    <string name="introduction_welcome_content">Estamos por empezar. Si te sentis listo, solamente desliza tu dedo de derecha a izquierda.
+                                                Puedes cambiar todos los ajustes - que vas a cambiar con este asistente - mas tarde.</string>
+    <string name="introduction_perapp_heading">Perfiles por aplicacion</string>
+    <string name="introduction_perapp_check">Quieres habilitar este servicio?</string>
+    <string name="introduction_perapp_content">Elija sus preferencias para cada aplicacion automaticamente. Por lo tanto el servicio comprueba la
+                                               aplicacion en primer plano en cada momento y aplica el perfil deseado automaticamente. \n\n
+                                               Esto podria ahorrar un poco de energia para la bateria o darle un impulso de rendimiento
+                                               en tu aplicacion favorita.</string>
+    <string name="introduction_setonboot_heading">Establecer en el arranque!</string>
+    <string name="introduction_setonboot_content">Con la pequeña casilla de verificación al lado de cada ajuste puedes establecer tus valores en el arranque individualmente. Solamente seleccionalos
+                                                  y se guardaran tus ajustes. Esto tambien define los valores de tu perfil activo.</string>
+    <string name="introduction_tutorial_heading">Tutoriales</string>
+    <string name="introduction_tutorial_check">Quieres habilitar los tutoriales?</string>
+    <string name="introduction_tutorial_content">Los tutoriales aparecen mientras usas Aero Control. Ellos te pueden dar algunas ideas.
+                                                 Si eres un usuario avanzado, no los vas a necesitar.</string>
+
 
 </resources>
