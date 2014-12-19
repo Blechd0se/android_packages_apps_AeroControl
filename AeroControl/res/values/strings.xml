@@ -243,7 +243,7 @@
     <string name="showcase_profile_fragment_sum">Just click on this little button and add a profile. All your current settings will be saved into this
                                         new Profile. If you have added multiple Profiles you can simply load them by clicking on them.</string>
 
-    <string name="showcase_perapp_profiles">Assign your apps to profiles!</string>
+    <string name="showcase_perapp_profiles">Assign profiles to your apps!</string>
     <string name="showcase_perapp_profiles_sum">Want a certain profile only apply to certain apps? No problem, click to the right on the small icon and
                                         assign your profile to your favorite apps. Be sure to enable the service in the settings.</string>
 
