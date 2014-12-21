@@ -2,12 +2,15 @@ package com.aero.control.settings;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,11 +22,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.Android.AboutDialog;
 import com.aero.control.service.PerAppServiceHelper;
 
 import java.io.File;
@@ -187,45 +192,22 @@ public class PrefsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AboutDialog alertDialog = new AboutDialog();
                 LayoutInflater inflater = getLayoutInflater();
                 View layout = inflater.inflate(R.layout.about_screen, null);
                 TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
 
-                builder.setTitle(R.string.about);
-                builder.setIcon(R.drawable.beer);
+                alertDialog.setContext(context);
+                alertDialog.setTitle(R.string.about);
+                alertDialog.setIcon(R.drawable.beer);
+                alertDialog.setView(layout);
+                alertDialog.setNegativeButton(R.string.github);
+                alertDialog.setNeutralButton(R.string.donation_quarx);
+                alertDialog.setPositiveButton(R.string.donation_blechdose);
 
                 aboutText.setText(getText(R.string.about_dialog));
 
-                builder.setView(layout)
-                        .setPositiveButton(R.string.github, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                Uri uri = Uri.parse("https://github.com/Blechd0se/android_packages_apps_AeroControl");
-                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                startActivity(intent);
-                            }
-                        })
-                        .setNegativeButton(R.string.donation_blechdose, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                Uri uri = Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=46VQEKBETN36U");
-                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                startActivity(intent);
-                            }
-                        })
-                        .setNeutralButton(R.string.donation_quarx, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                Uri uri = Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=quarx%40yandex%2eru&lc=DE&no_note=0&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest");
-                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                                startActivity(intent);
-                            }
-                        });
-
-                builder.show();
-
+                alertDialog.show(getFragmentManager(), "");
 
                 return true;
             }
@@ -298,7 +280,7 @@ public class PrefsActivity extends PreferenceActivity {
         });
     }
 
-    private final void setCheckedState(CheckBoxPreference preference) {
+    private void setCheckedState(CheckBoxPreference preference) {
 
         if (preference.isChecked())
             preference.setSummary(R.string.enabled);
@@ -321,5 +303,4 @@ public class PrefsActivity extends PreferenceActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

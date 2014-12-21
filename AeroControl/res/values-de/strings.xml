@@ -5,9 +5,9 @@
     <string name="error_detected">Fehler ?</string>
     <string name="cancel">Abbrechen</string>
     <string name="save">Speichern</string>
-    <string name="github">Github AeroControl</string>
-    <string name="donation_blechdose">Spende an Blechdose</string>
-    <string name="donation_quarx">Spende an Quarx</string>
+    <string name="github">Github</string>
+    <string name="donation_blechdose">Blechdose</string>
+    <string name="donation_quarx">Quarx</string>
     <string name="default_values">Standardwerte</string>
     <string name="need_reboot">Benötige Reboot.</string>
     <string name="unavailable">Nicht verfügbar</string>

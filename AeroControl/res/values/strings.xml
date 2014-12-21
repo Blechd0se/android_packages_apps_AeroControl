@@ -6,8 +6,8 @@
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
     <string name="github">Github AeroControl</string>
-    <string name="donation_blechdose">Donate to Blechdose</string>
-    <string name="donation_quarx">Donate to Quarx</string>
+    <string name="donation_blechdose">Blechdose</string>
+    <string name="donation_quarx">Quarx</string>
     <string name="default_values">Default Values</string>
     <string name="need_reboot">This may require a reboot.</string>
     <string name="unavailable">Unavailable</string>
