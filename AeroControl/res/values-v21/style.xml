@@ -11,5 +11,5 @@
         <item name="android:textColor">#707070</item>
     </style>
 
-    <style name="Theme.Transparent" parent="@android:style/Theme.Material.Light"/>
+    <style name="Theme.Transparent" parent="@android:style/Theme.Material.Light.NoActionBar"/>
 </resources>

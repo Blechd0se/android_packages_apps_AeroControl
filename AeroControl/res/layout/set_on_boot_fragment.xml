@@ -7,7 +7,8 @@
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="18dp">
+        android:padding="18dp"
+        android:weightSum="1">
 
         <TextView android:id="@+id/text_heading"
             android:textStyle="bold"
@@ -26,10 +27,12 @@
             android:layout_gravity="center_horizontal" />
 
         <ImageView android:id="@+id/image_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@drawable/set_on_boot"
-            android:layout_gravity="center_horizontal|bottom" />
+            android:layout_gravity="center_horizontal|bottom"
+            android:adjustViewBounds="true" />
 
     </LinearLayout>
 
