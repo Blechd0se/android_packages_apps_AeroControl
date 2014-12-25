@@ -10,6 +10,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
 
+import com.aero.control.helpers.Android.CirclePageIndicator;
 import com.aero.control.sliderFragments.IntroductionFragment;
 import com.aero.control.sliderFragments.PerAppFragment;
 import com.aero.control.sliderFragments.SetOnBootFragment;
@@ -27,6 +28,7 @@ public class SplashScreen extends FragmentActivity {
     public static final String FIRSTRUN_AERO = "firstrun_aero";
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
+    private CirclePageIndicator mCircleIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class SplashScreen extends FragmentActivity {
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mPager.setAdapter(mPagerAdapter);
+        mCircleIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
+        mCircleIndicator.setViewPager(mPager);
 
     }
 

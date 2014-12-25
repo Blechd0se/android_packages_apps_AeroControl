@@ -4,5 +4,8 @@
     <color name="grey">#607d8b</color>
     <color name="dark_grey">#37474F</color>
     <color name="light_grey">#3D3D3D</color>
+    <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
+    <color name="default_circle_indicator_page_color">#00000000</color>
+    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
 
 </resources>
