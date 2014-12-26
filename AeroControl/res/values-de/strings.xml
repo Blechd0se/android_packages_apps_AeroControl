@@ -144,6 +144,7 @@
 
     <string name="pref_fstrim">Trim Optionen</string>
     <string name="pref_fstrim_sum">Mit Trim lassen sich Partition trimmen, um die Performance zu erhöhen. Das kann eine Weile dauern.</string>
+    <string name="pref_fstrim_no_busybox">BusyBox wird hiefür benötigt!</string>
 
     <string name="pref_dalvik_setttings">VM Einstellungen</string>
     <string name="pref_dalvik_setttings_heading">Virtuelle Maschine</string>

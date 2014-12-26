@@ -454,7 +454,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         // If the library doesn't exist, skip through;
         if (!(AeroActivity.genHelper.doesExist("/system/xbin/fstrim"))) {
-            Toast.makeText(getActivity(), R.string.unavailable, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.pref_fstrim_no_busybox, Toast.LENGTH_SHORT).show();
             return;
         }
 
