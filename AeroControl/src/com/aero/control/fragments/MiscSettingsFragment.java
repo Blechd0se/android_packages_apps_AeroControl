@@ -307,6 +307,10 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
 
         mNameList.add("temp_threshold");
         mParaList.add(FilePath.MISC_THERMAL_CONTROL);
+
+        mNameList.add("volume_boost");
+        mParaList.add(FilePath.MISC_HEADSET_VOLUME_BOOST);
+
         setHasOptionsMenu(true);
     }
 

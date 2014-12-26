@@ -82,7 +82,8 @@ public final class FilePath {
     public static final String MISC_THERMAL_CONTROL_FILE = "/sys/module/msm_thermal/parameters/temp_threshold";
     public static final String MISC_TCP_CONGESTION_AVAILABLE = "/proc/sys/net/ipv4/tcp_available_congestion_control";
     public static final String MISC_TCP_CONGESTION_CURRENT = "/proc/sys/net/ipv4/tcp_congestion_control";
-
+    public static final String MISC_HEADSET_VOLUME_BOOST = "/sys/class/misc/soundcontrol";
+    public static final String MISC_HEADSET_VOLUME_BOOST_FILE = "/sys/class/misc/soundcontrol/volume_boost";
 
     /* Used by; ProfileFragment */
     public static final String sharedPrefsPath = "/data/data/com.aero.control/shared_prefs/";

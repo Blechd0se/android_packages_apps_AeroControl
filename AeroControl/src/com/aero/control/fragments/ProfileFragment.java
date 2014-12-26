@@ -792,6 +792,8 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                         tmp = tmp.replace("/sys/module/msm_thermal/parameters/", "thermal_control -> ");
                     else if (tmp.contains("/sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/devfreq/"))
                         tmp = tmp.replace("/sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/devfreq/", "");
+                    else if (tmp.contains("/sys/class/misc/soundcontrol/"))
+                        tmp = tmp.replace("/sys/class/misc/soundcontrol/", "");
 
                     content = tmp + " = " + entry.getValue().toString() + "\n" + content;
 

@@ -129,6 +129,7 @@ public class settingsHelper {
         String misc_amp = prefs.getString(FilePath.MISC_VIBRATOR_CONTROL_FILEAMP, null);
         String misc_thm = prefs.getString(FilePath.MISC_THERMAL_CONTROL_FILE, null);
         String misc_tcp = prefs.getString(PREF_TCP_CONGESTION, null);
+        String misc_vol = prefs.getString(FilePath.MISC_HEADSET_VOLUME_BOOST_FILE, null);
 
         // ADD CPU COMMANDS TO THE ARRAY
         ArrayList<String> governorSettings = new ArrayList<String>();
@@ -358,6 +359,16 @@ public class settingsHelper {
                 defaultProfile.add("echo " + shell.getInfo(FilePath.MISC_TCP_CONGESTION_CURRENT) + " > " + FilePath.MISC_TCP_CONGESTION_CURRENT);
 
             shell.queueWork("echo " + misc_tcp + " > " + FilePath.MISC_TCP_CONGESTION_CURRENT);
+        }
+
+        if (misc_vol != null) {
+
+            shell.queueWork("chmod 0666 " + FilePath.MISC_HEADSET_VOLUME_BOOST_FILE);
+
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(FilePath.MISC_HEADSET_VOLUME_BOOST_FILE) + " > " + FilePath.MISC_HEADSET_VOLUME_BOOST_FILE);
+
+            shell.queueWork("echo " + misc_vol + " > " + FilePath.MISC_HEADSET_VOLUME_BOOST_FILE);
         }
 
         // Generic Misc Settings;
