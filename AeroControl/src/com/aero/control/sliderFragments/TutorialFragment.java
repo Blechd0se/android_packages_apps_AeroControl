@@ -45,7 +45,7 @@ public class TutorialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout containing a title and body text.
-        final ViewGroup rootView = (ViewGroup) inflater
+        ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.tutorial_fragment, container, false);
 
         // Set the title view to show the page number.
