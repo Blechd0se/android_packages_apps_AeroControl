@@ -200,45 +200,55 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         ioSettingsCategory.addPreference(mIOScheduler);
 
         if (showDialog) {
-            // Ensure only devices with this special path are checked;
-            final String fileMount[] = AeroActivity.shell.getInfo("/proc/mounts", false);
-            boolean fileMountCheck = false;
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
 
-            for (String tmp : fileMount) {
-                if (tmp.contains("/dev/block/mmcblk1p25")) {
-                    fileMountCheck = true;
-                    break;
-                }
-            }
+                    // Ensure only devices with this special path are checked;
+                    final String fileMount[] = AeroActivity.shell.getInfo("/proc/mounts", false);
+                    boolean fileMountCheck = false;
 
-            showDialog = false;
-
-            if (fileMountCheck) {
-                final String fileJournal = AeroActivity.shell.getRootInfo("tune2fs -l", "/dev/block/mmcblk1p25");
-                final boolean fileSystemCheck = fileJournal.length() != 0 && fileJournal.contains("has_journal");
-                if (!fileSystemCheck) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    LayoutInflater inflater = getActivity().getLayoutInflater();
-                    // Just reuse aboutScreen, because its Linear and has a TextView
-                    View layout = inflater.inflate(R.layout.about_screen, null);
-                    TextView aboutText = (TextView) (layout != null ? layout.findViewById(R.id.aboutScreen) : null);
-                    builder.setTitle(R.string.has_journal_dialog_header);
-                    if (aboutText != null) {
-                        aboutText.setText(getText(R.string.has_journal_dialog));
-                        aboutText.setTextSize(13);
+                    for (String tmp : fileMount) {
+                        if (tmp.contains("/dev/block/mmcblk1p25")) {
+                            fileMountCheck = true;
+                            break;
+                        }
                     }
-                    builder.setView(layout)
-                            .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
+
+                    showDialog = false;
+
+                    if (fileMountCheck) {
+                        final String fileJournal = AeroActivity.shell.getRootInfo("tune2fs -l", "/dev/block/mmcblk1p25");
+                        final boolean fileSystemCheck = fileJournal.length() != 0 && fileJournal.contains("has_journal");
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!fileSystemCheck) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                                    // Just reuse aboutScreen, because its Linear and has a TextView
+                                    View layout = inflater.inflate(R.layout.about_screen, null);
+                                    TextView aboutText = (TextView) (layout != null ? layout.findViewById(R.id.aboutScreen) : null);
+                                    builder.setTitle(R.string.has_journal_dialog_header);
+                                    if (aboutText != null) {
+                                        aboutText.setText(getText(R.string.has_journal_dialog));
+                                        aboutText.setTextSize(13);
+                                    }
+                                    builder.setView(layout)
+                                            .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                }
+                                            });
+                                    builder.show();
                                 }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                }
-                            });
-                    builder.show();
+                            }
+                        });
+                    }
                 }
-            }
+            };
+            Thread checkThread = new Thread(runnable);
+            checkThread.start();
         }
     }
 
