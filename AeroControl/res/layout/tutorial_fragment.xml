@@ -34,12 +34,11 @@
             android:textColor="#eceff1"
             android:checked="true"
             android:button="@drawable/onboot_selector"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginTop="5dp" />
+            android:layout_gravity="center_horizontal|bottom" />
 
         <ImageView android:id="@+id/image_content"
             android:layout_width="wrap_content"
-            android:layout_height="230dp"
+            android:layout_height="220dp"
             android:src="@drawable/tutorial"
             android:layout_gravity="center_horizontal|bottom"
             android:adjustViewBounds="true" />
