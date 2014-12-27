@@ -140,6 +140,9 @@ public class PreferenceHandler {
         final String parameterPath = path + "/" + parameter;
         final String summary = AeroActivity.shell.getInfo(parameterPath);
 
+        if (summary.equals(NO_DATA_FOUND))
+            return;
+
         // If the file doesn't exist, no need to waste time;
         if (!(AeroActivity.genHelper.doesExist(parameterPath)))
             return;
@@ -183,18 +186,8 @@ public class PreferenceHandler {
             public boolean onPreferenceChange(Preference preference, Object o) {
 
                 String a = (String) o;
-                CharSequence oldValue = prefload.getPrefSummary();
 
                 AeroActivity.shell.setRootInfo(a, parameterPath);
-
-                if (AeroActivity.shell.checkPath(AeroActivity.shell.getInfo(parameterPath), a)) {
-                    prefload.setPrefSummary(a);
-                } else {
-                    Toast.makeText(mContext, "Couldn't set desired parameter" + " Old value; " +
-                            AeroActivity.shell.getInfo(parameterPath) + " New Value; " + a, Toast.LENGTH_LONG).show();
-                    prefload.setPrefSummary(oldValue);
-                }
-
 
                 if (prefload.isChecked() == true) {
                     // Store our custom preferences if available;

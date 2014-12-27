@@ -532,23 +532,6 @@ public final class shellHelper {
 
     }
 
-    /**
-     * Check if a method set a value correctly
-     * (Needs to be reworked/reviewed)
-     *
-     * @param oldPath   => the old path (+file)
-     * @param newPath   => the new path (+file)
-     *
-     * @return boolean
-     */
-    public final boolean checkPath(String oldPath, String newPath) {
-
-        if(!oldPath.equals(newPath))
-            return true;
-        else
-            return false;
-    }
-
 
     /**
      * Executes a command in Terminal and returns output
