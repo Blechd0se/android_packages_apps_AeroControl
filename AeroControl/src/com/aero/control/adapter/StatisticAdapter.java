@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import com.aero.control.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by ac on 18.09.13.
  */
@@ -21,10 +24,11 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
 
     private Context mContext;
     private int mLayoutResourceId;
-    private statisticInit mData[];
+    private List<statisticInit> mData = new ArrayList<statisticInit>();
     private final static Typeface mFont = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     private int mIndex = 0;
     private boolean[] mIsVisible;
+    private String[] mTags = new String[0];
 
     // Color Code, redundant but necessary
     public static final String[] color_code = {
@@ -42,13 +46,30 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
         super(context, layoutResourceId, data);
         this.mLayoutResourceId = layoutResourceId;
         this.mContext = context;
-        this.mData = data;
         this.mIsVisible = new boolean[data.length];
+        this.mTags = new String[data.length];
 
-        int i = 0;
+        for (statisticInit i : data) {
+            mData.add(i);
+        }
+
+        int j, i = 0;
         for (boolean b : mIsVisible) {
             mIsVisible[i] = false;
             i++;
+        }
+
+        i = 0;
+        j = 0;
+
+        for (String c : mTags) {
+            if (i == color_code.length)
+                i = 0;
+
+            mTags[j] = color_code[i];
+
+            i++;
+            j++;
         }
     }
 
@@ -90,7 +111,7 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
             holder = (Holder) row.getTag();
         }
 
-        final statisticInit overview = mData[position];
+        final statisticInit overview = mData.get(position);
         if(overview == null)
             return row;
 
@@ -104,6 +125,12 @@ public class StatisticAdapter extends ArrayAdapter<statisticInit> {
 
             if(overview.mPercentage != null)
                 holder.percentage.setText(overview.mPercentage);
+
+            if (mTags[position] != null) {
+                holder.frequency.setTextColor(Color.parseColor(mTags[position]));
+                holder.timeInState.setTextColor(Color.parseColor(mTags[position]));
+                holder.percentage.setTextColor(Color.parseColor(mTags[position]));
+            }
 
         } else {
             Log.e("Aero",
