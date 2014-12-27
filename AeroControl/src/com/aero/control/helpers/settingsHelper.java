@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.aero.control.AeroActivity;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
@@ -43,15 +41,13 @@ public class settingsHelper {
     private static final shellHelper shell = new shellHelper();
     private static final shellHelper shellPara = new shellHelper();
     private static final ArrayList<String> defaultProfile = new ArrayList<String>();
+    private static final GenericHelper genHelper = new GenericHelper();
 
     public void setSettings(final Context context, final String Profile) {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-                if (AeroActivity.genHelper == null)
-                    AeroActivity.genHelper = new GenericHelper();
 
                 // We need to sleep here for a short while for the kernel
                 if (shell.setOverclockAddress()) {
@@ -212,7 +208,7 @@ public class settingsHelper {
         if (gpu_max != null) {
 
             for (String a : FilePath.GPU_FILES) {
-                if (AeroActivity.genHelper.doesExist(a)) {
+                if (genHelper.doesExist(a)) {
                     gpu_file = a;
                     break;
                 }
@@ -228,7 +224,7 @@ public class settingsHelper {
             }
         }
 
-        if(AeroActivity.genHelper.doesExist(FilePath.GPU_CONTROL_ACTIVE)) {
+        if(genHelper.doesExist(FilePath.GPU_CONTROL_ACTIVE)) {
 
             shell.queueWork("chmod 0666 " + FilePath.GPU_CONTROL_ACTIVE);
 
@@ -238,7 +234,7 @@ public class settingsHelper {
             shell.queueWork("echo " + (gpu_enb ? "1" : "0") + " > " + FilePath.GPU_CONTROL_ACTIVE);
         }
 
-        if(AeroActivity.genHelper.doesExist(FilePath.SWEEP2WAKE)) {
+        if(genHelper.doesExist(FilePath.SWEEP2WAKE)) {
 
             shell.queueWork("chmod 0666 " + FilePath.SWEEP2WAKE);
 
@@ -248,7 +244,7 @@ public class settingsHelper {
             shell.queueWork("echo " + (sweep ? "1" : "0") + " > " + FilePath.SWEEP2WAKE);
         }
 
-        if(AeroActivity.genHelper.doesExist(FilePath.DOUBLETAP2WAKE)) {
+        if(genHelper.doesExist(FilePath.DOUBLETAP2WAKE)) {
 
             shell.queueWork("chmod 0666 " + FilePath.DOUBLETAP2WAKE);
 
@@ -280,7 +276,7 @@ public class settingsHelper {
 
         // ADD MEM COMMANDS TO THE ARRAY
 
-        if (AeroActivity.genHelper.doesExist(FilePath.DYANMIC_FSYNC)) {
+        if (genHelper.doesExist(FilePath.DYANMIC_FSYNC)) {
 
             shell.queueWork("chmod 0666 " + FilePath.DYANMIC_FSYNC);
 
@@ -290,7 +286,7 @@ public class settingsHelper {
             shell.queueWork("echo " + (mem_dfs ? "1" : "0") + " > " + FilePath.DYANMIC_FSYNC);
         }
 
-        if (AeroActivity.genHelper.doesExist(FilePath.WRITEBACK)) {
+        if (genHelper.doesExist(FilePath.WRITEBACK)) {
 
             shell.queueWork("chmod 0666 " + FilePath.WRITEBACK);
 
@@ -300,7 +296,7 @@ public class settingsHelper {
             shell.queueWork("echo " + (mem_wrb ? "1" : "0") + " > " + FilePath.WRITEBACK);
         }
 
-        if (AeroActivity.genHelper.doesExist(FilePath.FSYNC)) {
+        if (genHelper.doesExist(FilePath.FSYNC)) {
 
             shell.queueWork("chmod 0666 " + FilePath.FSYNC);
 
@@ -310,7 +306,7 @@ public class settingsHelper {
             shell.queueWork("echo " + (mem_fsy ? "Y" : "N") + " > " + FilePath.FSYNC);
         }
 
-        if (AeroActivity.genHelper.doesExist(FilePath.KSM_SETTINGS)) {
+        if (genHelper.doesExist(FilePath.KSM_SETTINGS)) {
 
             shell.queueWork("chmod 0666 " + FilePath.KSM_SETTINGS);
 
@@ -438,7 +434,7 @@ public class settingsHelper {
 
         shellPara.queueWork("sleep 1");
         final String completeVMSettings[] = shellPara.getDirInfo(FilePath.DALVIK_TWEAK, true);
-        final String cpu_governor = AeroActivity.shell.getInfo(FilePath.CPU_BASE_PATH + 0 + FilePath.CURRENT_GOV_AVAILABLE);
+        final String cpu_governor = shell.getInfo(FilePath.CPU_BASE_PATH + 0 + FilePath.CURRENT_GOV_AVAILABLE);
         final String completeGovernorSettingList[] = shellPara.getDirInfo(FilePath.CPU_GOV_BASE + cpu_governor, true);
 
 
@@ -477,7 +473,7 @@ public class settingsHelper {
             }
         }
 
-        if (AeroActivity.genHelper.doesExist(FilePath.HOTPLUG_PATH)) {
+        if (genHelper.doesExist(FilePath.HOTPLUG_PATH)) {
             final String completeHotplugSettings[] = shellPara.getDirInfo(FilePath.HOTPLUG_PATH, true);
 
             /* Hotplug specific settings at boot */
@@ -498,7 +494,7 @@ public class settingsHelper {
             }
         }
 
-        if (AeroActivity.genHelper.doesExist(FilePath.GPU_GOV_PATH)) {
+        if (genHelper.doesExist(FilePath.GPU_GOV_PATH)) {
             final String completeGPUGovSettings[] = shellPara.getDirInfo(FilePath.GPU_GOV_PATH, true);
 
             /* GPU Governor specific settings at boot */
