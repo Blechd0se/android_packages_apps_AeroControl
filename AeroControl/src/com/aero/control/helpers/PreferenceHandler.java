@@ -189,6 +189,8 @@ public class PreferenceHandler {
 
                 AeroActivity.shell.setRootInfo(a, parameterPath);
 
+                prefload.setPrefSummary(a);
+
                 if (prefload.isChecked() == true) {
                     // Store our custom preferences if available;
 
