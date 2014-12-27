@@ -295,6 +295,7 @@
     <string name="pref_profile_export">Export</string>
     <string name="pref_profile_import">Import</string>
     <string name="pref_profile_import_select">Select profiles for import</string>
+    <string name="pref_profile_no_import">I couldn\'t find anything to import.</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Click me and rate this app!</string>

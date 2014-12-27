@@ -257,8 +257,10 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
                         final String dir = FilePath.EXTERNAL_PATH + "/com.aero.control/profiles";
 
-                        if (!(AeroActivity.genHelper.doesExist(dir)))
+                        if (!(AeroActivity.genHelper.doesExist(dir))) {
+                            Toast.makeText(mContext, R.string.pref_profile_no_import, Toast.LENGTH_LONG).show();
                             return;
+                        }
 
 
                         final String[] strings = AeroActivity.shell.getDirInfo(dir, true);

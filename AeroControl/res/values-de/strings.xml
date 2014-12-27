@@ -286,6 +286,7 @@
     <string name="pref_profile_export">Exportieren</string>
     <string name="pref_profile_import">Importieren</string>
     <string name="pref_profile_import_select">Profile für Import auswählen</string>
+    <string name="pref_profile_no_import">Ich habe keine Profile zum Importieren gefunden.</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Klick mich und bewerte diese App!</string>
