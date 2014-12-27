@@ -73,4 +73,6 @@
         <attr name="android:background"/>
     </declare-styleable>
 
+    <bool name="portrait_only">true</bool>
+
 </resources>

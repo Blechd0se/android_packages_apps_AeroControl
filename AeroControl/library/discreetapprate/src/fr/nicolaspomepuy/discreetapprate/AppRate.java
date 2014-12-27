@@ -427,6 +427,13 @@ public class AppRate {
         final ViewGroup mainView = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.app_rate, null);
 
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+
+            if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270)
+                return;
+        }
+
         ImageView close = (ImageView) mainView.findViewById(R.id.close);
         TextView textView = (TextView) mainView.findViewById(R.id.text);
         RelativeLayout container = (RelativeLayout) mainView.findViewById(R.id.container);

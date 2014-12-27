@@ -2,6 +2,7 @@ package com.aero.control;
 
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
@@ -34,6 +35,10 @@ public class SplashScreen extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        if(getResources().getBoolean(R.bool.portrait_only)){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         ContextWrapper cw = new ContextWrapper(getBaseContext());
         File firstrun_aero = new File(cw.getFilesDir() + "/" + FIRSTRUN_AERO);
