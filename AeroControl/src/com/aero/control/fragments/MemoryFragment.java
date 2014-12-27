@@ -50,6 +50,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     private PreferenceScreen root;
 
     private boolean showDialog = true;
+    private String mLowMemState;
 
     private CheckBoxPreference mZCache, mLowMemoryPref;
     private CustomPreference mDynFSync, mWriteBackControl, mFsync, mKSMSettings;
@@ -174,6 +175,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
         mLowMemoryPref = (CheckBoxPreference) findPreference("low_mem");
         mLowMemoryPref.setOrder(10);
+        mLowMemoryPref.setChecked(isLowMem());
         mFSTrimToggle = (CustomPreference)findPreference("fstrim_toggle");
         mFSTrimToggle.setOrder(25);
         mFSTrimToggle.setHideOnBoot(true);
@@ -391,6 +393,42 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         return true;
     }
 
+    private Boolean isLowMem() {
+
+        mLowMemState = null;
+        BufferedReader br = null;
+
+        try {
+            br = new BufferedReader(new FileReader(FilePath.LOW_MEM));
+        } catch (FileNotFoundException e) {}
+
+        if (br == null)
+            return false;
+
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                sb.append(line);
+                sb.append('\n');
+                line = br.readLine();
+            }
+            mLowMemState = sb.toString();
+        } catch (IOException ignored) {}
+
+        // The main part, if we get false in the other parts, we are probably not on a Defy
+        if (mLowMemState != null) {
+            if (mLowMemState.contains("ro.config.low_ram=true"))
+                return true;
+
+            if (mLowMemState.contains("ro.config.low_ram=false"))
+                return false;
+        } else {
+            return false;
+        }
+        return false;
+    }
+
     private void zCacheClick() {
         String getState = AeroActivity.shell.getInfo(FilePath.CMDLINE_ZACHE);
         boolean value = mZCache.isChecked();
@@ -414,39 +452,25 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     }
 
     private void lowMemoryPrefClick() {
-        String getState = null;
         boolean value = mLowMemoryPref.isChecked();
         AeroActivity.shell.remountSystem();
-        try {
-            final BufferedReader br = new BufferedReader(new FileReader(FilePath.LOW_MEM));
-            try {
-                StringBuilder sb = new StringBuilder();
-                String line = br.readLine();
-                while (line != null) {
-                    sb.append(line);
-                    sb.append('\n');
-                    line = br.readLine();
-                }
-                getState = sb.toString();
-                if (value) {
-                    // If already on, we can bail out;
-                    if (getState.contains("ro.config.low_ram=true"))
-                        return;
 
-                    getState = getState.replace("ro.config.low_ram=false", "ro.config.low_ram=true");
-                } else {
-                    // bail out again, because its already how we want it;
-                    if (getState.contains("ro.config.low_ram=false"))
-                        return;
+        if (value) {
+            // If already on, we can bail out;
+            if (isLowMem())
+                return;
 
-                    getState = getState.replace("ro.config.low_ram=true", "ro.config.low_ram=false");
-                }
-            } catch (IOException ignored) {
-            }
-        } catch (FileNotFoundException ignored) {
+            mLowMemState = mLowMemState.replace("ro.config.low_ram=false", "ro.config.low_ram=true");
+        } else {
+            // bail out again, because its already how we want it;
+            if (!isLowMem())
+                return;
+
+            mLowMemState = mLowMemState.replace("ro.config.low_ram=true", "ro.config.low_ram=false");
         }
+
         // Set current State to path;
-        AeroActivity.shell.setRootInfo(getState, FilePath.LOW_MEM);
+        AeroActivity.shell.setRootInfo(mLowMemState, FilePath.LOW_MEM);
         Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
     }
 
