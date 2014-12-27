@@ -32,6 +32,7 @@ public class AeroAdapter extends ArrayAdapter<AeroData> {
 
     public static class Holder {
         TextView header;
+        TextView right_header;
         TextView content;
     }
 
@@ -58,9 +59,11 @@ public class AeroAdapter extends ArrayAdapter<AeroData> {
 
             holder = new Holder();
             holder.header = (TextView) row.findViewById(R.id.header);
+            holder.right_header = (TextView) row.findViewById(R.id.right_header);
             holder.content = (TextView) row.findViewById((R.id.content));
 
             holder.header.setTypeface(font);
+            holder.right_header.setTypeface(font);
             holder.content.setTypeface(font);
 
             row.setTag(holder);
@@ -74,6 +77,9 @@ public class AeroAdapter extends ArrayAdapter<AeroData> {
             // To ensure we can use this adapter for different things, make some hooks;
             if (!overview.name.equals("A"))
                 holder.header.setText(overview.name);
+
+            if (overview.right_name != null)
+                holder.right_header.setText(overview.right_name);
 
             if (!overview.content.equals("A"))
                 holder.content.setText(overview.content);

@@ -10,15 +10,17 @@ import android.graphics.drawable.Drawable;
 public class AeroData {
 
     public String name;
+    public String right_name;
     public String content;
     public int file;
     public Drawable image;
     public boolean isChecked = false;
 
-    public AeroData(String name, String content) {
+    public AeroData(String name, String content, String right_name) {
         super();
         this.name = name;
         this.content = content;
+        this.right_name = right_name;
     }
 
     public AeroData(int file, String content){

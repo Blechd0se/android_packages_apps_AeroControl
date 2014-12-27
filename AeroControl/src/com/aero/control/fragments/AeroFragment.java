@@ -46,6 +46,11 @@ public class AeroFragment extends Fragment {
     private final static String FILENAME = "firstrun";
     private final static String NO_DATA_FOUND = "Unavailable";
 
+    private final static String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu";
+    private final static String SCALE_PATH_NAME = "/cpufreq/scaling_cur_freq";
+    private final static String SCALE_CPU_UTIL = "/cpufreq/cpu_utilization";
+    private final static String CPU_TEMP_FILE = "/sys/devices/virtual/thermal/thermal_zone4/temp";
+
     private String gpu_file;
 
     private class RefreshThread extends Thread {
@@ -169,9 +174,6 @@ public class AeroFragment extends Fragment {
 
     // Get all frequencies for all cores;
     public final String getFreqPerCore() {
-        final String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu";
-        final String SCALE_PATH_NAME = "/cpufreq/scaling_cur_freq";
-        final String SCALE_CPU_UTIL = "/cpufreq/cpu_utilization";
         String complete_path;
         String freq_string =  "";
         String cpu_util = "";
@@ -207,6 +209,14 @@ public class AeroFragment extends Fragment {
         return freq_string;
     }
 
+    private String getCPUTemp() {
+
+        if (AeroActivity.genHelper.doesExist(CPU_TEMP_FILE))
+            return AeroActivity.shell.getInfo(CPU_TEMP_FILE) + " °C";
+        else
+            return null;
+    }
+
     public void createList() {
 
         String gpu_freq;
@@ -228,12 +238,12 @@ public class AeroFragment extends Fragment {
             gpu_freq = NO_DATA_FOUND;
 
         // Default Overview Menu
-        mOverviewData.add(new AeroData(getString(R.string.kernel_version), AeroActivity.shell.getKernel()));
-        mOverviewData.add(new AeroData(getString(R.string.current_governor), AeroActivity.shell.getInfo(FilePath.GOV_FILE)));
-        mOverviewData.add(new AeroData(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(FilePath.GOV_IO_FILE)));
-        mOverviewData.add(new AeroData(getString(R.string.current_cpu_speed), getFreqPerCore()));
-        mOverviewData.add(new AeroData(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((gpu_freq.substring(0, gpu_freq.length() - 3)))));
-        mOverviewData.add(new AeroData(getString(R.string.available_memory), AeroActivity.shell.getMemory(FilePath.FILENAME_PROC_MEMINFO)));
+        mOverviewData.add(new AeroData(getString(R.string.kernel_version), AeroActivity.shell.getKernel(), null));
+        mOverviewData.add(new AeroData(getString(R.string.current_governor), AeroActivity.shell.getInfo(FilePath.GOV_FILE), null));
+        mOverviewData.add(new AeroData(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(FilePath.GOV_IO_FILE), null));
+        mOverviewData.add(new AeroData(getString(R.string.current_cpu_speed), getFreqPerCore(), getCPUTemp()));
+        mOverviewData.add(new AeroData(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((gpu_freq.substring(0, gpu_freq.length() - 3))), null));
+        mOverviewData.add(new AeroData(getString(R.string.available_memory), AeroActivity.shell.getMemory(FilePath.FILENAME_PROC_MEMINFO), null));
 
 
         if (mAdapter == null) {
