@@ -20,6 +20,14 @@ public class updateHelper {
 
     public static final String timeStamp = new SimpleDateFormat("ddMMyyyy").format(Calendar.getInstance().getTime());
     private static final String LOG_TAG = updateHelper.class.getName();
+    private static final String[][] WHITE_LIST_DEVICES = {
+            {"Nexus 4", FilePath.BACKUPPATH[0]},
+            {"Nexus 5", FilePath.BACKUPPATH[0]},
+            {"ASUS_T00N", FilePath.BACKUPPATH[0]},
+            {"XT1032", FilePath.BACKUPPATH[0]},
+            {"XT1033", FilePath.BACKUPPATH[0]},
+            {"Nexus 7", FilePath.BACKUPPATH[1]}
+    };
 
     /**
      * Method for copying files.
@@ -68,5 +76,23 @@ public class updateHelper {
             input.close();
             output.close();
         }
+    }
+
+    /**
+     * Returns the backup path if this model is in the white list
+     *
+     * @param model String, contains the model to check
+     * @return String Backuppath or NULL if not found
+     */
+    public String isWhiteListed(String model) {
+
+        for (String[] s : WHITE_LIST_DEVICES) {
+            if (s[0].equals(model)) {
+                // We found a match!
+                return s[1];
+            }
+        }
+
+        return null;
     }
 }

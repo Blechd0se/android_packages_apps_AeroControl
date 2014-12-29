@@ -2,6 +2,7 @@ package com.aero.control.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.ListPreference;
@@ -69,6 +70,14 @@ public class UpdaterFragment extends PreferenceFragment {
 
         if (mBackup != null)
             mBackupKernel.setEnabled(true);
+
+        // Check if this model is in the white list;
+        if (!mBackupKernel.isEnabled()) {
+            if (update.isWhiteListed(Build.MODEL) != null) {
+                mBackup = update.isWhiteListed(Build.MODEL);
+                mBackupKernel.setEnabled(true);
+            }
+        }
 
         if (AeroActivity.shell.getInfo(FilePath.zImage).equals(NO_DATA_FOUND))
             mRestoreKernel.setEnabled(false);
