@@ -1,7 +1,6 @@
 package com.aero.control.helpers.Android.Material;
 
 import com.aero.control.R;
-import com.aero.control.helpers.Android.Material.CustomView;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -39,9 +38,12 @@ public class CheckBox extends CustomView {
         setAttributes(attrs);
     }
 
-    private static int dpToPx(float dp, Resources resources){
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.getDisplayMetrics());
-        return (int) px;
+    @Override
+    protected void onInitDefaultValues() {
+        minWidth = 48;
+        minHeight = 48;
+        backgroundColor = Color.parseColor("#4CAF50");// default color
+        backgroundResId = R.drawable.background_checkbox;
     }
 
     // Set atributtes of XML to View

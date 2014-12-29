@@ -1,7 +1,6 @@
 package com.aero.control.fragments;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -9,6 +8,8 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,20 +17,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.Android.CustomListPreference;
 import com.aero.control.helpers.Android.CustomPreference;
-import com.aero.control.helpers.FilePath;
-import com.aero.control.helpers.GenericHelper;
+import com.aero.control.helpers.Android.Material.Slider;
+import com.aero.control.helpers.FilePath;;
 import com.aero.control.helpers.PreferenceHandler;
 import com.aero.control.helpers.Shell;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * Created by ac on 16.09.13.
@@ -39,6 +38,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     private String[] mColorValues;
     private PreferenceCategory PrefCat;
     private PreferenceScreen root;
+    private AlertDialog mColorDialog;
 
     private GPUGovernorFragment mGPUGovernorFragment;
 
@@ -275,8 +275,9 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
     private void showColorControl(final SharedPreferences.Editor editor, final CustomPreference cusPref) {
 
-        if (mShell == null)
+        if (mShell == null) {
             mShell = new Shell("su", true);
+        }
 
         mColorValues = AeroActivity.shell.getInfoArray(FilePath.COLOR_CONTROL, 0, 0);
 
@@ -284,9 +285,10 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         builder.setIcon(R.drawable.flower);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View layout = inflater.inflate(R.layout.gpu_color_control, null);
-        final SeekBar redValues = (SeekBar)layout.findViewById(R.id.redValues);
-        final SeekBar greenValues = (SeekBar)layout.findViewById(R.id.greenValues);
-        final SeekBar blueValues = (SeekBar)layout.findViewById(R.id.blueValues);
+
+        final Slider redValues = (Slider)layout.findViewById(R.id.redValues);
+        final Slider greenValues = (Slider)layout.findViewById(R.id.greenValues);
+        final Slider blueValues = (Slider)layout.findViewById(R.id.blueValues);
 
         final EditText redValue = (EditText)layout.findViewById(R.id.redValue);
         final EditText greenValue = (EditText)layout.findViewById(R.id.greenValue);
@@ -300,57 +302,101 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         greenValue.setText(mColorValues[1]);
         blueValue.setText(mColorValues[2]);
 
-        redValue.setEnabled(false);
-        greenValue.setEnabled(false);
-        blueValue.setEnabled(false);
+        redValue.setEnabled(true);
+        greenValue.setEnabled(true);
+        blueValue.setEnabled(true);
 
-        redValues.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        redValue.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                redValue.setText("" + i);
-                setColorValues(redValue, greenValue, blueValue, cusPref, editor);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    int i = Integer.parseInt(s.toString());
+                    if (i <= 255 && i >= 0) {
+                        redValues.setProgress(i);
+                        setColorValues(redValue, greenValue, blueValue, cusPref, editor);
+                    } else {
+                        redValue.setText("" + 255);
+                    }
+                } catch (NumberFormatException e) {}
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void afterTextChanged(Editable s) { }
+        });
+
+        greenValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
-        greenValues.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                greenValue.setText("" + i);
-                setColorValues(redValue, greenValue, blueValue, cusPref, editor);
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    int i = Integer.parseInt(s.toString());
+                    if (i <= 255 && i >= 0) {
+                        greenValues.setProgress(i);
+                        setColorValues(redValue, greenValue, blueValue, cusPref, editor);
+                    } else {
+                        greenValue.setText("" + 255);
+                    }
+                } catch (NumberFormatException e) {}
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void afterTextChanged(Editable s) { }
+        });
+
+        blueValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
-        blueValues.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                blueValue.setText("" + i);
-                setColorValues(redValue, greenValue, blueValue, cusPref, editor);
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    int i = Integer.parseInt(s.toString());
+                    if (i <= 255 && i >= 0) {
+                        blueValues.setProgress(i);
+                        setColorValues(redValue, greenValue, blueValue, cusPref, editor);
+                    } else {
+                        blueValue.setText("" + 255);
+                    }
+                } catch (NumberFormatException e) {}
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void afterTextChanged(Editable s) { }
         });
 
+        redValues.setOnValueChangedListener(new Slider.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int value) {
+                redValue.setText("" + value);
+                setColorValues(redValue, greenValue, blueValue, cusPref, editor);
+            }
+        });
+        greenValues.setOnValueChangedListener(new Slider.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int value) {
+                greenValue.setText("" + value);
+                setColorValues(redValue, greenValue, blueValue, cusPref, editor);
+            }
+        });
+        blueValues.setOnValueChangedListener(new Slider.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int value) {
+                blueValue.setText("" + value);
+                setColorValues(redValue, greenValue, blueValue, cusPref, editor);
+            }
+        });
 
         builder.setTitle(R.string.pref_display_color);
-
         builder.setView(layout);
 
-
-        builder.show();
+        // Use the builder to create a new instance, which we can dismiss later;
+        mColorDialog = builder.create();
+        mColorDialog.show();
     }
 
 
@@ -386,6 +432,10 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     @Override
     public void onPause() {
         super.onPause();
+        if (mColorDialog != null) {
+            // In order to make the shell work correctly, dismiss here;
+            mColorDialog.dismiss();
+        }
         if (mShell != null) {
             mShell.closeInteractive();
             mShell = null;

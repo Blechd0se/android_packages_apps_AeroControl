@@ -11,4 +11,8 @@
     </style>
 
     <style name="Theme.Transparent" parent="@android:style/Theme.Holo.Light"/>
+
+    <style name="Translucent" parent="android:Theme.Translucent">
+    </style>
+
 </resources>
