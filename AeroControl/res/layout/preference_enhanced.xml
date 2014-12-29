@@ -42,12 +42,14 @@
         android:layout_margin="2dip"
         android:background="@android:color/darker_gray" />
 
-    <com.aero.control.helpers.CheckBox
+    <com.aero.control.helpers.Android.Material.CheckBox
         android:id="@+id/checkbox_pref"
         android:layout_width="64dp"
         android:layout_height="match_parent"
         android:background="#455A64"
         android:paddingRight="5dp"
-        android:paddingLeft="0dp"/>
+        android:paddingEnd="5dp"
+        android:paddingLeft="0dp"
+        android:paddingStart="0dp"/>
 
 </LinearLayout>

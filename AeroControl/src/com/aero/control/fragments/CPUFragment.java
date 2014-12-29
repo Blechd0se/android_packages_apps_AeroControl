@@ -29,7 +29,6 @@ import com.aero.control.helpers.Android.CustomListPreference;
 import com.aero.control.helpers.Android.CustomPreference;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
-import com.aero.control.helpers.RippleView;
 import com.espian.showcaseview.ShowcaseView;
 
 import java.io.FileInputStream;
@@ -452,9 +451,6 @@ public class CPUFragment extends PreferenceFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         inflater.inflate(R.menu.cpu_menu, menu);
-        RippleView rv = new RippleView(getActivity());
-
-
         super.onCreateOptionsMenu(menu, inflater);
     }
 

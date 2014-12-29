@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.aero.control.helpers.RippleView
+    <com.aero.control.helpers.Android.Material.RippleView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:rv_type="rectangle"
@@ -34,5 +34,5 @@
             android:layout_alignParentRight="true"
             android:focusable="false"
             android:padding="10dp" />
-    </com.aero.control.helpers.RippleView>
+    </com.aero.control.helpers.Android.Material.RippleView>
 </RelativeLayout>

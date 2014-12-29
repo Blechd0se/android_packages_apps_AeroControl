@@ -2,13 +2,12 @@ package com.aero.control.helpers.Android;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
-import com.aero.control.helpers.CheckBox;
-import com.aero.control.helpers.CheckBox.OnCheckListener;
+import com.aero.control.helpers.Android.Material.CheckBox;
+import com.aero.control.helpers.Android.Material.CheckBox.OnCheckListener;
 import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
