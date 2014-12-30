@@ -20,6 +20,10 @@
             android:title="@string/pref_reset_tutorials"
             android:summary="" />
 
+        <Preference
+            android:key="beta"
+            android:title="@string/pref_beta_program" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/app_name">
@@ -27,6 +31,10 @@
         <Preference
             android:key="version"
             android:title="Version"/>
+
+        <Preference
+            android:key="google+"
+            android:title="Google+" />
 
         <Preference
             android:key="xda_thread"

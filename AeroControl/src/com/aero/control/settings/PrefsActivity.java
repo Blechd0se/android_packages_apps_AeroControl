@@ -18,6 +18,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -83,8 +84,10 @@ public class PrefsActivity extends PreferenceActivity {
             mPer_app_check = (CheckBoxPreference)root.findPreference("per_app_service");
 
         Preference resetTutorials = root.findPreference("reset_tutorials");
+        Preference beta = root.findPreference("beta");
         Preference about = root.findPreference("about");
         Preference version = root.findPreference("version");
+        Preference google = root.findPreference("google+");
         Preference legal = root.findPreference("legal");
         Preference xda = root.findPreference("xda_thread");
 
@@ -94,6 +97,8 @@ public class PrefsActivity extends PreferenceActivity {
         resetTutorials.setIcon(R.drawable.ic_action_warning);
         setCheckedState(mPer_app_check);
         version.setIcon(R.drawable.rocket);
+        beta.setIcon(R.drawable.beta);
+        google.setIcon(R.drawable.google);
         xda.setIcon(R.drawable.xda);
 
         try {
@@ -104,6 +109,40 @@ public class PrefsActivity extends PreferenceActivity {
         about.setIcon(R.drawable.ic_action_about);
         legal.setIcon(R.drawable.ic_action_legal);
 
+
+        beta.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                AboutDialog alertDialog = new AboutDialog();
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.about_screen, null);
+                TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
+
+                alertDialog.setContext(context);
+                alertDialog.setTitle(R.string.pref_beta_program);
+                alertDialog.setIcon(R.drawable.beta);
+                alertDialog.setView(layout);
+
+                aboutText.setText(getText(R.string.pref_beta_program_text));
+
+                alertDialog.show(getFragmentManager(), "");
+
+                aboutText.setMovementMethod(LinkMovementMethod.getInstance());
+
+                return true;
+            }
+        });
+
+        google.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Uri uri = Uri.parse("https://plus.google.com/117941672478859152986/");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                return true;
+            }
+        });
 
         xda.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -201,6 +240,7 @@ public class PrefsActivity extends PreferenceActivity {
                 alertDialog.setTitle(R.string.about);
                 alertDialog.setIcon(R.drawable.beer);
                 alertDialog.setView(layout);
+                alertDialog.setPayPalIcons(true);
                 alertDialog.setNegativeButton(R.string.github);
                 alertDialog.setNeutralButton(R.string.donation_quarx);
                 alertDialog.setPositiveButton(R.string.donation_blechdose);

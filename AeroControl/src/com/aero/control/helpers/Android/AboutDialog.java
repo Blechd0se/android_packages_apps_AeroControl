@@ -21,6 +21,7 @@ public class AboutDialog extends DialogFragment {
 
     private String mTitle;
     private Context mContext;
+    private boolean mPayPalIcons = false;
 
     private String mNegativeText;
     private String mPositiveText;
@@ -42,6 +43,10 @@ public class AboutDialog extends DialogFragment {
 
     public void setIcon(int i) {
         this.mIcon = i;
+    }
+
+    public void setPayPalIcons(boolean b) {
+        this.mPayPalIcons = b;
     }
 
     public void setNegativeButton(int i) {
@@ -88,26 +93,27 @@ public class AboutDialog extends DialogFragment {
                     }
                 }).create();
 
-
-
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
 
             @Override
             public void onShow(DialogInterface dialogInterface) {
-                Button positive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                Button neutral = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+                if (mPayPalIcons) {
+                    Button positive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    Button neutral = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
 
-                Drawable drawable = mContext.getResources().getDrawable(
-                        R.drawable.paypal);
+                    Drawable drawable = mContext.getResources().getDrawable(
+                            R.drawable.paypal);
 
-                // set the bounds to place the drawable a bit right
-                positive.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-                neutral.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                    // set the bounds to place the drawable a bit right
+                    positive.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+                    neutral.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
 
-                positive.setCompoundDrawablePadding(5);
-                neutral.setCompoundDrawablePadding(5);
+                    positive.setCompoundDrawablePadding(5);
+                    neutral.setCompoundDrawablePadding(5);
+                }
             }
         });
+
         return dialog;
     }
 }

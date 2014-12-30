@@ -5,7 +5,7 @@
     <string name="error_detected">Error ?</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
-    <string name="github">Github AeroControl</string>
+    <string name="github">Github</string>
     <string name="donation_blechdose">Blechdose</string>
     <string name="donation_quarx">Quarx</string>
     <string name="default_values">Default Values</string>
@@ -79,6 +79,15 @@
     <string name="pref_reset_tutorials">Reset Tutorials</string>
     <string name="pref_reset_tutorials_title">There is no way back</string>
     <string name="pref_reset_tutorials_dialog">You are going to reset the tutorials.</string>
+    <string name="pref_beta_program">Become a Beta-Tester</string>
+    <string name="pref_beta_program_text">If you want, you can become a beta tester. This means you will receive Aero Control updates earlier.\nTo
+                        become a beta tester, you need to fulfill two steps:\n\n<ul>
+                            <li><b>Join the <a href="https://plus.google.com/communities/117982729981389849140">Google+ Community</a>\n\n</b></li>
+                            <li><b>Apply for <a href="https://play.google.com/apps/testing/com.aero.control/join">beta testing</a></b></li>
+                        </ul>
+                        \n\nKeep in mind that you can always leave the beta channel if you click the second link again.
+    </string>
+
 
     <string name="app_theme_red">Red - Light Holo with red accent</string>
     <string name="app_theme_light">Light - Light Holo with blue accent</string>

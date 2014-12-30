@@ -75,7 +75,14 @@
     <string name="pref_reset_tutorials">Tutorials zurücksetzen</string>
     <string name="pref_reset_tutorials_title">Es gibt kein zurück</string>
     <string name="pref_reset_tutorials_dialog">Das wird deine Tutorials zurücksetzen.</string>
-
+    <string name="pref_beta_program">Werde ein Beta-Tester</string>
+    <string name="pref_beta_program_text">Wenn Du möchtest, kannst Du Beta-Tester werden. Das bedeutet, Du bekommst Aero Control Updates früher.\nUm
+                        ein Beta-Tester zu werden, musst Du die folgenden Schritte ausführen:\n\n<ul>
+                            <li><b>Trete der <a href="https://plus.google.com/communities/117982729981389849140">Google+ Community</a> bei\n\n</b></li>
+                            <li><b>Werde <a href="https://play.google.com/apps/testing/com.aero.control/join">Beta-Tester</a></b></li>
+                        </ul>
+                        \n\nDu kannst den Beta Kanal jederzeit verlassen, wenn Du den zweiten Link nochmals anklickst.
+    </string>
 
     <string name="app_theme_red">Rot - Light Holo mit rotem Akzent</string>
     <string name="app_theme_light">Light - Light Holo mit blauem Akzent</string>
