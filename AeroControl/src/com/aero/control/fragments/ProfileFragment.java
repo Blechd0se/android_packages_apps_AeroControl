@@ -779,7 +779,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
                     tmp = entry.getKey();
 
-                    // For better looking;
+                    // For better looking, simplify this!
                     if (tmp.contains("/sys/devices/system/cpu/cpufreq/"))
                         tmp = tmp.replace("/sys/devices/system/cpu/cpufreq/", "");
                     else if (tmp.contains("/proc/sys/vm/"))
@@ -796,6 +796,8 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                         tmp = tmp.replace("/sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/devfreq/", "");
                     else if (tmp.contains("/sys/class/misc/soundcontrol/"))
                         tmp = tmp.replace("/sys/class/misc/soundcontrol/", "");
+                    else if (tmp.contains("/sys/class/misc/mako_hotplug_control/"))
+                        tmp = tmp.replace("/sys/class/misc/mako_hotplug_control/", "hotplug_control -> ");
 
                     content = tmp + " = " + entry.getValue().toString() + "\n" + content;
 

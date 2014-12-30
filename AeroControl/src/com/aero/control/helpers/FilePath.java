@@ -41,7 +41,8 @@ public final class FilePath {
     public static final String CPU_FREQ_TABLE = "/proc/overclock/freq_table";
 
     /* Used by; HotplugFragment */
-    public static final String HOTPLUG_PATH = "/sys/kernel/hotplug_control";
+    public static final String[] HOTPLUG_PATH = { "/sys/kernel/hotplug_control",
+                                                  "/sys/class/misc/mako_hotplug_control"};
 
     /* Used by; DefyPartsFragment */
     public static final String PROP_CHARGE_LED_MODE = "persist.sys.charge_led";

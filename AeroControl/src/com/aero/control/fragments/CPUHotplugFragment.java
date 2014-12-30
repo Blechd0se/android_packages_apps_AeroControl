@@ -13,6 +13,8 @@ import com.aero.control.R;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
 
+import java.io.File;
+
 /**
  * Created by Alexander Christ on 09.03.14.
  */
@@ -21,6 +23,7 @@ public class CPUHotplugFragment extends PreferenceFragment {
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;
     private TextView mActionBarTitle;
+    private String mHotplugPath;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,11 @@ public class CPUHotplugFragment extends PreferenceFragment {
         root = this.getPreferenceScreen();
         mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
         setTitle();
+
+        for (String s : FilePath.HOTPLUG_PATH) {
+            if (AeroActivity.genHelper.doesExist(s))
+                mHotplugPath = s;
+        }
 
         // Load our custom preferences;
         loadHotplug();
@@ -42,7 +50,7 @@ public class CPUHotplugFragment extends PreferenceFragment {
 
     public void loadHotplug() {
 
-        String completeParamterList[] = AeroActivity.shell.getDirInfo(FilePath.HOTPLUG_PATH, true);
+        String completeParamterList[] = AeroActivity.shell.getDirInfo(mHotplugPath, true);
 
         // If there are already some entries, kill them all (with fire)
         if (PrefCat != null)
@@ -56,7 +64,7 @@ public class CPUHotplugFragment extends PreferenceFragment {
 
             PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-            h.genPrefFromDictionary(completeParamterList, FilePath.HOTPLUG_PATH);
+            h.genPrefFromDictionary(completeParamterList, mHotplugPath);
 
         } catch (NullPointerException e) {
             Log.e("Aero", "I couldn't get any files!", e);

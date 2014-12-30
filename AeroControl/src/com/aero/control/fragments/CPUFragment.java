@@ -54,6 +54,7 @@ public class CPUFragment extends PreferenceFragment {
     private boolean mVisible = true;
     private ShowcaseView.ConfigOptions mConfigOptions;
     private ShowcaseView mShowCase;
+    private String mHotplugPath;
 
     private CPUHotplugFragment mHotplugFragment;
     private VoltageFragment mVoltageFragment;
@@ -100,8 +101,13 @@ public class CPUFragment extends PreferenceFragment {
         mMaxFrequency.setOrder(1);
         cpuCategory.addPreference(mMinFrequency);
 
+        for (String s : FilePath.HOTPLUG_PATH) {
+            if (AeroActivity.genHelper.doesExist(s))
+                mHotplugPath = s;
+        }
+
         final CustomPreference cpu_hotplug = (CustomPreference)root.findPreference("hotplug_control");
-        if (AeroActivity.genHelper.doesExist("/sys/kernel/hotplug_control")) {
+        if (AeroActivity.genHelper.doesExist(mHotplugPath)) {
             cpu_hotplug.setHideOnBoot(true);
             cpu_hotplug.setOrder(10);
             cpu_hotplug.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

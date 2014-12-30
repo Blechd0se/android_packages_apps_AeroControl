@@ -36,6 +36,7 @@ public class settingsHelper {
     private SharedPreferences prefs;
     private SharedPreferences mMiscSettings;
     private String gpu_file;
+    private String mHotplugPath;
     public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
     private static final shellHelper shell = new shellHelper();
@@ -473,23 +474,28 @@ public class settingsHelper {
             }
         }
 
-        if (genHelper.doesExist(FilePath.HOTPLUG_PATH)) {
-            final String completeHotplugSettings[] = shellPara.getDirInfo(FilePath.HOTPLUG_PATH, true);
+        for (String s : FilePath.HOTPLUG_PATH) {
+            if (genHelper.doesExist(s))
+                mHotplugPath = s;
+        }
+
+        if (genHelper.doesExist(mHotplugPath)) {
+            final String completeHotplugSettings[] = shellPara.getDirInfo(mHotplugPath, true);
 
             /* Hotplug specific settings at boot */
             for (String d : completeHotplugSettings) {
 
-                final String hotplugSettings = prefs.getString(FilePath.HOTPLUG_PATH + "/" + d, null);
+                final String hotplugSettings = prefs.getString(mHotplugPath + "/" + d, null);
                 if (hotplugSettings != null) {
 
-                    shellPara.queueWork("chmod 0666 " + FilePath.HOTPLUG_PATH + "/" + d);
+                    shellPara.queueWork("chmod 0666 " + mHotplugPath + "/" + d);
 
                     if (Profile != null)
-                        defaultProfile.add("echo " + shellPara.getInfo(FilePath.HOTPLUG_PATH + "/" + d) + " > " + FilePath.HOTPLUG_PATH + "/" + d);
+                        defaultProfile.add("echo " + shellPara.getInfo(mHotplugPath + "/" + d) + " > " + mHotplugPath + "/" + d);
 
-                    shellPara.queueWork("echo " + hotplugSettings + " > " + FilePath.HOTPLUG_PATH + "/" + d);
+                    shellPara.queueWork("echo " + hotplugSettings + " > " + mHotplugPath + "/" + d);
 
-                    //Log.e("Aero", "Output: " + "echo " + hotplugSettings + " > " + FilePath.HOTPLUG_PATH + "/" + d);
+                    //Log.e("Aero", "Output: " + "echo " + hotplugSettings + " > " + mHotplugPath + "/" + d);
                 }
             }
         }

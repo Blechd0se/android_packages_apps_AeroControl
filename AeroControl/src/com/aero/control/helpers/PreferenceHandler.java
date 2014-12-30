@@ -143,6 +143,10 @@ public class PreferenceHandler {
         if (summary.equals(NO_DATA_FOUND))
             return;
 
+        // Dont try to read those files;
+        if (parameter.equals("uevent") || parameter.equals("dev"))
+            return;
+
         // If the file doesn't exist, no need to waste time;
         if (!(AeroActivity.genHelper.doesExist(parameterPath)))
             return;
