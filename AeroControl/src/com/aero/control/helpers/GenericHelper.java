@@ -22,6 +22,10 @@ public class GenericHelper {
     }
 
     public final boolean doesExist(String s) {
+
+        if (s == null)
+            return false;
+
         return new File(s).exists();
     }
 
