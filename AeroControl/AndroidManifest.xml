@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aero.control"
-    android:versionCode="21"
+    android:versionCode="22"
     android:versionName="2.1.0">
 
     <uses-sdk
