@@ -191,13 +191,16 @@ public class PreferenceHandler {
 
                 String a = (String) o;
 
+                // Return, if empty string;
+                if (a.equals(""))
+                    return false;
+
                 AeroActivity.shell.setRootInfo(a, parameterPath);
 
                 prefload.setPrefSummary(a);
 
                 if (prefload.isChecked() == true) {
                     // Store our custom preferences if available;
-
                     mPreferences.edit().putString(parameterPath, o.toString()).commit();
                 }
 
