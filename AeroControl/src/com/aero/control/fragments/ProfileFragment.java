@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceFragment;
@@ -34,7 +35,8 @@ import com.aero.control.service.PerAppServiceHelper;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.AdvancedUndoListener;
 import com.cocosw.undobar.UndoBarStyle;
-import com.espian.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,7 +58,6 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
     private ViewGroup mContainerView;
     public ShowcaseView mShowCase;
     private SharedPreferences mPrefs;
-    public ShowcaseView.ConfigOptions mConfigOptions;
     private static final String perAppProfileHandler = "perAppProfileHandler";
     private  String[] mCompleteProfiles;
     public static final String FILENAME_PROFILES = "firstrun_profiles";
@@ -902,10 +903,6 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        // Prepare Showcase;
-        mConfigOptions = new ShowcaseView.ConfigOptions();
-        mConfigOptions.hideOnClickOutside = false;
-        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
 
         // Set up our file;
         int output = 0;
@@ -925,21 +922,47 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
     }
 
-    public void DrawFirstStart(int header, int content, String filename, Integer id) {
+    public void DrawFirstStart(int header, int content, String filename, final Integer id) {
 
         try {
             FileOutputStream fos = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
             fos.write("1".getBytes());
             fos.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e(LOG_TAG, "Could not save file. ", e);
         }
 
-        if (id == null)
-            mShowCase = ShowcaseView.insertShowcaseView(150, 200, getActivity(), header, content, mConfigOptions);
-        else
-            mShowCase = ShowcaseView.insertShowcaseViewWithType(ShowcaseView.ITEM_ACTION_ITEM, id, getActivity(), header, content, mConfigOptions);
+        Target homeTarget = new Target() {
+            @Override
+            public Point getPoint() {
+                return new Point(150, 125);
+            }
+        };
+        Target actionIcon = new Target() {
+            @Override
+            public Point getPoint() {
+                // Get approximate position of home icon's center
+                int actionBarSize = getActivity().findViewById(id).getHeight();
+                int x = getResources().getDisplayMetrics().widthPixels - actionBarSize / 2;
+                int y = actionBarSize / 2;
+                return new Point(x, y);
+            }
+        };
+
+        if (id == null) {
+
+            mShowCase = new ShowcaseView.Builder(getActivity())
+                    .setContentTitle(header)
+                    .setContentText(content)
+                    .setTarget(homeTarget)
+                    .build();
+        } else {
+            mShowCase = new ShowcaseView.Builder(getActivity())
+                    .setContentTitle(header)
+                    .setContentText(content)
+                    .setTarget(actionIcon)
+                    .build();
+        }
     }
 
 

@@ -4,11 +4,10 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,7 +27,8 @@ import com.aero.control.adapter.statisticInit;
 import com.aero.control.helpers.FilePath;
 import com.echo.holographlibrary.PieGraph;
 import com.echo.holographlibrary.PieSlice;
-import com.espian.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -58,7 +58,6 @@ public class StatisticsFragment extends Fragment {
     public TextView txtPercentage;
     public TextView txtTime;
     private double mCompleteTime = 0;
-    public ShowcaseView.ConfigOptions mConfigOptions;
     public ShowcaseView mShowCase;
     public static final String FILENAME_STATISTICS = "firstrun_statistics";
 
@@ -116,10 +115,6 @@ public class StatisticsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        // Prepare Showcase;
-        mConfigOptions = new ShowcaseView.ConfigOptions();
-        mConfigOptions.hideOnClickOutside = false;
-        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
 
         // Set up our file;
         int output = 0;
@@ -149,7 +144,22 @@ public class StatisticsFragment extends Fragment {
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        mShowCase = ShowcaseView.insertShowcaseViewWithType(ShowcaseView.ITEM_ACTION_ITEM, R.id.action_refresh, getActivity(), header, content, mConfigOptions);
+        Target homeTarget = new Target() {
+            @Override
+            public Point getPoint() {
+                // Get approximate position of overflow action icon's center
+                int actionBarSize = getActivity().findViewById(R.id.action_refresh).getHeight();
+                int x = getResources().getDisplayMetrics().widthPixels - actionBarSize / 2;
+                int y = actionBarSize / 2;
+                return new Point(x, y);
+            }
+        };
+
+        mShowCase = new ShowcaseView.Builder(getActivity())
+                .setContentTitle(header)
+                .setContentText(content)
+                .setTarget(homeTarget)
+                .build();
     }
 
     private void showResetDialog() {

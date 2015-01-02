@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -25,7 +26,8 @@ import com.aero.control.helpers.FileManager.FileManagerListener;
 import com.aero.control.helpers.FileManager.FileManager;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
-import com.espian.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,7 +53,6 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
     private FileManager mLocalFolders;
     private Dialog mFileDialog;
     private Context mContext;
-    private ShowcaseView.ConfigOptions mConfigOptions;
     private ShowcaseView mShowCase;
 
 
@@ -197,10 +198,6 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        // Prepare Showcase;
-        mConfigOptions = new ShowcaseView.ConfigOptions();
-        mConfigOptions.hideOnClickOutside = false;
-        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
 
         // Set up our file;
         int output = 0;
@@ -231,7 +228,22 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        mShowCase = ShowcaseView.insertShowcaseViewWithType(ShowcaseView.ITEM_ACTION_ITEM , R.id.action_add_item, getActivity(), header, content, mConfigOptions);
+        Target homeTarget = new Target() {
+            @Override
+            public Point getPoint() {
+                // Get approximate position of overflow action icon's center
+                int actionBarSize = getActivity().findViewById(R.id.action_add_item).getHeight();
+                int x = getResources().getDisplayMetrics().widthPixels - actionBarSize / 2;
+                int y = actionBarSize / 2;
+                return new Point(x, y);
+            }
+        };
+
+        mShowCase = new ShowcaseView.Builder(getActivity())
+                .setContentTitle(header)
+                .setContentText(content)
+                .setTarget(homeTarget)
+                .build();
     }
 
     public void OnCannotFileRead(File file) { }

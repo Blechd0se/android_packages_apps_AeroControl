@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -28,7 +29,8 @@ import com.aero.control.helpers.Android.CustomListPreference;
 import com.aero.control.helpers.Android.CustomPreference;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
-import com.espian.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -44,7 +46,6 @@ import java.util.ArrayList;
  */
 public class MemoryFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
-    private ShowcaseView.ConfigOptions mConfigOptions;
     private ShowcaseView mShowCase;
     private PreferenceCategory PrefCat;
     private PreferenceScreen root;
@@ -256,10 +257,6 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        // Prepare Showcase;
-        mConfigOptions = new ShowcaseView.ConfigOptions();
-        mConfigOptions.hideOnClickOutside = false;
-        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
 
         // Set up our file;
         int output = 0;
@@ -573,7 +570,18 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             Log.e("Aero", "Could not save file. ", e);
         }
 
-        mShowCase = ShowcaseView.insertShowcaseView(200, 200, getActivity(), header, content, mConfigOptions);
+        Target homeTarget = new Target() {
+            @Override
+            public Point getPoint() {
+                return new Point(200, 200);
+            }
+        };
+
+        mShowCase = new ShowcaseView.Builder(getActivity())
+                .setContentTitle(header)
+                .setContentText(content)
+                .setTarget(homeTarget)
+                .build();
     }
 
     private void loadIOParameter() {

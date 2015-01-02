@@ -2,6 +2,7 @@ package com.aero.control.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +18,8 @@ import com.aero.control.R;
 import com.aero.control.adapter.AeroAdapter;
 import com.aero.control.adapter.AeroData;
 import com.aero.control.helpers.FilePath;
-import com.espian.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,8 +40,8 @@ public class AeroFragment extends Fragment {
     private ViewGroup root;
     private AeroAdapter mAdapter;
     private List<AeroData> mOverviewData = new ArrayList<AeroData>();
-    private ShowcaseView.ConfigOptions mConfigOptions;
     private ShowcaseView mShowCase;
+    private int mActionBarHeight = 0;
     private boolean mVisible = true;
     private boolean mExecuted = false;
 
@@ -149,9 +151,6 @@ public class AeroFragment extends Fragment {
 
         super.onActivityCreated(savedInstanceState);
         // Prepare Showcase;
-        mConfigOptions = new ShowcaseView.ConfigOptions();
-        mConfigOptions.hideOnClickOutside = false;
-        mConfigOptions.shotType = ShowcaseView.TYPE_ONE_SHOT;
 
         // Set up our file;
         int output = 0;
@@ -268,8 +267,6 @@ public class AeroFragment extends Fragment {
 
     public void DrawFirstStart(int header, int content) {
 
-        int actionBarHeight = 0;
-
         try {
             final FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
             fos.write("1".getBytes());
@@ -281,10 +278,21 @@ public class AeroFragment extends Fragment {
 
         TypedValue tv = new TypedValue();
         if (getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
+            mActionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
         }
 
-        mShowCase = ShowcaseView.insertShowcaseView(100, (actionBarHeight + 50), getActivity(), header, content, mConfigOptions);
+        Target homeTarget = new Target() {
+            @Override
+            public Point getPoint() {
+                return new Point(100, mActionBarHeight);
+            }
+        };
+
+        mShowCase = new ShowcaseView.Builder(getActivity())
+                .setContentTitle(header)
+                .setContentText(content)
+                .setTarget(homeTarget)
+                .build();
     }
 
     public void setPermissions() {
