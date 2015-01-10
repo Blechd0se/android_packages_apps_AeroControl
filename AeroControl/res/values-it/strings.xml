@@ -11,8 +11,8 @@
     <string name="default_values">Valori predefiniti</string>
     <string name="need_reboot">Potrebbe richiedere un riavvio.</string>
     <string name="unavailable">Non disponibile</string>
-    <string name="got_it">Got it</string>
-    <string name="back_for_close">Premi indietro un altra volta per uscire.</string>
+    <string name="got_it">Va bene.</string>
+    <string name="back_for_close">Premi indietro un'altra volta per uscire.</string>
     <string name="define_a_name">Scegli un nome per questo profilo</string>
     <string name="add_a_name">Nome del profilo</string>
     <string name="add">Aggiungi</string>
@@ -22,7 +22,7 @@
     <string name="refresh">Aggiorna</string>
     <string name="legal">Note Legali</string>
     <string name="send_email">Invia una Email</string>
-    <string name="nocpu_data">Nessun dato CPU trovato.</string>
+    <string name="nocpu_data">Configurazione CPU non trovata.</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -41,7 +41,7 @@
     <string name="current_cpu_speed">Frequenza CPU:</string>
     <string name="current_gpu_speed">Frequenza GPU:</string>
     <string name="current_governor">Governor:</string>
-    <string name="current_io_governor">I/O-Scheduler:</string>
+    <string name="current_io_governor">Schedulatore I/O:</string>
     <string name="available_memory">Memoria totale:</string>
 
     <!-- Action Overflow Menu -->
@@ -71,7 +71,7 @@
                                 divertimento. É Open Source, quindi puoi prendere il
                                 codice sorgente e modificarlo a tuo piacimento. Inoltre se vuoi puoi anche
                                 donare a Quarx per la sua fantastica rom o a me.
-                                <b>The joy of living is in the giving.</b>
+                                <b>Il bello di vivere è donare.</b>
     </string>
 
 
@@ -95,7 +95,7 @@
     <string name="pref_cpu_freqmax">Mass. Frequenza</string>
     <string name="pref_cpu_freqmin">Min. Frequenza</string>
     <string name="pref_cpu_governor">Impostazioni</string>
-    <string name="perf_live_oc_uc">Live OC/UC</string>
+    <string name="perf_live_oc_uc">OC/UC</string>
     <string name="perf_live_oc_uc_sum">Controlla Frequenze e Voltaggi in tempo reale!</string>
 
     <string name="pref_gov_choose">Impostazioni Governor</string>
@@ -120,11 +120,11 @@
     <string name="pref_memory_zcache">zCache</string>
     <string name="pref_memory_zcache_sum">zCache usa il CPU-time per una miglior gestione della memoria.</string>
 
-    <string name="pref_memory_zcache_compression">zCache Compression</string>
-    <string name="pref_memory_zcache_compression_sum">Sceglie il metodo di compressione per zCache.</string>
+    <string name="pref_memory_zcache_compression">Compressione zCache</string>
+    <string name="pref_memory_zcache_compression_sum">Sceglie il metodo di compressione per la zCache.</string>
 
-    <string name="pref_dynamic_writeback">Controllo Writeback</string>
-    <string name="pref_dynamic_writeback_sum">Abilita o Disabilita il controllo del writeback.</string>
+    <string name="pref_dynamic_writeback">Controllo della Writeback</string>
+    <string name="pref_dynamic_writeback_sum">Abilita o Disabilita il controllo della writeback.</string>
 
     <string name="pref_low_mem_option">Opzione scarsa memoria</string>
     <string name="pref_low_mem_option_sum">Abilita o Disabilita l\'opzione di scarsa memoria. Potrebbe aiutare su dispositivi con 4.4+ (Kitkat).</string>
@@ -153,7 +153,7 @@
 
     <!-- GPU Fragment -->
     <string name="pref_gpu_control_enable">Controllo GPU</string>
-    <string name="pref_gpu_control_enable_sum">Abilita il driver per il controllo della GPU. Gestisce anche il overclocking/undervolting.
+    <string name="pref_gpu_control_enable_sum">Abilita il driver per il controllo della GPU. Gestisce anche overclock/undervolt.
                                             e alcune programmazioni basiche per la GPU.</string>
     <string name="pref_gpu_max_freq">Frequenza Mass.</string>
     <string name="pref_gpu_max_freq_sum">Imposterà la massima frequenza della GPU. La predefinita è di 200 Mhz.</string>
@@ -229,7 +229,7 @@
     <!-- Profile Fragment -->
     <string name="pref_profile_enter_name">Devi inserire un nome.</string>
     <string name="pref_profile_name_exists">Questo nome esiste già.</string>
-    <string name="pref_profile_change_name">Imposta un\'altro nome</string>
+    <string name="pref_profile_change_name">Imposta un altro nome</string>
     <string name="pref_profile_change_name_sum">Cambia il nome del profilo.</string>
 
 </resources>
