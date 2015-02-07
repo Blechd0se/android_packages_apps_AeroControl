@@ -60,6 +60,7 @@ public class StatisticsFragment extends Fragment {
     private double mCompleteTime = 0;
     public ShowcaseView mShowCase;
     public static final String FILENAME_STATISTICS = "firstrun_statistics";
+    private final static String NO_DATA_FOUND = "Unavailable";
 
     public ArrayList<Long> cpuTime = new ArrayList<Long>();
     public ArrayList<Long> cpuOverallTime = new ArrayList<Long>();
@@ -250,11 +251,17 @@ public class StatisticsFragment extends Fragment {
             String[] array = AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0);
 
             for (String b : array) {
-                cpuResetTime.add(Long.parseLong(b));
+                if (array.length > 1)
+                    cpuResetTime.add(Long.parseLong(b));
             }
 
             //Handle second case here;
-            if (Long.parseLong(array[array.length - 1]) > (SystemClock.elapsedRealtime() / 10)) {
+            try {
+                if (Long.parseLong(array[array.length - 1]) > (SystemClock.elapsedRealtime() / 10)) {
+                    a.delete();
+                    cpuResetTime = null;
+                }
+            } catch (NumberFormatException e) {
                 a.delete();
                 cpuResetTime = null;
             }
@@ -298,19 +305,37 @@ public class StatisticsFragment extends Fragment {
 
         // Handle Uptime here, maybe we don't want to reset it anyway...
         if (cpuResetTime != null) {
-            String resetUptime = (AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0))[(AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0)).length - 1];
-            long mResetTime = Long.parseLong(resetUptime);
+            String resetUptime = NO_DATA_FOUND;
+            long mResetTime = (long)0;
+
+            if (new File(FilePath.OFFSET_STAT).exists())
+                resetUptime = (AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0))[(AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0)).length - 1];
+
+            if (!resetUptime.equals(NO_DATA_FOUND))
+                mResetTime = Long.parseLong(resetUptime);
+
             mCompleteTime = mCompleteTime - mResetTime;
         }
 
-        for (int i = 0, j = 0; i < cpuData; i++) {
+        for (int i = 0; i < cpuData; i++) {
 
             String b = data[i];
             String[] c = b.split(" ");
+            Long offsetTime = (long)0;
+            File offsetFile = new File(FilePath.OFFSET_STAT);
 
-            // Color change;
-            if (j == 8)
-                j = 0;
+            if (offsetFile.exists()) {
+                try {
+                    offsetTime = Long.parseLong(AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0)[i]);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    // The file may be corrupt or didn't save correctly..
+                    Log.e("Aero", "The offset file might be smaller as assumed. " + e);
+                    offsetFile.delete();
+                } catch (NumberFormatException e) {
+                    Log.e("Aero", "The offset file might be unavailable. " + e);
+                    offsetFile.delete();
+                }
+            }
 
             /*
              * Handle deepsleep, if statistics are resetted hook into the calculation process;
@@ -318,14 +343,14 @@ public class StatisticsFragment extends Fragment {
             if(i == 0) {
                 cpuFreq.add((long)0);
                 if (cpuResetTime != null) {
-                    cpuTime.add((long) Integer.parseInt(c[0]) - Long.parseLong(AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0)[i]));
+                    cpuTime.add((long) Integer.parseInt(c[0]) - offsetTime);
                 } else {
                     cpuTime.add((long)Integer.parseInt(c[0]));
                 }
             } else {
                 cpuFreq.add((long)Integer.parseInt(c[0]));
                 if (cpuResetTime != null) {
-                    cpuTime.add((long)Integer.parseInt(c[1]) - Long.parseLong(AeroActivity.shell.getInfoArray(FilePath.OFFSET_STAT, 0, 0)[i]));
+                    cpuTime.add((long)Integer.parseInt(c[1]) - offsetTime);
                 } else {
                     cpuTime.add((long)Integer.parseInt(c[1]));
                 }
