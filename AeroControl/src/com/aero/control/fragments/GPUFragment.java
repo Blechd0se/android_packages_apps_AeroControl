@@ -281,6 +281,11 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
         mColorValues = AeroActivity.shell.getInfoArray(FilePath.COLOR_CONTROL, 0, 0);
 
+        if (mColorValues[0].equals(NO_DATA_FOUND)) {
+            Toast.makeText(getActivity(), R.string.no_data_found, Toast.LENGTH_LONG).show();
+            return;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setIcon(R.drawable.flower);
         LayoutInflater inflater = getActivity().getLayoutInflater();

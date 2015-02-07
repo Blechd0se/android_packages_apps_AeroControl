@@ -35,6 +35,7 @@
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
     <string name="folder_empty">Folder is empty</string>
+    <string name="no_data_found">I couldn\'t find any relevant data :(</string>
 
     <!-- Default Navigation Drawer entries -->
 

@@ -32,6 +32,7 @@
     <string name="enabled">Aktiviert</string>
     <string name="disabled">Deaktiviert</string>
     <string name="folder_empty">Ordner ist leer</string>
+    <string name="no_data_found">Ich konnte keine Daten finden :(</string>
 
     <!-- Default Navigation Drawer entries -->
 
