@@ -480,7 +480,7 @@ public final class AeroActivity extends Activity {
             public void run() {
 
                 getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
-                        android.R.animator.fade_out).replace(R.id.content_frame, fragment).commit();
+                        android.R.animator.fade_out).replace(R.id.content_frame, fragment).commitAllowingStateLoss();
             }
         },genHelper.getDefaultDelay());
         mFragmentStack.push(fragment);
