@@ -2,6 +2,7 @@ package com.aero.control.helpers.Android.Material;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -22,6 +23,7 @@ public abstract class CustomView extends RelativeLayout{
     protected int backgroundColor;
     protected int beforeBackground;
     protected int backgroundResId = -1;
+    protected boolean animation = false;
 
     // Indicate if user touched this view the last time
     public boolean isLastTouch = false;
@@ -95,4 +97,24 @@ public abstract class CustomView extends RelativeLayout{
         else
             setBackgroundColor(disabledBackgroundColor);
     }
+
+    @Override
+    protected void onAnimationStart() {
+        super.onAnimationStart();
+        animation = true;
+    }
+
+    @Override
+    protected void onAnimationEnd() {
+        super.onAnimationEnd();
+        animation = false;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if(animation)
+            invalidate();
+    }
+
 }
