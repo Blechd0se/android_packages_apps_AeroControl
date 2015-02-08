@@ -29,6 +29,7 @@ public class settingsHelper {
     public static final String PREF_DYANMIC_FSYNC = "dynFsync";
     public static final String PREF_FSYNC = "fsync";
     public static final String PREF_KSM = "ksm";
+    public static final String PREF_READAHEAD = "read_ahead";
     public static final String PREF_WRITEBACK = "writeback";
     public static final String PREF_TCP_CONGESTION = "tcp_congestion";
     private static final String MISC_SETTINGS_STORAGE = "miscSettingsStorage";
@@ -117,6 +118,7 @@ public class settingsHelper {
         String rgbValues = prefs.getString("rgbValues", null);
         // GET MEM VALUES FROM PREFERENCES
         String mem_ios = prefs.getString(PREF_GOV_IO_FILE, null);
+        String mem_rah = prefs.getString(PREF_READAHEAD, null);
         Boolean mem_dfs = getSaveBoolean(PREF_DYANMIC_FSYNC);
         Boolean mem_wrb = getSaveBoolean(PREF_WRITEBACK);
         Boolean mem_fsy = getSaveBoolean(PREF_FSYNC) ;
@@ -187,6 +189,15 @@ public class settingsHelper {
                 defaultProfile.add("echo " + shell.getInfoString(shell.getInfo(FilePath.GOV_IO_FILE)) + " > " + FilePath.GOV_IO_FILE);
 
             governorSettings.add("echo " + mem_ios + " > " + FilePath.GOV_IO_FILE);
+        }
+
+        if (mem_rah != null) {
+            shell.queueWork("chmod 0666 " + FilePath.READAHEAD_PARAMETER);
+
+            if (Profile != null)
+                defaultProfile.add("echo " + shell.getInfo(FilePath.READAHEAD_PARAMETER) + " > " + FilePath.READAHEAD_PARAMETER);
+
+            shell.queueWork("echo " + mem_rah + " > " + FilePath.READAHEAD_PARAMETER);
         }
 
         if (cpu_gov != null || mem_ios != null) {

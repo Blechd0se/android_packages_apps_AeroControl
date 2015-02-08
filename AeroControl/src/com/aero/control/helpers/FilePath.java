@@ -73,6 +73,7 @@ public final class FilePath {
     public static final String LOW_MEM = "/system/build.prop";
     public static final String FILENAME = "firstrun_trim";
     public static final String GOV_IO_PARAMETER = "/sys/block/mmcblk0/queue/iosched";
+    public static final String READAHEAD_PARAMETER = "/sys/block/mmcblk0/queue/read_ahead_kb";
     public static final String KSM_SETTINGS = "/sys/kernel/mm/ksm/run";
 
     /* Used by; MiscSettingsFragment */

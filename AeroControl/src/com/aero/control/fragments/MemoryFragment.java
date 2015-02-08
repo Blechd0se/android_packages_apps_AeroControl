@@ -56,7 +56,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
     private CheckBoxPreference mZCache, mLowMemoryPref;
     private CustomPreference mDynFSync, mWriteBackControl, mFsync, mKSMSettings;
     private CustomPreference mFSTrimToggle, mDalvikSettings;
-    private CustomListPreference mIOScheduler;
+    private CustomListPreference mIOScheduler, mReadAHead;
     private String mFileSystem;
     private MemoryDalvikFragment mMemoryDalvikFragment;
 
@@ -71,6 +71,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.memory_fragment);
         setHasOptionsMenu(true);
+        ArrayList<CharSequence> readaheadValues = new ArrayList<CharSequence>();
         String temp;
 
         root = this.getPreferenceScreen();
@@ -173,6 +174,22 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
             if (memorySettingsCategory != null)
                 memorySettingsCategory.removePreference(mWriteBackControl);
         }
+
+        for (int i = 1; i <= 32; i++) {
+            readaheadValues.add("" + (128 * i));
+        }
+
+        mReadAHead = new CustomListPreference(getActivity());
+        mReadAHead.setName("read_ahead");
+        mReadAHead.setOrder(12);
+        mReadAHead.setTitle(R.string.pref_readahead);
+        mReadAHead.setDialogTitle(R.string.pref_readahead_dialog);
+        mReadAHead.setEntries(readaheadValues.toArray(new CharSequence[0]));
+        mReadAHead.setEntryValues(readaheadValues.toArray(new CharSequence[0]));
+        mReadAHead.setValue(AeroActivity.shell.getInfo(FilePath.READAHEAD_PARAMETER));
+        mReadAHead.setSummary(AeroActivity.shell.getInfo(FilePath.READAHEAD_PARAMETER));
+        mReadAHead.setOnPreferenceChangeListener(this);
+        memorySettingsCategory.addPreference(mReadAHead);
 
         mLowMemoryPref = (CheckBoxPreference) findPreference("low_mem");
         mLowMemoryPref.setOrder(10);
@@ -386,14 +403,19 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+        String value = (String) newValue;
+
         if (preference == mIOScheduler) {
-            String value = (String) newValue;
             mIOScheduler.setSummary(value);
             AeroActivity.shell.setRootInfo(value, FilePath.GOV_IO_FILE);
 
             // Kill everything with fire;
             if (PrefCat != null)
                 root.removePreference(PrefCat);
+        } else if (preference == mReadAHead) {
+            AeroActivity.shell.setRootInfo(value, FilePath.READAHEAD_PARAMETER);
+            mReadAHead.setSummary(value);
         } else {
             return false;
         }

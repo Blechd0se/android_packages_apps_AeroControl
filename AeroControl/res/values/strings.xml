@@ -142,6 +142,9 @@
     <string name="pref_dynamic_fsync">Dynamic FSync</string>
     <string name="pref_dynamic_fsync_sum">Dynamic FSync enables fsync only while the screen is off.</string>
 
+    <string name="pref_readahead">Readahead size</string>
+    <string name="pref_readahead_dialog">Readahead size in kb</string>
+
     <string name="pref_ksm">KSM</string>
     <string name="pref_ksm_sum">Enables or disabled the KSM deamon completely.</string>
 
