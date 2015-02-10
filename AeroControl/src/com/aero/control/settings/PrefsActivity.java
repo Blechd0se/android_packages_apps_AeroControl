@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -54,8 +55,12 @@ public class PrefsActivity extends PreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         mCounter = 0;
-
         super.onCreate(savedInstanceState);
+
+        if(getResources().getBoolean(R.bool.portrait_only)){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mActionBar = getActionBar();
             mActionBar.setIcon(android.R.color.transparent);

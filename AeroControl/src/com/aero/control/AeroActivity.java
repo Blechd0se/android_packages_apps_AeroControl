@@ -479,8 +479,17 @@ public final class AeroActivity extends Activity {
             @Override
             public void run() {
 
-                getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
-                        android.R.animator.fade_out).replace(R.id.content_frame, fragment).commitAllowingStateLoss();
+                /*
+                 * Somehow the activity is destroyed sometimes when we switched activities which
+                 * forced an orientation. To hopefully avoid this, we are just restarting the app
+                 * safely.
+                 */
+                try {
+                    getFragmentManager().beginTransaction().setCustomAnimations(android.R.animator.fade_in,
+                            android.R.animator.fade_out).replace(R.id.content_frame, fragment).commitAllowingStateLoss();
+                } catch (IllegalStateException e) {
+                    recreate();
+                }
             }
         },genHelper.getDefaultDelay());
         mFragmentStack.push(fragment);
