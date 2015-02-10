@@ -480,7 +480,7 @@ public class settingsHelper {
                 if (Profile != null)
                     defaultProfile.add("echo " + shellPara.getInfo(FilePath.DALVIK_TWEAK + "/" + c) + " > " + FilePath.DALVIK_TWEAK + "/" + c);
 
-                shell.queueWork("echo " + vmSettings + " > " + FilePath.DALVIK_TWEAK + "/" + c);
+                shellPara.queueWork("echo " + vmSettings + " > " + FilePath.DALVIK_TWEAK + "/" + c);
                 //Log.e("Aero", "Output: " + "echo " + vmSettings + " > " + FilePath.DALVIK_TWEAK + "/" + c);
             }
         }
