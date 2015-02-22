@@ -175,8 +175,10 @@ public final class shellHelper {
             return info;
         } catch (IOException e) {
 
-            // At least try to read it via root;
-            info = getRootInfo("cat", s);
+            // At least try to read it via root, but check for permissions;
+            if (!(getRootInfo("ls -l", s).substring(0, 10).equals("--w-------"))) {
+                info = getRootInfo("cat", s);
+            }
 
             if (info.equals(NO_DATA_FOUND))
                 Log.e(LOG_TAG,
