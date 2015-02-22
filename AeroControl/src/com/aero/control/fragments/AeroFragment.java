@@ -150,18 +150,12 @@ public class AeroFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        // Prepare Showcase;
 
         // Set up our file;
         int output = 0;
-        byte[] buffer = new byte[1024];
 
-        try {
-            final FileInputStream fis = getActivity().openFileInput(FILENAME);
-            output = fis.read(buffer);
-            fis.close();
-        } catch (IOException e) {
-            Log.e("Aero", "Couldn't open File... " + output);
+        if (AeroActivity.genHelper.doesExist(getActivity().getFilesDir().getAbsolutePath() + "/" + FILENAME)) {
+            output = 1;
         }
 
         // Only show showcase once;

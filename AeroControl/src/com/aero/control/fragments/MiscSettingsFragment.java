@@ -201,14 +201,9 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
 
         // Set up our file;
         int output = 0;
-        final byte[] buffer = new byte[1024];
 
-        try {
-            final FileInputStream fis = getActivity().openFileInput(FILENAME_MISC);
-            output = fis.read(buffer);
-            fis.close();
-        } catch (IOException e) {
-            Log.e("Aero", "Couldn't open File... " + output);
+        if (AeroActivity.genHelper.doesExist(getActivity().getFilesDir().getAbsolutePath() + "/" + FILENAME_MISC)) {
+            output = 1;
         }
 
         // Only show showcase once;

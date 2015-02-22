@@ -228,14 +228,9 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                             addProfile(profileTitle, true);
                             // Set up our file;
                             int output = 0;
-                            final byte[] buffer = new byte[1024];
 
-                            try {
-                                FileInputStream fis = mContext.openFileInput(FILENAME_PERAPP);
-                                output = fis.read(buffer);
-                                fis.close();
-                            } catch (IOException e) {
-                                Log.e(LOG_TAG, "Couldn't open File... " + output);
+                            if (AeroActivity.genHelper.doesExist(getActivity().getFilesDir().getAbsolutePath() + "/" + FILENAME_PERAPP)) {
+                                output = 1;
                             }
 
                             // Only show showcase once;
@@ -906,15 +901,11 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
         // Set up our file;
         int output = 0;
-        final byte[] buffer = new byte[1024];
 
-        try {
-            FileInputStream fis = mContext.openFileInput(FILENAME_PROFILES);
-            output = fis.read(buffer);
-            fis.close();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Couldn't open File... " + output);
+        if (AeroActivity.genHelper.doesExist(getActivity().getFilesDir().getAbsolutePath() + "/" + FILENAME_PROFILES)) {
+            output = 1;
         }
+
 
         // Only show showcase once;
         if (output == 0)

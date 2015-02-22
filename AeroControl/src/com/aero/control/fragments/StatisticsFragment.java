@@ -119,14 +119,9 @@ public class StatisticsFragment extends Fragment {
 
         // Set up our file;
         int output = 0;
-        final byte[] buffer = new byte[1024];
 
-        try {
-            final FileInputStream fis = getActivity().openFileInput(FILENAME_STATISTICS);
-            output = fis.read(buffer);
-            fis.close();
-        } catch (IOException e) {
-            Log.e("Aero", "Couldn't open File... " + output);
+        if (AeroActivity.genHelper.doesExist(getActivity().getFilesDir().getAbsolutePath() + "/" + FILENAME_STATISTICS)) {
+            output = 1;
         }
 
         // Only show showcase once;

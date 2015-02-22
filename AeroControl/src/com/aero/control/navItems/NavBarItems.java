@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+import com.aero.control.AeroActivity;
 import com.aero.control.R;
 
 import java.io.FileInputStream;
@@ -39,16 +40,13 @@ public class NavBarItems {
         addItem(new PreferenceItem(R.string.slider_backup_restore, R.drawable.update));
         addItem(new PreferenceItem(R.string.slider_profile, R.drawable.profile));
 
+        // Set up our file;
         int output = 0;
-        final byte[] buffer = new byte[1024];
 
-        try {
-            FileInputStream fis = mContext.openFileInput("testsuite");
-            output = fis.read(buffer);
-            fis.close();
-        } catch (IOException e) {
-            Log.e("Aero", "Couldn't open File... " + output);
+        if (AeroActivity.genHelper.doesExist(mContext.getFilesDir().getAbsolutePath() + "/" + "testsuite")) {
+            output = 1;
         }
+
         if (output > 0)
             addItem(new PreferenceItem(R.string.slider_testsuite_settings, R.drawable.dashboard));
     }
