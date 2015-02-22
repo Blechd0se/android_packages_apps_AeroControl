@@ -73,4 +73,14 @@
         <item>@string/app_theme_dark</item>
     </string-array>
 
+    <!-- Boot timer delay -->
+    <string-array name="boot_delay" translatable="false">
+        <item>@string/disabled</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
 </resources>

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -16,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
@@ -50,6 +52,7 @@ public class PrefsActivity extends PreferenceActivity {
     private ActionBar mActionBar;
     private int mCounter;
     private CheckBoxPreference mPer_app_check, mRebootChecker;
+    private ListPreference mBootDelay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,8 @@ public class PrefsActivity extends PreferenceActivity {
             mRebootChecker = (CheckBoxPreference)root.findPreference("reboot_checker");
         if (mPer_app_check == null)
             mPer_app_check = (CheckBoxPreference)root.findPreference("per_app_service");
+        if(mBootDelay == null)
+            mBootDelay = (ListPreference) root.findPreference("boot_delay");
 
         Preference resetTutorials = root.findPreference("reset_tutorials");
         Preference beta = root.findPreference("beta");
@@ -99,6 +104,9 @@ public class PrefsActivity extends PreferenceActivity {
         mRebootChecker.setIcon(R.drawable.ic_action_phone);
         setCheckedState(mRebootChecker);
         mPer_app_check.setIcon(R.drawable.ic_action_person);
+        mBootDelay.setIcon(R.drawable.timer);
+        mBootDelay.setDialogIcon(R.drawable.timer);
+        setMinutes(mBootDelay, mBootDelay.getValue());
         resetTutorials.setIcon(R.drawable.ic_action_warning);
         setCheckedState(mPer_app_check);
         version.setIcon(R.drawable.rocket);
@@ -164,6 +172,16 @@ public class PrefsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 setCheckedState((CheckBoxPreference) preference);
+                return false;
+            }
+        });
+
+        mBootDelay.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                setMinutes(mBootDelay, newValue.toString());
+
                 return false;
             }
         });
@@ -331,6 +349,28 @@ public class PrefsActivity extends PreferenceActivity {
             preference.setSummary(R.string.enabled);
         else
             preference.setSummary(R.string.disabled);
+    }
+
+    private void setMinutes(ListPreference preference, String value) {
+
+        if (value != null) {
+
+            if (value.equals(getText(R.string.disabled)) ||
+                    value.equals("" + 0)) {
+                preference.setSummary(R.string.disabled);
+                preference.setValue("" + 0);
+                return;
+            }
+
+            int i = Integer.parseInt(value);
+
+            if (i == 1)
+                preference.setSummary(value + " " + getText(R.string.minute));
+            else
+                preference.setSummary(value + " " + getText(R.string.minutes));
+
+            preference.setValue(value);
+        }
     }
 
     @Override

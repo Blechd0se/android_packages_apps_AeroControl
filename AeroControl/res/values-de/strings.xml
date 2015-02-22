@@ -33,6 +33,10 @@
     <string name="disabled">Deaktiviert</string>
     <string name="folder_empty">Ordner ist leer</string>
     <string name="no_data_found">Ich konnte keine Daten finden :(</string>
+    <string name="setonboot_settings"> wende Einstellungen an.</string>
+    <string name="finishing_settings"> Einstellung angwandt.</string>
+    <string name="minutes">Minuten</string>
+    <string name="minute">Minute</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -88,6 +92,9 @@
     <string name="app_theme_red">Rot - Light Holo mit rotem Akzent</string>
     <string name="app_theme_light">Light - Light Holo mit blauem Akzent</string>
     <string name="app_theme_dark">Dark - Light Holo mit blauem Akzent und dunkler Actionbar</string>
+
+    <string name="pref_boot_delay">Hochfahrverzögerung</string>
+    <string name="pref_boot_delay_dialog">Verzögerung in Minuten</string>
 
     <!-- About -->
     <string name="about_dialog">Hallo. Danke, dass Du meine App nutzt. Mein Name

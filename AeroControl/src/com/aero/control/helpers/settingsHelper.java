@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
+import android.os.Handler;
+
+import com.aero.control.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,6 +36,7 @@ public class settingsHelper {
     public static final String PREF_READAHEAD = "read_ahead";
     public static final String PREF_WRITEBACK = "writeback";
     public static final String PREF_TCP_CONGESTION = "tcp_congestion";
+    public static final String PREF_TIMER_DELAY = "boot_delay";
     private static final String MISC_SETTINGS_STORAGE = "miscSettingsStorage";
 
     private SharedPreferences prefs;
@@ -45,7 +50,7 @@ public class settingsHelper {
     private static final ArrayList<String> defaultProfile = new ArrayList<String>();
     private static final GenericHelper genHelper = new GenericHelper();
 
-    public void setSettings(final Context context, final String Profile) {
+    public void setSettings(final Context context, final String Profile, final boolean onboot) {
 
         new Thread(new Runnable() {
             @Override
@@ -60,14 +65,26 @@ public class settingsHelper {
                     }
                 }
                 // Apply all our saved values;
-                doBackground(context, Profile);
+                doBackground(context, Profile, onboot);
+
+                if (onboot) {
+                    Handler h = new Handler(context.getMainLooper());
+
+                    h.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, context.getText(R.string.app_name) + ": " +
+                                    context.getText(R.string.finishing_settings), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
 
             }
         }).start();
 
     }
 
-    private void doBackground(Context context, String Profile) {
+    private void doBackground(final Context context, final String Profile, final boolean onboot) {
 
 
         if (Profile == null)
@@ -76,6 +93,28 @@ public class settingsHelper {
             prefs = context.getSharedPreferences(Profile, context.MODE_PRIVATE);
 
         mMiscSettings = context.getSharedPreferences(MISC_SETTINGS_STORAGE, context.MODE_PRIVATE);
+
+        if (onboot) {
+            String timer_delay = prefs.getString(PREF_TIMER_DELAY, null);
+            if (timer_delay != null) {
+                int i = Integer.parseInt(timer_delay);
+                try {
+                    Thread.sleep((i * 1000 * 60));
+                } catch (InterruptedException e) {
+                }
+            }
+
+            Handler h = new Handler(context.getMainLooper());
+
+            h.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, context.getText(R.string.app_name) + ": " +
+                            context.getText(R.string.setonboot_settings), Toast.LENGTH_LONG).show();
+                }
+            });
+
+        }
 
         // GET CPU VALUES AND COMMANDS FROM PREFERENCES
         String cpu_max = prefs.getString(PREF_CPU_MAX_FREQ, null);

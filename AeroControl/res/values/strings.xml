@@ -36,6 +36,10 @@
     <string name="disabled">Disabled</string>
     <string name="folder_empty">Folder is empty</string>
     <string name="no_data_found">I couldn\'t find any relevant data :(</string>
+    <string name="setonboot_settings"> set-on-boot settings.</string>
+    <string name="finishing_settings"> finished settings.</string>
+    <string name="minutes">Minutes</string>
+    <string name="minute">Minute</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -93,6 +97,9 @@
     <string name="app_theme_red">Red - Light Holo with red accent</string>
     <string name="app_theme_light">Light - Light Holo with blue accent</string>
     <string name="app_theme_dark">Dark - Light Holo with blue accent and black action bar</string>
+
+    <string name="pref_boot_delay">Boot Timer Delay</string>
+    <string name="pref_boot_delay_dialog">Delay in minutes</string>
 
     <!-- About -->
     <string name="about_dialog">Hello. Thank you for using this App. My name is

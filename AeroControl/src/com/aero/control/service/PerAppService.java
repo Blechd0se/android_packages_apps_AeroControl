@@ -106,7 +106,7 @@ public final class PerAppService extends Service {
                             mActive = true;
 
                             // Passing the profile to our settings helper;
-                            settingsHelper.setSettings(mContext, mProfile);
+                            settingsHelper.setSettings(mContext, mProfile, false);
                         }
                     }
                 }

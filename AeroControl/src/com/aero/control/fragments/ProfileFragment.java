@@ -823,7 +823,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                                 deleteProfile("com.aero.control_preferences");
                                 SharedPreferences AeroProfile = mContext.getSharedPreferences(txtView.getText().toString(), Context.MODE_PRIVATE);
                                 applyProfile(AeroProfile);
-                                settings.setSettings(mContext, null);
+                                settings.setSettings(mContext, null, false);
 
                             }
                         })
