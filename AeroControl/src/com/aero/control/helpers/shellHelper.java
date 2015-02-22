@@ -174,9 +174,14 @@ public final class shellHelper {
 
             return info;
         } catch (IOException e) {
-            Log.e(LOG_TAG,
-                    "IO Exception when trying to get information.",
-                    e);
+
+            // At least try to read it via root;
+            info = getRootInfo("cat", s);
+
+            if (info.equals(NO_DATA_FOUND))
+                Log.e(LOG_TAG,
+                        "IO Exception when trying to get information.",
+                        e);
 
             return info;
         }
@@ -563,7 +568,6 @@ public final class shellHelper {
                     break;
                 }
             }
-            Log.e(LOG_TAG, "Output from su-Operation: " + output);
             return output;
 
         } catch (IOException e) {
