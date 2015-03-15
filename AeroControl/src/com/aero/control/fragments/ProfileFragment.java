@@ -1,6 +1,7 @@
 package com.aero.control.fragments;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,7 +40,6 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -245,7 +245,6 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
                     }
                 })
-                .setNegativeButton(R.string.cancel, null)
                 .setNeutralButton(R.string.pref_profile_import, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -302,13 +301,6 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                                             mContainerView.getChildAt(j).setVisibility(View.GONE);
                                         }
                                         loadProfiles();
-                                    }
-                                })
-                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // Do Nothing
-
                                     }
                                 })
                         ;
@@ -822,7 +814,6 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
                             }
                         })
-                        .setNegativeButton(R.string.cancel, null)
                         .setNeutralButton(R.string.pref_profile_export, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -883,7 +874,6 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                                 }
                             }
                         })
-                        .setNegativeButton(R.string.cancel, null)
                         .create();
                 dialog.show();
 
