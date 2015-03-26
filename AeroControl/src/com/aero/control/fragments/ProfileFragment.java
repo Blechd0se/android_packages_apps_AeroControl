@@ -36,6 +36,8 @@ import com.aero.control.service.PerAppServiceHelper;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.AdvancedUndoListener;
 import com.cocosw.undobar.UndoBarStyle;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 
@@ -56,6 +58,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
     private static final String LOG_TAG = PreferenceFragment.class.getName();
     private ViewGroup mContainerView;
+    private ViewGroup mRootView;
     public ShowcaseView mShowCase;
     private SharedPreferences mPrefs;
     private static final String perAppProfileHandler = "perAppProfileHandler";
@@ -75,25 +78,76 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
 
         mContext = getActivity();
         mWarning = false;
         mPerAppDialogVisible = false;
 
         mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
-        final View v = inflater.inflate(R.layout.profile_fragment, null);
+        final View v = inflater.inflate(R.layout.profile_fragment, container, false);
         final TextView empty = (TextView)v.findViewById(android.R.id.empty);
         empty.setTypeface(FilePath.kitkatFont);
 
-        mContainerView = (ViewGroup)v.findViewById(R.id.container);
+        mRootView = (ViewGroup)v.findViewById(R.id.root_container);
+        mContainerView = (ViewGroup)mRootView.findViewById(R.id.container);
+
+        // Load floating menu;
+        loadFloatingMenu();
 
         // Load all available profiles;
         loadProfiles();
 
-        return mContainerView;
+        return mRootView;
+    }
+
+    private void loadFloatingMenu() {
+
+        final FloatingActionsMenu floatMenu  = (FloatingActionsMenu) mRootView.findViewById(R.id.float_menu);
+        FloatingActionButton addProfiles = (FloatingActionButton) mRootView.findViewById(R.id.add_button);
+        FloatingActionButton toggleSystem = (FloatingActionButton) mRootView.findViewById(R.id.toggle_system);
+        FloatingActionButton resetButton = (FloatingActionButton) mRootView.findViewById(R.id.reset_button);
+
+        addProfiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if there are actual changes;
+                if (!(AeroActivity.genHelper.doesExist(FilePath.sharedPrefsPath + "com.aero.control_preferences.xml"))) {
+                    Toast.makeText(mContext, R.string.pref_profile_no_changes , Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                showDialog(new EditText(mContext));
+                floatMenu.toggle();
+            }
+        });
+
+        toggleSystem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String systemStatus = mPerAppPrefs.getString("systemStatus", "false");
+
+                if (systemStatus.equals("false")) {
+                    systemStatus = "true";
+                } else {
+                    systemStatus = "false";
+                }
+
+                mPerAppPrefs.edit().putString("systemStatus", systemStatus).commit();
+
+                mPerAppDialogVisible = false;
+                floatMenu.toggle();
+            }
+        });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showResetDialog();
+                floatMenu.toggle();
+            }
+        });
     }
 
     private void loadProfiles() {
@@ -131,39 +185,6 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                 mWarning = true;
             }
         }
-    }
-
-    // Create our options menu;
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-
-        inflater.inflate(R.menu.profiles_menu, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add_item:
-
-                // Check if there are actual changes;
-                if (!(AeroActivity.genHelper.doesExist(FilePath.sharedPrefsPath + "com.aero.control_preferences.xml"))) {
-                    Toast.makeText(mContext, R.string.pref_profile_no_changes , Toast.LENGTH_LONG).show();
-                    break;
-                }
-
-                showDialog(new EditText(mContext));
-                break;
-            case R.id.action_reload:
-                showResetDialog();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void showResetDialog() {
@@ -610,18 +631,6 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                         // Do Nothing
                         mPerAppDialogVisible = false;
                     }
-                })
-                .setNeutralButton(R.string.pref_profile_showSystem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        perApp.setSystemAppStatus(!perApp.getSystemAppStatus());
-                        mPerAppPrefs.edit().putString("systemStatus", perApp.getSystemAppStatus() + "").commit();
-
-                        mPerAppDialogVisible = false;
-
-                        getPersistentData(perApp, profileName, txtViewSummary);
-                    }
-
                 });
 
         dialog.create().show();

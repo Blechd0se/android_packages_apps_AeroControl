@@ -1,31 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
-    android:showDividers="middle"
-    android:divider="?android:dividerHorizontal"
-    android:animateLayoutChanges="true"
-    android:paddingLeft="0dp"
-    android:paddingRight="0dp">
+    android:id="@+id/root_container">
 
-    <ImageView
-        android:id="@+id/empty_image"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container"
+        android:showDividers="middle"
+        android:divider="?android:dividerHorizontal"
+        android:animateLayoutChanges="true"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp">
+
+        <ImageView
+            android:id="@+id/empty_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/rocket_large"
+            android:layout_gravity="center"
+            android:padding="32dp"/>
+
+        <TextView android:id="@android:id/empty"
+            style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="32dp"
+            android:text="@string/nothing_added_yet"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/rocket_large"
-        android:layout_gravity="center"
-        android:padding="32dp"/>
+        android:id="@+id/float_menu"
+        fab:fab_addButtonColorNormal="#455A64"
+        fab:fab_addButtonColorPressed="#37474F"
+        fab:fab_addButtonPlusIconColor="#ffffff"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp">
 
-    <TextView android:id="@android:id/empty"
-        style="?android:textAppearanceSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="32dp"
-        android:text="@string/nothing_added_yet"
-        android:textColor="?android:textColorSecondary"
-        android:textSize="20dp"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/reset_button"
+            fab:fab_colorNormal="#F44336"
+            fab:fab_title="@string/reload"
+            fab:fab_icon="@drawable/ic_refresh"
+            fab:fab_colorPressed="#C62828"/>
 
-</LinearLayout>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/toggle_system"
+            fab:fab_colorNormal="#4CAF50"
+            fab:fab_title="@string/pref_profile_showSystem"
+            fab:fab_icon="@drawable/ic_fab_star"
+            fab:fab_colorPressed="#388E3C"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_button"
+            fab:fab_colorNormal="#03A9F4"
+            fab:fab_title="@string/add"
+            fab:fab_icon="@drawable/ic_person_add"
+            fab:fab_colorPressed="#01579B"/>
+
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+</RelativeLayout>
