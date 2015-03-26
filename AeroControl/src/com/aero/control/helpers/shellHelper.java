@@ -60,8 +60,11 @@ public final class shellHelper {
         }
 
         private void flushWork() {
-            mWorkItems.clear();
-            mWorkItems = null;
+            // Be super save here and check for null
+            if (mWorkItems != null) {
+                mWorkItems.clear();
+                mWorkItems = null;
+            }
         }
 
     }
