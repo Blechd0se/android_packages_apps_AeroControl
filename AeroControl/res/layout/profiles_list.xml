@@ -34,6 +34,7 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
+            android:textColor="#263238"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -45,7 +46,7 @@
             android:maxLines="4"
             android:layout_marginTop="25dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?android:attr/textColorSecondary" />
+            android:textColor="#263238" />
     </RelativeLayout>
 
     <ImageButton android:id="@+id/assign_to_app"

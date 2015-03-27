@@ -36,19 +36,20 @@
                 android:id="@+id/header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#7f8c8d"
+                android:textColor="#263238"
                 android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/right_header"
                 android:textSize="20sp"
-                android:textColor="#7f8c8d"
+                android:textColor="#263238"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"/>
 
             <TextView
                 android:textSize="14sp"
+                android:textColor="#263238"
                 android:id="@+id/content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:padding="32dp"
             android:text="@string/nothing_added_yet"
-            android:textColor="?android:textColorSecondary"
+            android:textColor="#263238"
             android:textSize="20dp"/>
 
     </LinearLayout>

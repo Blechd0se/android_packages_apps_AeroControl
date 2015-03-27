@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:materialdesign="http://schemas.android.com/apk/res/com.aero.control.helpers"
     android:layout_width="match_parent"
-    android:layout_height="?android:listPreferredItemHeight"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:listPreferredItemHeight"
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center_vertical">
 
@@ -21,6 +21,7 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
+            android:textColor="#263238"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -29,8 +30,8 @@
             android:layout_height="wrap_content"
             android:maxLines="4"
             android:layout_marginTop="25dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?android:attr/textColorSecondary" />
+            android:textColor="#263238"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 
     <!-- Preference should place its actual preference widget here. -->
