@@ -244,6 +244,8 @@ public final class shellHelper {
      */
     public final String[] getDirInfo(String s, boolean flag) {
 
+        String[] result;
+
         // Return null, if the file doesn't exist
         if (!(new File(s).exists()))
             return null;
@@ -259,9 +261,9 @@ public final class shellHelper {
                 }
             }
 
-            String[] result = new String[results.size()];
+            result = new String[results.size()];
             for (int i = 0; i < results.size(); i++) {
-                result[i] = results.get(i).toString();
+                result[i] = results.get(i);
             }
             Arrays.sort(result);
 
@@ -270,7 +272,7 @@ public final class shellHelper {
         } else {
             // Handle case if directory is needed;
             File file = new File (s);
-            String[] result = file.list(new FilenameFilter() {
+            result = file.list(new FilenameFilter() {
                 @Override
                 public boolean accept(File file, String s) {
                     return new File(file, s).isDirectory();
@@ -281,43 +283,74 @@ public final class shellHelper {
     }
 
     /**
+     * Splits up the information from a string in more usable values
+     * and returns this array.
+     *
+     * @param s         => string used (from a given path)
+     * @param flag      => set to 1 to convert it with @toMHZ
+     * @param flag_io   => set to 1 to read the io_schedulers
+     * @return String[]
+     */
+
+    private String[] buildArray(String s, int flag, int flag_io) {
+
+        String[] completeString = new String[0];
+        String[] output;
+
+        if (flag_io == 1)
+            completeString = s.replace("[", "").replace("]", "").split(" ");
+        else if (flag_io == 0)
+            completeString = s.split(" ");
+
+        output = new String[completeString.length];
+        output[0] = NO_DATA_FOUND;
+
+        for (int i = 0; i < output.length; i++) {
+            if (flag == 1)
+                output[i] = toMHz(completeString[i]);
+            else
+                output[i] = completeString[i];
+        }
+
+        return output;
+    }
+
+    /**
      * This Method returns an Array, useful for the frequency list of the kernel
      *
-     * @param s   => string used (from a given path)
-     * @param flag => set to 1 to convert it with @toMHZ
+     * @param s       => string used (from a given path)
+     * @param flag    => set to 1 to convert it with @toMHZ
      * @param flag_io => set to 1 to read the io_schedulers
      *
      * @return String[]
      */
     public final String[] getInfoArray(String s, int flag, int flag_io) {
 
-        String[] completeString = new String[0];
         String[] output = new String[] { NO_DATA_FOUND };
+        String tmp;
 
         try {
             // Try to read the given Path, if not available -> throw exception
             BufferedReader reader = new BufferedReader(new FileReader(s), BUFF_LEN);
             try {
-                if (flag_io == 1)
-                    completeString = reader.readLine().replace("[", "").replace("]", "").split(" ");
-                else if (flag_io == 0)
-                    completeString = reader.readLine().split(" ");
-                output = new String[completeString.length];
-                for (int i = 0; i < output.length; i++) {
-                    if (flag == 1)
-                        output[i] = toMHz(completeString[i]);
-                    else
-                        output[i] = completeString[i];
-                }
+                output = buildArray(reader.readLine(), flag, flag_io);
             } finally {
                 reader.close();
             }
 
             return output;
         } catch (IOException e) {
-            Log.e(LOG_TAG,
-                    "IO Exception when trying to get information with an Array.",
-                    e);
+
+            // At least try to read it via root, but check for permissions;
+            if (!(getRootInfo("ls -l", s).substring(0, 10).equals("--w-------"))) {
+                tmp = getRootInfo("cat", s);
+                output = buildArray(tmp, flag, flag_io);
+            }
+
+            if (output[0].equals(NO_DATA_FOUND))
+                Log.e(LOG_TAG,
+                        "IO Exception when trying to get information.",
+                        e);
 
             return output;
         }
@@ -542,7 +575,6 @@ public final class shellHelper {
 
     }
 
-
     /**
      * Executes a command in Terminal and returns output
      *
@@ -561,7 +593,7 @@ public final class shellHelper {
             stdin.writeBytes(command + " " + parameter + "\n");
             InputStream stdout = rooting.getInputStream();
             int read;
-            String output = new String();
+            String output = "";
             while(true){
                 read = stdout.read(buffer);
                 if (read == -1)
@@ -592,7 +624,7 @@ public final class shellHelper {
      */
     public final String[] getRootArray(String command, String split) {
 
-        ArrayList<String> temp = new ArrayList();
+        ArrayList<String> temp = new ArrayList<String>();
         ExecutorService executor = Executors.newFixedThreadPool(2);
 
         try {
