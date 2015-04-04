@@ -55,6 +55,13 @@ public class AeroFragment extends Fragment {
 
     private String gpu_file;
 
+    private AeroData mKernelData;
+    private AeroData mGovernorData;
+    private AeroData mIOSchedulerData;
+    private AeroData mFrequencyData;
+    private AeroData mGPUData;
+    private AeroData mRAMData;
+
     private class RefreshThread extends Thread {
 
         private boolean mInterrupt = false;
@@ -210,6 +217,47 @@ public class AeroFragment extends Fragment {
             return null;
     }
 
+    private void fillData(String gpu_freq) {
+
+        if (mKernelData == null)
+            mKernelData = new AeroData(getString(R.string.kernel_version), AeroActivity.shell.getKernel(), null);
+        else {
+            mKernelData.content = AeroActivity.shell.getKernel();
+        }
+
+        if (mGovernorData == null)
+            mGovernorData = new AeroData(getString(R.string.current_governor), AeroActivity.shell.getInfo(FilePath.GOV_FILE), null);
+        else {
+            mGovernorData.content = AeroActivity.shell.getInfo(FilePath.GOV_FILE);
+        }
+
+        if (mIOSchedulerData == null)
+            mIOSchedulerData = new AeroData(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(FilePath.GOV_IO_FILE), null);
+        else {
+            mIOSchedulerData.content = AeroActivity.shell.getInfo(FilePath.GOV_IO_FILE);
+        }
+
+        if (mFrequencyData == null)
+            mFrequencyData = new AeroData(getString(R.string.current_cpu_speed), getFreqPerCore(), getCPUTemp());
+        else {
+            mFrequencyData.content = getFreqPerCore();
+            mFrequencyData.right_name = getCPUTemp();
+        }
+
+        if (mGPUData == null)
+            mGPUData = new AeroData(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((gpu_freq.substring(0, gpu_freq.length() - 3))), null);
+        else {
+            mGPUData.content = AeroActivity.shell.toMHz((gpu_freq.substring(0, gpu_freq.length() - 3)));
+        }
+
+        if (mRAMData == null)
+            mRAMData = new AeroData(getString(R.string.available_memory), AeroActivity.shell.getMemory(FilePath.FILENAME_PROC_MEMINFO), null);
+        else {
+            mRAMData.content = AeroActivity.shell.getMemory(FilePath.FILENAME_PROC_MEMINFO);
+        }
+
+    }
+
     public void createList() {
 
         String gpu_freq;
@@ -230,13 +278,15 @@ public class AeroFragment extends Fragment {
         if (gpu_freq.length() <= 3)
             gpu_freq = NO_DATA_FOUND;
 
+        fillData(gpu_freq);
+
         // Default Overview Menu
-        mOverviewData.add(new AeroData(getString(R.string.kernel_version), AeroActivity.shell.getKernel(), null));
-        mOverviewData.add(new AeroData(getString(R.string.current_governor), AeroActivity.shell.getInfo(FilePath.GOV_FILE), null));
-        mOverviewData.add(new AeroData(getString(R.string.current_io_governor), AeroActivity.shell.getInfo(FilePath.GOV_IO_FILE), null));
-        mOverviewData.add(new AeroData(getString(R.string.current_cpu_speed), getFreqPerCore(), getCPUTemp()));
-        mOverviewData.add(new AeroData(getString(R.string.current_gpu_speed), AeroActivity.shell.toMHz((gpu_freq.substring(0, gpu_freq.length() - 3))), null));
-        mOverviewData.add(new AeroData(getString(R.string.available_memory), AeroActivity.shell.getMemory(FilePath.FILENAME_PROC_MEMINFO), null));
+        mOverviewData.add(mKernelData);
+        mOverviewData.add(mGovernorData);
+        mOverviewData.add(mIOSchedulerData);
+        mOverviewData.add(mFrequencyData);
+        mOverviewData.add(mGPUData);
+        mOverviewData.add(mRAMData);
 
 
         if (mAdapter == null) {
