@@ -46,6 +46,8 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     private CustomListPreference mGPUControlFrequencies, mGPUGovernor, mDisplayControl;
 
     private String mGPUFile;
+    private String mGPUFreq;
+    private String mGPUGov;
 
     private Shell mShell;
 
@@ -199,20 +201,39 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         mDisplayControl.setEntries(display_entries);
         mDisplayControl.setEntryValues(display_values);
 
+        for (String s : FilePath.GPU_FREQ_ARRAY) {
+            if (AeroActivity.genHelper.doesExist(s))
+                mGPUFreq = s;
+        }
+
         // Just throw in our frequencies;
-        if (AeroActivity.genHelper.doesExist(FilePath.GPU_FREQ_NEXUS4_VALUES)) {
-            mGPUControlFrequencies.setEntries(AeroActivity.shell.getInfoArray(FilePath.GPU_FREQ_NEXUS4_VALUES, 1, 0));
-            mGPUControlFrequencies.setEntryValues(AeroActivity.shell.getInfoArray(FilePath.GPU_FREQ_NEXUS4_VALUES, 0, 0));
+        if (mGPUFreq != null) {
+            mGPUControlFrequencies.setEntries(AeroActivity.shell.getInfoArray(mGPUFreq, 1, 0));
+            mGPUControlFrequencies.setEntryValues(AeroActivity.shell.getInfoArray(mGPUFreq, 0, 0));
         } else {
             mGPUControlFrequencies.setEntries(R.array.gpu_frequency_list);
             mGPUControlFrequencies.setEntryValues(R.array.gpu_frequency_list_values);
         }
 
-        if (AeroActivity.genHelper.doesExist(FilePath.GPU_GOV_BASE + "governor")) {
-            mGPUGovernor.setEntries(AeroActivity.shell.getInfoArray(FilePath.GPU_GOV_BASE + "available_governors", 0, 0));
-            mGPUGovernor.setEntryValues(AeroActivity.shell.getInfoArray(FilePath.GPU_GOV_BASE + "available_governors", 0, 0));
-            mGPUGovernor.setValue(AeroActivity.shell.getInfo(FilePath.GPU_GOV_BASE + "governor"));
-            mGPUGovernor.setSummary(AeroActivity.shell.getInfo(FilePath.GPU_GOV_BASE + "governor"));
+
+        for (String s: FilePath.GPU_GOV_ARRAY) {
+            if (AeroActivity.genHelper.doesExist(s))
+                mGPUGov = s;
+        }
+
+        if (mGPUGov != null) {
+
+            String tmp;
+            if (AeroActivity.genHelper.doesExist(mGPUGov + "available_governors")) {
+                tmp = mGPUGov + "available_governors";
+            } else {
+                tmp = mGPUGov + "governor";
+            }
+
+            mGPUGovernor.setEntries(AeroActivity.shell.getInfoArray(tmp, 0, 0));
+            mGPUGovernor.setEntryValues(AeroActivity.shell.getInfoArray(tmp, 0, 0));
+            mGPUGovernor.setValue(AeroActivity.shell.getInfo(mGPUGov + "governor"));
+            mGPUGovernor.setSummary(AeroActivity.shell.getInfo(mGPUGov + "governor"));
             mGPUGovernor.setDialogIcon(R.drawable.device_old);
         } else {
             gpuCategory.removePreference(mGPUGovernor);
@@ -524,7 +545,14 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
             if (PrefCat != null)
                 root.removePreference(PrefCat);
 
-            path = FilePath.GPU_GOV_BASE + "governor";
+            if (mGPUGov == null) {
+                for (String s: FilePath.GPU_GOV_ARRAY) {
+                    if (AeroActivity.genHelper.doesExist(s))
+                        mGPUGov = s;
+                }
+            }
+
+            path = mGPUGov + "governor";
             newSummary = a;
 
         }  else if (preference == mDisplayControl) {
@@ -555,7 +583,14 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
     // Create our options menu;
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (AeroActivity.genHelper.doesExist(FilePath.GPU_GOV_BASE)) {
+        if (mGPUGov == null) {
+            for (String s: FilePath.GPU_GOV_ARRAY) {
+                if (AeroActivity.genHelper.doesExist(s))
+                    mGPUGov = s;
+            }
+        }
+
+        if (AeroActivity.genHelper.doesExist(mGPUGov)) {
             inflater.inflate(R.menu.cpu_menu, menu);
             super.onCreateOptionsMenu(menu, inflater);
         }
@@ -566,13 +601,19 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
         switch (item.getItemId()) {
             case R.id.action_governor_settings:
 
-                String[] completeParamterList;
+                String[] completeParamterList = null;
                 try {
-                    completeParamterList = AeroActivity.shell.getDirInfo(FilePath.GPU_GOV_BASE + AeroActivity.shell.getInfo(FilePath.GPU_GOV_BASE + "governor"), true);
+                    completeParamterList = AeroActivity.shell.getDirInfo(mGPUGov + AeroActivity.shell.getInfo(mGPUGov + "governor"), true);
                 } catch (NullPointerException e) {
                     Toast.makeText(getActivity(), "Looks like there are no parameter for this governor?", Toast.LENGTH_LONG).show();
                     Log.e("Aero", "Couldn't find any parameters for this governor!", e);
                     return true;
+                } finally {
+                    if (completeParamterList == null) {
+                        Toast.makeText(getActivity(), "Looks like there are no parameter for this governor?", Toast.LENGTH_LONG).show();
+                        Log.e("Aero", "We found no parameters for this governor, maybe because it has none?");
+                        return true;
+                    }
                 }
 
                 // If there are already some entries, kill them all (with fire)
@@ -587,7 +628,7 @@ public class GPUFragment extends PreferenceFragment implements Preference.OnPref
 
                     PreferenceHandler h = new PreferenceHandler(getActivity(), PrefCat, getPreferenceManager());
 
-                    h.genPrefFromDictionary(completeParamterList, FilePath.GPU_GOV_BASE + AeroActivity.shell.getInfo(FilePath.GPU_GOV_BASE + "governor"));
+                    h.genPrefFromDictionary(completeParamterList, mGPUGov + AeroActivity.shell.getInfo(mGPUGov + "governor"));
 
                 } catch (NullPointerException e) {
                     Log.e("Aero", "I couldn't get any files!", e);

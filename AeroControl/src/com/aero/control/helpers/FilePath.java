@@ -52,12 +52,18 @@ public final class FilePath {
     /* Used by; GPUFragment */
     public static final String GPU_CONTROL_ACTIVE = "/sys/kernel/gpu_control/gpu_control_active";
     public static final String DISPLAY_COLOR ="/sys/class/misc/mDisplayControl/display_brightness_value";
-    public static final String GPU_FREQ_NEXUS4_VALUES = "/sys/class/kgsl/kgsl-3d0/gpu_available_frequencies";
-    public static final String GPU_GOV_BASE = "/sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/devfreq/";
+    public static final String GPU_FREQ_FB00000_VALUES = "/sys/class/kgsl/kgsl-3d0/gpu_available_frequencies";
+    public static final String GPU_FREQ_1C00000_VALUES = "/sys/devices/soc.0/1c00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/gpu_available_frequencies";
+    public static final String GPU_FREQ_KGSL3D0_VALUES = "/sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpu_available_frequencies";
+    public static final String GPU_GOV_BASE_FB00000 = "/sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/devfreq/";
+    public static final String GPU_GOV_BASE_1C00000 = "/sys/devices/soc.0/1c00000.qcom,kgsl-3d0/devfreq/1c00000.qcom,kgsl-3d0/";
+    public static final String GPU_GOV_BASE_KGSL3D0 = "/sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/trustzone/";
     public static final String SWEEP2WAKE = "/sys/android_touch/sweep2wake";
     public static final String DOUBLETAP2WAKE = "/sys/android_touch/doubletap2wake";
     public static final String COLOR_CONTROL = "/sys/devices/platform/kcal_ctrl.0/kcal";
     public static final String COLOR_CONTROL_BIT = "/sys/devices/platform/kcal_ctrl.0/kcal_ctrl";
+    public static final String[] GPU_GOV_ARRAY = { GPU_GOV_BASE_FB00000, GPU_GOV_BASE_1C00000, GPU_GOV_BASE_KGSL3D0 };
+    public static final String[] GPU_FREQ_ARRAY = { GPU_FREQ_FB00000_VALUES, GPU_FREQ_1C00000_VALUES, GPU_FREQ_KGSL3D0_VALUES};
 
     /* Used by; GPUGovernorFragment */
     public static final String GPU_GOV_PATH = "/sys/module/msm_kgsl_core/parameters";

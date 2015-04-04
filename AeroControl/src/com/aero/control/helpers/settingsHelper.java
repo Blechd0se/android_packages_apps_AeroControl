@@ -43,6 +43,7 @@ public class settingsHelper {
     private SharedPreferences mMiscSettings;
     private String gpu_file;
     private String mHotplugPath;
+    private String mGPUGov;
     public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
     private static final shellHelper shell = new shellHelper();
@@ -247,12 +248,17 @@ public class settingsHelper {
         /* GPU Governor */
         if (gpu_gov != null) {
 
-            shell.queueWork("chmod 0666 " + FilePath.GPU_GOV_BASE + "governor");
+            for (String s: FilePath.GPU_GOV_ARRAY) {
+                if (genHelper.doesExist(s))
+                    mGPUGov = s;
+            }
+
+            shell.queueWork("chmod 0666 " + mGPUGov + "governor");
 
             if (Profile != null)
-                defaultProfile.add("echo " + shell.getInfo(FilePath.GPU_GOV_BASE + "governor") + " > " + FilePath.GPU_GOV_BASE + "governor");
+                defaultProfile.add("echo " + shell.getInfo(mGPUGov + "governor") + " > " + mGPUGov + "governor");
 
-            shell.queueWork("echo " + gpu_gov + " > " + FilePath.GPU_GOV_BASE + "governor");
+            shell.queueWork("echo " + gpu_gov + " > " + mGPUGov + "governor");
         }
 
         // ADD GPU COMMANDS TO THE ARRAY
@@ -592,19 +598,27 @@ public class settingsHelper {
 
         /* GPU Governor Parameters */
         if (gpu_gov != null) {
-            final String completeGPUGovernorSetting[] = shell.getDirInfo(FilePath.GPU_GOV_BASE + gpu_gov, true);
+
+            if (mGPUGov == null) {
+                for (String s: FilePath.GPU_GOV_ARRAY) {
+                    if (genHelper.doesExist(s))
+                        mGPUGov = s;
+                }
+            }
+
+            final String completeGPUGovernorSetting[] = shell.getDirInfo(mGPUGov + gpu_gov, true);
 
             /* Governor Specific Settings at boot */
             for (String b : completeGPUGovernorSetting) {
-                final String governorSetting = prefs.getString(FilePath.GPU_GOV_BASE + gpu_gov + "/" + b, null);
+                final String governorSetting = prefs.getString(mGPUGov + gpu_gov + "/" + b, null);
                 if (governorSetting != null) {
 
-                    shellPara.queueWork("chmod 0666 " + FilePath.GPU_GOV_BASE + gpu_gov + "/" + b);
+                    shellPara.queueWork("chmod 0666 " + mGPUGov + gpu_gov + "/" + b);
 
                     if (Profile != null)
-                        defaultProfile.add("echo " + shellPara.getInfo(FilePath.GPU_GOV_BASE + gpu_gov + "/" + b) + " > " + FilePath.GPU_GOV_BASE + gpu_gov + "/" + b);
+                        defaultProfile.add("echo " + shellPara.getInfo(mGPUGov + gpu_gov + "/" + b) + " > " + mGPUGov + gpu_gov + "/" + b);
 
-                    shellPara.queueWork("echo " + governorSetting + " > " + FilePath.GPU_GOV_BASE + gpu_gov + "/" + b);
+                    shellPara.queueWork("echo " + governorSetting + " > " + mGPUGov + gpu_gov + "/" + b);
                     //Log.e("Aero", "Output: " + "echo " + governorSetting + " > " + FilePath.GPU_GOV_BASE + gpu_gov + "/" + b);
                 }
             }
