@@ -26,6 +26,8 @@ public final class FilePath {
 
     public static final String FILENAME_PROC_MEMINFO = "/proc/meminfo";
 
+    public static final String CPU_TEMP_FILE = "/sys/devices/virtual/thermal/thermal_zone4/temp";
+
 
     /* Used by; CPUFragment */
     public static final String CPU_BASE_PATH = "/sys/devices/system/cpu/cpu";

@@ -5,12 +5,19 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Handler;
+import android.os.PowerManager;
+import android.view.Display;
 import android.widget.Toast;
 
+import com.aero.control.AeroActivity;
+import com.aero.control.helpers.PerApp.AppMonitor.AppContext;
+import com.aero.control.helpers.PerApp.AppMonitor.AppLogger;
+import com.aero.control.helpers.PerApp.AppMonitor.JobManager;
 import com.aero.control.helpers.settingsHelper;
 
 import java.util.List;
@@ -32,6 +39,8 @@ public final class PerAppService extends Service {
     private static final settingsHelper settingsHelper = new settingsHelper();
     private static final Handler mHandler = new Handler(Looper.getMainLooper());
     private Runnable mRunnable;
+    private static JobManager mJobManager = AeroActivity.mJobManager;
+    private final String mClassName = getClass().getName();
 
     @Override
     public void onCreate() {
@@ -48,6 +57,7 @@ public final class PerAppService extends Service {
                         public void run() {
                             // Do work in its own thread;
                             runTask();
+                            mHandler.postDelayed(mRunnable, 5000);
                         }
                     });
                 }
@@ -73,11 +83,35 @@ public final class PerAppService extends Service {
 
     private void runTask() {
 
+        AppContext localContext = null;
+
         if (mPerAppPrefs == null)
             mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
 
         // init our data;
         setAppData();
+
+        if (mJobManager != null) {
+
+            mJobManager.setContext(mContext);
+            localContext = mJobManager.getAppContext(mCurrentApp);
+
+            mJobManager.setSleep(isScreenOn());
+
+            /*
+             * We need to check three things here before shutting down the JobManager;
+             * 1.) Is the context null, e.g. are we disabled or sleeping?
+             * 2.) Is the last known state NOT the sleeping state?
+             * 3.) Is the screen currently on?
+             */
+            if (localContext == null && !mJobManager.getSleepState() && isScreenOn()) {
+                AppLogger.print(mClassName, "Shutting down JobManager...", 0);
+                mJobManager = null;
+            } else {
+                mJobManager.schedule(localContext);
+            }
+            AeroActivity.mJobManager = mJobManager;
+        }
 
         if (mPreviousApp != null && mCurrentApp != null) {
             if (!(mPreviousApp.equals(mCurrentApp))) {
@@ -117,6 +151,7 @@ public final class PerAppService extends Service {
             }
         }
     }
+
     private void setAppData() {
 
         String PackageName = mCurrentApp;
@@ -147,5 +182,26 @@ public final class PerAppService extends Service {
             }
         }
         return null;
+    }
+
+    private boolean isScreenOn() {
+
+        // Take special care for API20+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            DisplayManager dm = (DisplayManager) mContext.getSystemService(mContext.DISPLAY_SERVICE);
+
+            // We iterate through all available displays
+            for (Display display : dm.getDisplays()) {
+                if (display.getState() != Display.STATE_OFF)
+                    return false;
+            }
+            // If we are here, all displays are on;
+            return true;
+
+        } else {
+            PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+
+            return !pm.isScreenOn();
+        }
     }
 }

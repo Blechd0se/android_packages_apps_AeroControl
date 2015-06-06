@@ -1,6 +1,5 @@
 package com.aero.control.service;
 
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import java.util.Calendar;
 public class PerAppServiceHelper {
 
     private Intent mBackgroundIntent = null;
-    private AlarmManager mTimer = null;
     private PendingIntent mPendingIntent = null;
     private SharedPreferences mPrefs;
     private Context mContext;
@@ -59,9 +57,6 @@ public class PerAppServiceHelper {
         mContext.startService(mBackgroundIntent);
         mPendingIntent = PendingIntent.getService(mContext, 0, mBackgroundIntent, 0);
 
-        mTimer = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        mTimer.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 5 * 1000, mPendingIntent);
-
         setState(true);
     }
 
@@ -76,12 +71,8 @@ public class PerAppServiceHelper {
 
         if (mPendingIntent != null) {
             mPendingIntent.cancel();
-
-            if (mTimer != null)
-                mTimer.cancel(mPendingIntent);
         }
 
-        mTimer = null;
         mBackgroundIntent = null;
         mPendingIntent = null;
 

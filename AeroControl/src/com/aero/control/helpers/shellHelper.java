@@ -6,10 +6,12 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +32,7 @@ import java.util.regex.Pattern;
 public final class shellHelper {
 
     // Buffer length;
-    private static final int BUFF_LEN = 512;
+    private static final int BUFF_LEN = 8192;
     private static final byte[] buffer = new byte[BUFF_LEN];
     private static final String LOG_TAG = shellHelper.class.getName();
     private ShellWorkqueue shWork = new ShellWorkqueue();
@@ -165,7 +167,7 @@ public final class shellHelper {
             return info;
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(s), BUFF_LEN);
+            final BufferedReader reader = new BufferedReader(new FileReader(s), BUFF_LEN);
             try {
                 info = reader.readLine();
             } finally {
@@ -190,6 +192,29 @@ public final class shellHelper {
 
             return info;
         }
+    }
+
+    /**
+     * Reads a file from a given path. It has not sanity checks and uses FileInputStream
+     * to read the file.
+     * @param path String, the filepath to read
+     * @return String, the output from the file
+     */
+    public final String getFastInfo(final String path) {
+        String tmp;
+        try {
+            final FileInputStream fis = new FileInputStream(path);
+            final BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+
+            tmp = br.readLine();
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "IO Exception when trying to get information. Fallback to getInfo()", e);
+            tmp = getInfo(path);
+        }
+
+        return tmp;
+
     }
 
     /**
