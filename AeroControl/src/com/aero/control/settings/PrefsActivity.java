@@ -121,6 +121,9 @@ public class PrefsActivity extends PreferenceActivity {
         if (AeroActivity.mJobManager != null)
             mPerAppMonitor.setChecked(AeroActivity.mJobManager.getJobManagerState());
 
+        if (!mPer_app_check.isChecked())
+            mPerAppMonitor.setEnabled(false);
+
         try {
             version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
             version.setSummary("Build: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);

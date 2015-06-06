@@ -7,12 +7,11 @@
 
     <TextView android:id="@+id/noData"
         android:textSize="20sp"
-        android:fontFamily="sans-serif-medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textAllCaps="true"
         android:padding="32dp"
-        android:text="NO DATA FOUND YET, CHECK BACK IN A FEW MINUTES!"
         android:textColor="@color/light_grey" />
 
     <ListView
