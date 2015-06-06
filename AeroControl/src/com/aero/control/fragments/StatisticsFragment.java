@@ -31,7 +31,6 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,10 +43,6 @@ import java.util.concurrent.TimeUnit;
  * CPU Statistics Fragment
  */
 public class StatisticsFragment extends Fragment {
-    /*
-    TODO: - Take time from other cores in account as well (not critical, governors keep freqs mostly synced)
-          - Unify listview and holograph data (?)
-     */
     public int mIndex = 0;
     private int mColorIndex = 0;
     public ViewGroup root;

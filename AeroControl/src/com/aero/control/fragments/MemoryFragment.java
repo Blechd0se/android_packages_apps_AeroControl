@@ -29,6 +29,7 @@ import com.aero.control.helpers.Android.CustomListPreference;
 import com.aero.control.helpers.Android.CustomPreference;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
+import com.aero.control.helpers.Util;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 
@@ -548,7 +549,7 @@ public class MemoryFragment extends PreferenceFragment implements Preference.OnP
                 update.setCancelable(false);
                 update.setIndeterminate(true);
                 update.setIndeterminateDrawable(getResources().getDrawable(R.drawable.spinner_animation));
-                update.setMessage(getText(R.string.pref_profile_loading_app_data));
+                update.setMessage(Util.getRandomLoadingText(getActivity()));
                 update.show();
                 AeroActivity.shell.remountSystem();
                 Runnable runnable = new Runnable() {

@@ -16,9 +16,6 @@ import android.preference.PreferenceManager;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -31,6 +28,7 @@ import com.aero.control.R;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PerApp.PerAppManager;
 import com.aero.control.helpers.PerApp.perAppHelper;
+import com.aero.control.helpers.Util;
 import com.aero.control.helpers.settingsHelper;
 import com.aero.control.service.PerAppServiceHelper;
 import com.cocosw.undobar.UndoBarController;
@@ -515,7 +513,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
         } else {
             if (mProgressDialog == null) {
                 mProgressDialog = new ProgressDialog(mContext);
-                mProgressDialog.setMessage(getText(R.string.pref_profile_loading_app_data));
+                mProgressDialog.setMessage(Util.getRandomLoadingText(mContext));
                 mProgressDialog.setIndeterminate(true);
                 mProgressDialog.setIndeterminateDrawable(getResources().getDrawable(R.drawable.spinner_animation));
             }

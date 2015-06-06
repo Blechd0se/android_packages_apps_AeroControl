@@ -51,7 +51,6 @@ public class AeroFragment extends Fragment {
     private final static String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu";
     private final static String SCALE_PATH_NAME = "/cpufreq/scaling_cur_freq";
     private final static String SCALE_CPU_UTIL = "/cpufreq/cpu_utilization";
-    private final static String CPU_TEMP_FILE = "/sys/devices/virtual/thermal/thermal_zone4/temp";
 
     private String gpu_file;
 
@@ -211,8 +210,8 @@ public class AeroFragment extends Fragment {
 
     private String getCPUTemp() {
 
-        if (AeroActivity.genHelper.doesExist(CPU_TEMP_FILE))
-            return AeroActivity.shell.getInfo(CPU_TEMP_FILE) + " °C";
+        if (AeroActivity.genHelper.doesExist(FilePath.CPU_TEMP_FILE))
+            return AeroActivity.shell.getInfo(FilePath.CPU_TEMP_FILE) + " °C";
         else
             return null;
     }

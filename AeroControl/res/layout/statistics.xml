@@ -4,13 +4,13 @@
     android:orientation="horizontal">
 
     <TextView android:id="@+id/noCpuData"
-        style="?android:textAppearanceMedium"
+        android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="32dp"
         android:text="@string/nocpu_data"
-        android:textColor="?android:textColorSecondary" />
+        android:textColor="@color/light_grey" />
 
     <com.echo.holographlibrary.PieGraph
         android:layout_width="match_parent"
