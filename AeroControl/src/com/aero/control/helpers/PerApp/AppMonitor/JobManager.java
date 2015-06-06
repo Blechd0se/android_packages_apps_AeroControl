@@ -16,6 +16,8 @@ import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PerApp.AppMonitor.model.AppElement;
 import com.aero.control.helpers.PerApp.AppMonitor.model.AppElementDetail;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,6 +33,7 @@ public final class JobManager {
     private AppData mAppData;
     private final String mClassName = getClass().getName();
     private static final String mPreferenceValue = "per_app_monitor";
+    private static final String FILENAME_APPMONITOR_NOTIFY = "appmonitor_notify";
     private boolean mJobManagerEnable = true;
     private List<AppModule> mModules;
     private AppModuleData mAppModuleData;
@@ -217,7 +220,8 @@ public final class JobManager {
             for (AppModuleMetaData ammd : this.getModuleData().getAppModuleData()) {
                 // Is this context "ready"?
                 if (ammd.getAppContext().isAboveThreshold()) {
-                    showNotification();
+                    if (!AeroActivity.genHelper.doesExist(mContext.getFilesDir().getAbsolutePath() + "/" + FILENAME_APPMONITOR_NOTIFY))
+                        showNotification();
                 }
             }
         }
@@ -354,6 +358,13 @@ public final class JobManager {
             notificationManager.notify(0, builder.build());
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             notificationManager.notify(0, builder.getNotification());
+
+        try {
+            final FileOutputStream fos = mContext.openFileOutput(FILENAME_APPMONITOR_NOTIFY, Context.MODE_PRIVATE);
+            fos.write("1".getBytes());
+            fos.close();
+        }
+        catch (IOException e) {}
 
         this.mNotifcationShowed = true;
     }
