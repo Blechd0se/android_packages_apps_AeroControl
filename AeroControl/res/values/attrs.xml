@@ -82,4 +82,9 @@
     <!-- in progress view indicate min value of progress -->
     <attr name="min" format="integer" />
 
+    <declare-styleable name="CardBox">
+        <attr name="cardTitle" format="string" />
+        <attr name="cardContent" format="string" />
+    </declare-styleable>
+
 </resources>

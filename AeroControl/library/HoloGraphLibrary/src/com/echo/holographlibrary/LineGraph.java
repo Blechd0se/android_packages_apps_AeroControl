@@ -45,6 +45,7 @@ public class LineGraph extends View {
 	private ArrayList<Line> lines = new ArrayList<Line>();
 	private Paint paint = new Paint();
 	private Paint txtPaint = new Paint();
+	private final int mAxisColor;
 	private float minY = 0, minX = 0;
 	private float maxY = 0, maxX = 0;
 	private boolean isMaxYUserSet = false;
@@ -56,6 +57,7 @@ public class LineGraph extends View {
     private boolean showMinAndMax = false;
     private boolean showHorizontalGrid = false;
 	private int gridColor = 0xffffffff;
+	private boolean showClickedPoint = false;
 	
 	public LineGraph(Context context){
 		this(context,null);
@@ -65,6 +67,7 @@ public class LineGraph extends View {
 		txtPaint.setColor(0xffffffff);
 		txtPaint.setTextSize(20);
 		txtPaint.setAntiAlias(true);
+		mAxisColor = Color.LTGRAY;
 	}
 	public void setGridColor(int color)
 	{
@@ -78,6 +81,11 @@ public class LineGraph extends View {
 	{
         showMinAndMax = show;
     }
+
+	public void showClickedPoint(boolean show) {
+		this.showClickedPoint = show;
+	}
+
 	public void setTextColor(int color)
 	{
 		txtPaint.setColor(color);
@@ -190,12 +198,13 @@ public class LineGraph extends View {
 		if (fullImage == null || shouldUpdate) {
 			fullImage = Bitmap.createBitmap(getWidth(), getHeight(), Config.ARGB_8888);
 			Canvas canvas = new Canvas(fullImage);
+			canvas.drawColor(Color.WHITE);
 			String max = (int)maxY+"";// used to display max
 			String min = (int)minY+"";// used to display min
 			paint.reset();
 			Path path = new Path();
 			
-			float bottomPadding = 1, topPadding = 0;
+			float bottomPadding = 0, topPadding = 0;
 			float sidePadding = 10;
             if (this.showMinAndMax)
                 sidePadding = txtPaint.measureText(max);
@@ -275,8 +284,8 @@ public class LineGraph extends View {
 			
 			paint.reset();
 			
-			paint.setColor(this.gridColor);
-			paint.setAlpha(50);
+			paint.setColor(mAxisColor);
+			paint.setStrokeWidth(2 * getResources().getDisplayMetrics().density);
 			paint.setAntiAlias(true);
 			canvas.drawLine(sidePadding, getHeight() - bottomPadding, getWidth(), getHeight()-bottomPadding, paint);
 			if(this.showHorizontalGrid)
@@ -284,7 +293,7 @@ public class LineGraph extends View {
 				{
 					canvas.drawLine(sidePadding, getHeight() - bottomPadding-(i*lineSpace), getWidth(), getHeight()-bottomPadding-(i*lineSpace), paint);
 				}
-			paint.setAlpha(255);
+			paint.reset();
 			
 			
 			for (Line line : lines){
@@ -337,9 +346,9 @@ public class LineGraph extends View {
 						float yPixels = getHeight() - bottomPadding - (usableHeight*yPercent);
 						
 						paint.setColor(Color.GRAY);
-						canvas.drawCircle(xPixels, yPixels, 10, paint);
+						canvas.drawCircle(xPixels, yPixels, 15, paint);
 						paint.setColor(Color.WHITE);
-						canvas.drawCircle(xPixels, yPixels, 5, paint);
+						canvas.drawCircle(xPixels, yPixels, 10, paint);
 						
 						Path path2 = new Path();
 						path2.addCircle(xPixels, yPixels, 30, Direction.CW);
@@ -347,7 +356,7 @@ public class LineGraph extends View {
 						p.setRegion(new Region((int)(xPixels-30), (int)(yPixels-30), (int)(xPixels+30), (int)(yPixels+30)));
 						
 						if (indexSelected == pointCount && listener != null){
-							paint.setColor(Color.parseColor("#33B5E5"));
+							paint.setColor(line.getColor());
 							paint.setAlpha(100);
 							canvas.drawPath(p.getPath(), paint);
 							paint.setAlpha(255);
@@ -360,8 +369,9 @@ public class LineGraph extends View {
 			
 			shouldUpdate = false;
             if (this.showMinAndMax) {
+				paint.setColor(Color.BLACK);
 				ca.drawText(max, 0, txtPaint.getTextSize(), txtPaint);
-				ca.drawText(min,0,this.getHeight(),txtPaint);
+				ca.drawText(min, 0, this.getHeight(),txtPaint);
 			}
 		}
 		
@@ -394,7 +404,8 @@ public class LineGraph extends View {
                         if (r.contains(point.x, point.y) && listener != null) {
                             listener.onClick(lineCount, pointCount);
 			    		}
-			    		indexSelected = -1;
+						if (!showClickedPoint)
+			    			indexSelected = -1;
 			    	}
 	    		}
 		    	

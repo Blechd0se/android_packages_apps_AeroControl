@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="white">#ffffff</color>
     <color name="grey">#607d8b</color>
     <color name="dark_grey">#37474F</color>
     <color name="light_grey">#3D3D3D</color>
+    <color name="bg_grey">#EEEEEE</color>
+    <color name="bg_dark_grey">#E0E0E0</color>
+    <color name="card_grey">#ffBDBDBD</color>
+    <color name="card_shadow">#8c666666</color>
+    <color name="material_orange">#FFA726</color>
     <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
     <color name="default_circle_indicator_page_color">#00000000</color>
     <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>

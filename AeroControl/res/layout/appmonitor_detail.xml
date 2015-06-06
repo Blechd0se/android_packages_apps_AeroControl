@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey">
+
+    <com.db.chart.view.LineChartView
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:background="@drawable/card"
+        android:id="@+id/graph"/>
+
+
+    <TextView
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:textAllCaps="true"
+        android:background="@drawable/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/graph"
+        android:textColor="@color/light_grey"
+        android:id="@+id/header"/>
+
+    <RelativeLayout
+        android:id="@+id/wrapper"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/header" >
+
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnWidth="96dp"
+            android:numColumns="auto_fit"
+            android:gravity="center"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:stretchMode="spacingWidthUniform"
+            android:layout_marginBottom="50dp"/>
+    </RelativeLayout>
+
+</RelativeLayout>

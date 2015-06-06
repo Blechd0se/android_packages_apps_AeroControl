@@ -52,6 +52,7 @@
     <string name="slider_profile">Profiles</string>
     <string name="slider_statistics">CPU Statistics</string>
     <string name="slider_misc_settings">Misc Settings</string>
+    <string name="slider_app_monitor">App Monitor</string>
     <string name="slider_testsuite_settings">TestSuite</string>
 
     <!-- Overview Elements -->
@@ -311,11 +312,14 @@
     <string name="pref_profile_undo">Undo</string>
     <string name="pref_profile_no_changes">You haven\'t changed any settings yet!</string>
     <string name="pref_profile_service_not_running">Per App Service not running, but you have associated apps to profiles!</string>
-    <string name="pref_profile_loading_app_data">Programming the flux capacitor...</string>
     <string name="pref_profile_export">Export</string>
     <string name="pref_profile_import">Import</string>
     <string name="pref_profile_import_select">Select profiles for import</string>
     <string name="pref_profile_no_import">I couldn\'t find anything to import.</string>
+
+    <!-- AppMonitor Fragment -->
+    <string name="pref_no_appmonitor_data">No data is found yet, check back in a few minutes.</string>
+    <string name="pref_appmonitor_disabled">AppMonitor is disabled, please enable it in the settings to display data.</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Click me and rate this app!</string>
@@ -338,4 +342,12 @@
     <string name="introduction_tutorial_content">Tutorials pop up during your usage of Aero Control. They might give you some insights.
                                                 If you are an advanced user, it is unlikely that you need them.</string>
 
+    <!-- Random Loading Texts -->
+    <string name="random_nsa_loading">Sending all data to the NSA...</string>
+    <string name="random_programming_flux">Programming the flux capacitor...</string>
+    <string name="random_shovelling_coal">Shovelling coal into CPU...</string>
+    <string name="random_testing_patience">Testing your patience...</string>
+    <string name="random_data_somewhere">Hang on a second, I know your data is somewhere...</string>
+    <string name="random_working_you_know">Working... well... you know...</string>
+    <string name="random_prepare_awesomeness">Prepare for awesomeness!</string>
 </resources>

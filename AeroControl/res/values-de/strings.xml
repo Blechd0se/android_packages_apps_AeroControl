@@ -300,11 +300,14 @@
     <string name="pref_profile_undo">Rückgangig</string>
     <string name="pref_profile_no_changes">Es wurden noch keine Einstellungen vorgenommen!</string>
     <string name="pref_profile_service_not_running">Per App Service ist nicht gestartet, es wurden aber Apps zu Profilen zugewiesen!</string>
-    <string name="pref_profile_loading_app_data">Programmierung des Flux-Kompensators...</string>
     <string name="pref_profile_export">Exportieren</string>
     <string name="pref_profile_import">Importieren</string>
     <string name="pref_profile_import_select">Profile für Import auswählen</string>
     <string name="pref_profile_no_import">Ich habe keine Profile zum Importieren gefunden.</string>
+
+    <!-- AppMonitor Fragment -->
+    <string name="pref_no_appmonitor_data">Es sind noch keine Daten verfügbar, schaue später nochmal vorbei.</string>
+    <string name="pref_appmonitor_disabled">AppMonitor ist deaktiviert. Aktiviere ihn in den Einstellungen um Daten zu sehen.</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Klick mich und bewerte diese App!</string>
@@ -326,5 +329,14 @@
     <string name="introduction_tutorial_check">Möchtest Du Tutorials aktivieren?</string>
     <string name="introduction_tutorial_content">Tutorials erscheinen Dir beim Benutzen von Aero Control. Sie können Dir ein paar Tipps und Tricks verraten.
                                                 Wenn Du ein fortgeschrittener Benutzer bist, wirst Du sie vermutlich nicht brauchen.</string>
+
+    <!-- Random Loading Texts -->
+    <string name="random_nsa_loading">Sende alle Daten zur NSA...</string>
+    <string name="random_programming_flux">Programmierung des Flux-Kompensators...</string>
+    <string name="random_shovelling_coal">Schaufele Kohle in die CPU...</string>
+    <string name="random_testing_patience">Überprüfe deine Geduld...</string>
+    <string name="random_data_somewhere">Einen Moment bitte, Ich weiß die Daten sind hier irgendwo...</string>
+    <string name="random_working_you_know">Am Arbeiten... Naja... Du weißt schon...</string>
+    <string name="random_prepare_awesomeness">Bereite Dich auf was tolles vor!</string>
 
 </resources>

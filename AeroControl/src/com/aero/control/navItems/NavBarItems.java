@@ -2,13 +2,10 @@ package com.aero.control.navItems;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -39,6 +36,7 @@ public class NavBarItems {
 
         addItem(new PreferenceItem(R.string.slider_backup_restore, R.drawable.update));
         addItem(new PreferenceItem(R.string.slider_profile, R.drawable.profile));
+        addItem(new PreferenceItem(R.string.slider_app_monitor, R.drawable.appmonitor));
 
         // Set up our file;
         int output = 0;

@@ -35,6 +35,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aero.control.fragments.AppMonitorFragment;
+import com.aero.control.fragments.StatisticsFragment;
+import com.aero.control.helpers.PerApp.AppMonitor.JobManager;
 import com.aero.control.navItems.NavBarItems;
 import com.aero.control.fragments.AeroFragment;
 import com.aero.control.fragments.CPUFragment;
@@ -43,7 +46,6 @@ import com.aero.control.fragments.GPUFragment;
 import com.aero.control.fragments.MemoryFragment;
 import com.aero.control.fragments.MiscSettingsFragment;
 import com.aero.control.fragments.ProfileFragment;
-import com.aero.control.fragments.StatisticsFragment;
 import com.aero.control.helpers.GenericHelper;
 import com.aero.control.testsuite.TestSuiteFragment;
 import com.aero.control.fragments.UpdaterFragment;
@@ -72,7 +74,7 @@ public final class AeroActivity extends Activity {
     private DrawerArrowDrawable mDrawerArrow;
     private CharSequence mTitle;
     private String[] mAeroTitle;
-    private CharSequence mPreviousTitle;
+    private int mPreviousTitle;
     private int mBackCounter = 0;
 
     // Fragment Keys;
@@ -85,7 +87,8 @@ public final class AeroActivity extends Activity {
     private static final int DEFY = 6;
     private static final int UPDATER = 7;
     private static final int PROFILE = 8;
-    private static final int TESTSUITE = 9;
+    private static final int APPSTATISTICS = 9;
+    private static final int TESTSUITE = 10;
 
     // Fragments;
     private AeroFragment mAeroFragment;
@@ -97,6 +100,7 @@ public final class AeroActivity extends Activity {
     private ProfileFragment mProfileFragment;
     private StatisticsFragment mStatisticsFragment;
     private MiscSettingsFragment mMiscSettingsFragment;
+    private AppMonitorFragment mAppStatisticsFragment;
     private TestSuiteFragment mTestSuiteFragment;
 
     public static final Handler mHandler = new Handler(Looper.getMainLooper());
@@ -110,6 +114,7 @@ public final class AeroActivity extends Activity {
     public static PerAppServiceHelper perAppService;
 
     public static GenericHelper genHelper = new GenericHelper();
+    public static JobManager mJobManager = JobManager.instance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -221,10 +226,27 @@ public final class AeroActivity extends Activity {
         mDrawerToggle.syncState();
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            selectItem(OVERVIEW);
         } else {
             selectItem(savedInstanceState.getInt(SELECTED_ITEM));
         }
+
+        // Handle notification click here;
+        if(savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                if (extras.getString("NOTIFY_STRING").equals("APPMONITOR")) {
+                    selectItem(!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")) ? PROFILE : APPSTATISTICS);
+                }
+            }
+        } else {
+            if (savedInstanceState.getSerializable("NOTIFY_STRING") != null) {
+                if (savedInstanceState.getSerializable("NOTIFY_STRING").equals("APPMONITOR")) {
+                    selectItem(!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")) ? PROFILE : APPSTATISTICS);
+                }
+            }
+        }
+
     }
 
     private final class ItemAdapter extends ArrayAdapter<PreferenceItem> {
@@ -275,6 +297,31 @@ public final class AeroActivity extends Activity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        //If we don't do this, the application will crash when resume via a notification.
+        setIntent(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle extras = getIntent().getExtras();
+
+        // Display the appmonitor upon resume;
+        if (extras != null) {
+            if (extras.getString("NOTIFY_STRING").equals("APPMONITOR")) {
+                selectItem(!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")) ? PROFILE : APPSTATISTICS);
+            }
+        }
+
+        // Reset the string;
+        getIntent().putExtra("NOTIFY_STRING", new String());
+
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
         // ActionBarDrawerToggle will take care of this.
@@ -319,7 +366,9 @@ public final class AeroActivity extends Activity {
     private void selectItem(int position) {
 
         int j = position;
-        mDrawerLayout.closeDrawers();
+
+        if(mDrawerLayout != null)
+            mDrawerLayout.closeDrawers();
 
         // update the main content by replacing fragments
         Fragment fragment = null;
@@ -385,6 +434,12 @@ public final class AeroActivity extends Activity {
                 }
                 fragment = mProfileFragment;
                 break;
+            case APPSTATISTICS:
+                if (mAppStatisticsFragment == null) {
+                    mAppStatisticsFragment = new AppMonitorFragment();
+                }
+                fragment = mAppStatisticsFragment;
+                break;
             case TESTSUITE:
                 if (mTestSuiteFragment == null) {
                     mTestSuiteFragment = new TestSuiteFragment();
@@ -398,15 +453,20 @@ public final class AeroActivity extends Activity {
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
+        mPreviousTitle = j;
         setTitle(mAeroTitle[j]);
         mBackCounter = 0;
 
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
+    public void setActionBarTitle(String title) {
+        setTitle(title);
+    }
+
     public final void setTitle(CharSequence title) {
         mTitle = title;
-        mPreviousTitle = mTitle;
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mActionBar.setTitle(mTitle);
         } else {
@@ -438,13 +498,14 @@ public final class AeroActivity extends Activity {
 
         if (mFragmentStack.size() > 1) {
             switchContent(mFragmentStack.lastElement());
-            setTitle(mPreviousTitle);
+            setTitle(mAeroTitle[mPreviousTitle]);
         }
 
         // Back-Button logic;
         mBackCounter++;
-        if (mBackCounter == 1)
+        if (mBackCounter == 1) {
             Toast.makeText(this, R.string.back_for_close, Toast.LENGTH_LONG).show();
+        }
         if (mBackCounter == 2)
             finish();
     }

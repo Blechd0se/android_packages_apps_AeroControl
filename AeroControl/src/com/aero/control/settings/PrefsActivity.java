@@ -51,7 +51,7 @@ public class PrefsActivity extends PreferenceActivity {
     public TextView mActionBarTitle;
     private ActionBar mActionBar;
     private int mCounter;
-    private CheckBoxPreference mPer_app_check, mRebootChecker;
+    private CheckBoxPreference mPer_app_check, mRebootChecker, mPerAppMonitor;
     private ListPreference mBootDelay;
 
     @Override
@@ -92,6 +92,8 @@ public class PrefsActivity extends PreferenceActivity {
             mPer_app_check = (CheckBoxPreference)root.findPreference("per_app_service");
         if(mBootDelay == null)
             mBootDelay = (ListPreference) root.findPreference("boot_delay");
+        if (mPerAppMonitor == null)
+            mPerAppMonitor = (CheckBoxPreference)root.findPreference("per_app_monitor");
 
         Preference resetTutorials = root.findPreference("reset_tutorials");
         Preference beta = root.findPreference("beta");
@@ -104,15 +106,20 @@ public class PrefsActivity extends PreferenceActivity {
         mRebootChecker.setIcon(R.drawable.ic_action_phone);
         setCheckedState(mRebootChecker);
         mPer_app_check.setIcon(R.drawable.ic_action_person);
+        mPerAppMonitor.setIcon(R.drawable.ic_action_appmonitor);
         mBootDelay.setIcon(R.drawable.timer);
         mBootDelay.setDialogIcon(R.drawable.timer);
         setMinutes(mBootDelay, mBootDelay.getValue());
         resetTutorials.setIcon(R.drawable.ic_action_warning);
         setCheckedState(mPer_app_check);
+        setCheckedState(mPerAppMonitor);
         version.setIcon(R.drawable.rocket);
         beta.setIcon(R.drawable.beta);
         google.setIcon(R.drawable.google);
         xda.setIcon(R.drawable.xda);
+
+        if (AeroActivity.mJobManager != null)
+            mPerAppMonitor.setChecked(AeroActivity.mJobManager.getJobManagerState());
 
         try {
             version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
@@ -190,9 +197,12 @@ public class PrefsActivity extends PreferenceActivity {
             @Override
             public boolean onPreferenceClick(Preference preference) {
 
-                setCheckedState((CheckBoxPreference)preference);
+                setCheckedState((CheckBoxPreference) preference);
 
                 if (mPer_app_check.isChecked()) {
+
+                    mPerAppMonitor.setEnabled(true);
+                    AeroActivity.mJobManager.enable();
 
                     // Only start if really down;
                     if (AeroActivity.perAppService == null)
@@ -205,7 +215,10 @@ public class PrefsActivity extends PreferenceActivity {
                     //** store preferences
                     preference.getEditor().commit();
                     return true;
-                } else  {
+                } else {
+
+                    mPerAppMonitor.setEnabled(false);
+                    AeroActivity.mJobManager.disable();
 
                     // Only stop if running;
                     if (AeroActivity.perAppService == null) {
@@ -218,6 +231,25 @@ public class PrefsActivity extends PreferenceActivity {
 
                     return false;
                 }
+            }
+        });
+
+        mPerAppMonitor.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                setCheckedState((CheckBoxPreference) preference);
+
+                if (((CheckBoxPreference) preference).isChecked()) {
+                    if (AeroActivity.mJobManager != null)
+                        AeroActivity.mJobManager.enable();
+                } else {
+                    if (AeroActivity.mJobManager != null)
+                        AeroActivity.mJobManager.disable();
+                }
+
+
+                return false;
             }
         });
 

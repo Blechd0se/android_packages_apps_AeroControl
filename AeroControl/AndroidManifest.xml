@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aero.control"
-    android:versionCode="24"
+    android:versionCode="25"
     android:versionName="2.1.2">
 
     <uses-sdk
@@ -31,6 +31,7 @@
 
         <activity
             android:name=".AeroActivity"
+            android:launchMode="singleTop"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +40,8 @@
 
         <activity
             android:name="com.aero.control.boot.RebootActivity"
-            android:theme="@style/RebootDialog" />
+            android:theme="@style/RebootDialog"
+            android:excludeFromRecents="true" />
 
         <activity
             android:name=".settings.PrefsActivity">

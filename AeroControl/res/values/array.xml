@@ -11,6 +11,7 @@
         <item>@string/slider_defy_parts</item>
         <item>@string/slider_backup_restore</item>
         <item>@string/slider_profile</item>
+        <item>@string/slider_app_monitor</item>
         <item>@string/slider_testsuite_settings</item>
     </string-array>
 
