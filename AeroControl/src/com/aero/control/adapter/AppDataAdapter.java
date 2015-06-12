@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.aero.control.R;
 import com.aero.control.helpers.PerApp.AppMonitor.model.AppElement;
+import com.aero.control.helpers.Util;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class AppDataAdapter extends ArrayAdapter<AppElement> {
     public static class Holder {
         ImageView image;
         TextView text;
+        TextView textTime;
     }
 
     @Override
@@ -61,7 +63,9 @@ public class AppDataAdapter extends ArrayAdapter<AppElement> {
             holder = new Holder();
             holder.image = (ImageView) row.findViewById(R.id.rowimage);
             holder.text = (TextView) row.findViewById((R.id.rowtext));
+            holder.textTime = (TextView) row.findViewById(R.id.rowtime);
             holder.text.setTypeface(font);
+            holder.textTime.setTypeface(font);
 
 
             row.setTag(holder);
@@ -74,6 +78,7 @@ public class AppDataAdapter extends ArrayAdapter<AppElement> {
         if (data != null) {
 
             holder.text.setText(overview.getRealName() + "\n" + overview.getName());
+            holder.textTime.setText(Util.convertMsToHours(overview.getUsage()));
             holder.image.setImageDrawable(overview.getImage());
             holder.image.setTag(position);
 

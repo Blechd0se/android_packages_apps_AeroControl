@@ -6,6 +6,7 @@ import com.aero.control.R;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Alexander Christ on 25.05.15.
@@ -32,6 +33,27 @@ public class Util {
         randomData.add(R.string.random_working_you_know);
 
         return context.getText(randomData.get(new Random().nextInt(randomData.size())));
+    }
+
+    /**
+     * Shows different output depending on the passed value.
+     * @param milliseconds long, Time in milliseconds.
+     * @return String
+     */
+    public static String convertMsToHours(long milliseconds) {
+        if (milliseconds >= 60000) {
+            // If we are just above one minute
+            return String.format("%d min",
+                    TimeUnit.MILLISECONDS.toMinutes(milliseconds));
+        } else if (milliseconds >= 3600000) {
+            // If we are above one hour;
+            return String.format("%dh",
+                    TimeUnit.MILLISECONDS.toHours(milliseconds));
+        } else {
+            // Fall through, should actually never appear
+            return String.format("%d secs",
+                    TimeUnit.MILLISECONDS.toSeconds(milliseconds));
+        }
     }
 
 }
