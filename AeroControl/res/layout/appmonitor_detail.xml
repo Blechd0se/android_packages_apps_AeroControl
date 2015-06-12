@@ -27,7 +27,6 @@
 
     <RelativeLayout
         android:id="@+id/wrapper"
-        android:layout_margin="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -41,7 +40,7 @@
             android:numColumns="auto_fit"
             android:gravity="center"
             android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
+            android:horizontalSpacing="2dp"
             android:stretchMode="spacingWidthUniform"
             android:layout_marginBottom="50dp"/>
     </RelativeLayout>
