@@ -1,7 +1,6 @@
 package com.aero.control.fragments;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -371,6 +370,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
         }
 
         txtView.setTypeface(FilePath.kitkatFont);
+        txtViewSummary.setTypeface(FilePath.kitkatFont);
         createListener(txtView, txtViewSummary);
 
 

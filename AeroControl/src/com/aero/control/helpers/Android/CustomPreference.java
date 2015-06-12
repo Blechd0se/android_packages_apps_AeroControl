@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.FilePath;
 
 import java.util.Map;
 
@@ -242,6 +243,8 @@ public class CustomPreference extends Preference implements OnCheckListener {
 
         mTitle.setText(super.getTitle());
         mSummary.setText(mSummaryPref);
+        mTitle.setTypeface(FilePath.kitkatFont);
+        mSummary.setTypeface(FilePath.kitkatFont);
 
         mCheckBox = (CheckBox) view.findViewById(R.id.checkbox_pref);
         mCheckBox.setOncheckListener(this);

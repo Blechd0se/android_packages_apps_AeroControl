@@ -4,7 +4,7 @@
 
     <PreferenceCategory android:title="@string/pref_updater">
 
-        <Preference
+        <com.aero.control.helpers.Android.CustomPreference
             android:key="backup_kernel"
             android:title="@string/pref_backup_kernel"
             android:summary="@string/pref_backup_kernel_sum" />
@@ -12,11 +12,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_restore">
-
-        <ListPreference
-            android:key="restore_kernel"
-            android:title="@string/pref_restore_kernel"
-            android:summary="@string/pref_restore_kernel_sum" />
 
     </PreferenceCategory>
 

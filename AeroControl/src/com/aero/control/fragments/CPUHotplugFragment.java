@@ -1,9 +1,7 @@
 package com.aero.control.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.widget.TextView;
@@ -13,12 +11,11 @@ import com.aero.control.R;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
 
-import java.io.File;
 
 /**
  * Created by Alexander Christ on 09.03.14.
  */
-public class CPUHotplugFragment extends PreferenceFragment {
+public class CPUHotplugFragment extends PlaceHolderFragment {
 
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;

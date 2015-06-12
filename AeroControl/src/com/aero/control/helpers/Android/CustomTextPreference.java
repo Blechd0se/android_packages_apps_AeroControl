@@ -10,6 +10,7 @@ import com.aero.control.helpers.Android.Material.CheckBox.OnCheckListener;
 import android.widget.TextView;
 
 import com.aero.control.R;
+import com.aero.control.helpers.FilePath;
 
 /**
  * Created by Alexander Christ on 30.09.13.
@@ -156,6 +157,8 @@ public class CustomTextPreference extends EditTextPreference implements OnCheckL
 
         mTitle.setText(mText);
         mSummary.setText(mSummaryPref);
+        mTitle.setTypeface(FilePath.kitkatFont);
+        mSummary.setTypeface(FilePath.kitkatFont);
 
         CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkbox_pref);
         checkbox.setOncheckListener(this);

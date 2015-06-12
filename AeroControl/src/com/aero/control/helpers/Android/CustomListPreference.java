@@ -11,6 +11,7 @@ import com.aero.control.helpers.Android.Material.CheckBox.OnCheckListener;
 import android.widget.TextView;
 
 import com.aero.control.R;
+import com.aero.control.helpers.FilePath;
 
 
 /**
@@ -44,6 +45,16 @@ public class CustomListPreference extends ListPreference implements OnCheckListe
 
     public void setContext(Context context) {
         this.mContext = context;
+    }
+
+    /**
+     * Sets the checkbox visible or invisible.
+     *
+     * @param checked Boolean. Decides whether the checkbox
+     *                should be visible or not.
+     */
+    public void setHideOnBoot (Boolean checked) {
+        this.mHideOnBoot = checked;
     }
 
     /**
@@ -136,6 +147,8 @@ public class CustomListPreference extends ListPreference implements OnCheckListe
 
         mTitle.setText(super.getTitle());
         mSummary.setText(mSummaryPref);
+        mTitle.setTypeface(FilePath.kitkatFont);
+        mSummary.setTypeface(FilePath.kitkatFont);
 
         mCheckBox = (CheckBox) view.findViewById(R.id.checkbox_pref);
         mCheckBox.setOncheckListener(this);

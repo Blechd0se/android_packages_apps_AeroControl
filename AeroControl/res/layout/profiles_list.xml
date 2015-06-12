@@ -5,16 +5,14 @@
     android:showDividers="middle"
     android:divider="?android:dividerVertical"
     android:dividerPadding="6dp"
+    android:layout_margin="3dp"
+    android:background="@drawable/card"
     android:gravity="left">
 
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dip"
-        android:layout_marginLeft="0dip"
-        android:layout_marginRight="0dip"
-        android:layout_marginTop="5dip"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:paddingBottom="6dip"
         android:paddingLeft="8dip"
@@ -35,7 +33,7 @@
             android:fadingEdge="horizontal"
             android:singleLine="true"
             android:textColor="#263238"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/profile_text_summary"
@@ -45,7 +43,7 @@
             android:layout_below="@android:id/title"
             android:maxLines="4"
             android:layout_marginTop="25dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="14sp"
             android:textColor="#263238" />
     </RelativeLayout>
 

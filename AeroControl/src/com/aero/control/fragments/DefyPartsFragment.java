@@ -3,7 +3,6 @@ package com.aero.control.fragments;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.text.InputType;
 import android.widget.Toast;
@@ -18,7 +17,7 @@ import com.aero.control.helpers.FilePath;
  * Created by Alexander Christ on 16.09.13.
  * This should replace the Defy Parts.
  */
-public class DefyPartsFragment extends PreferenceFragment {
+public class DefyPartsFragment extends PlaceHolderFragment {
     /*
     TODO: - Simplify it!
           - Add checks for different kernel settings

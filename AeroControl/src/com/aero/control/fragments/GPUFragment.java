@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.text.Editable;
@@ -33,7 +32,7 @@ import java.io.File;
 /**
  * Created by ac on 16.09.13.
  */
-public class GPUFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
+public class GPUFragment extends PlaceHolderFragment implements Preference.OnPreferenceChangeListener {
 
     private String[] mColorValues;
     private PreferenceCategory PrefCat;

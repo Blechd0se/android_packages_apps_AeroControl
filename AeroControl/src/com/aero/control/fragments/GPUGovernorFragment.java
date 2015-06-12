@@ -2,7 +2,6 @@ package com.aero.control.fragments;
 
 import android.os.Bundle;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import com.aero.control.helpers.PreferenceHandler;
 /**
  * Created by Alexander Christ on 09.03.14.
  */
-public class GPUGovernorFragment extends PreferenceFragment {
+public class GPUGovernorFragment extends PlaceHolderFragment {
 
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;

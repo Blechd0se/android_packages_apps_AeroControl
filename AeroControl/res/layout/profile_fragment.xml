@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         android:id="@+id/container"
         android:showDividers="middle"
-        android:divider="?android:dividerHorizontal"
         android:animateLayoutChanges="true"
         android:paddingLeft="0dp"
         android:paddingRight="0dp">

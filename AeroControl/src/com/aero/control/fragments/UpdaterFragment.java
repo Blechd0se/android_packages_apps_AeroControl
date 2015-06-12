@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +16,8 @@ import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.Android.CustomListPreference;
+import com.aero.control.helpers.Android.CustomPreference;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.updateHelper;
 
@@ -30,7 +31,7 @@ import java.util.Locale;
  * Created by Alexander Christ on 16.09.13.
  * Default Updater Fragment
  */
-public class UpdaterFragment extends PreferenceFragment {
+public class UpdaterFragment extends PlaceHolderFragment {
 
     private static final String SDPATH = Environment.getExternalStorageDirectory().getPath();
 
@@ -40,8 +41,8 @@ public class UpdaterFragment extends PreferenceFragment {
     private static final String AERO_PATH = "/sdcard/com.aero.control/backup";
 
     private static final updateHelper update = new updateHelper();
-    private Preference mBackupKernel;
-    private ListPreference mRestoreKernel;
+    private CustomPreference mBackupKernel;
+    private CustomListPreference mRestoreKernel;
     private String mBackup = null;
 
     private final static String NO_DATA_FOUND = "Unavailable";
@@ -53,10 +54,14 @@ public class UpdaterFragment extends PreferenceFragment {
         // We have to load the xml layout first;
         addPreferencesFromResource(R.layout.updater_fragment);
 
-        PreferenceScreen root = this.getPreferenceScreen();
-
-        mBackupKernel = root.findPreference("backup_kernel");
-        mRestoreKernel = (ListPreference) root.findPreference("restore_kernel");
+        mBackupKernel = (CustomPreference) findPreference("backup_kernel");
+        mBackupKernel.setHideOnBoot(true);
+        mRestoreKernel = new CustomListPreference(getActivity());
+        mRestoreKernel.setName("restore_kernel");
+        mRestoreKernel.setTitle(R.string.pref_restore_kernel);
+        mRestoreKernel.setDialogTitle(R.string.pref_restore_kernel);
+        mRestoreKernel.setHideOnBoot(true);
+        this.getPreferenceScreen().addPreference(mRestoreKernel);
 
         for (String s : FilePath.BACKUPPATH) {
             if (AeroActivity.genHelper.doesExist(s)) {

@@ -9,7 +9,6 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
@@ -30,7 +29,6 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ import java.util.Map;
 /**
  * Created by Alexander Christ on 03.04.14.
  */
-public class MiscSettingsFragment extends PreferenceFragment implements FileManagerListener {
+public class MiscSettingsFragment extends PlaceHolderFragment implements FileManagerListener {
 
     public static final String FILENAME_MISC = "firstrun_misc";
     private PreferenceScreen root;
@@ -119,7 +117,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
                 final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
                 final ArrayList<String> allMiscSettings = new ArrayList<String>();
                 final ArrayList<Boolean> miscSettingsDelete = new ArrayList<Boolean>();
-                for (int i = 0; i < mMiscCat.getPreferenceCount(); i++) {
+                for (int i = 0; i < mMiscCat.getPreferenceCount() - 1; i++) {
                     allMiscSettings.add(mMiscCat.getPreference(i).getTitle().toString());
                 }
                 if (allMiscSettings.size() == 0) {
@@ -245,6 +243,16 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
 
     public void OnFileClicked(File file) {
 
+        // Sanity-check; is this tunable already added?
+        for (int i = 0; i < mMiscCat.getPreferenceCount() - 1; i++) {
+            if (file.toString().contains(mMiscCat.getPreference(i).getTitle().toString())) {
+                Toast.makeText(mContext, "This tunable was already added!", Toast.LENGTH_LONG).show();
+                mFileDialog.dismiss();
+                return;
+            }
+
+        }
+
         mHandler.genPrefFromSingleFile(file.toString());
 
         String[] array = file.toString().split("/");
@@ -259,6 +267,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
 
         mMiscSettings.edit().putString(file.toString(), paraName).commit();
         root.addPreference(mMiscCat);
+        mHandler.addInvisiblePreference();
 
         mFileDialog.dismiss();
     }
@@ -285,6 +294,7 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
                 mHandler.genPrefFromSingleFile(key);
                 i++;
             }
+
         } else {
             root.addPreference(mMiscCat);
             if (mMiscCat.getPreferenceCount() != 0)
@@ -294,6 +304,8 @@ public class MiscSettingsFragment extends PreferenceFragment implements FileMana
         if (mHandler == null) {
             mHandler = new PreferenceHandler(mContext, mMiscCat, getPreferenceManager());
         }
+
+        mHandler.addInvisiblePreference();
 
         if (i == 0 && !forceAdd) {
             root.removePreference(mMiscCat);

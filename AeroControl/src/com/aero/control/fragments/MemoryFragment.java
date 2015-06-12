@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
@@ -34,7 +33,6 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -45,7 +43,7 @@ import java.util.ArrayList;
  * Created by Alexander Christ on 16.09.13.
  * Default Memory Fragment
  */
-public class MemoryFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
+public class MemoryFragment extends PlaceHolderFragment implements Preference.OnPreferenceChangeListener {
 
     private ShowcaseView mShowCase;
     private PreferenceCategory PrefCat;

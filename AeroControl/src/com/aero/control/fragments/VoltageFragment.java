@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.text.InputType;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by Alexander Christ on 03.05.14.
  */
-public class VoltageFragment extends PreferenceFragment {
+public class VoltageFragment extends PlaceHolderFragment {
 
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;

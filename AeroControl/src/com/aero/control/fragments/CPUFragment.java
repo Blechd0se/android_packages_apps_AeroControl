@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -33,7 +34,6 @@ import com.aero.control.helpers.PreferenceHandler;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ import java.util.HashSet;
  * Created by Alexander Christ on 03.10.13.
  *
  */
-public class CPUFragment extends PreferenceFragment {
+public class CPUFragment extends PlaceHolderFragment {
 
     private static final String FILENAME = "firstrun_cpu";
 

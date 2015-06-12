@@ -168,7 +168,7 @@ public class AppMonitorDetailFragment extends Fragment {
         }
 
         if (data != null) {
-            setTitle(data.getRealName() + " Stats");
+            setTitle(data.getRealName());
             mAppName = data.getName();
         }
 
