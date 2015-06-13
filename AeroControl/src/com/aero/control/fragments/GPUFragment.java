@@ -180,7 +180,6 @@ public class GPUFragment extends PlaceHolderFragment implements Preference.OnPre
                                     .replace(R.id.content_frame, mGPUGovernorFragment)
                                     .addToBackStack("GPU Governor")
                                     .commit();
-                            mGPUGovernorFragment.setTitle();
                         }
                     },AeroActivity.genHelper.getDefaultDelay());
                     return true;

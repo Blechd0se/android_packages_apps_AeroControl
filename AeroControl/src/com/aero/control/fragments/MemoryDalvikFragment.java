@@ -18,7 +18,6 @@ public class MemoryDalvikFragment extends PlaceHolderFragment {
 
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;
-    private TextView mActionBarTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,16 +25,10 @@ public class MemoryDalvikFragment extends PlaceHolderFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
-        mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
-        setTitle();
+        setTitle(getActivity().getText(R.string.pref_dalvik_setttings).toString());
 
         // Load our custom preferences;
         loadDalvik();
-    }
-
-    public final void setTitle() {
-        if (mActionBarTitle != null)
-            mActionBarTitle.setText(R.string.pref_dalvik_setttings);
     }
 
     public void loadDalvik() {

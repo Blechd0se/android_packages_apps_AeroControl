@@ -19,7 +19,6 @@ public class GPUGovernorFragment extends PlaceHolderFragment {
 
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;
-    private TextView mActionBarTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,16 +26,10 @@ public class GPUGovernorFragment extends PlaceHolderFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
-        mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
-        setTitle();
+        setTitle(getActivity().getText(R.string.perf_gpu_gov).toString());
 
         // Load our custom preferences;
         loadGPUGov();
-    }
-
-    public final void setTitle() {
-        if (mActionBarTitle != null)
-            mActionBarTitle.setText(R.string.perf_gpu_gov);
     }
 
     public void loadGPUGov() {

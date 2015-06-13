@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.aero.control.AeroActivity;
+
 /**
  * Created by Alexander Christ on 12.06.15.
  * Allows the hold various generic stuff for all fragments.
@@ -27,5 +29,14 @@ public class PlaceHolderFragment extends PreferenceFragment {
         }
         return v;
     }
+
+    /**
+     * Sets the title of the action bar
+     * @param title String
+     */
+    public final void setTitle(String title) {
+        ((AeroActivity)getActivity()).setActionBarTitle(title);
+    }
+
 
 }

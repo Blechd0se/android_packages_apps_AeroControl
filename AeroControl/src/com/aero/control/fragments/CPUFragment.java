@@ -127,7 +127,6 @@ public class CPUFragment extends PlaceHolderFragment {
                                     .replace(R.id.content_frame, mHotplugFragment)
                                     .addToBackStack("Hotplug")
                                     .commit();
-                            mHotplugFragment.setTitle();
                         }
                     },AeroActivity.genHelper.getDefaultDelay());
                     return true;
@@ -157,7 +156,6 @@ public class CPUFragment extends PlaceHolderFragment {
                                     .replace(R.id.content_frame, mVoltageFragment)
                                     .addToBackStack("Voltage")
                                     .commit();
-                            mVoltageFragment.setTitle();
                         }
                     },AeroActivity.genHelper.getDefaultDelay());
                     return true;

@@ -377,7 +377,6 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
                             .replace(R.id.content_frame, mMemoryDalvikFragment)
                             .addToBackStack("Memory")
                             .commit();
-                    mMemoryDalvikFragment.setTitle();
                 }
             },AeroActivity.genHelper.getDefaultDelay());
         }

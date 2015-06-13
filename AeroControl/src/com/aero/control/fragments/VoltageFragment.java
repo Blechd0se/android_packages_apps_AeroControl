@@ -29,7 +29,6 @@ public class VoltageFragment extends PlaceHolderFragment {
     private PreferenceCategory PrefCat;
     private final ArrayList<String> voltList = new ArrayList<String>();
     private SharedPreferences mPrefs;
-    private TextView mActionBarTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,16 +37,10 @@ public class VoltageFragment extends PlaceHolderFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.layout.empty_preference);
         root = this.getPreferenceScreen();
-        mActionBarTitle = (TextView) getActivity().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
-        setTitle();
+        setTitle(getActivity().getText(R.string.perf_voltage_control).toString());
 
         // Load our custom preferences;
         loadVoltage();
-    }
-
-    public final void setTitle() {
-        if (mActionBarTitle != null)
-            mActionBarTitle.setText(R.string.perf_voltage_control);
     }
 
     // Create our options menu;
