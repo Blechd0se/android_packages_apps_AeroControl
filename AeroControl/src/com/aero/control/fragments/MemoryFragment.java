@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
@@ -32,10 +30,7 @@ import com.aero.control.helpers.Util;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -50,9 +45,7 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
     private PreferenceScreen root;
 
     private boolean showDialog = true;
-    private String mLowMemState;
 
-    private CheckBoxPreference mZCache, mLowMemoryPref;
     private CustomPreference mDynFSync, mWriteBackControl, mFsync, mKSMSettings;
     private CustomPreference mFSTrimToggle, mDalvikSettings;
     private CustomListPreference mIOScheduler, mReadAHead;
@@ -61,8 +54,6 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
 
     private static final String MEMORY_SETTINGS_CATEGORY = "memory_settings";
     private static final String IO_SETTINGS_CATEGORY = "io_scheduler_parameter";
-
-    private final static String NO_DATA_FOUND = "Unavailable";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -142,18 +133,6 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
                 memorySettingsCategory.removePreference(mKSMSettings);
         }
 
-        mZCache = (CheckBoxPreference) findPreference("zcache");
-        mZCache.setOrder(5);
-        if (NO_DATA_FOUND.equals(AeroActivity.shell.getInfo(FilePath.CMDLINE_ZACHE))) {
-            if (memorySettingsCategory != null)
-                memorySettingsCategory.removePreference(mZCache);
-        } else {
-            final String fileCMD = AeroActivity.shell.getInfo(FilePath.CMDLINE_ZACHE);
-            final boolean zcacheEnabled = fileCMD.length() != 0 && fileCMD.contains("zcache");
-            mZCache.setChecked(zcacheEnabled);
-        }
-        mZCache.getEditor().remove(mZCache.getKey()).commit();
-
         mWriteBackControl = new CustomPreference(getActivity());
         mWriteBackControl.setName("writeback");
         mWriteBackControl.setTitle(R.string.pref_dynamic_writeback);
@@ -190,19 +169,12 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
         mReadAHead.setOnPreferenceChangeListener(this);
         memorySettingsCategory.addPreference(mReadAHead);
 
-        mLowMemoryPref = (CheckBoxPreference) findPreference("low_mem");
-        mLowMemoryPref.setOrder(10);
-        mLowMemoryPref.setChecked(isLowMem());
         mFSTrimToggle = (CustomPreference)findPreference("fstrim_toggle");
         mFSTrimToggle.setOrder(25);
         mFSTrimToggle.setHideOnBoot(true);
         mDalvikSettings = (CustomPreference)findPreference("dalvik_settings");
         mDalvikSettings.setOrder(30);
         mDalvikSettings.setHideOnBoot(true);
-
-        if (!(Build.MODEL.equals("MB525") || Build.MODEL.equals("MB526")))
-            memorySettingsCategory.removePreference(mLowMemoryPref);
-        mLowMemoryPref.getEditor().remove(mLowMemoryPref.getKey()).commit();
 
         mIOScheduler = new CustomListPreference(getActivity());
         mIOScheduler.setName("io_scheduler_list");
@@ -313,9 +285,7 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
 
         CustomPreference cusPref = null;
 
-        if (preference == mLowMemoryPref) {
-            lowMemoryPrefClick();
-        } else if (preference == mDynFSync) {
+        if (preference == mDynFSync) {
 
             mDynFSync.setClicked(!mDynFSync.isClicked());
 
@@ -348,8 +318,6 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
 
             cusPref = (CustomPreference) preference;
 
-        } else if (preference == mZCache) {
-            zCacheClick();
         } else if (preference == mWriteBackControl) {
 
             mWriteBackControl.setClicked(!mWriteBackControl.isClicked());
@@ -415,87 +383,6 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
         return true;
     }
 
-    private Boolean isLowMem() {
-
-        mLowMemState = null;
-        BufferedReader br = null;
-
-        try {
-            br = new BufferedReader(new FileReader(FilePath.LOW_MEM));
-        } catch (FileNotFoundException e) {}
-
-        if (br == null)
-            return false;
-
-        try {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-            while (line != null) {
-                sb.append(line);
-                sb.append('\n');
-                line = br.readLine();
-            }
-            mLowMemState = sb.toString();
-        } catch (IOException ignored) {}
-
-        // The main part, if we get false in the other parts, we are probably not on a Defy
-        if (mLowMemState != null) {
-            if (mLowMemState.contains("ro.config.low_ram=true"))
-                return true;
-
-            if (mLowMemState.contains("ro.config.low_ram=false"))
-                return false;
-        } else {
-            return false;
-        }
-        return false;
-    }
-
-    private void zCacheClick() {
-        String getState = AeroActivity.shell.getInfo(FilePath.CMDLINE_ZACHE);
-        boolean value = mZCache.isChecked();
-        AeroActivity.shell.remountSystem();
-        if (value) {
-            // If already on, we can bail out;
-            if (getState.contains("zcache"))
-                return;
-
-            getState = getState + " zcache";
-        } else {
-            // bail out again, because its already how we want it;
-            if (!getState.contains("zcache"))
-                return;
-
-            getState = getState.replace(" zcache", "");
-        }
-        // Set current State to path;
-        AeroActivity.shell.setRootInfo(getState, FilePath.CMDLINE_ZACHE);
-        Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
-    }
-
-    private void lowMemoryPrefClick() {
-        boolean value = mLowMemoryPref.isChecked();
-        AeroActivity.shell.remountSystem();
-
-        if (value) {
-            // If already on, we can bail out;
-            if (isLowMem())
-                return;
-
-            mLowMemState = mLowMemState.replace("ro.config.low_ram=false", "ro.config.low_ram=true");
-        } else {
-            // bail out again, because its already how we want it;
-            if (!isLowMem())
-                return;
-
-            mLowMemState = mLowMemState.replace("ro.config.low_ram=true", "ro.config.low_ram=false");
-        }
-
-        // Set current State to path;
-        AeroActivity.shell.setRootInfo(mLowMemState, FilePath.LOW_MEM);
-        Toast.makeText(getActivity(), R.string.need_reboot, Toast.LENGTH_LONG).show();
-    }
-
     private void fsTrimToggleClick() {
 
         // If the library doesn't exist, skip through;
@@ -523,8 +410,6 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
                     fs.add(a.toString());
                     count++;
                 }
-            } else {
-                continue;
             }
         }
         final CharSequence[] fsystem = fs.toArray(new CharSequence[0]);

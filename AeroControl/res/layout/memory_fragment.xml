@@ -6,18 +6,6 @@
         android:title="@string/pref_memory_settings"
         android:key="memory_settings">
 
-        <CheckBoxPreference
-            android:key="zcache"
-            android:title="@string/pref_memory_zcache"
-            android:summary="@string/pref_memory_zcache_sum"
-            android:dialogTitle="@string/pref_memory_zcache" />
-
-        <CheckBoxPreference
-            android:key="low_mem"
-            android:title="@string/pref_low_mem_option"
-            android:summary="@string/pref_low_mem_option_sum"
-            android:dialogTitle="@string/pref_low_mem_option" />
-
         <com.aero.control.helpers.Android.CustomPreference
             android:key="fstrim_toggle"
             android:title="@string/pref_fstrim"

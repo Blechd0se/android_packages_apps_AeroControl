@@ -91,9 +91,9 @@ public class settingsHelper {
         if (Profile == null)
             prefs = PreferenceManager.getDefaultSharedPreferences(context);
         else
-            prefs = context.getSharedPreferences(Profile, context.MODE_PRIVATE);
+            prefs = context.getSharedPreferences(Profile, Context.MODE_PRIVATE);
 
-        mMiscSettings = context.getSharedPreferences(MISC_SETTINGS_STORAGE, context.MODE_PRIVATE);
+        mMiscSettings = context.getSharedPreferences(MISC_SETTINGS_STORAGE, Context.MODE_PRIVATE);
 
         if (onboot) {
             String timer_delay = prefs.getString(PREF_TIMER_DELAY, null);
@@ -101,8 +101,7 @@ public class settingsHelper {
                 int i = Integer.parseInt(timer_delay);
                 try {
                     Thread.sleep((i * 1000 * 60));
-                } catch (InterruptedException e) {
-                }
+                } catch (InterruptedException e) {}
             }
 
             Handler h = new Handler(context.getMainLooper());
