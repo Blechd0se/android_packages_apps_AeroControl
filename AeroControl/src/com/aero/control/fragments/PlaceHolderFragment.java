@@ -15,6 +15,8 @@ import com.aero.control.AeroActivity;
  */
 public class PlaceHolderFragment extends PreferenceFragment {
 
+    private String mTitle;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Tuneup the layout a bit;
@@ -36,7 +38,17 @@ public class PlaceHolderFragment extends PreferenceFragment {
      */
     public final void setTitle(String title) {
         ((AeroActivity)getActivity()).setActionBarTitle(title);
+        mTitle = title;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Re-set our title if resumed;
+        if (mTitle != null) {
+            setTitle(mTitle);
+        }
+    }
 
 }
