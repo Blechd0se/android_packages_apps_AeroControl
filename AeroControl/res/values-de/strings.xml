@@ -140,6 +140,9 @@
     <string name="pref_readahead">Readahead Größe</string>
     <string name="pref_readahead_dialog">Readahead Größe in KB</string>
 
+    <string name="pref_entropy_settings">Entropie</string>
+    <string name="pref_entropy_settings_sum">Ändere hier den Lese- und Schreibschwellwert für die Entropie.</string>
+
     <string name="pref_ksm">KSM</string>
     <string name="pref_ksm_sum">Enables or disabled the KSM deamon completely.</string>
 

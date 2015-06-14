@@ -56,4 +56,19 @@ public class Util {
         }
     }
 
+    /**
+     * Returns the last file from a given path.
+     * @param syspath The system path (e.g. /sys/path/to/file)
+     * @return String (for example "file")
+     */
+    public static String getLastSysValue(String syspath) {
+
+        if (syspath == null)
+            return null;
+
+        String[] values = syspath.split("/");
+
+        return values[values.length - 1];
+    }
+
 }

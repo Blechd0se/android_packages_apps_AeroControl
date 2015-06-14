@@ -7,6 +7,11 @@
         android:key="memory_settings">
 
         <com.aero.control.helpers.Android.CustomPreference
+            android:key="entropy_settings"
+            android:title="@string/pref_entropy_settings"
+            android:summary="@string/pref_entropy_settings_sum" />
+
+        <com.aero.control.helpers.Android.CustomPreference
             android:key="fstrim_toggle"
             android:title="@string/pref_fstrim"
             android:summary="@string/pref_fstrim_sum" />

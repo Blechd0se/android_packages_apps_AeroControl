@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ import com.github.amlcurran.showcaseview.targets.Target;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Created by Alexander Christ on 16.09.13.
@@ -47,7 +50,7 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
     private boolean showDialog = true;
 
     private CustomPreference mDynFSync, mWriteBackControl, mFsync, mKSMSettings;
-    private CustomPreference mFSTrimToggle, mDalvikSettings;
+    private CustomPreference mFSTrimToggle, mDalvikSettings, mRandomSettings;
     private CustomListPreference mIOScheduler, mReadAHead;
     private String mFileSystem;
     private MemoryDalvikFragment mMemoryDalvikFragment;
@@ -168,6 +171,9 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
         mReadAHead.setSummary(AeroActivity.shell.getInfo(FilePath.READAHEAD_PARAMETER));
         mReadAHead.setOnPreferenceChangeListener(this);
         memorySettingsCategory.addPreference(mReadAHead);
+
+        mRandomSettings = (CustomPreference)findPreference("entropy_settings");
+        mRandomSettings.setOrder(22);
 
         mFSTrimToggle = (CustomPreference)findPreference("fstrim_toggle");
         mFSTrimToggle.setOrder(25);
@@ -347,6 +353,8 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
                             .commit();
                 }
             },AeroActivity.genHelper.getDefaultDelay());
+        } else if (preference == mRandomSettings) {
+            onRandomClick();
         }
 
         // If its checked, we want to save it;
@@ -381,6 +389,58 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
             return false;
         }
         return true;
+    }
+
+    private void onRandomClick() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        // Inflate our layout and build up the UI;
+        View layout = inflater.inflate(R.layout.memory_random, null);
+
+        TextView txtRandomRead = (TextView) layout.findViewById(R.id.random_read);
+        TextView txtRandomWrite = (TextView) layout.findViewById(R.id.random_write);
+
+        final EditText editRandomRead = (EditText) layout.findViewById(R.id.random_read_value);
+        final EditText editRandomWrite = (EditText) layout.findViewById(R.id.random_write_value);
+
+        txtRandomRead.setText(Util.getLastSysValue(FilePath.RANDOM_READ_WAKEUP));
+        txtRandomWrite.setText(Util.getLastSysValue(FilePath.RANDOM_WRITE_WAKEUP));
+
+        editRandomRead.setText(AeroActivity.shell.getFastInfo(FilePath.RANDOM_READ_WAKEUP));
+        editRandomWrite.setText(AeroActivity.shell.getFastInfo(FilePath.RANDOM_WRITE_WAKEUP));
+
+        builder.setIcon(R.drawable.puzzle);
+        builder.setTitle(R.string.pref_entropy_settings);
+        builder.setView(layout);
+        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Build up our commands;
+                String[] cmds = {
+                  "echo " + editRandomRead.getText() + " > " + FilePath.RANDOM_READ_WAKEUP,
+                  "echo " + editRandomWrite.getText() + " > " + FilePath.RANDOM_WRITE_WAKEUP,
+                };
+
+                AeroActivity.shell.setRootInfo(cmds);
+
+                if (mRandomSettings.isChecked()) {
+                    SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+                    // We still want to write it here, since we can disable it later;
+                    preference.edit().putStringSet(mRandomSettings.getKey(), new HashSet<String>(Arrays.asList(cmds))).commit();
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing
+            }
+        });
+        builder.show();
+
     }
 
     private void fsTrimToggleClick() {

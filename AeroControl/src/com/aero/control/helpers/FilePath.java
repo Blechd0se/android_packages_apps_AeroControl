@@ -83,6 +83,8 @@ public final class FilePath {
     public static final String GOV_IO_PARAMETER = "/sys/block/mmcblk0/queue/iosched";
     public static final String READAHEAD_PARAMETER = "/sys/block/mmcblk0/queue/read_ahead_kb";
     public static final String KSM_SETTINGS = "/sys/kernel/mm/ksm/run";
+    public static final String RANDOM_READ_WAKEUP = "/proc/sys/kernel/random/read_wakeup_threshold";
+    public static final String RANDOM_WRITE_WAKEUP = "/proc/sys/kernel/random/write_wakeup_threshold";
 
     /* Used by; MiscSettingsFragment */
     public static final String MISC_VIBRATOR_CONTROL = "/sys/devices/virtual/timed_output/vibrator";

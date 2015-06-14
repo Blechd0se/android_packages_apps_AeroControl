@@ -154,6 +154,9 @@
     <string name="pref_readahead">Readahead size</string>
     <string name="pref_readahead_dialog">Readahead size in kb</string>
 
+    <string name="pref_entropy_settings">Entropy</string>
+    <string name="pref_entropy_settings_sum">Change the read and write threshold for the entropy pool.</string>
+
     <string name="pref_ksm">KSM</string>
     <string name="pref_ksm_sum">Enables or disabled the KSM deamon completely.</string>
 

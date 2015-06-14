@@ -17,26 +17,27 @@ import java.util.Map;
  * Created by Alexander Christ on 05.01.14.
  */
 public class settingsHelper {
-    public static final String PREF_CURRENT_GOV_AVAILABLE = "set_governor";
-    public static final String PREF_CPU_MAX_FREQ = "max_frequency";
-    public static final String PREF_CPU_MIN_FREQ = "min_frequency";
-    public static final String PREF_CPU_COMMANDS = "cpu_commands";
+    private static final String PREF_CURRENT_GOV_AVAILABLE = "set_governor";
+    private static final String PREF_CPU_MAX_FREQ = "max_frequency";
+    private static final String PREF_CPU_MIN_FREQ = "min_frequency";
+    private static final String PREF_CPU_COMMANDS = "cpu_commands";
 
-    public static final String PREF_CURRENT_GPU_GOV_AVAILABLE = "set_gpu_governor";
-    public static final String PREF_GPU_FREQ_MAX = "gpu_max_freq";
-    public static final String PREF_GPU_CONTROL_ACTIVE = "gpu_control_enable";
-    public static final String PREF_DISPLAY_COLOR = "display_control";
-    public static final String PREF_SWEEP2WAKE = "sweeptowake";
-    public static final String PREF_DOUBLETAP2WAKE = "doubletaptowake";
+    private static final String PREF_CURRENT_GPU_GOV_AVAILABLE = "set_gpu_governor";
+    private static final String PREF_GPU_FREQ_MAX = "gpu_max_freq";
+    private static final String PREF_GPU_CONTROL_ACTIVE = "gpu_control_enable";
+    private static final String PREF_DISPLAY_COLOR = "display_control";
+    private static final String PREF_SWEEP2WAKE = "sweeptowake";
+    private static final String PREF_DOUBLETAP2WAKE = "doubletaptowake";
 
-    public static final String PREF_GOV_IO_FILE = "io_scheduler_list";
-    public static final String PREF_DYANMIC_FSYNC = "dynFsync";
-    public static final String PREF_FSYNC = "fsync";
-    public static final String PREF_KSM = "ksm";
-    public static final String PREF_READAHEAD = "read_ahead";
-    public static final String PREF_WRITEBACK = "writeback";
-    public static final String PREF_TCP_CONGESTION = "tcp_congestion";
-    public static final String PREF_TIMER_DELAY = "boot_delay";
+    private static final String PREF_GOV_IO_FILE = "io_scheduler_list";
+    private static final String PREF_DYANMIC_FSYNC = "dynFsync";
+    private static final String PREF_FSYNC = "fsync";
+    private static final String PREF_KSM = "ksm";
+    private static final String PREF_READAHEAD = "read_ahead";
+    private static final String PREF_ENTROPY_SETTINGS = "entropy_settings";
+    private static final String PREF_WRITEBACK = "writeback";
+    private static final String PREF_TCP_CONGESTION = "tcp_congestion";
+    private static final String PREF_TIMER_DELAY = "boot_delay";
     private static final String MISC_SETTINGS_STORAGE = "miscSettingsStorage";
 
     private SharedPreferences prefs;
@@ -44,7 +45,7 @@ public class settingsHelper {
     private String gpu_file;
     private String mHotplugPath;
     private String mGPUGov;
-    public static final int mNumCpus = Runtime.getRuntime().availableProcessors();
+    private static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
     private static final shellHelper shell = new shellHelper();
     private static final shellHelper shellPara = new shellHelper();
@@ -142,6 +143,28 @@ public class settingsHelper {
                 }
             }
         }
+
+        // Entropy settings...
+        try {
+            HashSet<String> hashent_cmd = (HashSet<String>) prefs.getStringSet(PREF_ENTROPY_SETTINGS, null);
+            if (hashent_cmd != null) {
+                for (String cmd : hashent_cmd) {
+                    shell.queueWork(cmd);
+                }
+            }
+        } catch (ClassCastException e) {
+            // HashSet didn't work, so we make a fallback;
+            String ent_cmd = prefs.getString(PREF_ENTROPY_SETTINGS, null);
+
+            if (ent_cmd != null) {
+                // Since we can't cast to hashmap, little workaround;
+                String[] array = ent_cmd.substring(1, ent_cmd.length() - 1).split(",");
+                for (String cmd : array) {
+                    shell.queueWork(cmd);
+                }
+            }
+        }
+
         String voltage = prefs.getString("voltage_values", null);
 
         if (voltage != null)
