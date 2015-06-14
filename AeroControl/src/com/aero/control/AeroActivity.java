@@ -468,9 +468,11 @@ public final class AeroActivity extends Activity {
         mTitle = title;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mActionBar.setTitle(mTitle);
+            if (mActionBar != null)
+                mActionBar.setTitle(mTitle);
         } else {
-            mActionBarTitle.setText(mTitle);
+            if (mActionBarTitle != null)
+                mActionBarTitle.setText(mTitle);
         }
     }
 
