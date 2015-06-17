@@ -91,9 +91,10 @@ public class TutorialFragment extends Fragment {
                         fos.write("1".getBytes());
                     }
                     fos.close();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     Log.e("Aero", "Could not save file(s). ", e);
+                } catch (NullPointerException e) {
+                    Log.e("Aero", "OpenFileOutput probably was initialized on a null-object.", e);
                 }
 
                 Intent i = new Intent(getActivity(), AeroActivity.class);
