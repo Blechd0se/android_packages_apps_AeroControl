@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.ViewConfiguration;
-import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.helpers.Android.CustomTextPreference;
@@ -23,10 +22,12 @@ public class PreferenceHandler {
     public Context mContext;
     public PreferenceCategory mPrefCat;
     public PreferenceManager mPrefMan;
+    private boolean mInvisibleAdded = false;
 
     private SharedPreferences mPreferences;
 
     private final static String NO_DATA_FOUND = "Unavailable";
+    private final static String PREF_BLANKED = "BLANKED";
 
     /*
      * Default constructor to set our objects
@@ -35,6 +36,40 @@ public class PreferenceHandler {
         this.mContext = context;
         this.mPrefCat = PrefCat;
         this.mPrefMan = PrefMan;
+    }
+
+    /**
+     * Removes the added invisible preference
+     */
+    public final void removeInvisiblePreference() {
+        if (mInvisibleAdded) {
+            for (int i = 0; i < mPrefCat.getPreferenceCount(); i++) {
+                if (mPrefCat.getPreference(i).getKey().equals(PREF_BLANKED)) {
+                    mPrefCat.removePreference(mPrefCat.getPreference(i));
+                    mInvisibleAdded = false;
+                }
+            }
+        }
+    }
+
+    /**
+     * Adds an invisible preference to the category for layout purposes.
+     */
+    public final void addInvisiblePreference() {
+
+        // bail out if null or if already added
+        if (mPrefCat == null || mContext == null || mInvisibleAdded)
+            return;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
+                !(ViewConfiguration.get(mContext).hasPermanentMenuKey())) {
+                /* For better KitKat+ looks; */
+            Preference blankedPref = new Preference(mContext);
+            blankedPref.setSelectable(false);
+            blankedPref.setKey(PREF_BLANKED);
+            mPrefCat.addPreference(blankedPref);
+            mInvisibleAdded = true;
+        }
     }
 
     /**
@@ -53,15 +88,8 @@ public class PreferenceHandler {
         for (String b : array) {
             generateSettings(b, path, false);
             i++;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
-                    !(ViewConfiguration.get(mContext).hasPermanentMenuKey())) {
-                /* For better KitKat+ looks; */
-                if (i == counter) {
-                    Preference blankedPref = new Preference(mContext);
-                    blankedPref.setSelectable(false);
-                    mPrefCat.addPreference(blankedPref);
-                }
-            }
+            if (i == counter)
+                addInvisiblePreference();
         }
     }
 
@@ -88,16 +116,8 @@ public class PreferenceHandler {
                 generateSettings(nameArray[j], paraArray[j], false);
             
             i++;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT &&
-                    !(ViewConfiguration.get(mContext).hasPermanentMenuKey())
-                    && showEmpty) {
-                /* For better KitKat+ looks; */
-                if (i == counter) {
-                    Preference blankedPref = new Preference(mContext);
-                    blankedPref.setSelectable(false);
-                    mPrefCat.addPreference(blankedPref);
-                }
-            }
+            if (i == counter && showEmpty)
+                addInvisiblePreference();
         }
     }
 
@@ -109,6 +129,8 @@ public class PreferenceHandler {
      * @return nothing
      */
     public final void genPrefFromSingleFile(String path) {
+
+        removeInvisiblePreference();
 
         String[] array = path.split("/");
         String paraName = "";

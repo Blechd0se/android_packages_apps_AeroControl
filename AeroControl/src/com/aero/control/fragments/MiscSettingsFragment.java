@@ -24,6 +24,7 @@ import com.aero.control.helpers.Android.CustomListPreference;
 import com.aero.control.helpers.FileManager.FileManagerListener;
 import com.aero.control.helpers.FileManager.FileManager;
 import com.aero.control.helpers.FilePath;
+import com.aero.control.helpers.PerApp.AppMonitor.AppLogger;
 import com.aero.control.helpers.PreferenceHandler;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
@@ -117,7 +118,7 @@ public class MiscSettingsFragment extends PlaceHolderFragment implements FileMan
                 final AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
                 final ArrayList<String> allMiscSettings = new ArrayList<String>();
                 final ArrayList<Boolean> miscSettingsDelete = new ArrayList<Boolean>();
-                for (int i = 0; i < mMiscCat.getPreferenceCount() - 1; i++) {
+                for (int i = 0; i < mMiscCat.getPreferenceCount(); i++) {
                     allMiscSettings.add(mMiscCat.getPreference(i).getTitle().toString());
                 }
                 if (allMiscSettings.size() == 0) {
@@ -244,7 +245,7 @@ public class MiscSettingsFragment extends PlaceHolderFragment implements FileMan
     public void OnFileClicked(File file) {
 
         // Sanity-check; is this tunable already added?
-        for (int i = 0; i < mMiscCat.getPreferenceCount() - 1; i++) {
+        for (int i = 0; i < mMiscCat.getPreferenceCount(); i++) {
             if (file.toString().contains(mMiscCat.getPreference(i).getTitle().toString())) {
                 Toast.makeText(mContext, "This tunable was already added!", Toast.LENGTH_LONG).show();
                 mFileDialog.dismiss();
@@ -267,7 +268,6 @@ public class MiscSettingsFragment extends PlaceHolderFragment implements FileMan
 
         mMiscSettings.edit().putString(file.toString(), paraName).commit();
         root.addPreference(mMiscCat);
-        mHandler.addInvisiblePreference();
 
         mFileDialog.dismiss();
     }
@@ -279,7 +279,6 @@ public class MiscSettingsFragment extends PlaceHolderFragment implements FileMan
 
         final Map<String,?> keys = mMiscSettings.getAll();
         int i = 0;
-        boolean forceAdd = false;
 
         if (mMiscCat == null) {
             mMiscCat = new PreferenceCategory(mContext);
@@ -297,17 +296,14 @@ public class MiscSettingsFragment extends PlaceHolderFragment implements FileMan
 
         } else {
             root.addPreference(mMiscCat);
-            if (mMiscCat.getPreferenceCount() != 0)
-                forceAdd = true;
         }
 
         if (mHandler == null) {
             mHandler = new PreferenceHandler(mContext, mMiscCat, getPreferenceManager());
         }
 
-        mHandler.addInvisiblePreference();
-
-        if (i == 0 && !forceAdd) {
+        // Remove the category if nothing is left;
+        if (mMiscCat.getPreferenceCount() == 0) {
             root.removePreference(mMiscCat);
         }
 
