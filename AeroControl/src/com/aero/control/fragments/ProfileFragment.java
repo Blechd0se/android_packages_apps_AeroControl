@@ -912,14 +912,6 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
     public void DrawFirstStart(int header, int content, String filename, final Integer id) {
 
-        try {
-            FileOutputStream fos = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
-            fos.write("1".getBytes());
-            fos.close();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Could not save file. ", e);
-        }
-
         Target homeTarget = new Target() {
             @Override
             public Point getPoint() {
@@ -930,7 +922,12 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
             @Override
             public Point getPoint() {
                 // Get approximate position of home icon's center
-                int actionBarSize = getActivity().findViewById(id).getHeight();
+                int actionBarSize = 96;
+                try {
+                    actionBarSize = getActivity().findViewById(id).getHeight();
+                } catch (NullPointerException e) {
+                    // In case we get a null pointer, just continue with default value
+                }
                 int x = getResources().getDisplayMetrics().widthPixels - actionBarSize / 2;
                 int y = actionBarSize / 2;
                 return new Point(x, y);
@@ -950,6 +947,14 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                     .setContentText(content)
                     .setTarget(actionIcon)
                     .build();
+        }
+
+        try {
+            FileOutputStream fos = mContext.openFileOutput(filename, Context.MODE_PRIVATE);
+            fos.write("1".getBytes());
+            fos.close();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Could not save file. ", e);
         }
     }
 
