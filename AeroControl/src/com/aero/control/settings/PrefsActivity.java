@@ -125,7 +125,7 @@ public class PrefsActivity extends PreferenceActivity {
             mPerAppMonitor.setEnabled(false);
 
         try {
-            version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+            version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " Beta 1");
             version.setSummary("Build: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
         } catch (PackageManager.NameNotFoundException e) {}
 
@@ -405,6 +405,9 @@ public class PrefsActivity extends PreferenceActivity {
                 preference.setSummary(value + " " + getText(R.string.minutes));
 
             preference.setValue(value);
+        } else {
+            preference.setSummary(R.string.disabled);
+            preference.setValue("" + 0);
         }
     }
 
