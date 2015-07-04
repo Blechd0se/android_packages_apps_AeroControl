@@ -33,8 +33,8 @@
     <string name="disabled">Deaktiviert</string>
     <string name="folder_empty">Ordner ist leer</string>
     <string name="no_data_found">Ich konnte keine Daten finden :(</string>
-    <string name="setonboot_settings"> wende Einstellungen an.</string>
-    <string name="finishing_settings"> Einstellung angwandt.</string>
+    <string name="setonboot_settings"> Wende Einstellungen an.</string>
+    <string name="finishing_settings"> Einstellung angewandt.</string>
     <string name="minutes">Minuten</string>
     <string name="minute">Minute</string>
     <string name="dont_show_again">Nicht mehr anzeigen</string>
@@ -213,7 +213,7 @@
 
     <!-- Updater Fragment -->
     <string name="pref_updater">Kernel Updater und Backup</string>
-    <string name="pref_backup_kernel">Backup vom Kernel</string>
+    <string name="pref_backup_kernel">Backup des Kernels</string>
     <string name="pref_backup_kernel_sum">Das macht eine Kopie deines momentanen Kernel.</string>
 
     <string name="pref_updater_kernel">Update Kernel</string>
@@ -286,7 +286,7 @@
 
     <!-- Misc Settings -->
     <string name="pref_misc_settings">Misc Einstellungen</string>
-    <string name="pref_misc_tcp_congestion">TCP Verdichtungsalogrithmus</string>
+    <string name="pref_misc_tcp_congestion">TCP Verdichtungsalgorithmus</string>
     <string name="pref_misc_delete_misc">Lösche deine Einstellungen</string>
     <string name="pref_misc_your_settings">Deine Einstellungen</string>
     <string name="pref_misc_no_settings">Du hast noch keine Einstellungen hinzugefügt!</string>
@@ -311,7 +311,7 @@
 
     <!-- AppMonitor Fragment -->
     <string name="pref_no_appmonitor_data">Es sind noch keine Daten verfügbar, schaue später nochmal vorbei.</string>
-    <string name="pref_appmonitor_disabled">AppMonitor ist deaktiviert. Aktiviere ihn in den Einstellungen um Daten zu sehen.</string>
+    <string name="pref_appmonitor_disabled">AppMonitor ist deaktiviert. Aktiviere ihn in den Einstellungen, um Daten zu sehen.</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Klick mich und bewerte diese App!</string>
