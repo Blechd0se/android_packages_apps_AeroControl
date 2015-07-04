@@ -206,6 +206,7 @@ public class PrefsActivity extends PreferenceActivity {
 
                     mPerAppMonitor.setEnabled(true);
                     AeroActivity.mJobManager.enable();
+                    setCheckedState(mPerAppMonitor);
 
                     // Only start if really down;
                     if (AeroActivity.perAppService == null)
@@ -222,6 +223,7 @@ public class PrefsActivity extends PreferenceActivity {
 
                     mPerAppMonitor.setEnabled(false);
                     AeroActivity.mJobManager.disable();
+                    setCheckedState(mPerAppMonitor);
 
                     // Only stop if running;
                     if (AeroActivity.perAppService == null) {
