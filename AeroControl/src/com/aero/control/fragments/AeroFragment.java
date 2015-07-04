@@ -195,8 +195,14 @@ public class AeroFragment extends Fragment {
 
             String tmp = AeroActivity.shell.getInfo(complete_path);
             if (!tmp.equals(NO_DATA_FOUND)) {
-                if (Integer.parseInt(tmp) < 10) {
-                    tmp = " " + tmp;
+                try {
+                    if (Integer.parseInt(tmp.trim()) < 10) {
+                        tmp = " " + tmp;
+                    }
+                } catch (NumberFormatException e) {
+                    // If we encounter a NFE, we assume its 0.
+                    // Its not clean, but this case should never happen.
+                    tmp = "0";
                 }
             }
 
@@ -210,10 +216,17 @@ public class AeroFragment extends Fragment {
 
     private String getCPUTemp() {
 
-        if (AeroActivity.genHelper.doesExist(FilePath.CPU_TEMP_FILE))
-            return AeroActivity.shell.getInfo(FilePath.CPU_TEMP_FILE) + " °C";
-        else
+        String tmp;
+
+        if (AeroActivity.genHelper.doesExist(FilePath.CPU_TEMP_FILE)) {
+            tmp = AeroActivity.shell.getInfo(FilePath.CPU_TEMP_FILE);
+            if (tmp.length() > 2) {
+                tmp = tmp.substring(0, 2);
+            }
+            return tmp + " °C";
+        } else {
             return null;
+        }
     }
 
     private void fillData(String gpu_freq) {
