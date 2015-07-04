@@ -75,6 +75,10 @@ public class AppMonitorFragment extends Fragment {
         }
         mProgressDialog.show();
 
+        // Reset the back button coutner in our activity
+        // TODO: put this logic somewhere else
+        AeroActivity.resetBackCounter();
+
         // Run the main operation in its own thread;
         final Runnable runnable = new Runnable() {
             @Override

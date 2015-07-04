@@ -75,7 +75,7 @@ public final class AeroActivity extends Activity {
     private CharSequence mTitle;
     private String[] mAeroTitle;
     private int mPreviousTitle;
-    private int mBackCounter = 0;
+    private static int mBackCounter = 0;
 
     // Fragment Keys;
     private static final int OVERVIEW = 0;
@@ -510,6 +510,13 @@ public final class AeroActivity extends Activity {
         }
         if (mBackCounter == 2)
             finish();
+    }
+
+    /**
+     * Resets the back button counter logic.
+     */
+    public static void resetBackCounter() {
+        mBackCounter = 0;
     }
 
     public final void showRootDialog() {
