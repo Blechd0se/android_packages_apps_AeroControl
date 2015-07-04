@@ -488,7 +488,7 @@ public final class shellHelper {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Process rooting;
+                Process rooting = null;
                 String tmp;
                 try {
 
@@ -512,6 +512,9 @@ public final class shellHelper {
 
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "Do you even root, bro? :/");
+                } finally {
+                    if (rooting != null)
+                        rooting.destroy();
                 }
             }
         };
@@ -560,9 +563,10 @@ public final class shellHelper {
     }
 
     private final void runRootInfo(final String[] array) {
-        try {
+        Process process = null;
 
-            Process process = Runtime.getRuntime().exec("su");
+        try {
+            process = Runtime.getRuntime().exec("su");
             DataOutputStream dataStream = new DataOutputStream(process.getOutputStream());
             for (String commands : array) {
                 dataStream.writeBytes(commands + "\n");
@@ -573,6 +577,9 @@ public final class shellHelper {
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "Do you even root, bro? :/");
+        } finally {
+            if (process != null)
+                process.destroy();
         }
     }
 
@@ -583,7 +590,7 @@ public final class shellHelper {
      */
     public final void remountSystem() {
 
-        Process rooting;
+        Process rooting = null;
         try {
 
             rooting = Runtime.getRuntime().exec("su");
@@ -596,6 +603,9 @@ public final class shellHelper {
 
         } catch (Exception e) {
             Log.e(LOG_TAG, "Do you even root, bro? :/", e);
+        } finally {
+            if (rooting != null)
+                rooting.destroy();
         }
 
     }
@@ -610,8 +620,10 @@ public final class shellHelper {
      */
     public final String getRootInfo(String command, String parameter) {
 
+        Process rooting = null;
+
         try {
-            final Process rooting = Runtime.getRuntime().exec("su");
+            rooting = Runtime.getRuntime().exec("su");
 
             DataOutputStream stdin = new DataOutputStream(rooting.getOutputStream());
 
@@ -630,11 +642,16 @@ public final class shellHelper {
                     break;
                 }
             }
+            stdin.writeBytes("exit\n");
             return output;
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "Do you even root, bro? :/", e);
+        } finally {
+            if (rooting != null)
+                rooting.destroy();
         }
+
         return NO_DATA_FOUND;
     }
 
@@ -651,9 +668,10 @@ public final class shellHelper {
 
         ArrayList<String> temp = new ArrayList<String>();
         ExecutorService executor = Executors.newFixedThreadPool(2);
+        Process rooting = null;
 
         try {
-            final Process rooting = Runtime.getRuntime().exec("su");
+            rooting = Runtime.getRuntime().exec("su");
 
             DataOutputStream stdin = new DataOutputStream(rooting.getOutputStream());
 
@@ -696,11 +714,15 @@ public final class shellHelper {
             for (String a : tmp.split(split)) {
                 temp.add(a);
             }
+            stdin.writeBytes("exit\n");
 
             return temp.toArray(new String[0]);
 
         } catch (IOException e) {
             Log.e(LOG_TAG, "Do you even root, bro? :/", e);
+        } finally {
+            if (rooting != null)
+                rooting.destroy();
         }
         return null;
     }
