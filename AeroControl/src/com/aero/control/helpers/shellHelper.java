@@ -513,8 +513,12 @@ public final class shellHelper {
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "Do you even root, bro? :/");
                 } finally {
-                    if (rooting != null)
+                    if (rooting != null) {
+                        try {
+                            rooting.waitFor();
+                        } catch (InterruptedException e) {}
                         rooting.destroy();
+                    }
                 }
             }
         };
@@ -578,8 +582,12 @@ public final class shellHelper {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Do you even root, bro? :/");
         } finally {
-            if (process != null)
+            if (process != null) {
+                try {
+                    process.waitFor();
+                } catch (InterruptedException e) {}
                 process.destroy();
+            }
         }
     }
 
@@ -604,8 +612,12 @@ public final class shellHelper {
         } catch (Exception e) {
             Log.e(LOG_TAG, "Do you even root, bro? :/", e);
         } finally {
-            if (rooting != null)
+            if (rooting != null) {
+                try {
+                    rooting.waitFor();
+                } catch (InterruptedException e) {}
                 rooting.destroy();
+            }
         }
 
     }
@@ -648,8 +660,12 @@ public final class shellHelper {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Do you even root, bro? :/", e);
         } finally {
-            if (rooting != null)
+            if (rooting != null) {
+                try {
+                    rooting.waitFor();
+                } catch (InterruptedException e) {}
                 rooting.destroy();
+            }
         }
 
         return NO_DATA_FOUND;
@@ -721,8 +737,12 @@ public final class shellHelper {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Do you even root, bro? :/", e);
         } finally {
-            if (rooting != null)
+            if (rooting != null) {
+                try {
+                    rooting.waitFor();
+                } catch (InterruptedException e) {}
                 rooting.destroy();
+            }
         }
         return null;
     }
