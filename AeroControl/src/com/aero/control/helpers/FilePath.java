@@ -85,6 +85,8 @@ public final class FilePath {
     public static final String KSM_SETTINGS = "/sys/kernel/mm/ksm/run";
     public static final String RANDOM_READ_WAKEUP = "/proc/sys/kernel/random/read_wakeup_threshold";
     public static final String RANDOM_WRITE_WAKEUP = "/proc/sys/kernel/random/write_wakeup_threshold";
+    public static final String RANDOM_POOL_AVAIL = "/proc/sys/kernel/random/entropy_avail";
+    public static final String RANDOM_POOL_SIZE = "/proc/sys/kernel/random/poolsize";
 
     /* Used by; MiscSettingsFragment */
     public static final String MISC_VIBRATOR_CONTROL = "/sys/devices/virtual/timed_output/vibrator";

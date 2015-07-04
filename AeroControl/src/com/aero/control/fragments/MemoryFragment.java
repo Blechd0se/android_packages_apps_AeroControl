@@ -413,7 +413,9 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
         editRandomWrite.setText(AeroActivity.shell.getFastInfo(FilePath.RANDOM_WRITE_WAKEUP));
 
         builder.setIcon(R.drawable.puzzle);
-        builder.setTitle(R.string.pref_entropy_settings);
+        // Display the current available entropy as well as the pool size;
+        builder.setTitle(getText(R.string.pref_entropy_settings) + " (" + AeroActivity.shell.getFastInfo(FilePath.RANDOM_POOL_AVAIL) + "/" +
+                            AeroActivity.shell.getFastInfo(FilePath.RANDOM_POOL_SIZE) + ")");
         builder.setView(layout);
         builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override

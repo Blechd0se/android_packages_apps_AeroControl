@@ -44,6 +44,7 @@
         android:inputType="number"
         android:gravity="right"
         android:layout_width="64dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"/>
 
 </RelativeLayout>
