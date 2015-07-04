@@ -8,6 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
         android:padding="32dp"
         android:text="@string/nocpu_data"
         android:textColor="@color/light_grey" />
