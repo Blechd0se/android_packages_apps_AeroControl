@@ -410,6 +410,7 @@ public class PrefsActivity extends PreferenceActivity {
         } else {
             preference.setSummary(R.string.disabled);
             preference.setValue("" + 0);
+            preference.setValueIndex(0);
         }
     }
 
