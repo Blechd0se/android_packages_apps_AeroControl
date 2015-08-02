@@ -21,6 +21,7 @@ public class AppModule {
     public static final int MODULE_CPU_NUM_IDENTIFIER = 20;
     public static final int MODULE_RAM_IDENTIFIER = 30;
     public static final int MODULE_TEMP_IDENTIFIER = 40;
+    public static final int MODULE_GPU_IDENTIFIER = 50;
 
     public AppModule() {
         this.mName = mClassName;

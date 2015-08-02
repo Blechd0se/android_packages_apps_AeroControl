@@ -306,12 +306,24 @@ public final class JobManager {
      * Load all desired modules upon start which will then be periodically checked.
      */
     private void loadModules() {
+
+        int counter = 0;
+
         // Load our modules;
         mModules.add(new CPUFreqModule());
         mModules.add(new CPUNumModule());
         mModules.add(new RAMModule());
         if (AeroActivity.genHelper.doesExist(FilePath.CPU_TEMP_FILE))
             mModules.add(new TEMPModule());
+
+        for (String s : FilePath.GPU_FREQ_ARRAY) {
+            if (AeroActivity.genHelper.doesExist(s))
+                counter++;
+        }
+        if (counter >= 0) {
+            mModules.add(new GPUFreqModule());
+        }
+
         AppLogger.print(mClassName, "Modules successfully initialized!", 0);
     }
 
