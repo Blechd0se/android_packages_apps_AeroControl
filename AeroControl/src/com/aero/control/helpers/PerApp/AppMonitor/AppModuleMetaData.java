@@ -48,8 +48,14 @@ public class AppModuleMetaData {
     public final void cleanUp() {
         this.mUsage = 0;
 
+        int i = 0;
+
         for (List<Integer> moduleData : mModules) {
             moduleData.clear();
+
+            mModules.get(i).clear();
+
+            i++;
         }
 
         // Cleanup the module data separately;

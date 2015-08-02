@@ -121,6 +121,7 @@ public class AppModule {
      */
     protected final void cleanUp() {
         this.mValues.clear();
+        this.mValues = new ArrayList<Integer>();
     }
 
     /**
