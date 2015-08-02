@@ -335,7 +335,12 @@ public class PrefsActivity extends PreferenceActivity {
 
                                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                         "mailto", "alex.christ@hotmail.de", null));
-                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[AeroControl] Got something for you");
+                                try {
+                                    // Could help debugging
+                                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[AeroControl] Got something for you (" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + ")");
+                                } catch (PackageManager.NameNotFoundException e) {
+                                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[AeroControl] Got something for you");
+                                }
                                 startActivity(Intent.createChooser(emailIntent, getText(R.string.send_email)));
                             }
                         });
