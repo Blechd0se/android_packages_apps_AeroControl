@@ -323,8 +323,8 @@
     <string name="introduction_perapp_heading">PerApp Profile</string>
     <string name="introduction_perapp_check">Möchtest Du diesen Service aktivieren?</string>
     <string name="introduction_perapp_content">Lasse Profile automatisch für bestimmte Apps aktivieren. Hierfür überprüft ein Service von Zeit zu Zeit
-                                                die aktuell laufende App und aktiviert Dein gewünschtes Profil automatisch. \n\n
-                                                Das könnte dir helfen in weniger aufwändigen Apps etwas Energie zu sparen oder es gibt
+                                                die aktuell laufende App und aktiviert Dein gewünschtes Profil automatisch.\n
+        Das könnte dir helfen in weniger aufwändigen Apps etwas Energie zu sparen oder es gibt
                                                 Dir ein Leistungsvorteil in deinem Lieblingsspiel.</string>
     <string name="introduction_setonboot_heading">Beim Hochfahren setzen!</string>
     <string name="introduction_setonboot_content">Mit dem kleinen Kästchen neben dem eigentlichen Feld kannst Du deine Wert beim Hochfahren individuell setzen.

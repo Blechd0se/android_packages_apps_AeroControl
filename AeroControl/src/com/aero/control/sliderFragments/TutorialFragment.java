@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -24,6 +23,7 @@ public class TutorialFragment extends Fragment {
 
     private static final String ARG_PAGE = "Tutorial";
     private static final Typeface kitkatFont = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+    private CheckBox mCheckbox;
 
     public static TutorialFragment create(int pageNumber) {
         TutorialFragment fragment = new TutorialFragment();
@@ -57,18 +57,23 @@ public class TutorialFragment extends Fragment {
         content.setText(R.string.introduction_tutorial_content);
         content.setTypeface(kitkatFont);
 
-        final CheckBox checkbox = (CheckBox) rootView.findViewById(R.id.show_checkbox);
-        checkbox.setTypeface(kitkatFont);
+        mCheckbox = (CheckBox) rootView.findViewById(R.id.show_checkbox);
+        mCheckbox.setTypeface(kitkatFont);
 
-        final Button button = (Button) rootView.findViewById(R.id.show_button);
+        return rootView;
+    }
 
-        button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((SplashScreen)getActivity()).mSkip.setText(R.string.got_it);
+
+        ((SplashScreen)getActivity()).mSkip.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                FileOutputStream fos;
+            public void onClick(View v) {
+                FileOutputStream fos = null;
                 // Set tutorials?
-                boolean check_state = checkbox.isChecked();
+                boolean check_state = mCheckbox.isChecked();
 
                 try {
                     fos = getActivity().openFileOutput(SplashScreen.FIRSTRUN_AERO, Context.MODE_PRIVATE);
@@ -105,6 +110,5 @@ public class TutorialFragment extends Fragment {
             }
         });
 
-        return rootView;
     }
 }

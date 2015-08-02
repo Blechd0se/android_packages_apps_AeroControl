@@ -6,12 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aero.control.R;
+import com.aero.control.SplashScreen;
 
 public class SetOnBootFragment extends Fragment {
 
@@ -51,5 +49,11 @@ public class SetOnBootFragment extends Fragment {
         content.setTypeface(kitkatFont);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((SplashScreen)getActivity()).initDefaultSkip();
     }
 }

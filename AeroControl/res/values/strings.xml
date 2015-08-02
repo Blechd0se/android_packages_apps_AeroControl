@@ -41,6 +41,7 @@
     <string name="minutes">Minutes</string>
     <string name="minute">Minute</string>
     <string name="dont_show_again">Don\'t show this again</string>
+    <string name="skip_splash">Skip</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -335,7 +336,7 @@
     <string name="introduction_perapp_heading">PerApp Profiles</string>
     <string name="introduction_perapp_check">Do you want to enable this service?</string>
     <string name="introduction_perapp_content">Choose your preferences for individual apps automatically. Therefore a service checks the
-                                                foreground app every now and then and applies your desired profile automatically. \n\n
+                                                foreground app every now and then and applies your desired profile automatically.\n
                                                 This might save you some extra juice for your battery or give you a full performance boost
                                                 on your favorite app.</string>
     <string name="introduction_setonboot_heading">Set on boot!</string>

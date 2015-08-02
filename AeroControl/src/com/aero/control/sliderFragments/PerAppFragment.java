@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.aero.control.R;
+import com.aero.control.SplashScreen;
 
 public class PerAppFragment extends Fragment {
 
@@ -85,4 +86,11 @@ public class PerAppFragment extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((SplashScreen)getActivity()).initDefaultSkip();
+    }
+
 }

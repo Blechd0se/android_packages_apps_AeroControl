@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aero.control.R;
+import com.aero.control.SplashScreen;
 
 public class IntroductionFragment extends Fragment {
 
@@ -57,4 +58,11 @@ public class IntroductionFragment extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((SplashScreen)getActivity()).initDefaultSkip();
+    }
+
 }
