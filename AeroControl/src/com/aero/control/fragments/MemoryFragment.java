@@ -43,7 +43,6 @@ import java.util.HashSet;
  */
 public class MemoryFragment extends PlaceHolderFragment implements Preference.OnPreferenceChangeListener {
 
-    private ShowcaseView mShowCase;
     private PreferenceCategory PrefCat;
     private PreferenceScreen root;
 
@@ -251,7 +250,7 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
             checkThread.start();
         }
     }
-    
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
@@ -544,7 +543,7 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
             }
         };
 
-        mShowCase = new ShowcaseView.Builder(getActivity())
+        new ShowcaseView.Builder(getActivity())
                 .setContentTitle(header)
                 .setContentText(content)
                 .setTarget(homeTarget)
