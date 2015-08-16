@@ -55,6 +55,8 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
     private String mFileSystem;
     private MemoryDalvikFragment mMemoryDalvikFragment;
 
+    private PreferenceHandler mIOSchedulerHandler;
+
     private static final String MEMORY_SETTINGS_CATEGORY = "memory_settings";
     private static final String IO_SETTINGS_CATEGORY = "io_scheduler_parameter";
 
@@ -194,6 +196,9 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
         mIOScheduler.setOnPreferenceChangeListener(this);
         ioSettingsCategory.addPreference(mIOScheduler);
 
+        mIOSchedulerHandler = new PreferenceHandler(getActivity(), ioSettingsCategory, getPreferenceManager());
+        mIOSchedulerHandler.addInvisiblePreference();
+
         if (showDialog) {
             Runnable runnable = new Runnable() {
                 @Override
@@ -246,7 +251,7 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
             checkThread.start();
         }
     }
-
+    
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
@@ -547,6 +552,9 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
     }
 
     private void loadIOParameter() {
+
+        // First remove our invisible element;
+        mIOSchedulerHandler.removeInvisiblePreference();
 
         try {
             String completeParamterList[] = AeroActivity.shell.getDirInfo(FilePath.GOV_IO_PARAMETER, true);
