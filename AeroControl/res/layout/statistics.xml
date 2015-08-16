@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="5dp">
 
     <TextView android:id="@+id/noCpuData"
         android:textSize="20sp"
@@ -48,8 +49,11 @@
     <ListView
         android:id="@+id/statisticListView"
         android:layout_marginTop="240dp"
+        android:drawSelectorOnTop="true"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="48dp"/>
+        android:layout_marginBottom="48dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="2dip"/>
 
 </RelativeLayout>

@@ -456,11 +456,9 @@ public class StatisticsFragment extends Fragment {
 
     public final void handleOnClick(ArrayList<String> list) {
 
-        final String[] valueArray = list.toArray(new String[0]);
+        for (String a: list) {
 
-        for (String a: valueArray) {
-
-            int arrayLength = valueArray.length;
+            int arrayLength = list.size();
 
             if(mIndex == arrayLength) {
                 mIndex = 0;
@@ -473,7 +471,7 @@ public class StatisticsFragment extends Fragment {
             if (mColorIndex >= 8)
                 mColorIndex = 0;
 
-            String currentRow = valueArray[mIndex];
+            String currentRow = list.get(mIndex);
             String[] tmp = currentRow.split(" ");
 
             txtFreq = (TextView)root.findViewById(R.id.statisticFreq);
