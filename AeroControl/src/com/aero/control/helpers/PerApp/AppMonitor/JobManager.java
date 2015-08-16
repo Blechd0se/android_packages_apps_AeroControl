@@ -522,7 +522,7 @@ public final class JobManager {
         if (AeroActivity.genHelper.doesExist(FilePath.CPU_TEMP_FILE))
             mModules.add(new TEMPModule());
 
-        for (String s : FilePath.GPU_FREQ_ARRAY) {
+        for (String s : FilePath.GPU_FILES_RATE) {
             if (AeroActivity.genHelper.doesExist(s))
                 counter++;
         }
