@@ -45,6 +45,34 @@ public class AppModuleData {
         return mAppModuleData;
     }
 
+
+    /**
+     * Simple wrapper-method around the real addData() to add multiple values in one call
+     * @param context     AppContext, context where we will add the data
+     * @param values      ArrayList<Integer>, the values to add
+     * @param identifier  Integer, the module identifier
+     */
+    public void addData(final AppContext context, final ArrayList<Integer> values, final Integer identifier) {
+
+        AppModule targetModule = null;
+
+        for (AppModule module : mModules) {
+            if (module.getIdentifier() == identifier) {
+                // Winner!
+                targetModule = module;
+            }
+        }
+
+        if (targetModule != null) {
+            for (Integer i : values) {
+                addData(context, i, targetModule);
+            }
+        } else {
+            throw new ExceptionHandler(ExceptionHandler.EX_MODULE_NOT_FOUND +  " (" + identifier + ")");
+        }
+
+    }
+
     /**
      * Adds data for our app context from a source and checks if we haven't yet build
      * up the MetaData information.

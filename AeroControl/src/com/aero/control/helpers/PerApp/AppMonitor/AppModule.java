@@ -106,6 +106,14 @@ public class AppModule {
     }
 
     /**
+     * Returns the current list of integers(values) for this module (e.g. "1000, 1200, 900")
+     * @return List<Integer>
+     */
+    protected final List<Integer> getValues() {
+        return mValues;
+    }
+
+    /**
      * Returns the last added value from the module data list.
      * @return Integer
      */

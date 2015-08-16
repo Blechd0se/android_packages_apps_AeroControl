@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -16,11 +17,18 @@ import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PerApp.AppMonitor.model.AppElement;
 import com.aero.control.helpers.PerApp.AppMonitor.model.AppElementDetail;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -183,6 +191,201 @@ public final class JobManager {
     }
 
     /**
+     * Saves the current available data for all apps we have collected so far
+     * and their module data.
+     * Saves the current AppContext for each app with the TimeUsed as well as
+     * LastChecked value. The data for each module is actually saved as raw data
+     * inside an array.
+     * This Method uses the internal API to get the data and saves it to the
+     * file directory of the app in a JSON-formatted string-like textfile.
+     */
+    public void exportData() {
+
+        // Our "parent" which will contain all information;
+        JSONObject parentJson = new JSONObject();
+
+        AppLogger.print(mClassName, "Starting emergency write of data...", 0);
+
+        try {
+            // Get all app contexts;
+            for (AppContext context : mAppData.getAppList()) {
+
+                // One for our current app, one for the data of the app
+                JSONObject currentApp = new JSONObject();
+                JSONObject appData = new JSONObject();
+
+                // Access our small API and get the information needed;
+                appData.put("TimeUsed", context.getTimeUsage());
+                appData.put("LastChecked", context.getLastChecked());
+
+                // Get the meta data for all loaded modules;
+                for (AppModuleMetaData ammd : getModuleData().getAppModuleData()) {
+                    // Find our App context;
+                    if (ammd.getAppContext() == context) {
+
+                        // Iterate through all loaded modules;
+                        for (AppModule module : mModules) {
+
+                            // For each module we need to get the data separately;
+                            JSONObject appModule = new JSONObject();
+                            // Our actual values are stored in this array;
+                            JSONArray values  = new JSONArray();
+
+                            // Add our data to our array;
+                            List<Integer> currentValues = module.getValues();
+                            for (Integer i : currentValues) {
+                                values.put(i);
+                            }
+
+                            // Add the data to our object;
+                            appModule.put("Values", values);
+                            // Then add the object to our app data;
+                            appData.put(module.getIdentifier() + "", appModule);
+
+                        }
+
+                    }
+                }
+                // Add the real app name as well as the gathered module data;
+                currentApp.put(context.getRealAppName(mContext), appData);
+                // Add everything to our parent;
+                parentJson.put(context.getAppName(), currentApp);
+
+            }
+        } catch (JSONException e) {}
+
+        AppLogger.print(mClassName, "Data gathered, writing to disk..", 1);
+        // Write the data to our private directory [files];
+        try {
+            FileOutputStream fos = mContext.openFileOutput(Configuration.EMERGENCY_FILE, Context.MODE_PRIVATE);
+            fos.write(parentJson.toString().getBytes());
+            fos.close();
+            AppLogger.print(mClassName, "Data successfully written to disk!", 0);
+        } catch (IOException e) {
+            AppLogger.print(mClassName, "Error during data-write..." + e, 0);
+        }
+    }
+
+    /**
+     * If found, imports a saved file and accesses the internal APIs to load
+     * the data back in. Its similar to the normal initialization process
+     * except it clears all previous data.
+     */
+    public void importData() {
+
+        ContextWrapper cw = new ContextWrapper(mContext);
+        String tmp = null;
+
+        // Lock the JobManager during this operation;
+        this.mSleeping = true;
+
+        if (AeroActivity.genHelper.doesExist(cw.getFilesDir() + "/" + Configuration.EMERGENCY_FILE)) {
+            AppLogger.print(mClassName, "Emergency file detected, starting import... ", 0);
+
+            // Read our file and save it in tmp;
+            try {
+                InputStream is = mContext.openFileInput(Configuration.EMERGENCY_FILE);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                tmp = new String(buffer, "UTF-8");
+
+                // Delete the file if read successfully;
+                new File(cw.getFilesDir() + "/" + Configuration.EMERGENCY_FILE).delete();
+
+            } catch (IOException e) {
+                AppLogger.print(mClassName, "Error during import... " + e, 0);
+                this.mSleeping = false;
+            }
+        } else {
+            this.mSleeping = false;
+            return;
+        }
+
+        // Clear the existing data before;
+        mAppData.clearData();
+        mModules = new ArrayList<AppModule>();
+        loadModules();
+        // We add our loaded modules;
+        this.mAppModuleData = new AppModuleData(getModules());
+
+        // Beginning JSON parsing...
+        try {
+            JSONObject json = new JSONObject(tmp);
+            Iterator<?> keys = json.keys();
+
+            // First we get the actual AppName (e.g. com.aero.control);
+            while (keys.hasNext()) {
+                String tempAppName = keys.next().toString();
+                AppLogger.print(mClassName, tempAppName + " : ", 1);
+
+                AppContext localContext = new AppContext(tempAppName);
+                mAppData.addContext(localContext);
+
+                JSONObject appParent = json.getJSONObject(tempAppName);
+                Iterator<?> appKeys = appParent.keys();
+
+                // Next (and a little bit redundant) we get the real AppName (e.g. Aero Control);
+                while (appKeys.hasNext()) {
+                    String tempApp = appKeys.next().toString();
+                    AppLogger.print(mClassName, tempApp + ": ", 1);
+                    JSONObject appData = appParent.getJSONObject(tempApp);
+                    Iterator<?> dataKeys = appData.keys();
+
+                    // Finally we get to the data part, first data for our AppContext
+                    while (dataKeys.hasNext()) {
+                        String tempData = dataKeys.next().toString();
+
+                        // Find module and appcontext data;
+                        try {
+                            // This is our module data;
+                            int i = Integer.parseInt(tempData);
+                            JSONObject moduleData = appData.getJSONObject(tempData);
+                            Iterator<?> moduleKeys = moduleData.keys();
+
+                            // Get all the data stored inside the arrays of the modules;
+                            while (moduleKeys.hasNext()) {
+                                String tempModule = moduleKeys.next().toString();
+                                ArrayList<Integer> values = new ArrayList<Integer>();
+
+                                // Add all the data to our array list;
+                                int length = moduleData.getJSONArray(tempModule).length();
+                                for (int j = 0; j < length; j++) {
+                                    values.add(Integer.parseInt(moduleData.getJSONArray(tempModule).get(j).toString()));
+                                }
+
+                                // Go through our modules and read/save data;
+                                for (AppModule module : mModules) {
+                                    mAppModuleData.addData(localContext, values, Integer.parseInt(tempModule));
+                                }
+
+                                AppLogger.print(mClassName, tempModule + ": " + moduleData.getJSONArray(tempModule), 1);
+                            }
+                        } catch (NumberFormatException e) {
+                            // No problem, these are our AppContext data;
+                            AppLogger.print(mClassName, tempData + ": " + appData.get(tempData), 1);
+
+                            if (tempData.equals("TimeUsed")) {
+                                localContext.setTimeUsage(appData.getLong(tempData));
+                            } else if(tempData.equals("LastChecked")) {
+                                localContext.setLastChecked(appData.getLong(tempData));
+                            }
+
+                        }
+                    }
+                }
+            }
+
+        } catch (JSONException e) {
+            AppLogger.print(mClassName, "Error during json-parsing: " + e, 0);
+            this.mSleeping = false;
+        }
+        this.mSleeping = false;
+        AppLogger.print(mClassName, "Import of data successful!", 0);
+    }
+
+    /**
      * Main method of the JobManager. Iterates through all added modules and gets the values
      * for the app context. Also handles the logic if the device is sleeping.
      * @param context AppContext which is passed from the calling method.
@@ -202,6 +405,9 @@ public final class JobManager {
         if (mSleeping) {
             return;
         }
+
+        // If necessary load the saved raw data back in;
+        importData();
 
         // Allow to disable (in the next cycle) the JobManager at runtime;
         if (!PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(mPreferenceValue, true))

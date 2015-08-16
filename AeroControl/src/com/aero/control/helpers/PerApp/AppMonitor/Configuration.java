@@ -28,5 +28,9 @@ public class Configuration {
      */
     public static final int CLEANUP_THRESHOLD = 5760; // = value * 5 = seconds (default 8 hours = 5760)
 
+    /**
+     * The name of the emergency file for automatic backup of the data.
+     */
+    public static final String EMERGENCY_FILE = "APPMonitorData.json";
 
 }

@@ -41,6 +41,14 @@ public class AppContext {
     }
 
     /**
+     * Sets the last checked time to a desired time (in ms)
+     * @param lastchecked, the actual value in ms
+     */
+    public final void setLastChecked(long lastchecked) {
+        this.mLastChecked = lastchecked;
+    }
+
+    /**
      * Returns the last checked value, if it hasn't been checked before
      * it calls setLastCheckedNow() to set the current time.
      * @return long, the last checked time value
@@ -68,6 +76,18 @@ public class AppContext {
         return mTimeUsage;
     }
 
+    /**
+     * Sets the current time usage value for this context
+     * @param timeusage long, the amount of total usage in ms
+     */
+    public final void setTimeUsage(long timeusage) {
+        this.mTimeUsage = timeusage;
+    }
+
+    /**
+     * Returns a formatted string of the current time usage
+     * @return String
+     */
     public final String getFormatTimeUsage() {
 
         return String.format("%02dh : %02dmin : %02d secs",

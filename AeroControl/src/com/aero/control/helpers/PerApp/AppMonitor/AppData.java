@@ -49,6 +49,26 @@ public class AppData {
         return mMetaData.getSimpleAppContext(appname);
     }
 
+    /**
+     * Gets the current "known" apps inside our data structure.
+     * This won't return a NULL value, but the list itself could be
+     * empty. Iterating over it is recommended.
+     * @return ArrayList<AppContext>, a list containing all known AppContext
+     */
+    public final ArrayList<AppContext> getAppList() {
+        return mMetaData.mAppList;
+    }
+
+
+    /**
+     * Clears all available data inside the metadata structure.
+     * This should only be called during the import process, when
+     * we load data back in.
+     */
+    public final void clearData() {
+        this.mMetaData = new AppMetaData();
+    }
+
     private final class AppMetaData {
 
         private ArrayList<AppContext> mAppList;
@@ -75,7 +95,7 @@ public class AppData {
             if (i > 0)
                 return true;
 
-            AppLogger.print(mClassName, "Couldn't add the following app, bailing out: " + context.getAppName(), 0);
+            AppLogger.print(mClassName, "Couldn't add the following app, bailing out: " + context.getAppName(), 1);
             return false;
         }
 

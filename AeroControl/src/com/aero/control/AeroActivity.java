@@ -120,7 +120,6 @@ public final class AeroActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         if(getResources().getBoolean(R.bool.portrait_only)){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
@@ -510,6 +509,14 @@ public final class AeroActivity extends Activity {
         }
         if (mBackCounter == 2)
             finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // If possible, try to save our current gathered data;
+        mJobManager.exportData();
     }
 
     /**
