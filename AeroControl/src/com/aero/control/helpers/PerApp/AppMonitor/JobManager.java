@@ -523,10 +523,11 @@ public final class JobManager {
             mModules.add(new TEMPModule());
 
         for (String s : FilePath.GPU_FILES_RATE) {
-            if (AeroActivity.genHelper.doesExist(s))
+            if (AeroActivity.genHelper.doesExist(s)) {
                 counter++;
+            }
         }
-        if (counter >= 0) {
+        if (counter > 0) {
             mModules.add(new GPUFreqModule());
         }
 
