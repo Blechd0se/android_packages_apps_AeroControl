@@ -99,7 +99,14 @@ public class settingsHelper {
         if (onboot) {
             String timer_delay = prefs.getString(PREF_TIMER_DELAY, null);
             if (timer_delay != null) {
-                int i = Integer.parseInt(timer_delay);
+                int i = 0;
+
+                try {
+                    i = Integer.parseInt(timer_delay);
+                } catch (NumberFormatException e) {
+                    // That's ok, we continue with 0
+                }
+
                 try {
                     Thread.sleep((i * 1000 * 60));
                 } catch (InterruptedException e) {}
