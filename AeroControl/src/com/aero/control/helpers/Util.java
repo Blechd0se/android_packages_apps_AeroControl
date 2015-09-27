@@ -1,10 +1,16 @@
 package com.aero.control.helpers;
 
+import android.annotation.TargetApi;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.os.Build;
 
 import com.aero.control.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -69,6 +75,29 @@ public class Util {
         String[] values = syspath.split("/");
 
         return values[values.length - 1];
+    }
+
+    /**
+     * Returns the current usage stats list, if the user enable the option in the settings menu.
+     * @param context Context, the current context
+     * @return List<UsageStats>
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static List<UsageStats> getUsageStatsList(Context context){
+        UsageStatsManager usm = getUsageStatsManager(context);
+        Calendar calendar = Calendar.getInstance();
+        long endTime = calendar.getTimeInMillis();
+        calendar.add(Calendar.YEAR, -1);
+        long startTime = calendar.getTimeInMillis();
+
+        List<UsageStats> usageStatsList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, startTime, endTime);
+        return usageStatsList;
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static UsageStatsManager getUsageStatsManager(Context context){
+        UsageStatsManager usm = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
+        return usm;
     }
 
 }

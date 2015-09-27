@@ -2,17 +2,13 @@ package com.aero.control.settings;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,18 +17,19 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.Android.AboutDialog;
+import com.aero.control.helpers.Util;
 import com.aero.control.service.PerAppServiceHelper;
 
 import java.io.File;
@@ -125,7 +122,7 @@ public class PrefsActivity extends PreferenceActivity {
             mPerAppMonitor.setEnabled(false);
 
         try {
-            version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " Beta 1");
+            version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " Beta 2");
             version.setSummary("Build: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
         } catch (PackageManager.NameNotFoundException e) {}
 
@@ -204,7 +201,10 @@ public class PrefsActivity extends PreferenceActivity {
 
                 if (mPer_app_check.isChecked()) {
 
+                    showUsageStatDialog();
+
                     mPerAppMonitor.setEnabled(true);
+                    mPerAppMonitor.setChecked(true);
                     AeroActivity.mJobManager.enable();
                     setCheckedState(mPerAppMonitor);
 
@@ -222,6 +222,7 @@ public class PrefsActivity extends PreferenceActivity {
                 } else {
 
                     mPerAppMonitor.setEnabled(false);
+                    mPerAppMonitor.setChecked(false);
                     AeroActivity.mJobManager.disable();
                     setCheckedState(mPerAppMonitor);
 
@@ -246,6 +247,9 @@ public class PrefsActivity extends PreferenceActivity {
                 setCheckedState((CheckBoxPreference) preference);
 
                 if (((CheckBoxPreference) preference).isChecked()) {
+
+                    showUsageStatDialog();
+
                     if (AeroActivity.mJobManager != null)
                         AeroActivity.mJobManager.enable();
                 } else {
@@ -417,6 +421,36 @@ public class PrefsActivity extends PreferenceActivity {
             preference.setValue("" + 0);
             preference.setValueIndex(0);
         }
+    }
+
+    /**
+     * Show the usage stats warning dialog, to inform the user;
+     */
+    private void showUsageStatDialog() {
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+
+            if (Util.getUsageStatsList(getApplicationContext()).isEmpty()) {
+
+                AlertDialog dialog = new AlertDialog.Builder(PrefsActivity.this)
+                        .setTitle(R.string.warning)
+                        .setIcon(R.drawable.warning)
+                        .setMessage(R.string.pref_lollipop_usage_warning)
+                        .setPositiveButton(R.string.aero_continue, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                                startActivity(intent);
+                            }
+                        })
+                        .create();
+
+                dialog.show();
+
+            }
+        }
+
     }
 
     @Override

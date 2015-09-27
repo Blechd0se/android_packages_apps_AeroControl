@@ -1,7 +1,10 @@
 package com.aero.control.service;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.Service;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +14,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.view.Display;
 import android.widget.Toast;
 
@@ -22,6 +26,8 @@ import com.aero.control.helpers.settingsHelper;
 
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Created by Alexander Christ on 17.05.14.
@@ -41,6 +47,7 @@ public final class PerAppService extends Service {
     private Runnable mRunnable;
     private static JobManager mJobManager = AeroActivity.mJobManager;
     private final String mClassName = getClass().getName();
+    private int mNullCounter = 0;
 
     @Override
     public void onCreate() {
@@ -56,7 +63,9 @@ public final class PerAppService extends Service {
                         @Override
                         public void run() {
                             // Do work in its own thread;
-                            runTask();
+                            if (AeroActivity.perAppService.getState()) {
+                                runTask();
+                            }
                             mHandler.postDelayed(mRunnable, 5000);
                         }
                     });
@@ -168,6 +177,24 @@ public final class PerAppService extends Service {
         // Get the first item in the list;
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             PackageName = getTopApp();
+
+            if (PackageName == null) {
+
+                mNullCounter++;
+
+                // If the user hasn't set the permissions in 120 seconds, we disable it again...
+                if (mNullCounter > 24) {
+                    // If we get a null, we should disable this feature (and service);
+                    AeroActivity.perAppService.stopService();
+                    // We also deactive this in aero controls settings, because the user didn't give us the permissions;
+                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
+                    editor.putBoolean("per_app_service", false);
+                    editor.putBoolean("per_app_monitor", false);
+                    editor.commit();
+                    mNullCounter = 0;
+                }
+            }
+
         } else {
             ActivityManager.RunningTaskInfo AppInfo = mAm.getRunningTasks(1).get(0);
 
@@ -177,17 +204,26 @@ public final class PerAppService extends Service {
         mCurrentApp = PackageName;
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private String getTopApp() {
 
-        List<ActivityManager.RunningAppProcessInfo> appProcesses = mAm.getRunningAppProcesses();
-        for(ActivityManager.RunningAppProcessInfo appProcess : appProcesses){
-            if(appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND){
-                // Always return the first one, since this is the one that we are looking for;
-                return appProcess.processName;
+        String visibleApp = null;
+        long time = System.currentTimeMillis();
+        UsageStatsManager usm = (UsageStatsManager) this.getSystemService(Context.USAGE_STATS_SERVICE);
+        List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,  time - 1000*1000, time);
+
+        if (appList != null && appList.size() > 0) {
+            SortedMap<Long, UsageStats> sortedMap = new TreeMap<Long, UsageStats>();
+            for (UsageStats usageStats : appList) {
+                sortedMap.put(usageStats.getLastTimeUsed(), usageStats);
+            }
+            if (!sortedMap.isEmpty()) {
+                // Get the last name;
+                visibleApp = sortedMap.get(sortedMap.lastKey()).getPackageName();
             }
         }
 
-        return null;
+        return visibleApp;
     }
 
     private boolean isScreenOn() {
