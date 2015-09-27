@@ -87,9 +87,17 @@ public class AppData {
 
             int i = 0;
 
+            if (context == null) {
+                // Return fast, if the context is null;
+                return false;
+            }
+
             for (AppContext ac : mAppList) {
-                if (ac.getAppName().equals(context.getAppName()))
-                    i++;
+                if (ac.getAppName() != null) {
+                    if (ac.getAppName().equals(context.getAppName())) {
+                        i++;
+                    }
+                }
             }
 
             if (i > 0)
@@ -179,7 +187,10 @@ public class AppData {
                 return; // already added to the list
             }
 
-            mAppList.add(context);
+            if (context != null) {
+                mAppList.add(context);
+            }
+
             AppLogger.print(mClassName, "App: " + context.getAppName() + " successfully added!", 1);
         }
 

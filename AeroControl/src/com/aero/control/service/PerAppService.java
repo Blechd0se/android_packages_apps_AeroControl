@@ -113,6 +113,11 @@ public final class PerAppService extends Service {
             AeroActivity.mJobManager = mJobManager;
         }
 
+        // Check if our screen is on, if not, return;
+        if (isScreenOn()) {
+            return;
+        }
+
         if (mPreviousApp != null && mCurrentApp != null) {
             if (!(mPreviousApp.equals(mCurrentApp))) {
 
@@ -181,6 +186,7 @@ public final class PerAppService extends Service {
                 return appProcess.processName;
             }
         }
+
         return null;
     }
 

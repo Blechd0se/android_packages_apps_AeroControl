@@ -516,7 +516,7 @@ public final class AeroActivity extends Activity {
         super.onDestroy();
 
         // If possible, try to save our current gathered data;
-        mJobManager.exportData();
+        //mJobManager.exportData();
     }
 
     /**
