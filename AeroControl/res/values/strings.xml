@@ -355,4 +355,87 @@
     <string name="random_data_somewhere">Hang on a second, I know your data is somewhere...</string>
     <string name="random_working_you_know">Working... well... you know...</string>
     <string name="random_prepare_awesomeness">Prepare for awesomeness!</string>
+
+
+    <!-- Helptexts -->
+    <!-- CPU Fragment helptexts -->
+    <string name="helptext_no_data_found">There is no information available about this item.</string>
+    <string name="helptext_max_freq_cpu">This tunable lets you adjust the maximum CPU frequency. Lowering this value can save you power at the cost of performance.</string>
+    <string name="helptext_min_freq_cpu">This tunable lets you adjust the minimum CPU frequency. Increasing this value can give a better performance at the cost of battery usage.</string>
+    <string name="helptext_hotplug_control">A tap on this element allows you to change various values of your hotplug driver. The hotplug driver decides when a CPU core should be on-/ or offline.</string>
+    <string name="helptext_voltage_values">In this submenu you can change the voltage values of your CPU. This might increase your battery life or allows your CPU to run on higher frequencies. However, this can cause massive issues if overdone too much.</string>
+    <string name="helptext_set_governor">The CPU governor controls the scaling of the frequency of your CPU. A different governor can give a total different experience/batterylife.</string>
+    <!-- CPU Hotplug Tunable helptexts -->
+    <string name="helptext_all_cpus_threshold">The threshold for the average load of all currently onlined cpus to online the next core. If you lower this value, cores can get more easily online.</string>
+    <string name="helptext_battery_saver">If enabled (1), only one core will stay active as soon as you turn off your screen. If you are getting strange audio quality while the screen is off, try switching it off via 0. This will let both cores stay active during suspend.</string>
+    <string name="helptext_debug">A debug flag intended for the developer. Nothing to do here!</string>
+    <string name="helptext_hotplug_sampling">The sampling rate of the hotplug driver. Lower this value and decisions will be made quicker in regards if a core should be onlined or not.</string>
+    <string name="helptext_low_latency">If enabled (1) it let\'s the hotplug driver react really quickly to short load spikes (100% CPU load) and onlines cpus accordingly.</string>
+    <string name="helptext_min_online_time">To prevent core off-/onlining when they are near the threshold. This is the minimum online time in seconds for a core.</string>
+    <string name="helptext_single_core_threshold" formatted="false">The threshold for a single core to online another one. For example; if core 1 is at 100% and the average load is above 60% core 3 will get online.</string>
+    <string name="helptext_up_frequency">The minimum cpu frequency to start hotplug operations. If the current frequency is below this value, no hotplug operations will perform. Default is the maximum frequency. </string>
+    <!-- CPU Fragment interactive governor -->
+    <string name="helptext_above_hispeed_delay">Wait this long before raising speed above hispeed, by default a single timer interval.</string>
+    <string name="helptext_align_windows">Whether to align timer windows across all CPUs. When use_sched_load is true, this flag is ignored and windows will always be aligned.</string>
+    <string name="helptext_boostpulse_duration">The duration of the input boost.</string>
+    <string name="helptext_go_hispeed_load">Go to hispeed when CPU load at or above this value.</string>
+    <string name="helptext_hispeed_freq">Hispeed to bump to from any smaller frequency when under heavy load.</string>
+    <string name="helptext_input_boost_freq">The frequency the cpu will go to when a touch on the display is registered.</string>
+    <string name="helptext_io_is_busy">This is a flag that determines if waiting for various IO should increase the CPU utilization in bump up the cpu frequency. Setting this to 0 will mean the governor will increase the frequency less often.</string>
+    <string name="helptext_max_freq_hysteresis">Stay at the max freq for at least this value before dropping frequency again.</string>
+    <string name="helptext_min_sample_time">The minimum amount of time to spend at a frequency before we can ramp down.</string>
+    <string name="helptext_target_loads">At or above this value, the governor will ramp up the frequency. Lower values result in higher CPU speeds. An example would be \'85 1200000:80 1500000:95\'. This means the overall target load is 85, but if the frequency is higher than 1.2Ghz its 80. The same applies for 1.5Ghz but with 95.</string>
+    <string name="helptext_timer_rate">The sample rate of the timer used to increase frequency</string>
+    <string name="helptext_timer_slack">Max additional time to wait in idle, beyond timer_rate, at speeds above minimum before wakeup to reduce speed, or -1 if unnecessary.</string>
+    <!-- CPU Fragment ondemand governor -->
+    <string name="helptext_sampling_rate">Measured in uS (10^-6 seconds), this is how often you want the kernel to look at the CPU usage and to make decisions on what to do about the frequency.</string>
+    <string name="helptext_up_threshold">Defines what the average CPU usage between the samplings of \'sampling_rate\' needs to be for the kernel to make a decision on whether it should increase the frequency.</string>
+    <string name="helptext_ignore_nice_load">This parameter takes a value of \'0\' or \'1\'. When set to \'0\' (its default), all processes are counted towards the \'cpu utilisation\' value.  When set to \'1\', the processes that are run with a \'nice\' value will not count (and thus be ignored) in the overall usage calculation.</string>
+    <string name="helptext_sampling_down_factor">This parameter controls the rate at which the kernel makes a decision on when to decrease the frequency while running at top speed. When set to 1 (the default) decisions to reevaluate load are made at the same interval regardless of current clock speed. But when set to greater than 1 (e.g. 100) it acts as a multiplier for the scheduling interval for reevaluating load when the CPU is at its top speed due to high load.</string>
+    <string name="helptext_powersave_bias">This parameter takes a value between 0 to 1000. It defines the percentage (times 10) value of the target frequency that will be shaved off of the target. For example, when set to 100 -> 10%, when ondemand governor would have targeted 1000 MHz, it will target 1000 MHz - (10% of 1000 MHz) = 900 MHz instead. This is set to 0 (disabled) by default.</string>
+    <!-- GPU Fragment helptexts -->
+    <string name="helptext_gpu_max_freq">This tunable lets you change the maximum GPU frequency. Lowering this value can save you some juice at the cost of performance.</string>
+    <string name="helptext_rgbValues">Lets you change the RGB (= red, green, blue) colors of your display to calibrate it.</string>
+    <string name="helptext_set_gpu_governor">Allows you to change the GPU governor. It handles the frequency scaling of your GPU and might have a big impact on the GPU performance.</string>
+    <string name="helptext_gpu_gov_settings">Your GPU governor has some special tunables to fine-tune its behaviour. This is very similar to a CPU governor.</string>
+    <!-- Memory Fragment helptexts -->
+    <string name="helptext_read_ahead">The kernel tries to readahead past requested data blocks and stores them in the cache to save potential disk I/O. The default value is 128KB. A higher value can increase app loadtime.</string>
+    <string name="helptext_fsync">The fsync() call is intended to force a physical write of data from the buffer cache. Disabling this feature may give a performance boost, but at the cost of dataloss if your system crashes.</string>
+    <string name="helptext_entropy_settings">The entropy pool stores random numbers for various applications. Higher values for read/write can help in some cases, but can also increase the batterydrain. In general your pool should be always above 200 at any point of time.</string>
+    <string name="helptext_fstrim_toggle">fstrim is used on filesystems to discard ("trim") blocks which are not in use by the filesystem. This is very useful on flash-based storage devices.</string>
+    <string name="helptext_dalvik_settings">This submenu lets you interact with the virtual machine of your device. Mostly there are memory related options.</string>
+    <string name="helptext_io_scheduler_list">The IO scheduler handles IO requests for a specific device to allow an efficient handling. Changing this value has a rather small impact on most android systems.</string>
+    <string name="helptext_ksm">KSM or kernel samepage merging allows to deduplicate memory. Its a very useful feature on android and can save some RAM at the cost of CPU performance.</string>
+    <!-- MemoryDalvik Fragment helptexts -->
+    <string name="helptext_block_dump">block_dump enables block I/O debugging when set to a nonzero value.</string>
+    <string name="helptext_dirty_background_bytes">Contains the amount of dirty memory at which the background kernel flusher threads will start writeback.\n Note: dirty_background_bytes is the counterpart of dirty_background_ratio. Only one of them may be specified at a time. When one sysctl is written it is immediately taken into account to evaluate the dirty memory limits and the other appears as 0 when read.</string>
+    <string name="helptext_dirty_background_ratio">Contains, as a percentage of total available memory that contains free pages and reclaimable pages, the number of pages at which the background kernel flusher threads will start writing out dirty data.</string>
+    <string name="helptext_dirty_bytes">Contains the amount of dirty memory at which a process generating disk writes will itself start writeback.\nNote: the minimum value allowed for dirty_bytes is two pages (in bytes); any value lower than this limit will be ignored and the old configuration will be retained.</string>
+    <string name="helptext_dirty_expire_centisecs">This tunable is used to define when dirty data is old enough to be eligible for writeout by the kernel flusher threads.  It is expressed in 100\'ths of a second.  Data which has been dirty in-memory for longer than this interval will be written out next time a flusher thread wakes up.</string>
+    <string name="helptext_dirty_ratio">Contains, as a percentage of total available memory that contains free pages and reclaimable pages, the number of pages at which a process which is generating disk writes will itself start writing out dirty data.</string>
+    <string name="helptext_dirty_writeback_centisecs">The kernel flusher threads will periodically wake up and write \'old\' data out to disk.  This tunable expresses the interval between those wakeups, in 100\'ths of a second.\nSetting this to zero disables periodic writeback altogether.</string>
+    <string name="helptext_drop_caches">Writing to this will cause the kernel to drop clean caches, as well as reclaimable slab objects like dentries and inodes.  Once dropped, their memory becomes free. (1 = free pagecache, 2 = free reclaimable slab objects, 3 = free slab objects and pagecache)</string>
+    <string name="helptext_extfrag_threshold">This parameter affects whether the kernel will compact memory or direct reclaim to satisfy a high-order allocation. Values tending towards 0 imply allocations would fail due to lack of memory, values towards 1000 imply failures are due to fragmentation and -1 implies that the allocation will succeed as long as watermarks are met.</string>
+    <string name="helptext_extra_free_kbytes">This parameter tells the VM to keep extra free memory between the threshold where background reclaim (kswapd) kicks in, and the threshold where direct reclaim (by allocating processes) kicks in.</string>
+    <string name="helptext_highmem_is_dirtyable">This defaults to 0 (false), meaning that the dirty_ratio and dirty_background_ratio ratios are calculated as a percentage of low memory only. This protects against excessive scanning in page reclaim, swapping and general VM distress.</string>
+    <string name="helptext_laptop_mode">laptop_mode is a knob that controls "laptop mode".</string>
+    <string name="helptext_legacy_va_layout">If non-zero, this sysctl disables the new 32-bit mmap layout - the kernel will use the legacy (2.4) layout for all processes.</string>
+    <string name="helptext_lowmem_reserve_ratio">For some specialised workloads on highmem machines it is dangerous for the kernel to allow process memory to be allocated from the "lowmem" zone. This is because that memory could then be pinned via the mlock() system call, or by unavailability of swapspace.</string>
+    <string name="helptext_max_map_count">This file contains the maximum number of memory map areas a process may have. Memory map areas are used as a side-effect of calling malloc, directly by mmap and mprotect, and also when loading shared libraries.</string>
+    <string name="helptext_min_free_kbytes">This is used to force the Linux VM to keep a minimum number of kilobytes free.</string>
+    <string name="helptext_oom_dump_tasks">Enables a system-wide task dump (excluding kernel threads) to be produced when the kernel performs an OOM-killing and includes such information as pid, uid, tgid, vm size, rss, nr_ptes, nr_pmds, swapents, oom_score_adj score, and name. This is helpful to determine why the OOM killer was invoked, to identify the rogue task that caused it, and to determine why the OOM killer chose the task it did to kill.</string>
+    <string name="helptext_oom_kill_allocating_task">This enables or disables killing the OOM-triggering task in out-of-memory situations. The default value is 0.</string>
+    <string name="helptext_overcommit_memory">This value contains a flag that enables memory overcommitment.\nWhen this flag is 0, the kernel attempts to estimate the amount of free memory left when userspace requests more memory.\nWhen this flag is 1, the kernel pretends there is always enough memory until it actually runs out.\nWhen this flag is 2, the kernel uses a "never overcommit" policy that attempts to prevent any overcommit of memory.</string>
+    <string name="helptext_overcommit_ratio">When overcommit_memory is set to 2, the committed address space is not permitted to exceed swap plus this percentage of physical RAM.</string>
+    <string name="helptext_panic_on_oom">This enables or disables panic on out-of-memory feature.</string>
+    <string name="helptext_percpu_pagelist_fraction">This is the fraction of pages at most (high mark pcp->high) in each zone that are allocated for each per cpu page list. The min value for this is 8. It means that we don\'t allow more than 1/8th of pages in each zone to be allocated in any single per_cpu_pagelist.</string>
+    <string name="helptext_stat_interval">The time interval between which vm statistics are updated. The default is 1 second.</string>
+    <string name="helptext_swappiness">This control is used to define how aggressive the kernel will swap memory pages.  Higher values will increase agressiveness, lower values decrease the amount of swap.  A value of 0 instructs the kernel not to initiate swap until the amount of free and file-backed pages is less than the high water mark in a zone.</string>
+    <string name="helptext_vfs_cache_pressure">This percentage value controls the tendency of the kernel to reclaim the memory which is used for caching of directory and inode objects.</string>
+    <!-- Misc Fragment helptexts -->
+    <string name="helptext_vtg_level">This tunable controls the vibration module of your phone. Usually a lower value means a softer vibration.</string>
+    <string name="helptext_tcp_congestion">Choose the algorithm behind your network congestion control. Usually the default is \'cubic\' or \'reno\'.</string>
+    <string name="helptext_temp_threshold">The temperature threshold when your CPU starts to throttle to save it from overheating. Usually this value is in °C.</string>
+    <string name="helptext_volume_boost">This value gives your speakers or your headphone a boost to get them a little louder.</string>
+
 </resources>

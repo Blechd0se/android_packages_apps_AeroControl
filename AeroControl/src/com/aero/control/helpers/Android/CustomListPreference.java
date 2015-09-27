@@ -1,17 +1,23 @@
 package com.aero.control.helpers.Android;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.aero.control.helpers.Android.Material.CheckBox;
 import com.aero.control.helpers.Android.Material.CheckBox.OnCheckListener;
+
 import android.widget.TextView;
 
 import com.aero.control.R;
+import com.aero.control.helpers.Android.Material.CustomImageButton;
 import com.aero.control.helpers.FilePath;
+import com.aero.control.helpers.HelpTextHolder;
 
 
 /**
@@ -24,6 +30,7 @@ public class CustomListPreference extends ListPreference implements OnCheckListe
     private TextView mTitle;
     private TextView mSummary;
     private CheckBox mCheckBox;
+    private CustomImageButton mCustomImageButton;
 
     private String mName = super.getKey();
     private CharSequence mSummaryPref;
@@ -31,6 +38,41 @@ public class CustomListPreference extends ListPreference implements OnCheckListe
 
     private Boolean mChecked;
     private Boolean mHideOnBoot;
+    private Boolean mShowHelp;
+
+    private String mHelpContent;
+
+    private OnClickListener mOnClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            String key = getKey();
+            if (key == null) {
+                // Could be null, so better check;
+                key = getName();
+            }
+
+            // Get the helptext if not already loaded;
+            if (mHelpContent == null) {
+                mHelpContent = HelpTextHolder.instance(mContext).getText(key);
+            }
+
+            AlertDialog dialog = new AlertDialog.Builder(mContext)
+                    .setTitle(getTitle())//.setTitle(key) // Fix to getTitle()
+                    .setMessage(mHelpContent)
+                    .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing
+                        }
+                    })
+                    .create();
+
+            dialog.show();
+
+        }
+    };
 
     public CustomListPreference(Context context) {
         super(context);
@@ -69,6 +111,30 @@ public class CustomListPreference extends ListPreference implements OnCheckListe
             mHideOnBoot = false;
 
         return mHideOnBoot;
+    }
+
+    /**
+     * Sets the small helptext icon left to the main entry visible or invisible
+     *
+     * @param enable boolean
+     */
+    public void setHelpEnable(boolean enable) {
+        this.mShowHelp = enable;
+    }
+
+
+    /**
+     * Gets the current state for the helptext icon.
+     *
+     * @return Boolean
+     */
+    public Boolean isHelpEnabled() {
+
+        if (mShowHelp == null) {
+            mShowHelp = true;
+
+        }
+        return mShowHelp;
     }
 
     /**
@@ -155,12 +221,22 @@ public class CustomListPreference extends ListPreference implements OnCheckListe
 
         mCheckBox.setChecked(isChecked());
 
-        View seperator = (View) view.findViewById(R.id.separator);
+        mCustomImageButton = (CustomImageButton) view.findViewById(R.id.info_button);
+
+        View separator_checkbox = (View) view.findViewById(R.id.separator_checkbox);
+        View seperator_info = (View) view.findViewById(R.id.separator_info);
+
+        if (isHelpEnabled()) {
+            mCustomImageButton.setOnClickListener(mOnClickListener);
+        } else {
+            mCustomImageButton.setVisibility(View.GONE);
+            seperator_info.setVisibility(View.GONE);
+        }
 
         // Some fragments don't need the new set on boot functionality for each element;
         if (isHidden()) {
             mCheckBox.setVisibility(View.GONE);
-            seperator.setVisibility(View.GONE);
+            separator_checkbox.setVisibility(View.GONE);
         }
     }
 

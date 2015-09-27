@@ -117,6 +117,7 @@ public class VoltageFragment extends PlaceHolderFragment {
             voltPref.setText(volTmp.replace("mV", ""));
             voltPref.setDialogTitle(freqTmp);
             voltPref.setHideOnBoot(true);
+            voltPref.setHelpEnable(false);
 
             PrefCat.addPreference(voltPref);
 
