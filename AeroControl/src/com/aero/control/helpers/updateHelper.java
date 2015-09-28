@@ -51,6 +51,8 @@ public class updateHelper {
                             +File.separator
                             +"com.aero.control" //folder name
                             +File.separator
+                            +"backup"
+                            +File.separator
                             +timeStamp); //file name
                     file.mkdirs();
                 }
@@ -67,7 +69,7 @@ public class updateHelper {
                     input.close();
                     output.close();
                 }
-        }
+            }
         } else {
             input = new FileInputStream(original).getChannel();
             output = new FileOutputStream(copy).getChannel();
