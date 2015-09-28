@@ -45,12 +45,16 @@ public final class PerAppService extends Service {
     private static final settingsHelper settingsHelper = new settingsHelper();
     private static final Handler mHandler = new Handler(Looper.getMainLooper());
     private Runnable mRunnable;
-    private static JobManager mJobManager = AeroActivity.mJobManager;
+    private static JobManager mJobManager;
     private final String mClassName = getClass().getName();
     private int mNullCounter = 0;
 
     @Override
     public void onCreate() {
+
+        final boolean enabled = (AeroActivity.perAppService != null) ? AeroActivity.perAppService.getState() : true;
+
+        mJobManager = JobManager.instance(PerAppService.this);
 
         if (mContext == null)
             mContext = this;
@@ -63,7 +67,7 @@ public final class PerAppService extends Service {
                         @Override
                         public void run() {
                             // Do work in its own thread;
-                            if (AeroActivity.perAppService.getState()) {
+                            if (enabled) {
                                 runTask();
                             }
                             mHandler.postDelayed(mRunnable, 5000);
@@ -77,11 +81,6 @@ public final class PerAppService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        // Do work in its own thread;
-        if (mRunnable != null)
-            new Thread(mRunnable).start();
-
         return Service.START_STICKY;
     }
 

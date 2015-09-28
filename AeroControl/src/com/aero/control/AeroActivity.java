@@ -513,14 +513,6 @@ public final class AeroActivity extends Activity {
             finish();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        // If possible, try to save our current gathered data;
-        //mJobManager.exportData();
-    }
-
     /**
      * Resets the back button counter logic.
      */

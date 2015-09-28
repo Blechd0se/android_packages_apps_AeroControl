@@ -49,6 +49,7 @@ public final class JobManager {
     private boolean mPrevSleeping = false;
     private Context mContext;
     private boolean mNotifcationShowed = false;
+    private long mExportThreshold = 0;
 
     private static JobManager mJobManager;
 
@@ -59,6 +60,8 @@ public final class JobManager {
         loadModules();
         // We add our loaded modules;
         this.mAppModuleData = new AppModuleData(getModules());
+        // If necessary load the saved raw data back in;
+        importData();
         AppLogger.print(mClassName, "JobManager initialized!", 0);
     }
 
@@ -308,6 +311,7 @@ public final class JobManager {
 
         // Clear the existing data before;
         mAppData.clearData();
+        mModules.clear();
         mModules = new ArrayList<AppModule>();
         loadModules();
         // We add our loaded modules;
@@ -360,7 +364,7 @@ public final class JobManager {
 
                                 // Go through our modules and read/save data;
                                 for (AppModule module : mModules) {
-                                    mAppModuleData.addData(localContext, values, Integer.parseInt(tempModule));
+                                    mAppModuleData.addData(localContext, values, Integer.parseInt(tempData));
                                 }
 
                                 AppLogger.print(mClassName, tempModule + ": " + moduleData.getJSONArray(tempModule), 1);
@@ -409,8 +413,11 @@ public final class JobManager {
             return;
         }
 
-        // If necessary load the saved raw data back in;
-        importData();
+        // If we are above the threshold, export data and set a new threshold;
+        if (mExportThreshold == 0 || System.currentTimeMillis() > mExportThreshold ) {
+            mExportThreshold = System.currentTimeMillis() + Configuration.EXPORT_THRESHOLD;
+            exportData();
+        }
 
         // Allow to disable (in the next cycle) the JobManager at runtime;
         if (!PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(mPreferenceValue, true))

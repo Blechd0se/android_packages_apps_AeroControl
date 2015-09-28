@@ -82,8 +82,9 @@ public class AppModuleData {
      */
     public void addData(final AppContext context, final Integer value, final AppModule module) {
 
-        if (value == null)
+        if (value == null) {
             return;
+        }
 
         AppModuleMetaData appmetadata = existsAppModuleMetaData(context);
         if (appmetadata == null) {
