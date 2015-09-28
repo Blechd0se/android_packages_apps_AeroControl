@@ -23,19 +23,15 @@
           android:background="@color/card_shadow"
           android:layout_below="@+id/card_title"/>
 
-        <TextView
-            android:id="@+id/card_content"
-            android:padding="5dp"
-            android:layout_margin="1dip"
-            android:textAllCaps="true"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/light_grey"/>
-
+      <ImageView
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"
+          android:id="@+id/card_content"
+          android:padding="5dp"
+          android:layout_centerHorizontal="true"
+          android:scaleType="center"
+          android:layout_marginTop="22dp"
+          />
    </RelativeLayout>
 
 </merge>

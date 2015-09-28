@@ -114,7 +114,7 @@ public final class AeroActivity extends Activity {
     public static PerAppServiceHelper perAppService;
 
     public static GenericHelper genHelper = new GenericHelper();
-    public static JobManager mJobManager = JobManager.instance();
+    public static JobManager mJobManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,6 +123,8 @@ public final class AeroActivity extends Activity {
         if(getResources().getBoolean(R.bool.portrait_only)){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+
+        mJobManager = JobManager.instance(AeroActivity.this);
 
         int actionBarHeight = 0;
 

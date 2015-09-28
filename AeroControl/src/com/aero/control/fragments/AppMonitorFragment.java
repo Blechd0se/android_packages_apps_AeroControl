@@ -64,7 +64,7 @@ public class AppMonitorFragment extends Fragment {
 
         if (AeroActivity.mJobManager == null) {
             // Generate a new instance;
-            AeroActivity.mJobManager = JobManager.instance();
+            AeroActivity.mJobManager = JobManager.instance(mContext);
         }
 
         if (mProgressDialog == null) {
@@ -119,7 +119,7 @@ public class AppMonitorFragment extends Fragment {
                         if (AppLogger.getLogLevel() >= 1) {
                             for (AppElement a : appData) {
                                 AppLogger.print(mClassName, a.getName(), 1);
-                                for (AppElementDetail acd : a.getChilData()) {
+                                for (AppElementDetail acd : a.getChildData()) {
                                     AppLogger.print(mClassName, " -------> " + acd.getTitle() + " \n" + acd.getContent(), 1);
                                 }
                             }

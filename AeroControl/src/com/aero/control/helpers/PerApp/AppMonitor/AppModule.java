@@ -1,5 +1,9 @@
 package com.aero.control.helpers.PerApp.AppMonitor;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +20,8 @@ public class AppModule {
     private Integer mModuleIdentifier;
     private String mSuffix = "";
     private String mPrefix = "";
+    private Context mContext;
+    private Drawable mDrawable;
 
     public static final int MODULE_CPU_FREQ_IDENTIFIER = 10;
     public static final int MODULE_CPU_NUM_IDENTIFIER = 20;
@@ -23,9 +29,10 @@ public class AppModule {
     public static final int MODULE_TEMP_IDENTIFIER = 40;
     public static final int MODULE_GPU_IDENTIFIER = 50;
 
-    public AppModule() {
+    public AppModule(Context context) {
         this.mName = mClassName;
         this.mValues = new ArrayList<Integer>();
+        this.mContext = context;
         AppLogger.print(mClassName, "App Module initialized", 0);
     }
 
@@ -65,11 +72,36 @@ public class AppModule {
 
 
     /**
+     * Sets a drawable for the module (e.g. logo) for the GUI.
+     * @param drawable Drawable, the actual drawable
+     */
+    public final void setDrawable(Drawable drawable) {
+        this.mDrawable = drawable;
+    }
+
+    /**
+     * Returns the the current Drawable of the module. This could be NULL if
+     * the module doesn't have a drawable.
+     * @return Drawable
+     */
+    public final Drawable getDrawable() {
+        return mDrawable;
+    }
+
+    /**
      * Sets a prefix for this module. Its later used in the GUI (e.g. "CPU FREQ").
      * @param prefix String, a suffix to set.
      */
     protected final void setPrefix(final String prefix) {
         this.mPrefix = prefix;
+    }
+
+    /**
+     * Sets a prefix for this module. Its later used in the GUI (e.g. "CPU frequency").
+     * @param charSequence CharSequence, a suffix to set.
+     */
+    protected final void setPrefix(final CharSequence charSequence) {
+        setPrefix(charSequence.toString());
     }
 
     /**

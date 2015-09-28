@@ -4,6 +4,7 @@
     <color name="white">#ffffff</color>
     <color name="grey">#607d8b</color>
     <color name="dark_grey">#37474F</color>
+    <color name="actionbar_color">#263238</color>
     <color name="light_grey">#3D3D3D</color>
     <color name="bg_grey">#EEEEEE</color>
     <color name="bg_dark_grey">#E0E0E0</color>

@@ -5,44 +5,127 @@
     android:layout_height="match_parent"
     android:background="@color/bg_grey">
 
-    <com.db.chart.view.LineChartView
-        android:padding="5dp"
-        android:layout_margin="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:background="@drawable/card"
-        android:id="@+id/graph"/>
+    <LinearLayout
+        android:id="@+id/topLevel"
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:background="@drawable/actionbar_card">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/usageTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="17dp"
+                android:paddingTop="5dp"
+                android:textSize="15sp"
+                android:textColor="@color/white"/>
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch1"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
 
 
-    <TextView
-        android:padding="5dp"
-        android:layout_margin="5dp"
-        android:textAllCaps="true"
-        android:background="@drawable/card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/graph"
-        android:textColor="@color/light_grey"
-        android:id="@+id/header"/>
-
-    <RelativeLayout
-        android:id="@+id/wrapper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/header" >
-
-        <GridView
-            android:id="@+id/gridview"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:columnWidth="96dp"
-            android:numColumns="auto_fit"
-            android:gravity="center"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="2dp"
-            android:stretchMode="spacingWidthUniform"
-            android:layout_marginBottom="50dp"/>
-    </RelativeLayout>
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/topValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="20dp"
+                    android:textSize="22sp"
+                    android:textColor="@color/white"/>
+
+
+                <TextView
+                    android:id="@+id/topHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="5dp"
+                    android:textSize="16sp"
+                    android:text="@string/average"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/topModuleName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="36dp"
+                    android:paddingTop="20dp"
+                    android:textSize="22sp"
+                    android:textColor="@color/white"/>
+
+
+                <TextView
+                    android:id="@+id/topModule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="36dp"
+                    android:paddingTop="5dp"
+                    android:textSize="16sp"
+                    android:text="@string/module"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.db.chart.view.LineChartView
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:background="@drawable/card_rect"
+        android:layout_below="@+id/topLevel"
+        android:id="@+id/graph"/>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalscreen"
+        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/graph"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/layouthorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        </LinearLayout>
+
+    </HorizontalScrollView>
 </RelativeLayout>

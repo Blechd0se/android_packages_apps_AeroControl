@@ -1,6 +1,9 @@
 package com.aero.control.helpers.PerApp.AppMonitor;
 
+import android.content.Context;
+
 import com.aero.control.AeroActivity;
+import com.aero.control.R;
 
 /**
  * Created by Alexander Christ on 03.05.15.
@@ -12,12 +15,13 @@ public class CPUFreqModule extends AppModule {
     private final static String SCALE_PATH_NAME = "/cpufreq/scaling_cur_freq";
     private final String mClassName = getClass().getName();
 
-    public CPUFreqModule() {
-        super();
+    public CPUFreqModule(Context context) {
+        super(context);
         setName(mClassName);
         setIdentifier(AppModule.MODULE_CPU_FREQ_IDENTIFIER);
-        setPrefix("CPU Freq");
+        setPrefix(context.getText(R.string.pref_cpu_frequency));
         setSuffix(" Mhz");
+        setDrawable(context.getResources().getDrawable(R.drawable.appmonitor_cpu));
         AppLogger.print(mClassName, "CPU Freq Module successfully initialized!", 0);
     }
 

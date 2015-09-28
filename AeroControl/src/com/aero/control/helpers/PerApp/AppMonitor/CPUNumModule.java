@@ -1,6 +1,9 @@
 package com.aero.control.helpers.PerApp.AppMonitor;
 
+import android.content.Context;
+
 import com.aero.control.AeroActivity;
+import com.aero.control.R;
 
 /**
  * Created by Alexander Christ on 14.05.15.
@@ -11,12 +14,13 @@ public class CPUNumModule extends AppModule {
     private final static String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu";
     private final String mClassName = getClass().getName();
 
-    public CPUNumModule() {
-        super();
+    public CPUNumModule(Context context) {
+        super(context);
         setName(mClassName);
         setIdentifier(AppModule.MODULE_CPU_NUM_IDENTIFIER);
-        setPrefix("CPU Cores");
+        setPrefix(context.getText(R.string.pref_cpu_number));
         setSuffix(" Cores");
+        setDrawable(context.getResources().getDrawable(R.drawable.appmonitor_number));
         AppLogger.print(mClassName, "CPU Num Module successfully initialized!", 0);
     }
 

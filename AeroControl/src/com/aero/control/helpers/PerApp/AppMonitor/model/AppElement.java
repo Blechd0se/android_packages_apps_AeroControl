@@ -41,7 +41,7 @@ public class AppElement implements Parcelable {
      * Returns the child-data (list) of this AppElement
      * @return List<AppElementDetail>
      */
-    public List<AppElementDetail> getChilData() {
+    public List<AppElementDetail> getChildData() {
         return mAverageData;
     }
 

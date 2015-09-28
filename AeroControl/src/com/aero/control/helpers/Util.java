@@ -46,19 +46,24 @@ public class Util {
      * @param milliseconds long, Time in milliseconds.
      * @return String
      */
-    public static String convertMsToHours(long milliseconds) {
-        if (milliseconds >= 60000) {
-            // If we are just above one minute
-            return String.format("%d min",
-                    TimeUnit.MILLISECONDS.toMinutes(milliseconds));
-        } else if (milliseconds >= 3600000) {
-            // If we are above one hour;
-            return String.format("%dh",
-                    TimeUnit.MILLISECONDS.toHours(milliseconds));
+    public static String getFormatedTimeString(long milliseconds) {
+        if (milliseconds < 60000) {
+            return String.format("%02d secs",
+                    TimeUnit.MILLISECONDS.toSeconds(milliseconds) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliseconds)));
+        } else if (milliseconds < 3600000) {
+            return String.format("%02d min %02d secs",
+                    TimeUnit.MILLISECONDS.toMinutes(milliseconds) -
+                            TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(milliseconds)),
+                    TimeUnit.MILLISECONDS.toSeconds(milliseconds) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliseconds)));
         } else {
-            // Fall through, should actually never appear
-            return String.format("%d secs",
-                    TimeUnit.MILLISECONDS.toSeconds(milliseconds));
+            return String.format("%02d h %02d min %02d secs",
+                    TimeUnit.MILLISECONDS.toHours(milliseconds),
+                    TimeUnit.MILLISECONDS.toMinutes(milliseconds) -
+                            TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(milliseconds)),
+                    TimeUnit.MILLISECONDS.toSeconds(milliseconds) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliseconds)));
         }
     }
 

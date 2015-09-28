@@ -12,14 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
-import com.aero.control.adapter.GridCardAdapter;
 import com.aero.control.helpers.Android.Material.CardBox;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PerApp.AppMonitor.AppModule;
@@ -52,9 +50,8 @@ public class AppMonitorDetailFragment extends Fragment {
     private String mAppName = null;
     private int mMaxValue = 0;
     private int mModule = 10;
-    private TextView mHeader, mLineTooltip;
+    private TextView mHeader, mLineTooltip, mAverage, mModuleName;
     private List<CardBox> mCards;
-    private GridView mGridView;
     private int mPositionModule = 0;
 
     private final OnEntryClickListener lineEntryListener = new OnEntryClickListener(){
@@ -76,18 +73,20 @@ public class AppMonitorDetailFragment extends Fragment {
         }
     };
 
-    private final GridView.OnItemClickListener mCardListener = new GridView.OnItemClickListener() {
+    private final CardBox.OnClickListener mCardListener = new CardBox.OnClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        public void onClick(View v) {
 
+            int i = 0;
             CardBox cb = (CardBox)v;
 
             for (AppModule module : AeroActivity.mJobManager.getModules()) {
-                if (module.getPrefix().equals(cb.getTitle()))
+                if (module.getPrefix().equals(cb.getTitle())) {
                     mModule = module.getIdentifier();
+                    mPositionModule = i;
+                }
+                i++;
             }
-
-            mPositionModule = position;
 
             clearUI();
             loadUI();
@@ -101,14 +100,27 @@ public class AppMonitorDetailFragment extends Fragment {
         mRoot = (ViewGroup) inflater.inflate(R.layout.appmonitor_detail, null);
         this.mAppName = null;
 
-        mHeader = (TextView) mRoot.findViewById(R.id.header);
+        mHeader = (TextView) mRoot.findViewById(R.id.usageTimer);
+        mAverage = (TextView) mRoot.findViewById(R.id.topValue);
+        mModuleName = (TextView) mRoot.findViewById(R.id.topModuleName);
         mCards = new ArrayList<CardBox>();
-        mGridView = (GridView) mRoot.findViewById(R.id.gridview);
-        mGridView.setOnItemClickListener(mCardListener);
+
+        LinearLayout layoutHolder = (LinearLayout) mRoot.findViewById(R.id.layouthorizontal);
 
         for (AppModule module : AeroActivity.mJobManager.getModules()) {
             CardBox cardbox = new CardBox(getActivity());
+            cardbox.setOnClickListener(mCardListener);
             mCards.add(cardbox);
+        }
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(0, 0, 15, 0);
+
+
+        // Add the views to our LinearLayout;
+        for (CardBox c : mCards) {
+            layoutHolder.addView(c, layoutParams);
         }
 
         clearUI();
@@ -147,13 +159,12 @@ public class AppMonitorDetailFragment extends Fragment {
 
         if (AeroActivity.mJobManager == null) {
             // Generate a new instance;
-            AeroActivity.mJobManager = JobManager.instance();
+            AeroActivity.mJobManager = JobManager.instance(getActivity());
         }
 
         AeroActivity.mJobManager.wakeUp();
 
         AppElement data = null;
-        String tmp = "Average usage (";
         String suffix = "";
 
         if (mAppName == null)
@@ -174,21 +185,22 @@ public class AppMonitorDetailFragment extends Fragment {
 
         // Set up our small adapter for all loaded modules;
         for (AppModule module : AeroActivity.mJobManager.getModules()) {
-            if (mModule == module.getIdentifier())
+            if (mModule == module.getIdentifier()) {
                 suffix = module.getSuffix();
+                mAverage.setText(data.getChildData().get((i + 1)).getContent());
+                mModuleName.setText(data.getChildData().get((i + 1)).getTitle());
+            }
 
-            mCards.get(i).setContent(data.getChilData().get((i + 1)).getContent());
-            mCards.get(i).setTitle(data.getChilData().get((i + 1)).getTitle());
+            //mCards.get(i).setContent(data.getChilData().get((i + 1)).getContent());
+            mCards.get(i).setContent(module.getDrawable());
+            mCards.get(i).setTitle(data.getChildData().get((i + 1)).getTitle());
 
             i++;
         }
 
-        final GridCardAdapter gca = new GridCardAdapter(getActivity(), 0, mCards);
-        mGridView.setAdapter(gca);
-
         loadGraph(data, suffix);
 
-        mHeader.setText(tmp + data.getChilData().get(0).getTitle() + "):");
+        mHeader.setText(data.getChildData().get(0).getTitle() + " " + getText(R.string.usage_time));
 
         mHeader.setTypeface(FilePath.kitkatFont);
     }
@@ -210,10 +222,12 @@ public class AppMonitorDetailFragment extends Fragment {
 
         loadLine(data);
 
-        mLineChart.setBorderSpacing(Tools.fromDpToPx(4))
+        mLineChart.setBorderSpacing(Tools.fromDpToPx(10))
                 .setGrid(LineChartView.GridType.HORIZONTAL, mLineGridPaint)
                 .setXLabels(XController.LabelPosition.OUTSIDE)
                 .setYLabels(YController.LabelPosition.OUTSIDE)
+                .setXAxis(false)
+                .setYAxis(false)
                 .setAxisBorderValues(0, mMaxValue, calculateSteps(0, mMaxValue))
                 .setLabelsFormat(new DecimalFormat("##" + suffix))
                 .show(new Animation()
@@ -247,12 +261,15 @@ public class AppMonitorDetailFragment extends Fragment {
         // Reset the max value;
         mMaxValue = 0;
 
+        // Find the highest value;
+        for (Integer j : rawData) {
+            if (j > mMaxValue)
+                mMaxValue = j;
+        }
+
         for (int i = 0; i < size; i += realPart) {
 
             int counter = 0;
-
-            if (rawData.get(i) > mMaxValue)
-                mMaxValue = rawData.get(i);
 
             if (rest > 0) {
                 rest--;
@@ -286,7 +303,7 @@ public class AppMonitorDetailFragment extends Fragment {
 
         int range = maxValue - minValue;
 
-        return (int)Math.max(Math.ceil(range / 10), 1);
+        return (int)Math.max(Math.ceil(range / 5), 1);
     }
 
     private void showLineTooltip(int entryIndex, Rect rect){

@@ -52,9 +52,10 @@ public final class JobManager {
 
     private static JobManager mJobManager;
 
-    private JobManager() {
+    private JobManager(Context context) {
         this.mAppData = new AppData();
         this.mModules = new ArrayList<AppModule>();
+        this.mContext = context;
         loadModules();
         // We add our loaded modules;
         this.mAppModuleData = new AppModuleData(getModules());
@@ -65,11 +66,13 @@ public final class JobManager {
      * Instead of creating a new instance of the JobManager directly we call this method
      * to synchronize access. It is guaranteed to return a JobManager-Object (creates a
      * new one if its NULL).
+     *
+     * @param context Context, the current android context
      * @return JobManager
      */
-    public static synchronized JobManager instance() {
+    public static synchronized JobManager instance(Context context) {
         if (mJobManager == null)
-            mJobManager = new JobManager();
+            mJobManager = new JobManager(context);
 
         return mJobManager;
     }
@@ -142,11 +145,11 @@ public final class JobManager {
             // We copy the usage time once into our parent (for sorting reasons) and once into our child;
             parentData.setUsage(ammd.getAppContext().getTimeUsage());
             parentData.setRealName(ammd.getAppContext().getRealAppName(context));
-            parentData.getChilData().add(new AppElementDetail(ammd.getAppContext().getFormatTimeUsage(), ""));
+            parentData.getChildData().add(new AppElementDetail(ammd.getAppContext().getFormatTimeUsage(), ""));
 
             for (AppModule module : this.getModules()) {
 
-                parentData.getChilData().add(new AppElementDetail(module.getPrefix(), ammd.getAverage(module.getIdentifier()) + module.getSuffix()));
+                parentData.getChildData().add(new AppElementDetail(module.getPrefix(), ammd.getAverage(module.getIdentifier()) + module.getSuffix()));
 
                 AppLogger.print(mClassName, "------ Average: " + ammd.getAverage(module.getIdentifier()), 2);
             }
@@ -516,11 +519,11 @@ public final class JobManager {
         int counter = 0;
 
         // Load our modules;
-        mModules.add(new CPUFreqModule());
-        mModules.add(new CPUNumModule());
-        mModules.add(new RAMModule());
+        mModules.add(new CPUFreqModule(mContext));
+        mModules.add(new CPUNumModule(mContext));
+        mModules.add(new RAMModule(mContext));
         if (AeroActivity.genHelper.doesExist(FilePath.CPU_TEMP_FILE))
-            mModules.add(new TEMPModule());
+            mModules.add(new TEMPModule(mContext));
 
         for (String s : FilePath.GPU_FILES_RATE) {
             if (AeroActivity.genHelper.doesExist(s)) {
@@ -528,7 +531,7 @@ public final class JobManager {
             }
         }
         if (counter > 0) {
-            mModules.add(new GPUFreqModule());
+            mModules.add(new GPUFreqModule(mContext));
         }
 
         AppLogger.print(mClassName, "Modules successfully initialized!", 0);

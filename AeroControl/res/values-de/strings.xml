@@ -38,6 +38,12 @@
     <string name="minutes">Minuten</string>
     <string name="minute">Minute</string>
     <string name="dont_show_again">Nicht mehr anzeigen</string>
+    <string name="skip_splash">Überspringen</string>
+    <string name="aero_continue">Weiter</string>
+    <string name="warning">Warnung!</string>
+    <string name="average">Ø Durchschnitt</string>
+    <string name="module">Modul</string>
+    <string name="usage_time">Nutzungszeit</string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -312,6 +318,11 @@
     <!-- AppMonitor Fragment -->
     <string name="pref_no_appmonitor_data">Es sind noch keine Daten verfügbar, schaue später nochmal vorbei.</string>
     <string name="pref_appmonitor_disabled">AppMonitor ist deaktiviert. Aktiviere ihn in den Einstellungen, um Daten zu sehen.</string>
+    <string name="pref_cpu_frequency">CPU Frequenz</string>
+    <string name="pref_cpu_number">CPU Kerne</string>
+    <string name="pref_gpu_frequency">GPU Frequenz</string>
+    <string name="pref_ram_usage">Freier RAM</string>
+    <string name="pref_temp_usage">Temperatur</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Klick mich und bewerte diese App!</string>

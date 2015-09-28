@@ -11,7 +11,7 @@ public class Configuration {
     /**
      * The timely threshold for one app context to display data (ms)
      */
-    public static final int TIME_THRESHOLD = 60000; // = 1 minutes (60000)
+    public static final int TIME_THRESHOLD = 6000; // = 1 minutes (60000)
 
     /**
      * Enables/disables the app logger

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
+import com.aero.control.helpers.Util;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -85,17 +87,12 @@ public class AppContext {
     }
 
     /**
-     * Returns a formatted string of the current time usage
+     * Returns a formatted string of the current time usage.
+     * Just a wrapper to call the right method in the Util class
      * @return String
      */
     public final String getFormatTimeUsage() {
-
-        return String.format("%02dh : %02dmin : %02d secs",
-                TimeUnit.MILLISECONDS.toHours(getTimeUsage()),
-                TimeUnit.MILLISECONDS.toMinutes(getTimeUsage()) -
-                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(getTimeUsage())),
-                TimeUnit.MILLISECONDS.toSeconds(getTimeUsage()) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(getTimeUsage())));
+        return Util.getFormatedTimeString(getTimeUsage());
     }
 
     /**

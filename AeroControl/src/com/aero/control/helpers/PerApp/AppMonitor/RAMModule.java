@@ -1,6 +1,9 @@
 package com.aero.control.helpers.PerApp.AppMonitor;
 
 
+import android.content.Context;
+
+import com.aero.control.R;
 import com.aero.control.helpers.FilePath;
 
 import java.io.BufferedReader;
@@ -15,12 +18,13 @@ public class RAMModule extends AppModule {
 
     private final String mClassName = getClass().getName();
 
-    public RAMModule() {
-        super();
+    public RAMModule(Context context) {
+        super(context);
         setName(mClassName);
         setIdentifier(AppModule.MODULE_RAM_IDENTIFIER);
-        setPrefix("Free RAM");
+        setPrefix(context.getText(R.string.pref_ram_usage));
         setSuffix(" MB");
+        setDrawable(context.getResources().getDrawable(R.drawable.appmonitor_ram));
         AppLogger.print(mClassName, "RAM Module successfully initialized!", 0);
     }
 

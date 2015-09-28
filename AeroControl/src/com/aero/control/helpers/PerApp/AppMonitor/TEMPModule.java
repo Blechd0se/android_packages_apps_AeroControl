@@ -1,7 +1,10 @@
 package com.aero.control.helpers.PerApp.AppMonitor;
 
 
+import android.content.Context;
+
 import com.aero.control.AeroActivity;
+import com.aero.control.R;
 
 /**
  * Created by Alexander Christ on 03.05.15.
@@ -12,12 +15,13 @@ public class TEMPModule extends AppModule {
     private final String mClassName = getClass().getName();
     private final static String CPU_TEMP_FILE = "/sys/devices/virtual/thermal/thermal_zone4/temp";
 
-    public TEMPModule() {
-        super();
+    public TEMPModule(Context context) {
+        super(context);
         setName(mClassName);
         setIdentifier(AppModule.MODULE_TEMP_IDENTIFIER);
-        setPrefix("temperature");
+        setPrefix(context.getText(R.string.pref_temp_usage));
         setSuffix(" °C");
+        setDrawable(context.getResources().getDrawable(R.drawable.appmonitor_temp));
         AppLogger.print(mClassName, "Temperature Module successfully initialized!", 0);
     }
 

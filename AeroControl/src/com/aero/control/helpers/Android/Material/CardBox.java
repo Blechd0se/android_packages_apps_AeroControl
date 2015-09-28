@@ -2,9 +2,11 @@ package com.aero.control.helpers.Android.Material;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,7 +19,8 @@ import com.aero.control.R;
 public class CardBox extends LinearLayout {
 
     private TextView mTextTitle;
-    private TextView mTextContent;
+    private ImageView mImageView;
+
 
     public CardBox(Context context) {
         super(context);
@@ -37,11 +40,9 @@ public class CardBox extends LinearLayout {
     private void init(Context context, AttributeSet attrs) {
 
         String title = "";
-        String content = "";
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CardBox, 0, 0);
             title = ta.getString(R.styleable.CardBox_cardTitle);
-            content = ta.getString(R.styleable.CardBox_cardContent);
             ta.recycle();
         }
 
@@ -53,10 +54,9 @@ public class CardBox extends LinearLayout {
         inflater.inflate(R.layout.cardbox_layout, this, true);
 
         mTextTitle = (TextView) this.findViewById(R.id.card_title);
-        mTextContent = (TextView) this.findViewById(R.id.card_content);
+        mImageView = (ImageView) this.findViewById(R.id.card_content);
 
         mTextTitle.setText(title);
-        mTextContent.setText(content);
     }
 
     public void setTitle(String title) {
@@ -68,13 +68,13 @@ public class CardBox extends LinearLayout {
         return mTextTitle.getText().toString();
     }
 
-    public void setContent(String content) {
-        mTextContent.setText(content);
+    public void setContent(Drawable drawable) {
+        mImageView.setImageDrawable(drawable);
         invalidate();
     }
 
-    public String getContent() {
-        return mTextContent.getText().toString();
+    public Drawable getContent() {
+        return mImageView.getDrawable();
     }
 
     public void setBackground(int drawable) {
@@ -84,5 +84,4 @@ public class CardBox extends LinearLayout {
             this.setBackground(getResources().getDrawable(drawable));
         }
     }
-
 }
