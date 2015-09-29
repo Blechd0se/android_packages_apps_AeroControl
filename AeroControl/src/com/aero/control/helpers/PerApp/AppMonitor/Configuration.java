@@ -26,7 +26,7 @@ public class Configuration {
     /**
      * The cleanup threshold. If the usage for one app context is at or above, we cleanup the data.
      */
-    public static final int CLEANUP_THRESHOLD = 5760; // = value * 5 = seconds (default 8 hours = 5760)
+    public static final int CLEANUP_THRESHOLD = 2880; // = value * 5 = seconds (default 4 hours = 2880)
 
     /**
      * The name of the emergency file for automatic backup of the data.

@@ -364,7 +364,11 @@ public final class JobManager {
 
                                 // Go through our modules and read/save data;
                                 for (AppModule module : mModules) {
-                                    mAppModuleData.addData(localContext, values, Integer.parseInt(tempData));
+                                    try {
+                                        mAppModuleData.addData(localContext, values, Integer.parseInt(tempData));
+                                    } catch (RuntimeException e) {
+                                        AppLogger.print(mClassName, "The data for this module was not added, maybe you tried to add data for a non-existing module?", 0);
+                                    }
                                 }
 
                                 AppLogger.print(mClassName, tempModule + ": " + moduleData.getJSONArray(tempModule), 1);
@@ -527,10 +531,17 @@ public final class JobManager {
 
         // Load our modules;
         mModules.add(new CPUFreqModule(mContext));
-        mModules.add(new CPUNumModule(mContext));
+
+        if (Runtime.getRuntime().availableProcessors() > 1) {
+            // If we just have one core, we dont need this module;
+            mModules.add(new CPUNumModule(mContext));
+        }
+
         mModules.add(new RAMModule(mContext));
-        if (AeroActivity.genHelper.doesExist(FilePath.CPU_TEMP_FILE))
+
+        if (AeroActivity.genHelper.doesExist(FilePath.CPU_TEMP_FILE)) {
             mModules.add(new TEMPModule(mContext));
+        }
 
         for (String s : FilePath.GPU_FILES_RATE) {
             if (AeroActivity.genHelper.doesExist(s)) {

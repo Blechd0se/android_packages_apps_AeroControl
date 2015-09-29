@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <RelativeLayout
+    <RelativeLayout
         android:id="@+id/wrapper"
-        android:layout_width="96dp"
+        android:minWidth="96dp"
+        android:layout_width="wrap_content"
         android:layout_height="96dp">
 
         <TextView
@@ -17,21 +18,22 @@
             android:layout_height="wrap_content"
             android:textColor="@color/light_grey"/>
 
-      <View
-          android:layout_width="wrap_content"
-          android:layout_height="1dp"
-          android:background="@color/card_shadow"
-          android:layout_below="@+id/card_title"/>
+        <View
+            android:minWidth="96dp"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/card_shadow"
+            android:layout_below="@+id/card_title"/>
 
-      <ImageView
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"
-          android:id="@+id/card_content"
-          android:padding="5dp"
-          android:layout_centerHorizontal="true"
-          android:scaleType="center"
-          android:layout_marginTop="22dp"
-          />
-   </RelativeLayout>
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/card_content"
+            android:padding="5dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="center"
+            android:layout_marginTop="23dp"
+            />
+    </RelativeLayout>
 
 </merge>
