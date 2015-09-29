@@ -47,7 +47,6 @@ public final class PerAppService extends Service {
     private Runnable mRunnable;
     private static JobManager mJobManager;
     private final String mClassName = getClass().getName();
-    private int mNullCounter = 0;
 
     @Override
     public void onCreate() {
@@ -176,27 +175,6 @@ public final class PerAppService extends Service {
         // Get the first item in the list;
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             PackageName = getTopApp();
-
-            if (PackageName == null && !isScreenOn()) {
-
-                mNullCounter++;
-
-                // If the user hasn't set the permissions in 120 seconds, we disable it again;
-                if (mNullCounter > 24) {
-                    AppLogger.print(mClassName, "Stopping service since the user didn't give us permission", 0);
-                    // If we get a null, we should disable this feature (and service);
-                    AeroActivity.perAppService.stopService();
-                    // We also deactive this in aero controls settings, because the user didn't give us the permissions;
-                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
-                    editor.putBoolean("per_app_service", false);
-                    editor.putBoolean("per_app_monitor", false);
-                    editor.commit();
-                    mNullCounter = 0;
-                }
-            } else {
-                mNullCounter = 0;
-            }
-
         } else {
             ActivityManager.RunningTaskInfo AppInfo = mAm.getRunningTasks(1).get(0);
 
