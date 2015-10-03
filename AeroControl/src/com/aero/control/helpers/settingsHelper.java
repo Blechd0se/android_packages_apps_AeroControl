@@ -47,8 +47,8 @@ public class settingsHelper {
     private String mGPUGov;
     private static final int mNumCpus = Runtime.getRuntime().availableProcessors();
 
-    private static final shellHelper shell = new shellHelper();
-    private static final shellHelper shellPara = new shellHelper();
+    private static final shellHelper shell = shellHelper.instance();
+    private static final shellHelper shellPara = shellHelper.forceInstance();
     private static final ArrayList<String> defaultProfile = new ArrayList<String>();
     private static final GenericHelper genHelper = new GenericHelper();
 

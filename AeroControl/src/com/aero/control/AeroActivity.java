@@ -110,7 +110,7 @@ public final class AeroActivity extends Activity {
     private ActionBar mActionBar;
 
     private static final rootHelper rootCheck = new rootHelper();
-    public static final shellHelper shell = new shellHelper();
+    public static final shellHelper shell = shellHelper.instance();
     public static PerAppServiceHelper perAppService;
 
     public static GenericHelper genHelper = new GenericHelper();

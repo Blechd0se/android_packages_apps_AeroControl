@@ -10,18 +10,11 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,11 +26,143 @@ public final class shellHelper {
 
     // Buffer length;
     private static final int BUFF_LEN = 8192;
-    private static final byte[] buffer = new byte[BUFF_LEN];
     private static final String LOG_TAG = shellHelper.class.getName();
     private ShellWorkqueue shWork = new ShellWorkqueue();
+    private static shellHelper mShellHelper;
+
+    private List<String> mCommands;
+    private Process mProcess = null;
+    private DataOutputStream mShellOutput = null;
+    private BufferedReader mOutput = null;
 
     private final static String NO_DATA_FOUND = "Unavailable";
+
+
+    private shellHelper() {
+
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                mCommands = new ArrayList<String>();
+                try {
+                    mProcess = Runtime.getRuntime().exec("su");
+                    mShellOutput = new DataOutputStream(mProcess.getOutputStream());
+                    mOutput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "We were not able to create a shell!", e);
+                }
+            }
+        };
+        Thread worker = new Thread(run);
+        worker.start();
+    }
+
+    /**
+     * Returns a interactive shell. If no shell objects existed previously,
+     * a new one is created.
+     * @return shellHelper
+     */
+    public static synchronized shellHelper instance() {
+        if (mShellHelper == null) {
+            mShellHelper = new shellHelper();
+        }
+
+        return mShellHelper;
+    }
+
+    /**
+     * Forcefully creates a new shell, this shouldn't be used.
+     * @return shellHelper
+     */
+    public static synchronized shellHelper forceInstance() {
+        return new shellHelper();
+    }
+
+    /**
+     * Adds commands to our queue for our shell.
+     * @param commands String[]
+     */
+    private synchronized void addCommands(String[] commands) {
+        for (String cmd : commands) {
+            if (cmd != null)
+                this.mCommands.add(cmd);
+        }
+    }
+
+    /**
+     * Adds a single command to our queue for our shell.
+     * @param cmd String
+     */
+    public synchronized void addCommand(String cmd) {
+        this.mCommands.add(cmd);
+    }
+
+    /**
+     * Runs our commands without checking the output inside the shell.
+     * This method is only used internally.
+     */
+    private void runCommands() {
+
+        List<String> commands = Collections.synchronizedList(mCommands);
+
+        try {
+            for (String cmd : commands) {
+                mShellOutput.write((cmd + "\n").getBytes("UTF-8"));
+                mShellOutput.flush();
+            }
+            try {
+                mShellOutput.flush();
+            } catch (IOException e) {}
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Something interrupted our operations...", e);
+        }
+        mCommands.clear();
+    }
+
+    /**
+     * Returns the output of *all* previously added commands. If one wants
+     * to get the output of the shell, one should call getRootResult() directly
+     * after addCommand() or addCommands().
+     * @return String
+     */
+    private String getRootResult() {
+
+        List<String> commands = Collections.synchronizedList(mCommands);
+        char[] buf = new char[BUFF_LEN];
+        int read;
+        StringBuilder response = new StringBuilder();
+
+        try {
+            for (String cmd : commands) {
+                mShellOutput.write((cmd + "\n").getBytes("UTF-8"));
+
+                while(true){
+                    read = mOutput.read(buf);
+                    if (read == -1) {
+                        return null;
+                    }
+
+                    response.append(buf, 0, read);
+
+                    if(read < BUFF_LEN){
+                        //we have read everything
+                        break;
+                    }
+                }
+
+                mShellOutput.flush();
+            }
+            try {
+                mShellOutput.flush();
+            } catch (IOException e) {}
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Something interrupted our operations...", e);
+            return null;
+        } finally {
+            mCommands.clear();
+        }
+        return response.toString();
+    }
 
     /*
      * Allows to simply query up commands to execute by the root process
@@ -89,7 +214,7 @@ public final class shellHelper {
      */
     public void execWork() {
         shWork.addToWork("echo ");
-        setRootInfo(shWork.execWork(), true);
+        setRootInfo(shWork.execWork());
     }
 
     /**
@@ -476,154 +601,59 @@ public final class shellHelper {
     }
 
     /**
-     * Generic Method for setting values in kernel with "echo" command
+     * Generic Method for setting values in kernel with "echo" command.
+     * This method is just a wrapper for runCommands().
      *
      * @param command   => (Object) and the value (echo value >)
      * @param content   => the path to set the value (echo > path)
-     *
-     * @return nothing
      */
     public final void setRootInfo(final String command, final String content) {
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                Process rooting = null;
-                String tmp;
-                try {
+        String tmp;
+        String[] commands;
+        // Check if last char is a whitespace;
+        tmp = command.substring(command.length() - 1);
+        if (tmp.matches("^\\s*$")) {
+            tmp = command.substring(0, command.length() - 1);
+        } else {
+            tmp = command;
+        }
 
-                    rooting = Runtime.getRuntime().exec("su");
-
-                    DataOutputStream dataStream = new DataOutputStream(rooting.getOutputStream());
-
-                    // Check if last char is a whitespace;
-                    tmp = command.substring(command.length() - 1);
-                    if (tmp.matches("^\\s*$")) {
-                        tmp = command.substring(0, command.length() - 1);
-                    } else {
-                        tmp = command;
-                    }
-
-                    // Doing some String-puzzle;
-                    dataStream.writeBytes("chmod 0666 " + content + "\n");
-                    dataStream.writeBytes("echo \"" + tmp + "\" " + "> " + content + "\n");
-                    dataStream.writeBytes("exit\n");
-                    dataStream.flush();
-
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "Do you even root, bro? :/");
-                } finally {
-                    if (rooting != null) {
-                        try {
-                            rooting.waitFor();
-                        } catch (InterruptedException e) {}
-                        rooting.destroy();
-                    }
-                }
-            }
+        commands = new String[]{
+                "chmod 0666 " + content,
+                "echo \"" + tmp + "\" " + "> " + content
         };
-        Thread rootThread = new Thread(runnable);
-        rootThread.start();
 
+        addCommands(commands);
+        runCommands();
     }
     /**
      * Generic Method for setting a bunch of commands
-     * Same as setRootInfo but with an array instead of objects
+     * Same as setRootInfo but with an array instead of objects.
+     * This method is just a wrapper for runCommands().
      *
      * @param array   => Commands to execute in an array
-     *
-     * @return nothing
      */
     public final void setRootInfo(final String array[]) {
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                // Run root commands;
-                runRootInfo(array);
-            }
-        };
-        Thread rootThread = new Thread(runnable);
-        rootThread.start();
+        addCommands(array);
+        runCommands();
     }
 
     /**
-     * Generic Method for setting a bunch of commands
-     * Same as setRootInfo but with an array instead of objects
+     * Remounts the system (on the Defy) via runCommands();
+     * TODO: Adjust this for the according device.
      *
-     * @param array    => Commands to execute in an array
-     * @param threaded => Should be run in its own thread?
-     *
-     * @return nothing
-     */
-    public final void setRootInfo(final String array[], boolean threaded) {
-
-        if (!threaded) {
-            setRootInfo(array);
-            return;
-        }
-        // Run the root commands;
-        runRootInfo(array);
-    }
-
-    private final void runRootInfo(final String[] array) {
-        Process process = null;
-
-        try {
-            process = Runtime.getRuntime().exec("su");
-            DataOutputStream dataStream = new DataOutputStream(process.getOutputStream());
-            for (String commands : array) {
-                dataStream.writeBytes(commands + "\n");
-                dataStream.flush();
-            }
-            dataStream.writeBytes("exit\n");
-            dataStream.flush();
-
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Do you even root, bro? :/");
-        } finally {
-            if (process != null) {
-                try {
-                    process.waitFor();
-                } catch (InterruptedException e) {}
-                process.destroy();
-            }
-        }
-    }
-
-    /**
-     * Remounts the system
-     *
-     * @return nothing
      */
     public final void remountSystem() {
 
-        Process rooting = null;
-        try {
-
-            rooting = Runtime.getRuntime().exec("su");
-            DataOutputStream dataStream = new DataOutputStream(rooting.getOutputStream());
-            dataStream.writeBytes("mount -o remount,rw -t ext3 /dev/block/mmcblk1p21 /system" + "\n");
-            dataStream.flush();
-            dataStream.writeBytes("exit\n");
-            dataStream.flush();
-            rooting.waitFor();
-
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "Do you even root, bro? :/", e);
-        } finally {
-            if (rooting != null) {
-                try {
-                    rooting.waitFor();
-                } catch (InterruptedException e) {}
-                rooting.destroy();
-            }
-        }
-
+        addCommand("mount -o remount,rw -t ext3 /dev/block/mmcblk1p21 /system");
+        runCommands();
     }
 
     /**
-     * Executes a command in Terminal and returns output
+     * Executes a command in Terminal and returns output.
+     * This method is just a wrapper for getRootResult().
      *
      * @param command   => set the command to execute
      * @param parameter => set a parameter
@@ -632,48 +662,22 @@ public final class shellHelper {
      */
     public final String getRootInfo(String command, String parameter) {
 
-        Process rooting = null;
+        String ret = null;
 
-        try {
-            rooting = Runtime.getRuntime().exec("su");
+        addCommand(command + " " + parameter);
+        ret = getRootResult();
 
-            DataOutputStream stdin = new DataOutputStream(rooting.getOutputStream());
-
-            stdin.writeBytes(command + " " + parameter + "\n");
-            InputStream stdout = rooting.getInputStream();
-            int read;
-            String output = "";
-            while(true){
-                read = stdout.read(buffer);
-                if (read == -1)
-                    return NO_DATA_FOUND;
-
-                output += new String(buffer, 0, read);
-                if(read<BUFF_LEN){
-                    //we have read everything
-                    break;
-                }
-            }
-            stdin.writeBytes("exit\n");
-            return output;
-
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Do you even root, bro? :/", e);
-        } finally {
-            if (rooting != null) {
-                try {
-                    rooting.waitFor();
-                } catch (InterruptedException e) {}
-                rooting.destroy();
-            }
+        if (ret == null) {
+            ret = NO_DATA_FOUND;
         }
 
-        return NO_DATA_FOUND;
+        return ret;
     }
 
 
     /**
-     * This Method returns an Array, with root rights
+     * This method returns an Array, with root rights.
+     * This method is just a wrapper for getRootResult().
      *
      * @param command   => the actual command which runs with root-rights
      * @param split     => delimiter, which seperates the strings (mostly \n)
@@ -683,76 +687,23 @@ public final class shellHelper {
     public final String[] getRootArray(String command, String split) {
 
         ArrayList<String> temp = new ArrayList<String>();
-        ExecutorService executor = Executors.newFixedThreadPool(2);
-        Process rooting = null;
+        String ret = null;
 
-        try {
-            rooting = Runtime.getRuntime().exec("su");
+        addCommand(command);
+        ret = getRootResult();
 
-            DataOutputStream stdin = new DataOutputStream(rooting.getOutputStream());
-
-            stdin.writeBytes(command + "\n");
-            final InputStream stdout = rooting.getInputStream();
-            int read;
-            String tmp = "";
-
-            Callable<Integer> readTask = new Callable<Integer>() {
-                @Override
-                public Integer call() throws Exception {
-                    return stdout.read(buffer);
-                }
-            };
-
-            while(true){
-
-                Future<Integer> future = executor.submit(readTask);
-
-                try {
-                    read = future.get(500, TimeUnit.MILLISECONDS);
-                } catch (ExecutionException e) {
-                    return null;
-                } catch (InterruptedException e) {
-                    return null;
-                } catch (TimeoutException e) {
-                    return null;
-                }
-                if (read == -1)
-                    return null;
-
-                tmp += new String(buffer, 0, read);
-
-                if(read < BUFF_LEN){
-                    //we have read everything
-                    break;
-                }
-            }
-
-            for (String a : tmp.split(split)) {
-                temp.add(a);
-            }
-            stdin.writeBytes("exit\n");
-
-            return temp.toArray(new String[0]);
-
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Do you even root, bro? :/", e);
-        } finally {
-            if (rooting != null) {
-                try {
-                    rooting.waitFor();
-                } catch (InterruptedException e) {}
-                rooting.destroy();
-            }
+        for (String a : ret.split(split)) {
+            temp.add(a);
         }
-        return null;
+
+        return temp.toArray(new String[0]);
     }
 
     /**
-     * Sets the proper base addresses for the overclocking module
+     * Sets the proper base addresses for the overclocking module.
      *
-     * @return nothing
+     * @return boolean, if overclocking was successful
      */
-
     public final boolean setOverclockAddress() {
 
         if (new File("/proc/overclock/omap2_clk_init_cpufreq_table_addr").exists() &&
@@ -760,8 +711,10 @@ public final class shellHelper {
 
             // getRootInfo() is much faster for large strings compared to getInfo()
             final String kallsyms = "/proc/kallsyms";
-            final String omap_address = getRootInfo("busybox egrep \"omap2_clk_init_cpufreq_table$\"", kallsyms).substring(0, 8);
-            final String cpufreq_address = getRootInfo("busybox egrep \"cpufreq_stats_update$\"", kallsyms).substring(0, 8);
+            addCommand("busybox egrep \"omap2_clk_init_cpufreq_table$\"" + kallsyms);
+            final String omap_address = getRootResult().substring(0, 8);
+            addCommand("busybox egrep \"cpufreq_stats_update$\"" + kallsyms);
+            final String cpufreq_address = getRootResult().substring(0, 8);
 
             final String [] commands = new String[] {
                     "echo " + "0x" + omap_address + " > " + "/proc/overclock/omap2_clk_init_cpufreq_table_addr",
