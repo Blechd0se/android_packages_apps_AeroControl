@@ -19,6 +19,7 @@ import android.view.Display;
 import android.widget.Toast;
 
 import com.aero.control.AeroActivity;
+import com.aero.control.R;
 import com.aero.control.helpers.PerApp.AppMonitor.AppContext;
 import com.aero.control.helpers.PerApp.AppMonitor.AppLogger;
 import com.aero.control.helpers.PerApp.AppMonitor.JobManager;
@@ -47,6 +48,7 @@ public final class PerAppService extends Service {
     private Runnable mRunnable;
     private static JobManager mJobManager;
     private final String mClassName = getClass().getName();
+    private boolean mShowToasts = true;
 
     @Override
     public void onCreate() {
@@ -95,6 +97,8 @@ public final class PerAppService extends Service {
         if (mPerAppPrefs == null)
             mPerAppPrefs = mContext.getSharedPreferences(perAppProfileHandler, Context.MODE_PRIVATE);
 
+        mShowToasts = PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean("per_app_toast", true);
+
         // init our data;
         setAppData();
 
@@ -129,7 +133,9 @@ public final class PerAppService extends Service {
             if (!(mPreviousApp.equals(mCurrentApp))) {
 
                 if(mActive) {
-                    Toast.makeText(mContext, "Returning to normal usage", Toast.LENGTH_LONG).show();
+                    if (mShowToasts) {
+                        Toast.makeText(mContext, mContext.getText(R.string.return_to_normal), Toast.LENGTH_LONG).show();
+                    }
                     mActive = false;
                     mProfile = null;
                     settingsHelper.executeDefault();
@@ -148,7 +154,9 @@ public final class PerAppService extends Service {
                     for (final String a : tmp) {
                         if (mCurrentApp.equals(a)) {
                             mProfile = entry.getKey();
-                            Toast.makeText(mContext, "Applying Per-App Profile ", Toast.LENGTH_LONG).show();
+                            if (mShowToasts) {
+                                Toast.makeText(mContext, mContext.getText(R.string.apply_profile) + " " + mProfile, Toast.LENGTH_LONG).show();
+                            }
                             mActive = true;
 
                             // Passing the profile to our settings helper;

@@ -48,7 +48,7 @@ public class PrefsActivity extends PreferenceActivity {
     public TextView mActionBarTitle;
     private ActionBar mActionBar;
     private int mCounter;
-    private CheckBoxPreference mPer_app_check, mRebootChecker, mPerAppMonitor;
+    private CheckBoxPreference mPer_app_check, mRebootChecker, mPerAppMonitor, mPerAppToasts;
     private ListPreference mBootDelay;
 
     @Override
@@ -91,6 +91,8 @@ public class PrefsActivity extends PreferenceActivity {
             mBootDelay = (ListPreference) root.findPreference("boot_delay");
         if (mPerAppMonitor == null)
             mPerAppMonitor = (CheckBoxPreference)root.findPreference("per_app_monitor");
+        if (mPerAppToasts == null)
+            mPerAppToasts = (CheckBoxPreference)root.findPreference("per_app_toast");
 
         Preference resetTutorials = root.findPreference("reset_tutorials");
         Preference beta = root.findPreference("beta");
@@ -106,6 +108,8 @@ public class PrefsActivity extends PreferenceActivity {
         mPerAppMonitor.setIcon(R.drawable.ic_action_appmonitor);
         mBootDelay.setIcon(R.drawable.timer);
         mBootDelay.setDialogIcon(R.drawable.timer);
+        mPerAppToasts.setIcon(R.drawable.ic_action_toast);
+        setCheckedState(mPerAppToasts);
         setMinutes(mBootDelay, mBootDelay.getValue());
         resetTutorials.setIcon(R.drawable.ic_action_warning);
         setCheckedState(mPer_app_check);
@@ -176,6 +180,15 @@ public class PrefsActivity extends PreferenceActivity {
         });
 
         mRebootChecker.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                setCheckedState((CheckBoxPreference) preference);
+                return false;
+            }
+        });
+
+
+        mPerAppToasts.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 setCheckedState((CheckBoxPreference) preference);

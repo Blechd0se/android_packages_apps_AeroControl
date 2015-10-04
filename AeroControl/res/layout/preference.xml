@@ -20,6 +20,11 @@
             android:title="Per App Monitor"
             android:summary="Enable or disable the AppMonitor." />
 
+        <CheckBoxPreference
+            android:key="per_app_toast"
+            android:title="PerApp Toasts"
+            android:summary="Enable or disable toast-notifications"/>
+
         <ListPreference
             android:key="boot_delay"
             android:title="@string/pref_boot_delay"

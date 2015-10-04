@@ -28,8 +28,8 @@
     <string name="successful">Successful!</string>
     <string name="mVPlus">+25 mV</string>
     <string name="mVMinus">-25 mV</string>
-    <string name="perAppAssigned">PerApp: Active</string>
-    <string name="notperAppAssigned">PerApp: Not active</string>
+    <string name="perAppAssigned">Per-App: Active</string>
+    <string name="notperAppAssigned">Per-App: Not active</string>
     <string name="nogpu_data">Couldn\'t find any GPU related data</string>
     <string name="xda">XDA Thread</string>
     <string name="enabled">Enabled</string>
@@ -47,6 +47,8 @@
     <string name="average">Ø average</string>
     <string name="module">module</string>
     <string name="usage_time">usage time</string>
+    <string name="return_to_normal">Returning to normal usage</string>
+    <string name="apply_profile">Applying Per-App Profile: </string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -110,6 +112,7 @@
 
     <string name="pref_boot_delay">Boot Timer Delay</string>
     <string name="pref_boot_delay_dialog">Delay in minutes</string>
+    <string name="pref_perapp_show_toasts">Per-App Toasts</string>
 
     <!-- About -->
     <string name="about_dialog">Hello. Thank you for using this App. My name is
@@ -345,7 +348,7 @@
     <string name="introduction_welcome_heading">Welcome to \n<i>Aero</i> Control</string>
     <string name="introduction_welcome_content">We are just about to get started. If you are feeling ready, just swipe from the right to the left.
                                                 You can change all settings - which you will be changing in this assistant - later on.</string>
-    <string name="introduction_perapp_heading">PerApp Profiles</string>
+    <string name="introduction_perapp_heading">Per-App Profiles</string>
     <string name="introduction_perapp_check">Do you want to enable this service?</string>
     <string name="introduction_perapp_content">Choose your preferences for individual apps automatically. Therefore a service checks the
                                                 foreground app every now and then and applies your desired profile automatically.\n

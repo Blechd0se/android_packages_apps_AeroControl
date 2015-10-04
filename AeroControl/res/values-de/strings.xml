@@ -26,8 +26,8 @@
     <string name="nocpu_data">Konnte keine CPU Daten finden.</string>
     <string name="maybe_later">Vielleicht später</string>
     <string name="successful">Erfolg!</string>
-    <string name="perAppAssigned">PerApp: Aktiv</string>
-    <string name="notperAppAssigned">PerApp: Nicht aktiv</string>
+    <string name="perAppAssigned">Per-App: Aktiv</string>
+    <string name="notperAppAssigned">Per-App: Nicht aktiv</string>
     <string name="nogpu_data">Konnte keine GPU relevanten Daten finden</string>
     <string name="enabled">Aktiviert</string>
     <string name="disabled">Deaktiviert</string>
@@ -44,6 +44,8 @@
     <string name="average">Ø Durchschnitt</string>
     <string name="module">Modul</string>
     <string name="usage_time">Nutzungszeit</string>
+    <string name="return_to_normal">Beende Per-App Profil</string>
+    <string name="apply_profile">Wende Per-App Profil an: </string>
 
     <!-- Default Navigation Drawer entries -->
 
@@ -102,6 +104,8 @@
 
     <string name="pref_boot_delay">Hochfahrverzögerung</string>
     <string name="pref_boot_delay_dialog">Verzögerung in Minuten</string>
+    <string name="pref_perapp_show_toasts">Per-App Toasts</string>
+
 
     <!-- About -->
     <string name="about_dialog">Hallo. Danke, dass Du meine App nutzt. Mein Name
@@ -309,7 +313,7 @@
     <string name="pref_profile_deleted">Gelöscht</string>
     <string name="pref_profile_undo">Rückgangig</string>
     <string name="pref_profile_no_changes">Es wurden noch keine Einstellungen vorgenommen!</string>
-    <string name="pref_profile_service_not_running">Per App Service ist nicht gestartet, es wurden aber Apps zu Profilen zugewiesen!</string>
+    <string name="pref_profile_service_not_running">Per-App Service ist nicht gestartet, es wurden aber Apps zu Profilen zugewiesen!</string>
     <string name="pref_profile_export">Exportieren</string>
     <string name="pref_profile_import">Importieren</string>
     <string name="pref_profile_import_select">Profile für Import auswählen</string>
@@ -331,7 +335,7 @@
     <string name="introduction_welcome_heading">Willkommen zu \n<i>Aero</i> Control</string>
     <string name="introduction_welcome_content">Du bist kurz davor richtig loszulegen. Wenn Du dich bereit fühlst, swipe von rechts nach links.
                                                 Alle Einstellungen, die Du in diesem Assistent vornimmst, kannst Du später abändern.</string>
-    <string name="introduction_perapp_heading">PerApp Profile</string>
+    <string name="introduction_perapp_heading">Per-App Profile</string>
     <string name="introduction_perapp_check">Möchtest Du diesen Service aktivieren?</string>
     <string name="introduction_perapp_content">Lasse Profile automatisch für bestimmte Apps aktivieren. Hierfür überprüft ein Service von Zeit zu Zeit
                                                 die aktuell laufende App und aktiviert Dein gewünschtes Profil automatisch.\n
