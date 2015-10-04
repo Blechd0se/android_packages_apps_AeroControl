@@ -30,6 +30,7 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.Android.AboutDialog;
 import com.aero.control.helpers.Util;
+import com.aero.control.service.PerAppService;
 import com.aero.control.service.PerAppServiceHelper;
 
 import java.io.File;
@@ -214,7 +215,7 @@ public class PrefsActivity extends PreferenceActivity {
 
                 if (mPer_app_check.isChecked()) {
 
-                    showUsageStatDialog();
+                    Util.showUsageStatDialog(PrefsActivity.this);
 
                     mPerAppMonitor.setEnabled(true);
                     mPerAppMonitor.setChecked(true);
@@ -261,7 +262,7 @@ public class PrefsActivity extends PreferenceActivity {
 
                 if (((CheckBoxPreference) preference).isChecked()) {
 
-                    showUsageStatDialog();
+                    Util.showUsageStatDialog(PrefsActivity.this);
 
                     if (AeroActivity.mJobManager != null)
                         AeroActivity.mJobManager.enable();
@@ -434,36 +435,6 @@ public class PrefsActivity extends PreferenceActivity {
             preference.setValue("" + 0);
             preference.setValueIndex(0);
         }
-    }
-
-    /**
-     * Show the usage stats warning dialog, to inform the user;
-     */
-    private void showUsageStatDialog() {
-
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-
-            if (Util.getUsageStatsList(getApplicationContext()).isEmpty()) {
-
-                AlertDialog dialog = new AlertDialog.Builder(PrefsActivity.this)
-                        .setTitle(R.string.warning)
-                        .setIcon(R.drawable.warning)
-                        .setMessage(R.string.pref_lollipop_usage_warning)
-                        .setPositiveButton(R.string.aero_continue, new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-                                startActivity(intent);
-                            }
-                        })
-                        .create();
-
-                dialog.show();
-
-            }
-        }
-
     }
 
     @Override

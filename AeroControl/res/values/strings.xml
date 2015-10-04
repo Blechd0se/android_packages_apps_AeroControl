@@ -103,7 +103,7 @@
                         \n\nKeep in mind that you can always leave the beta channel if you click the second link again.
     </string>
 
-    <string name="pref_lollipop_usage_warning">Please notice that Google changed the way to check for the current foreground app for Lollipop(+). In order to make this feature work on your device, you have to go into settings and enable usage statistics access for Aero Control. You can revoke this right at any point of time. If you are feeling ready, click continue.</string>
+    <string name="pref_lollipop_usage_warning">Please notice that Google changed the way to check for the current foreground app for Lollipop(+). In order to make PerApp Service work on your device, you have to go into settings and enable usage statistics access for Aero Control. You can revoke this right at any point of time. If you are feeling ready, click continue.</string>
 
 
     <string name="app_theme_red">Red - Light Holo with red accent</string>

@@ -1,10 +1,14 @@
 package com.aero.control.helpers;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
+import android.provider.Settings;
 
 import com.aero.control.R;
 
@@ -103,6 +107,37 @@ public class Util {
     private static UsageStatsManager getUsageStatsManager(Context context){
         UsageStatsManager usm = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
         return usm;
+    }
+
+    /**
+     * Show the usage stats warning dialog, to inform the user.
+     * @param context Context, the current application context
+     */
+    public static void showUsageStatDialog(final Context context) {
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+
+            if (Util.getUsageStatsList(context).isEmpty()) {
+
+                AlertDialog dialog = new AlertDialog.Builder(context)
+                        .setTitle(R.string.warning)
+                        .setIcon(R.drawable.warning)
+                        .setMessage(R.string.pref_lollipop_usage_warning)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.aero_continue, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                                context.startActivity(intent);
+                            }
+                        })
+                        .create();
+
+                dialog.show();
+
+            }
+        }
     }
 
 }

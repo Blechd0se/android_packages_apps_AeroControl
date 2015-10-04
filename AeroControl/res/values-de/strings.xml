@@ -98,6 +98,9 @@
                         \n\nDu kannst den Beta Kanal jederzeit verlassen, wenn Du den zweiten Link nochmals anklickst.
     </string>
 
+    <string name="pref_lollipop_usage_warning">Damit der PerApp Service bei dir funktioniert, musst du den Nutzungsdatenzugriff für Aero Control freischalten. Dies ist eine Limitierung von Android seit der Version 5.0(+). Du kannst dieses Recht jederzeit wieder deaktivieren. Wenn Du bereit bist, klicke auf Weiter.</string>
+
+
     <string name="app_theme_red">Rot - Light Holo mit rotem Akzent</string>
     <string name="app_theme_light">Light - Light Holo mit blauem Akzent</string>
     <string name="app_theme_dark">Dark - Light Holo mit blauem Akzent und dunkler Actionbar</string>

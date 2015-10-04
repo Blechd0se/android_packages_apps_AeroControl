@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.aero.control.fragments.AppMonitorFragment;
 import com.aero.control.fragments.StatisticsFragment;
 import com.aero.control.helpers.PerApp.AppMonitor.JobManager;
+import com.aero.control.helpers.Util;
 import com.aero.control.navItems.NavBarItems;
 import com.aero.control.fragments.AeroFragment;
 import com.aero.control.fragments.CPUFragment;
@@ -154,8 +155,10 @@ public final class AeroActivity extends Activity {
         if (!isServiceUp()) {
             // Service is not running, check if it should;
             perAppService = new PerAppServiceHelper(this);
-            if (perAppService.shouldBeStarted())
+            if (perAppService.shouldBeStarted()) {
+                Util.showUsageStatDialog(AeroActivity.this);
                 perAppService.startService();
+            }
         }
 
         // Assign action bar title;
