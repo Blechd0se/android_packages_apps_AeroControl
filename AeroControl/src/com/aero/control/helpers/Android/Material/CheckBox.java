@@ -3,7 +3,6 @@ package com.aero.control.helpers.Android.Material;
 import com.aero.control.R;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,7 +12,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -131,7 +129,6 @@ public class CheckBox extends CustomView {
             canvas.drawCircle(getWidth() / 2, getHeight() / 2, getWidth() / 2,
                     mPaint);
         }
-        invalidate();
     }
 
     private void changeBackgroundColor(int color) {
@@ -188,6 +185,9 @@ public class CheckBox extends CustomView {
         private Bitmap sprite;
         private Rect mSrc;
         private Rect mDst;
+        private boolean needDrawBackground = true;
+        private boolean needReDraw = false;
+        private boolean forceReDraw = false;
         private BitmapFactory.Options mOpt = new BitmapFactory.Options();
 
         public Check(Context context) {
@@ -226,17 +226,37 @@ public class CheckBox extends CustomView {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
             if (check) {
-                if (step < 11)
+                if (step < 11) {
                     step++;
+
+                    needDrawBackground = true;
+                    needReDraw = true;
+                }
+
+                if (!needReDraw)
+                    forceReDraw = true;
             } else {
-                if (step >= 0)
+                if (step >= 0) {
                     step--;
-                if (step == -1)
-                    changeBackground();
+
+                    needDrawBackground = true;
+                    needReDraw = true;
+                }
+                if (step == -1) {
+                    if (needDrawBackground) {
+                        changeBackground();
+
+                        needDrawBackground = false;
+                    }
+                }
             }
             drawRect();
             canvas.drawBitmap(sprite, mSrc, mDst, null);
-            invalidate();
+            if (needReDraw || forceReDraw && !needReDraw) {
+                invalidate();
+                needReDraw = false;
+                forceReDraw = false;
+            }
         }
 
     }
