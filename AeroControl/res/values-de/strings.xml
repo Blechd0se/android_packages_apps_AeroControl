@@ -107,7 +107,8 @@
 
     <string name="pref_boot_delay">Hochfahrverzögerung</string>
     <string name="pref_boot_delay_dialog">Verzögerung in Minuten</string>
-    <string name="pref_perapp_show_toasts">Per-App Toasts</string>
+    <string name="pref_perapp_monitor">Per-App Monitor</string>
+    <string name="pref_perapp_toasts">Per-App Toasts</string>
 
 
     <!-- About -->

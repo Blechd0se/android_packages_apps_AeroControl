@@ -17,12 +17,12 @@
 
         <CheckBoxPreference
             android:key="per_app_monitor"
-            android:title="Per App Monitor"
+            android:title="@string/pref_perapp_monitor"
             android:summary="Enable or disable the AppMonitor." />
 
         <CheckBoxPreference
             android:key="per_app_toast"
-            android:title="PerApp Toasts"
+            android:title="@string/pref_perapp_toasts"
             android:summary="Enable or disable toast-notifications"/>
 
         <ListPreference

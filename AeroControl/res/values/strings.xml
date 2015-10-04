@@ -112,7 +112,8 @@
 
     <string name="pref_boot_delay">Boot Timer Delay</string>
     <string name="pref_boot_delay_dialog">Delay in minutes</string>
-    <string name="pref_perapp_show_toasts">Per-App Toasts</string>
+    <string name="pref_perapp_monitor">Per-App Monitor</string>
+    <string name="pref_perapp_toasts">Per-App Toasts</string>
 
     <!-- About -->
     <string name="about_dialog">Hello. Thank you for using this App. My name is
