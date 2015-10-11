@@ -61,7 +61,7 @@ public class CustomPreference extends Preference implements OnCheckListener {
             }
 
             AlertDialog dialog = new AlertDialog.Builder(mContext)
-                    .setTitle(getTitle())//.setTitle(key) // Fix to getTitle()
+                    .setTitle(getTitle())
                     .setMessage(mHelpContent)
                     .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
 

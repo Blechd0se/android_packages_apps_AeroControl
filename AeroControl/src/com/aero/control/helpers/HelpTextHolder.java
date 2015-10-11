@@ -48,6 +48,7 @@ public class HelpTextHolder {
         putInMap("hotplug_control", R.string.helptext_hotplug_control);
         putInMap("voltage_values", R.string.helptext_voltage_values);
         putInMap("set_governor", R.string.helptext_set_governor);
+        putInMap("cpu_commands", R.string.helptext_live_oc_uc);
 
         // GPU Fragment helptexts;
         putInMap("gpu_max_freq", R.string.helptext_gpu_max_freq);
@@ -96,6 +97,7 @@ public class HelpTextHolder {
         putInMap("tcp_congestion", R.string.helptext_tcp_congestion);
         putInMap("temp_threshold", R.string.helptext_temp_threshold);
         putInMap("volume_boost", R.string.helptext_volume_boost);
+        putInMap("amp", R.string.helptext_amp);
 
         // CPU Hotplug Fragment helptexts;
         putInMap("all_cpus_threshold", R.string.helptext_all_cpus_threshold);

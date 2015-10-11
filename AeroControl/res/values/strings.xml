@@ -381,6 +381,7 @@
     <string name="helptext_hotplug_control">A tap on this element allows you to change various values of your hotplug driver. The hotplug driver decides when a CPU core should be on-/ or offline.</string>
     <string name="helptext_voltage_values">In this submenu you can change the voltage values of your CPU. This might increase your battery life or allows your CPU to run on higher frequencies. However, this can cause massive issues if overdone too much.</string>
     <string name="helptext_set_governor">The CPU governor controls the scaling of the frequency of your CPU. A different governor can give a total different experience/batterylife.</string>
+    <string name="helptext_live_oc_uc">Be careful with this option. You can overclock/underclock the listed frequency steps and set the correct voltage for it. Those values wont be applied to per-app profiles for your own safety.</string>
     <!-- CPU Hotplug Tunable helptexts -->
     <string name="helptext_all_cpus_threshold">The threshold for the average load of all currently onlined cpus to online the next core. If you lower this value, cores can get more easily online.</string>
     <string name="helptext_battery_saver">If enabled (1), only one core will stay active as soon as you turn off your screen. If you are getting strange audio quality while the screen is off, try switching it off via 0. This will let both cores stay active during suspend.</string>
@@ -453,5 +454,6 @@
     <string name="helptext_tcp_congestion">Choose the algorithm behind your network congestion control. Usually the default is \'cubic\' or \'reno\'.</string>
     <string name="helptext_temp_threshold">The temperature threshold when your CPU starts to throttle to save it from overheating. Usually this value is in °C.</string>
     <string name="helptext_volume_boost">This value gives your speakers or your headphone a boost to get them a little louder.</string>
+    <string name="helptext_amp">This value let you increase or decrease the strength of the vibration module. Usually 100 is the max.</string>
 
 </resources>
