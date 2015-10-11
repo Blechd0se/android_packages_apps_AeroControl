@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +27,7 @@ public final class shellHelper {
 
     // Buffer length;
     private static final int BUFF_LEN = 8192;
+    private static final byte[] buffer = new byte[BUFF_LEN];
     private static final String LOG_TAG = shellHelper.class.getName();
     private ShellWorkqueue shWork = new ShellWorkqueue();
     private static shellHelper mShellHelper;
@@ -75,7 +77,10 @@ public final class shellHelper {
      * @return shellHelper
      */
     public static synchronized shellHelper forceInstance() {
-        return new shellHelper();
+
+        mShellHelper = new shellHelper();
+
+        return mShellHelper;
     }
 
     /**
@@ -700,6 +705,56 @@ public final class shellHelper {
     }
 
     /**
+     * Executes a command in Terminal and returns output. Its only used internally for "legacy" devices.
+     *
+     * @param command   => set the command to execute
+     * @param parameter => set a parameter
+     *
+     * @return String
+     */
+    private String getLegacyRootInfo(String command, String parameter) {
+
+        Process rooting = null;
+
+        try {
+            rooting = Runtime.getRuntime().exec("su");
+
+            DataOutputStream stdin = new DataOutputStream(rooting.getOutputStream());
+
+            stdin.writeBytes(command + " " + parameter + "\n");
+            InputStream stdout = rooting.getInputStream();
+            int read;
+            String output = "";
+            while(true){
+                read = stdout.read(buffer);
+                if (read == -1)
+                    return NO_DATA_FOUND;
+
+                output += new String(buffer, 0, read);
+                if(read<BUFF_LEN){
+                    //we have read everything
+                    break;
+                }
+            }
+            stdin.writeBytes("exit\n");
+            return output;
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Do you even root, bro? :/", e);
+        } finally {
+            if (rooting != null) {
+                try {
+                    rooting.waitFor();
+                } catch (InterruptedException e) {}
+                rooting.destroy();
+            }
+        }
+
+        return NO_DATA_FOUND;
+    }
+
+
+    /**
      * Sets the proper base addresses for the overclocking module.
      *
      * @return boolean, if overclocking was successful
@@ -711,10 +766,8 @@ public final class shellHelper {
 
             // getRootInfo() is much faster for large strings compared to getInfo()
             final String kallsyms = "/proc/kallsyms";
-            addCommand("busybox egrep \"omap2_clk_init_cpufreq_table$\"" + kallsyms);
-            final String omap_address = getRootResult().substring(0, 8);
-            addCommand("busybox egrep \"cpufreq_stats_update$\"" + kallsyms);
-            final String cpufreq_address = getRootResult().substring(0, 8);
+            final String omap_address = getLegacyRootInfo("busybox egrep \"omap2_clk_init_cpufreq_table$\"", kallsyms).substring(0, 8);
+            final String cpufreq_address = getLegacyRootInfo("busybox egrep \"cpufreq_stats_update$\"", kallsyms).substring(0, 8);
 
             final String [] commands = new String[] {
                     "echo " + "0x" + omap_address + " > " + "/proc/overclock/omap2_clk_init_cpufreq_table_addr",
