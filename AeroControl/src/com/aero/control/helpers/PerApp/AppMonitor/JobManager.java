@@ -224,10 +224,14 @@ public final class JobManager {
                 appData.put("TimeUsed", context.getTimeUsage());
                 appData.put("LastChecked", context.getLastChecked());
 
+                AppLogger.print(mClassName, "Starting export for: " + context.getAppName(), 1);
+
                 // Get the meta data for all loaded modules;
                 for (AppModuleMetaData ammd : getModuleData().getAppModuleData()) {
                     // Find our App context;
                     if (ammd.getAppContext() == context) {
+
+                        AppLogger.print(mClassName, "Current Context: " + context.getAppName(), 1);
 
                         // Iterate through all loaded modules;
                         for (AppModule module : mModules) {
@@ -237,8 +241,10 @@ public final class JobManager {
                             // Our actual values are stored in this array;
                             JSONArray values  = new JSONArray();
 
+                            AppLogger.print(mClassName, "Adding Data for module: " + module.getName(), 1);
+
                             // Add our data to our array;
-                            List<Integer> currentValues = module.getValues();
+                            List<Integer> currentValues = ammd.getRawData(module.getIdentifier());
                             for (Integer i : currentValues) {
                                 values.put(i);
                             }
@@ -247,9 +253,7 @@ public final class JobManager {
                             appModule.put("Values", values);
                             // Then add the object to our app data;
                             appData.put(module.getIdentifier() + "", appModule);
-
                         }
-
                     }
                 }
                 // Add the real app name as well as the gathered module data;
