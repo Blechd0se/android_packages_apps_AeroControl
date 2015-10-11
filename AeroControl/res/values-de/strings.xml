@@ -362,4 +362,7 @@
     <string name="random_working_you_know">Am Arbeiten... Naja... Du weißt schon...</string>
     <string name="random_prepare_awesomeness">Bereite Dich auf was tolles vor!</string>
 
+    <!-- Notification Texts -->
+    <string name="notify_app_monitor_data">Wir haben genug Daten gesammelt, schaue jetzt in der App nach!</string>
+
 </resources>

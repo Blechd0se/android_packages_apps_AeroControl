@@ -585,8 +585,8 @@ public final class JobManager {
 
         final PendingIntent viewPendingIntent = PendingIntent.getActivity(mContext, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         final Notification.Builder builder = new Notification.Builder(mContext)
-                        .setContentTitle("Aero Control")
-                        .setContentText("We collected enough data, check them out in the AppMonitor section!")
+                        .setContentTitle(mContext.getText(R.string.app_name))
+                        .setContentText(mContext.getText(R.string.notify_app_monitor_data))
                         .setSmallIcon(R.drawable.rocket)
                         .setContentIntent(viewPendingIntent)
                         .setAutoCancel(true);

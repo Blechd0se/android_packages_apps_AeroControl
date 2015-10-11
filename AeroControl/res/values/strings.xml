@@ -372,6 +372,8 @@
     <string name="random_working_you_know">Working... well... you know...</string>
     <string name="random_prepare_awesomeness">Prepare for awesomeness!</string>
 
+    <!-- Notification Texts -->
+    <string name="notify_app_monitor_data">We collected enough data, check them out in the AppMonitor section!</string>
 
     <!-- Helptexts -->
     <!-- CPU Fragment helptexts -->
