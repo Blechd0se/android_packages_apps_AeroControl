@@ -9,6 +9,11 @@ public class Configuration {
     public Configuration() {}
 
     /**
+     * The current version of appmonitor. It can be used to distinguish between file formats.
+     */
+    public static final String APPMONITOR_VERSION = "1.0.0";
+
+    /**
      * The timely threshold for one app context to display data (ms)
      */
     public static final int TIME_THRESHOLD = 60000; // = 1 minutes (60000)

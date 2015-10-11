@@ -62,7 +62,7 @@ public final class JobManager {
         this.mAppModuleData = new AppModuleData(getModules());
         // If necessary load the saved raw data back in;
         importData();
-        AppLogger.print(mClassName, "JobManager initialized!", 0);
+        AppLogger.print(mClassName, "JobManager initialized, AppMonitor Version " + getVersion() + " loaded!", 0);
     }
 
     /**
@@ -94,6 +94,14 @@ public final class JobManager {
     public final void disable() {
         this.mJobManagerEnable = false;
         AppLogger.print(mClassName, "JobManager disabled!",0 );
+    }
+
+    /**
+     * Returns the current version of appmonitor.
+     * @return String
+     */
+    public final String getVersion() {
+        return Configuration.APPMONITOR_VERSION;
     }
 
     /**
@@ -223,6 +231,7 @@ public final class JobManager {
                 // Access our small API and get the information needed;
                 appData.put("TimeUsed", context.getTimeUsage());
                 appData.put("LastChecked", context.getLastChecked());
+                appData.put("AppMonitorVersion", this.getVersion());
 
                 AppLogger.print(mClassName, "Starting export for: " + context.getAppName(), 1);
 
