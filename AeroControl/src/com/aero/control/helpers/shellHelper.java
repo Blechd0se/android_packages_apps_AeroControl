@@ -311,8 +311,8 @@ public final class shellHelper {
         } catch (IOException e) {
 
             // At least try to read it via root, but check for permissions;
-            if (!(getRootInfo("ls -l", s).substring(0, 10).equals("--w-------"))) {
-                info = getRootInfo("cat", s);
+            if (!(getLegacyRootInfo("ls -l", s).substring(0, 10).equals("--w-------"))) {
+                info = getLegacyRootInfo("cat", s);
             }
 
             if (info.equals(NO_DATA_FOUND))
@@ -705,14 +705,14 @@ public final class shellHelper {
     }
 
     /**
-     * Executes a command in Terminal and returns output. Its only used internally for "legacy" devices.
+     * Executes a command in Terminal and returns output. Its only used internally for "legacy" devices/operations.
      *
      * @param command   => set the command to execute
      * @param parameter => set a parameter
      *
      * @return String
      */
-    private String getLegacyRootInfo(String command, String parameter) {
+    public String getLegacyRootInfo(String command, String parameter) {
 
         Process rooting = null;
 
