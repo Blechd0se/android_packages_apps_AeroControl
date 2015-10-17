@@ -45,14 +45,7 @@ public final class shellHelper {
         Runnable run = new Runnable() {
             @Override
             public void run() {
-                mCommands = new ArrayList<String>();
-                try {
-                    mProcess = Runtime.getRuntime().exec("su");
-                    mShellOutput = new DataOutputStream(mProcess.getOutputStream());
-                    mOutput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, "We were not able to create a shell!", e);
-                }
+                openShell();
             }
         };
         Thread worker = new Thread(run);
@@ -103,10 +96,38 @@ public final class shellHelper {
     }
 
     /**
+     * If necessary, initiates the relevant parts for the shell to work.
+     * This is only used internally.
+     */
+    private synchronized void openShell() {
+
+        if (mCommands == null) {
+            mCommands = new ArrayList<String>();
+        }
+        try {
+            if (mProcess == null) {
+                mProcess = Runtime.getRuntime().exec("su");
+            }
+            if (mShellOutput == null) {
+                mShellOutput = new DataOutputStream(mProcess.getOutputStream());
+            }
+            if (mOutput == null) {
+                mOutput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
+            }
+
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "We were not able to create a shell!", e);
+        }
+
+    }
+
+    /**
      * Runs our commands without checking the output inside the shell.
      * This method is only used internally.
      */
-    private void runCommands() {
+    private synchronized void runCommands() {
+
+        openShell();
 
         List<String> commands = Collections.synchronizedList(mCommands);
 
@@ -310,6 +331,9 @@ public final class shellHelper {
             return info;
         } catch (IOException e) {
 
+            // Make sure that the shell is open;
+            openShell();
+
             // At least try to read it via root, but check for permissions;
             if (!(getLegacyRootInfo("ls -l", s).substring(0, 10).equals("--w-------"))) {
                 info = getLegacyRootInfo("cat", s);
@@ -495,6 +519,9 @@ public final class shellHelper {
 
             return output;
         } catch (IOException e) {
+
+            // Make sure that the shell is open;
+            openShell();
 
             // At least try to read it via root, but check for permissions;
             if (!(getRootInfo("ls -l", s).substring(0, 10).equals("--w-------"))) {
