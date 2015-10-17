@@ -476,6 +476,11 @@ public final class shellHelper {
         String[] completeString = new String[0];
         String[] output;
 
+        // Make sure the last value is not a line feed;
+        if ((int)s.charAt(s.length() - 1) == 10) {
+            s = s.replace(Character.toString((char)10), "");
+        }
+
         if (flag_io == 1)
             completeString = s.replace("[", "").replace("]", "").split(" ");
         else if (flag_io == 0)
