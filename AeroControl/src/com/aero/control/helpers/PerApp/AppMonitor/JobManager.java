@@ -310,9 +310,6 @@ public final class JobManager {
                 is.close();
                 tmp = new String(buffer, "UTF-8");
 
-                // Delete the file if read successfully;
-                new File(cw.getFilesDir() + "/" + Configuration.EMERGENCY_FILE).delete();
-
             } catch (IOException e) {
                 AppLogger.print(mClassName, "Error during import... " + e, 0);
                 this.mSleeping = false;
@@ -330,6 +327,7 @@ public final class JobManager {
         // We add our loaded modules;
         this.mAppModuleData = new AppModuleData(getModules());
 
+        this.mAppModuleData.setCleanupEnable(false);
         // Beginning JSON parsing...
         try {
             JSONObject json = new JSONObject(tmp);
@@ -406,6 +404,7 @@ public final class JobManager {
             this.mSleeping = false;
         }
         this.mSleeping = false;
+        this.mAppModuleData.setCleanupEnable(true);
         AppLogger.print(mClassName, "Import of data successful!", 0);
     }
 

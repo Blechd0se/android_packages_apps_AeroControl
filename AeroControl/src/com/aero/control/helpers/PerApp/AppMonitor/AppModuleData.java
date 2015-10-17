@@ -12,6 +12,7 @@ public class AppModuleData {
     private List<AppModuleMetaData> mAppModuleData;
     private List<AppModule> mModules;
     private final String mClassName = getClass().getName();
+    private boolean mCleanUpEnabled = true;
 
     public AppModuleData(List<AppModule> modules) {
         this.mAppModuleData= new ArrayList<AppModuleMetaData>();
@@ -45,6 +46,14 @@ public class AppModuleData {
         return mAppModuleData;
     }
 
+    /**
+     * Allows to enable/disable the cleanup routines in general. This should be only used
+     * during the import of data.
+     * @param enable boolean
+     */
+    public final void setCleanupEnable(boolean enable) {
+        this.mCleanUpEnabled = enable;
+    }
 
     /**
      * Simple wrapper-method around the real addData() to add multiple values in one call
@@ -106,7 +115,8 @@ public class AppModuleData {
      */
     private void checkForCleanup(final AppModuleMetaData appmetadata, final AppContext context) {
 
-        if (appmetadata.readForCleanUp()) {
+        // CleanUp only if we are ready and its enabled;
+        if (mCleanUpEnabled && appmetadata.readForCleanUp()) {
             // Cleanup not only our data, but also the app context and module data;
             AppLogger.print(mClassName, "Cleaning up the found data for: " + context.getAppName(), 0);
             appmetadata.cleanUp();
