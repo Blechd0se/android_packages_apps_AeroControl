@@ -9,7 +9,7 @@ import com.aero.control.R;
  * Created by Alexander Christ on 14.05.15.
  * Checks for currently onlined cpu(s)
  */
-public class CPUNumModule extends AppModule {
+public final class CPUNumModule extends AppModule {
 
     private final static String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu";
     private final String mClassName = getClass().getName();

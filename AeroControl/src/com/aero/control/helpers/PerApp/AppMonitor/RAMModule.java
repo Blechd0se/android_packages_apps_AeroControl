@@ -14,7 +14,7 @@ import java.io.IOException;
  * Created by Alexander Christ on 03.05.15.
  * Checks for the current free amount of ram of the *whole* system
  */
-public class RAMModule extends AppModule {
+public final class RAMModule extends AppModule {
 
     private final String mClassName = getClass().getName();
 

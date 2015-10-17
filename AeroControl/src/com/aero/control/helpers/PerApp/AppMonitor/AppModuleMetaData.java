@@ -43,6 +43,14 @@ public class AppModuleMetaData {
     }
 
     /**
+     * Returns the current usage counter. This number represents the real usages [modules entries].
+     * @return int
+     */
+    public final int getUsage() {
+        return mUsage;
+    }
+
+    /**
      * Clears the data for all loaded modules
      */
     public final void cleanUp() {

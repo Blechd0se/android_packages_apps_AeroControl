@@ -11,7 +11,7 @@ import com.aero.control.helpers.FilePath;
  * Created by Alexander Christ on 02.08.15.
  * Checks for the current GPU Frequency
  */
-public class GPUFreqModule extends AppModule {
+public final class GPUFreqModule extends AppModule {
 
     private final String mClassName = getClass().getName();
     private String mGPUFile;

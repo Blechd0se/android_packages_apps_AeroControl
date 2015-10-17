@@ -430,10 +430,15 @@ public final class JobManager {
             return;
         }
 
+        // Don't export data on the first load;
+        if (mExportThreshold == 0) {
+            setExportTimeNow();
+        }
+
         // If we are above the threshold, export data and set a new threshold;
-        if (mExportThreshold == 0 || System.currentTimeMillis() > mExportThreshold ) {
-            mExportThreshold = System.currentTimeMillis() + Configuration.EXPORT_THRESHOLD;
+        if (System.currentTimeMillis() > mExportThreshold ) {
             exportData();
+            setExportTimeNow();
         }
 
         // Allow to disable (in the next cycle) the JobManager at runtime;
@@ -575,6 +580,13 @@ public final class JobManager {
      */
     private AppModuleData getModuleData() {
         return mAppModuleData;
+    }
+
+    /**
+     * Sets the current export threshold to now + the configuration parameter (e.g. 1 minute)
+     */
+    private void setExportTimeNow() {
+        mExportThreshold = System.currentTimeMillis() + Configuration.EXPORT_THRESHOLD;
     }
 
     /**

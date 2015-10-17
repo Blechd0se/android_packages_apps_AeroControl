@@ -9,7 +9,7 @@ import com.aero.control.R;
  * Created by Alexander Christ on 03.05.15.
  * Checks for the current frequency of cpu(s) and returns the current average
  */
-public class CPUFreqModule extends AppModule {
+public final class CPUFreqModule extends AppModule {
 
     private final static String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu";
     private final static String SCALE_PATH_NAME = "/cpufreq/scaling_cur_freq";

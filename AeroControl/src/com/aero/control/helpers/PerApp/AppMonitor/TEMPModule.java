@@ -10,7 +10,7 @@ import com.aero.control.R;
  * Created by Alexander Christ on 03.05.15.
  * Checks for the current CPU temperature
  */
-public class TEMPModule extends AppModule {
+public final class TEMPModule extends AppModule {
 
     private final String mClassName = getClass().getName();
     private final static String CPU_TEMP_FILE = "/sys/devices/virtual/thermal/thermal_zone4/temp";

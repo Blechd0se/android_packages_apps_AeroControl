@@ -31,13 +31,12 @@ public class Configuration {
     /**
      * The cleanup threshold. If the usage for one app context is at or above, we cleanup the data.
      */
-    public static final int CLEANUP_THRESHOLD = 2880; // = value * 5 = seconds (default 4 hours = 2880)
+    public static final int CLEANUP_THRESHOLD = 5760; // = value * 5 = seconds (default 4 hours = 2880)
 
     /**
      * The name of the emergency file for automatic backup of the data.
      */
     public static final String EMERGENCY_FILE = "APPMonitorData.json";
-
 
     /**
      * The interval in milliseconds to export a backup file (e.g. 60000 = 60 seconds)

@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Holds the app data in terms for each passed app context.
  * It also increases the time usage as well as the last check time for an app context.
  */
-public class AppData {
+public final class AppData {
 
     private AppMetaData mMetaData;
     private final String mClassName = getClass().getName();

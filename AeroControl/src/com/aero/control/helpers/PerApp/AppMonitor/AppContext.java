@@ -6,15 +6,13 @@ import android.content.pm.PackageManager;
 
 import com.aero.control.helpers.Util;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Created by Alexander Christ on 30.04.15.
  *
  * The main class to hold the app context for each app. It also holds
  * information about the time usage of the spoken app.
  */
-public class AppContext {
+public final class AppContext {
 
     private String mAppName;
     private long mTimeUsage = 0;                      // TimeUsage in milliseconds
@@ -101,7 +99,7 @@ public class AppContext {
      * @return boolean
      */
     public final boolean isAboveThreshold() {
-        return getTimeUsage() > Configuration.TIME_THRESHOLD;
+        return getTimeUsage() >= Configuration.TIME_THRESHOLD;
     }
 
     /**
