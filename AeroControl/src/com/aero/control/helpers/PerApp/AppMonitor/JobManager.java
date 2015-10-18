@@ -21,7 +21,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,8 +62,21 @@ public final class JobManager {
         loadModules();
         // We add our loaded modules;
         this.mAppModuleData = new AppModuleData(getModules());
+
         // If necessary load the saved raw data back in;
-        importData();
+        if (Configuration.THREADED_IMPORT_EXPORT) {
+            Runnable run = new Runnable() {
+                @Override
+                public void run() {
+                    importData();
+                }
+            };
+            Thread worker = new Thread(run);
+            worker.start();
+        } else {
+            importData();
+        }
+
         AppLogger.print(mClassName, "JobManager initialized, AppMonitor Version " + getVersion() + " loaded!", 0);
     }
 
@@ -85,7 +100,7 @@ public final class JobManager {
      */
     public final void enable() {
         this.mJobManagerEnable = true;
-        AppLogger.print(mClassName, "JobManager enabled!",0 );
+        AppLogger.print(mClassName, "JobManager enabled!", 0);
     }
 
     /**
@@ -93,7 +108,7 @@ public final class JobManager {
      */
     public final void disable() {
         this.mJobManagerEnable = false;
-        AppLogger.print(mClassName, "JobManager disabled!",0 );
+        AppLogger.print(mClassName, "JobManager disabled!", 0);
     }
 
     /**
@@ -217,6 +232,7 @@ public final class JobManager {
 
         // Our "parent" which will contain all information;
         JSONObject parentJson = new JSONObject();
+        long time = System.currentTimeMillis();
 
         AppLogger.print(mClassName, "Starting emergency write of data...", 0);
 
@@ -277,9 +293,13 @@ public final class JobManager {
         // Write the data to our private directory [files];
         try {
             FileOutputStream fos = mContext.openFileOutput(Configuration.EMERGENCY_FILE, Context.MODE_PRIVATE);
-            fos.write(parentJson.toString().getBytes());
-            fos.close();
-            AppLogger.print(mClassName, "Data successfully written to disk!", 0);
+            BufferedOutputStream bos = new BufferedOutputStream(fos, 8192);
+            // If we are here, we cleanup the old file and then write the new one;
+            new File(new ContextWrapper(mContext).getFilesDir() + "/" + Configuration.EMERGENCY_FILE).delete();
+            bos.write(parentJson.toString().getBytes());
+            bos.flush();
+            bos.close();
+            AppLogger.print(mClassName, "Data successfully written to disk in (" + (System.currentTimeMillis() - time) + " ms).", 0);
         } catch (IOException e) {
             AppLogger.print(mClassName, "Error during data-write..." + e, 0);
         }
@@ -294,6 +314,7 @@ public final class JobManager {
 
         ContextWrapper cw = new ContextWrapper(mContext);
         String tmp = null;
+        long time = System.currentTimeMillis();
 
         // Lock the JobManager during this operation;
         this.mSleeping = true;
@@ -313,6 +334,7 @@ public final class JobManager {
             } catch (IOException e) {
                 AppLogger.print(mClassName, "Error during import... " + e, 0);
                 this.mSleeping = false;
+                return;
             }
         } else {
             this.mSleeping = false;
@@ -405,7 +427,7 @@ public final class JobManager {
         }
         this.mSleeping = false;
         this.mAppModuleData.setCleanupEnable(true);
-        AppLogger.print(mClassName, "Import of data successful!", 0);
+        AppLogger.print(mClassName, "Import of data successful in (" + (System.currentTimeMillis() - time) + " ms).", 0);
     }
 
     /**
@@ -436,7 +458,20 @@ public final class JobManager {
 
         // If we are above the threshold, export data and set a new threshold;
         if (System.currentTimeMillis() > mExportThreshold ) {
-            exportData();
+
+            if (Configuration.THREADED_IMPORT_EXPORT) {
+                Runnable run = new Runnable() {
+                    @Override
+                    public void run() {
+                        exportData();
+                    }
+                };
+                Thread worker = new Thread(run);
+                worker.start();
+            } else {
+                exportData();
+            }
+
             setExportTimeNow();
         }
 

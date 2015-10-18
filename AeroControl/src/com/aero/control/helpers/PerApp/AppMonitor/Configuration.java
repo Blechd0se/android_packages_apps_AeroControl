@@ -42,4 +42,9 @@ public class Configuration {
      * The interval in milliseconds to export a backup file (e.g. 60000 = 60 seconds)
      */
     public static final int EXPORT_THRESHOLD = 60000;
+
+    /**
+     * If true, the import/export of data will be in a separate thread.
+     */
+    public static final boolean THREADED_IMPORT_EXPORT = true;
 }
