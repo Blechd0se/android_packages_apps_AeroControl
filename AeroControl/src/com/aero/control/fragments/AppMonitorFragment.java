@@ -4,7 +4,9 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,11 @@ import com.aero.control.helpers.PerApp.AppMonitor.JobManager;
 import com.aero.control.helpers.PerApp.AppMonitor.model.AppElement;
 import com.aero.control.helpers.PerApp.AppMonitor.model.AppElementDetail;
 import com.aero.control.helpers.Util;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -28,6 +34,7 @@ import java.util.List;
  */
 public class AppMonitorFragment extends Fragment {
 
+    private static final String FILENAME = "firstrun_appmonitor";
     private ViewGroup mRoot;
     private ListView mListView;
     private Context mContext;
@@ -53,6 +60,49 @@ public class AppMonitorFragment extends Fragment {
 
         clearUI();
         loadUI();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+
+        // Set up our file;
+        int output = 0;
+
+        if (AeroActivity.genHelper.doesExist(getActivity().getFilesDir().getAbsolutePath() + "/" + FILENAME)) {
+            output = 1;
+        }
+        
+        // Only show showcase once;
+        if (output == 0)
+            DrawFirstStart(R.string.showcase_appmonitor_fragment, R.string.showcase_appmonitor_fragment_sum);
+
+    }
+
+    private void DrawFirstStart(int header, int content) {
+
+        try {
+            final FileOutputStream fos = getActivity().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            fos.write("1".getBytes());
+            fos.close();
+        }
+        catch (IOException e) {
+            Log.e("Aero", "Could not save file. ", e);
+        }
+
+        Target homeTarget = new Target() {
+            @Override
+            public Point getPoint() {
+                return new Point(150, 125);
+            }
+        };
+
+        new ShowcaseView.Builder(getActivity())
+                .setContentTitle(header)
+                .setContentText(content)
+                .setTarget(homeTarget)
+                .build();
     }
 
     private void clearUI() {

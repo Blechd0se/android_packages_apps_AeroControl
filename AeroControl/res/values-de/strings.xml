@@ -285,6 +285,9 @@
     <string name="showcase_your_settings_sum">Klicke dieses Symbol um einen einfachen Dateibrowser zu erhalten. Damit kannst Du deine
                                             ganz persönlichen Einstellungen vornehmen. Mit dem linken Icon kannst Du diese wieder löschen.</string>
 
+    <string name="showcase_appmonitor_fragment">Überwache deine Apps!</string>
+    <string name="showcase_appmonitor_fragment_sum">AppMonitor zeigt dir nützliche Informationen zu deinen Apps. Sobald wir genug Informationen
+                                            gesammelt haben informieren wir dich. Die gesammelten Daten gehören dabei ganz alleine Dir und werden nicht zentral gesammelt.</string>
 
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">Allgemeine Einstellungen</string>

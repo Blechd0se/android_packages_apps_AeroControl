@@ -296,6 +296,10 @@
     <string name="showcase_your_settings_sum">Click this symbol to get a simple filemanager. You can choose any file you wish and add
                                         your very own tunables. With the left icon you can delete those settings.</string>
 
+    <string name="showcase_appmonitor_fragment">Monitor your Apps!</string>
+    <string name="showcase_appmonitor_fragment_sum">AppMonitor displays you useful information about your used apps. You will be informed once
+                                        we collected enough data to show you something. Your data belongs to you, no information will be send to someone else.</string>
+
     <!-- Defy Parts -->
     <string name="pref_general_settings_defy">General Settings</string>
     <string name="pref_charging_led">Charging LED Color</string>

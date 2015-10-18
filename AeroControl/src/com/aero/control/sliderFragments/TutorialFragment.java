@@ -94,6 +94,8 @@ public class TutorialFragment extends Fragment {
                         fos.write("1".getBytes());
                         fos = getActivity().openFileOutput("firstrun_misc", Context.MODE_PRIVATE);
                         fos.write("1".getBytes());
+                        fos = getActivity().openFileOutput("firstrun_appmonitor", Context.MODE_PRIVATE);
+                        fos.write("1".getBytes());
                     }
                     fos.close();
                 } catch (IOException e) {
