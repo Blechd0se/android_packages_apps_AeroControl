@@ -136,6 +136,26 @@ public final class JobManager {
     }
 
     /**
+     * If possible, forces a cleanup of the data for a specific app
+     * @param appname String, the appname (e.g. com.aero.control).
+     */
+    public final void forceCleanUp(String appname) {
+
+        AppContext context = getSimpleAppContext(appname);
+
+        if (context != null) {
+
+            AppModuleMetaData appModuleMetaData = mAppModuleData.existsAppModuleMetaData(context);
+
+            if (appModuleMetaData != null) {
+                appModuleMetaData.cleanUp();
+            }
+
+            context.cleanUp();
+        }
+    }
+
+    /**
      * Main method to get the gathered data in some kind of pretty format.
      * It iterates through all available modules(data) for each found app
      * and adds them to a custom AppElement object.
@@ -233,6 +253,9 @@ public final class JobManager {
         // Our "parent" which will contain all information;
         JSONObject parentJson = new JSONObject();
         long time = System.currentTimeMillis();
+
+        // Delete the file if read successfully;
+        new File(new ContextWrapper(mContext).getFilesDir() + "/" + Configuration.EMERGENCY_FILE).delete();
 
         AppLogger.print(mClassName, "Starting emergency write of data...", 0);
 

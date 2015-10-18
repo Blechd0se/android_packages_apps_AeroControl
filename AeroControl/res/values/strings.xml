@@ -344,6 +344,7 @@
     <string name="pref_gpu_frequency">GPU frequency</string>
     <string name="pref_ram_usage">Free RAM</string>
     <string name="pref_temp_usage">Temperature</string>
+    <string name="pref_reset_stats_for_app">Are you sure you want to reset the statistics for this app?</string>
 
     <!-- Toast Messages -->
     <string name="rateIt">Click me and rate this app!</string>

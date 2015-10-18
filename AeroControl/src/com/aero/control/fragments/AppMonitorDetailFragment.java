@@ -1,12 +1,17 @@
 package com.aero.control.fragments;
 
 import android.animation.TimeInterpolator;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +25,7 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.Android.Material.CardBox;
 import com.aero.control.helpers.FilePath;
+import com.aero.control.helpers.PerApp.AppMonitor.AppLogger;
 import com.aero.control.helpers.PerApp.AppMonitor.AppModule;
 import com.aero.control.helpers.PerApp.AppMonitor.JobManager;
 import com.aero.control.helpers.PerApp.AppMonitor.model.AppElement;
@@ -32,6 +38,7 @@ import com.db.chart.view.YController;
 import com.db.chart.view.animation.Animation;
 import com.db.chart.view.animation.easing.cubic.CubicEaseOut;
 import com.db.chart.view.animation.style.DashAnimation;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -53,6 +60,7 @@ public class AppMonitorDetailFragment extends Fragment {
     private TextView mHeader, mLineTooltip, mAverage, mModuleName;
     private List<CardBox> mCards;
     private int mPositionModule = 0;
+    private FloatingActionButton mResetButton;
 
     private final OnEntryClickListener lineEntryListener = new OnEntryClickListener(){
         @Override
@@ -93,6 +101,27 @@ public class AppMonitorDetailFragment extends Fragment {
         }
     };
 
+    private final View.OnClickListener mResetListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.warning)
+                    .setIcon(R.drawable.warning)
+                    .setMessage(R.string.pref_reset_stats_for_app)
+                    .setPositiveButton(R.string.aero_continue, new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            AeroActivity.mJobManager.forceCleanUp(mAppName);
+                            getActivity().onBackPressed();
+                        }
+                    })
+                    .create();
+
+            dialog.show();
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +133,12 @@ public class AppMonitorDetailFragment extends Fragment {
         mAverage = (TextView) mRoot.findViewById(R.id.topValue);
         mModuleName = (TextView) mRoot.findViewById(R.id.topModuleName);
         mCards = new ArrayList<CardBox>();
+        mResetButton = (FloatingActionButton) mRoot.findViewById(R.id.reset_stats);
+
+        // Not super clean, but easier than create a gazillion layouts;
+        if (getActivity().getWindowManager().getDefaultDisplay().getWidth() <= 480) {
+            mResetButton.setVisibility(View.GONE);
+        }
 
         LinearLayout layoutHolder = (LinearLayout) mRoot.findViewById(R.id.layouthorizontal);
 
@@ -182,6 +217,8 @@ public class AppMonitorDetailFragment extends Fragment {
             setTitle(data.getRealName());
             mAppName = data.getName();
         }
+
+        mResetButton.setOnClickListener(mResetListener);
 
         // Set up our small adapter for all loaded modules;
         for (AppModule module : AeroActivity.mJobManager.getModules()) {

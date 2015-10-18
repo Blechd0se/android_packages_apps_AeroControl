@@ -25,7 +25,7 @@ public class AppModuleData {
      * and returns the AppModuleMetaData
      * @param context AppContext, the context that will be checked
      */
-    private AppModuleMetaData existsAppModuleMetaData(final AppContext context) {
+    public final AppModuleMetaData existsAppModuleMetaData(final AppContext context) {
 
         for (AppModuleMetaData ammd : mAppModuleData) {
 
