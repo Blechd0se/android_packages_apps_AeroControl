@@ -585,6 +585,27 @@ public class settingsHelper {
             }
         }
 
+        if (genHelper.doesExist(FilePath.CPU_BOOST)) {
+            final String completeCPUBOOSTSettings[] = shellPara.getDirInfo(FilePath.CPU_BOOST, true);
+
+            /* CPU Boost specific settings at boot */
+            for (String d : completeCPUBOOSTSettings) {
+
+                final String cpuBoostSettings = prefs.getString(FilePath.CPU_BOOST + "/" + d, null);
+                if (cpuBoostSettings != null) {
+
+                    shellPara.queueWork("chmod 0666 " + FilePath.CPU_BOOST + "/" + d);
+
+                    if (Profile != null)
+                        defaultProfile.add("echo " + shellPara.getInfo(FilePath.CPU_BOOST + "/" + d) + " > " + FilePath.CPU_BOOST + "/" + d);
+
+                    shellPara.queueWork("echo " + cpuBoostSettings + " > " + FilePath.CPU_BOOST + "/" + d);
+
+                    Log.e("Aero", "Output: " + "echo " + cpuBoostSettings + " > " + FilePath.CPU_BOOST + "/" + d);
+                }
+            }
+        }
+
         if (genHelper.doesExist(FilePath.GPU_GOV_PATH)) {
             final String completeGPUGovSettings[] = shellPara.getDirInfo(FilePath.GPU_GOV_PATH, true);
 

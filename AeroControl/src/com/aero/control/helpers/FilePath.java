@@ -40,6 +40,7 @@ public final class FilePath {
     public static final String CPU_VSEL_MAX = "/proc/overclock/max_vsel";
     public static final String CPU_MAX_RATE = "/proc/overclock/max_rate";
     public static final String CPU_FREQ_TABLE = "/proc/overclock/freq_table";
+    public static final String CPU_BOOST = "/sys/module/cpu_boost/parameters";
 
     /* Used by; HotplugFragment */
     public static final String[] HOTPLUG_PATH = { "/sys/kernel/hotplug_control",

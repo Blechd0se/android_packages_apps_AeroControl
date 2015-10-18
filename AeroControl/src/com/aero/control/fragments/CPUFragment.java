@@ -59,6 +59,7 @@ public class CPUFragment extends PlaceHolderFragment {
 
     private CPUHotplugFragment mHotplugFragment;
     private VoltageFragment mVoltageFragment;
+    private CPUBoostFragment mCPUBoostFragment;
 
     private static final ArrayList<String> mVselList = new ArrayList<String>();
 
@@ -165,6 +166,34 @@ public class CPUFragment extends PlaceHolderFragment {
             cpuCategory.removePreference(voltage_control);
         }
 
+        final CustomPreference cpu_boost_control = (CustomPreference)root.findPreference("cpu_boost_control");
+        if (AeroActivity.genHelper.doesExist(FilePath.CPU_BOOST)) {
+            cpu_boost_control.setOrder(18);
+            cpu_boost_control.setHideOnBoot(true);
+            cpu_boost_control.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+
+                    if (mCPUBoostFragment == null)
+                        mCPUBoostFragment = new CPUBoostFragment();
+
+                    AeroActivity.mHandler.postDelayed(new Runnable()  {
+                        @Override
+                        public void run() {
+                            getFragmentManager()
+                                    .beginTransaction()
+                                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                                    .replace(R.id.content_frame, mCPUBoostFragment)
+                                    .addToBackStack("CPUBoost")
+                                    .commit();
+                        }
+                    },AeroActivity.genHelper.getDefaultDelay());
+                    return true;
+                }
+            });
+        } else {
+            cpuCategory.removePreference(cpu_boost_control);
+        }
 
         final Preference cpu_oc_uc = (Preference) root.findPreference("cpu_commands");
 

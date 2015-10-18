@@ -143,7 +143,10 @@
     <string name="perf_cpu_hotplug_sum">Stelle hier den Hotplug-Treiber ein</string>
 
     <string name="perf_voltage_control">Spannungskontrolle</string>
-    <string name="perf_voltage_control_sum">Stelle hier die Spannung der CPU ein.</string>
+    <string name="perf_voltage_control_sum">Stelle hier die Spannung der CPU ein</string>
+
+    <string name="perf_cpu_boost_control">CPU Boost</string>
+    <string name="perf_cpu_boost_control_sum">Stelle hier die Werte von CPU Boost ein</string>
 
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Speichereinstellungen</string>

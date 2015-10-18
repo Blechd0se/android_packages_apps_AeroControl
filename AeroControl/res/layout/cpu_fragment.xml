@@ -22,6 +22,11 @@
             android:title="@string/perf_voltage_control"
             android:summary="@string/perf_voltage_control_sum" />
 
+        <com.aero.control.helpers.Android.CustomPreference
+            android:key="cpu_boost_control"
+            android:title="@string/perf_cpu_boost_control"
+            android:summary="@string/perf_cpu_boost_control_sum" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

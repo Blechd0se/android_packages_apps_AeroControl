@@ -157,6 +157,9 @@
     <string name="perf_voltage_control">Voltage Control</string>
     <string name="perf_voltage_control_sum">Adjust the voltage of your cpu here</string>
 
+    <string name="perf_cpu_boost_control">CPU Boost</string>
+    <string name="perf_cpu_boost_control_sum">Adjust the CPU boost tunables of your cpu here</string>
+
     <!-- Memory Fragment -->
     <string name="pref_memory_settings">Memory Settings</string>
 
