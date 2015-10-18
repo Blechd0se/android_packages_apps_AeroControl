@@ -294,8 +294,6 @@ public final class JobManager {
         try {
             FileOutputStream fos = mContext.openFileOutput(Configuration.EMERGENCY_FILE, Context.MODE_PRIVATE);
             BufferedOutputStream bos = new BufferedOutputStream(fos, 8192);
-            // If we are here, we cleanup the old file and then write the new one;
-            new File(new ContextWrapper(mContext).getFilesDir() + "/" + Configuration.EMERGENCY_FILE).delete();
             bos.write(parentJson.toString().getBytes());
             bos.flush();
             bos.close();
