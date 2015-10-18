@@ -601,7 +601,7 @@ public class settingsHelper {
 
                     shellPara.queueWork("echo " + cpuBoostSettings + " > " + FilePath.CPU_BOOST + "/" + d);
 
-                    Log.e("Aero", "Output: " + "echo " + cpuBoostSettings + " > " + FilePath.CPU_BOOST + "/" + d);
+                    //Log.e("Aero", "Output: " + "echo " + cpuBoostSettings + " > " + FilePath.CPU_BOOST + "/" + d);
                 }
             }
         }

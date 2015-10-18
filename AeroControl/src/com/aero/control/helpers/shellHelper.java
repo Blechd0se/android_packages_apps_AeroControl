@@ -644,7 +644,7 @@ public final class shellHelper {
      * @param command   => (Object) and the value (echo value >)
      * @param content   => the path to set the value (echo > path)
      */
-    public final void setRootInfo(final String command, final String content) {
+    public synchronized final void setRootInfo(final String command, final String content) {
 
         String tmp;
         String[] commands;
