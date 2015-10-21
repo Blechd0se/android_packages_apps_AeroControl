@@ -23,7 +23,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,7 +63,7 @@ public final class JobManager {
         this.mAppModuleData = new AppModuleData(getModules());
 
         // If necessary load the saved raw data back in;
-        if (Configuration.THREADED_IMPORT_EXPORT) {
+        if (Configuration.THREADED_IMPORT) {
             Runnable run = new Runnable() {
                 @Override
                 public void run() {
@@ -274,8 +273,10 @@ public final class JobManager {
 
                 AppLogger.print(mClassName, "Starting export for: " + context.getAppName(), 1);
 
+                List<AppModuleMetaData> moduleMetaData = getModuleData().getAppModuleData();
+
                 // Get the meta data for all loaded modules;
-                for (AppModuleMetaData ammd : getModuleData().getAppModuleData()) {
+                for (AppModuleMetaData ammd : moduleMetaData) {
                     // Find our App context;
                     if (ammd.getAppContext() == context) {
 
@@ -287,7 +288,7 @@ public final class JobManager {
                             // For each module we need to get the data separately;
                             JSONObject appModule = new JSONObject();
                             // Our actual values are stored in this array;
-                            JSONArray values  = new JSONArray();
+                            JSONArray values = new JSONArray();
 
                             AppLogger.print(mClassName, "Adding Data for module: " + module.getName(), 1);
 
@@ -480,18 +481,7 @@ public final class JobManager {
         // If we are above the threshold, export data and set a new threshold;
         if (System.currentTimeMillis() > mExportThreshold ) {
 
-            if (Configuration.THREADED_IMPORT_EXPORT) {
-                Runnable run = new Runnable() {
-                    @Override
-                    public void run() {
-                        exportData();
-                    }
-                };
-                Thread worker = new Thread(run);
-                worker.start();
-            } else {
-                exportData();
-            }
+            exportData();
 
             setExportTimeNow();
         }

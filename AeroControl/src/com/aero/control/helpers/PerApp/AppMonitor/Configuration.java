@@ -44,7 +44,7 @@ public class Configuration {
     public static final int EXPORT_THRESHOLD = 60000;
 
     /**
-     * If true, the import/export of data will be in a separate thread.
+     * If true, the import of data will be in a separate thread.
      */
-    public static final boolean THREADED_IMPORT_EXPORT = true;
+    public static final boolean THREADED_IMPORT = true;
 }
