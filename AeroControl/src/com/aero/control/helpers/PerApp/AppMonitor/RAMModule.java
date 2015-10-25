@@ -17,6 +17,7 @@ import java.io.IOException;
 public final class RAMModule extends AppModule {
 
     private final String mClassName = getClass().getName();
+    private final static String mPROC_MEMINFO = FilePath.FILENAME_PROC_MEMINFO;
 
     public RAMModule(Context context) {
         super(context);
@@ -43,7 +44,7 @@ public final class RAMModule extends AppModule {
              * Buffers:            5236 kB
              * Cached:            81652 kB
              */
-            final BufferedReader reader = new BufferedReader(new FileReader(FilePath.FILENAME_PROC_MEMINFO), 1024);
+            final BufferedReader reader = new BufferedReader(new FileReader(mPROC_MEMINFO), 1024);
             totalMemory = reader.readLine();
             totalFreeMemory = reader.readLine();
 

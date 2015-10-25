@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.FilePath;
 
 /**
  * Created by Alexander Christ on 03.05.15.
@@ -11,7 +12,7 @@ import com.aero.control.R;
  */
 public final class CPUFreqModule extends AppModule {
 
-    private final static String SCALE_CUR_FILE = "/sys/devices/system/cpu/cpu";
+    private final static String SCALE_CUR_FILE = FilePath.CPU_BASE_PATH;
     private final static String SCALE_PATH_NAME = "/cpufreq/scaling_cur_freq";
     private final String mClassName = getClass().getName();
 

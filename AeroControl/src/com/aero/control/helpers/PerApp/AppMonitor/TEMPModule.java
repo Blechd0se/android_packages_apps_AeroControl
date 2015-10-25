@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;
+import com.aero.control.helpers.FilePath;
 
 /**
  * Created by Alexander Christ on 03.05.15.
@@ -13,7 +14,7 @@ import com.aero.control.R;
 public final class TEMPModule extends AppModule {
 
     private final String mClassName = getClass().getName();
-    private final static String CPU_TEMP_FILE = "/sys/devices/virtual/thermal/thermal_zone4/temp";
+    private final static String CPU_TEMP_FILE = FilePath.CPU_TEMP_FILE;
 
     public TEMPModule(Context context) {
         super(context);
