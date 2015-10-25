@@ -76,7 +76,7 @@ public final class JobManager {
             importData();
         }
 
-        AppLogger.print(mClassName, "JobManager initialized, AppMonitor Version " + getVersion() + " loaded!", 0);
+        AppLogger.print(mClassName, "JobManager initialized, AppMonitor Version " + getVersion() + " loaded!", -1);
     }
 
     /**

@@ -26,7 +26,7 @@ public class Configuration {
     /**
      * Sets the log level (default 0 = only relevant stuff). Set to 3 for full output
      */
-    public static final int LOG_LEVEL = 0;
+    public static final int LOG_LEVEL = -1;
 
     /**
      * The cleanup threshold. If the usage for one app context is at or above, we cleanup the data.
