@@ -11,6 +11,8 @@
     <color name="card_grey">#ffBDBDBD</color>
     <color name="card_shadow">#8c666666</color>
     <color name="material_orange">#FFA726</color>
+    <color name="text_color">#263238</color>
+    <color name="bg_preference">#455A64</color>
     <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
     <color name="default_circle_indicator_page_color">#00000000</color>
     <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>

@@ -203,6 +203,29 @@ public class CustomListPreference extends ListPreference implements OnCheckListe
         return mName;
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+
+        if (enabled) {
+            if (mTitle != null) {
+                mTitle.setTextColor(mContext.getResources().getColor(R.color.text_color));
+            }
+            if (mSummary != null) {
+                mSummary.setTextColor(mContext.getResources().getColor(R.color.text_color));
+            }
+        } else {
+            if (mTitle != null) {
+                mTitle.setTextColor(mContext.getResources().getColor(android.R.color.darker_gray));
+            }
+            if (mSummary != null) {
+                mSummary.setTextColor(mContext.getResources().getColor(android.R.color.darker_gray));
+            }
+        }
+        if (mCheckBox != null) {
+            mCheckBox.setEnabled(enabled);
+        }
+    }
 
     @Override
     protected void onBindView(View view) {

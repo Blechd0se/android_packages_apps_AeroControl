@@ -38,7 +38,7 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
-            android:textColor="#263238"
+            android:textColor="@color/text_color"
             android:textSize="18sp" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:maxLines="4"
             android:layout_marginTop="25dp"
-            android:textColor="#263238"
+            android:textColor="@color/text_color"
             android:textSize="14sp" />
     </RelativeLayout>
 
@@ -61,7 +61,7 @@
         android:id="@+id/checkbox_pref"
         android:layout_width="64dp"
         android:layout_height="match_parent"
-        android:background="#455A64"
+        android:background="@color/bg_preference"
         android:paddingRight="5dp"
         android:paddingEnd="5dp"
         android:paddingLeft="0dp"/>

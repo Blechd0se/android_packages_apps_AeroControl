@@ -54,11 +54,13 @@ public class UpdaterFragment extends PlaceHolderFragment {
 
         mBackupKernel = (CustomPreference) findPreference("backup_kernel");
         mBackupKernel.setHideOnBoot(true);
+        mBackupKernel.setHelpEnable(false);
         mRestoreKernel = new CustomListPreference(getActivity());
         mRestoreKernel.setName("restore_kernel");
         mRestoreKernel.setTitle(R.string.pref_restore_kernel);
         mRestoreKernel.setDialogTitle(R.string.pref_restore_kernel);
         mRestoreKernel.setHideOnBoot(true);
+        mRestoreKernel.setHelpEnable(false);
         this.getPreferenceScreen().addPreference(mRestoreKernel);
 
         for (String s : FilePath.BACKUPPATH) {
