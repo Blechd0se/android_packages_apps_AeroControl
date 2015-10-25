@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:textColor="@color/light_grey"
         android:textSize="16sp"
-        android:padding="2dp"
+        android:padding="10dp"
         android:layout_height="match_parent"
         android:layout_toRightOf="@+id/rowimage"/>
 

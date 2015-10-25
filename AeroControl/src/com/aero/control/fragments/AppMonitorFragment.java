@@ -5,12 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -145,6 +147,7 @@ public class AppMonitorFragment extends Fragment {
                     public void run() {
 
                         TextView tmp = (TextView) mRoot.findViewById(R.id.noData);
+                        ImageView iv = (ImageView) mRoot.findViewById(R.id.empty_image);
 
                         mProgressDialog.dismiss();
                         mProgressDialog.cancel();
@@ -152,15 +155,18 @@ public class AppMonitorFragment extends Fragment {
                         // Do we have data to display?
                         if (appData.size() > 0) {
                             tmp.setVisibility(View.GONE);
+                            iv.setVisibility(View.GONE);
                         } else {
                             tmp.setText(getText(R.string.pref_no_appmonitor_data));
                             tmp.setVisibility(View.VISIBLE);
+                            iv.setVisibility(View.VISIBLE);
                         }
 
                         // Is it even enabled?
                         if (!AeroActivity.mJobManager.getJobManagerState()) {
                             tmp.setText(getText(R.string.pref_appmonitor_disabled));
                             tmp.setVisibility(View.VISIBLE);
+                            iv.setVisibility(View.VISIBLE);
                             clearUI();
                             return;
                         }

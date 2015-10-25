@@ -77,7 +77,7 @@ public class AppDataAdapter extends ArrayAdapter<AppElement> {
 
         if (data != null) {
 
-            holder.text.setText(overview.getRealName() + "\n" + overview.getName());
+            holder.text.setText(overview.getRealName());
             holder.textTime.setText(Util.getFormatedTimeString(overview.getUsage()));
             holder.image.setImageDrawable(overview.getImage());
             holder.image.setTag(position);

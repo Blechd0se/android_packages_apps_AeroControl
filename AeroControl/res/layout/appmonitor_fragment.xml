@@ -5,6 +5,17 @@
     android:layout_height="match_parent"
     android:padding="5dp">
 
+    <ImageView
+        android:id="@+id/empty_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/appmonitor_large"
+        android:layout_gravity="center"
+        android:paddingLeft="32dp"
+        android:paddingTop="32dp"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp" />
+
     <TextView android:id="@+id/noData"
         android:textSize="20sp"
         android:layout_width="wrap_content"
