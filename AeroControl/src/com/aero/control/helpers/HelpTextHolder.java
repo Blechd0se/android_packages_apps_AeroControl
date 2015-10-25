@@ -65,6 +65,13 @@ public class HelpTextHolder {
         putInMap("io_scheduler_list", R.string.helptext_io_scheduler_list);
         putInMap("ksm", R.string.helptext_ksm);
 
+        // Memory Fragment deadline scheduler;
+        putInMap("fifo_batch", R.string.helptext_fifo_batch);
+        putInMap("front_merges", R.string.helptext_front_merges);
+        putInMap("read_expire", R.string.helptext_read_expire);
+        putInMap("write_expire", R.string.helptext_write_expire);
+        putInMap("writes_starved", R.string.helptext_writes_starved);
+
         // MemoryDalvik Fragment helptexts;
         putInMap("block_dump", R.string.helptext_block_dump);
         putInMap("dirty_background_bytes", R.string.helptext_dirty_background_bytes);

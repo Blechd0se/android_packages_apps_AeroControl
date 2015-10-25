@@ -433,6 +433,12 @@
     <string name="helptext_dalvik_settings">This submenu lets you interact with the virtual machine of your device. Mostly there are memory related options.</string>
     <string name="helptext_io_scheduler_list">The IO scheduler handles IO requests for a specific device to allow an efficient handling. Changing this value has a rather small impact on most android systems.</string>
     <string name="helptext_ksm">KSM or kernel samepage merging allows to deduplicate memory. Its a very useful feature on android and can save some RAM at the cost of CPU performance.</string>
+    <!-- Memory Fragment deadline scheduler -->
+    <string name="helptext_fifo_batch">Controls the maximum number of requests per batch. This parameter tunes the balance between per-request latency and aggregate throughput. When low latency is the primary concern, smaller is better. Increasing fifo_batch generally improves throughput, at the cost of latency variation.</string>
+    <string name="helptext_front_merges">This tunable takes either 0 (=off) or 1 (=on). Sometimes it happens that a request enters the io scheduler that is contiguous with a request that is already on the queue. Either it fits in the back of that request, or it fits at the front.</string>
+    <string name="helptext_read_expire">When a read request first enters the io scheduler, it is assigned a deadline that is the current time + the read_expire value in units of milliseconds.</string>
+    <string name="helptext_write_expire">Similar to read_expire, but for writes.</string>
+    <string name="helptext_writes_starved">So writes_starved controls how many times we give preference to reads over writes. When that has been done writes_starved number of times, we dispatch some writes based on the same criteria as reads.</string>
     <!-- MemoryDalvik Fragment helptexts -->
     <string name="helptext_block_dump">block_dump enables block I/O debugging when set to a nonzero value.</string>
     <string name="helptext_dirty_background_bytes">Contains the amount of dirty memory at which the background kernel flusher threads will start writeback.\n Note: dirty_background_bytes is the counterpart of dirty_background_ratio. Only one of them may be specified at a time. When one sysctl is written it is immediately taken into account to evaluate the dirty memory limits and the other appears as 0 when read.</string>
