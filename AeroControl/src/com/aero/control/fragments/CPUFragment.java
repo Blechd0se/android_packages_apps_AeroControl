@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
@@ -20,7 +19,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -494,7 +492,6 @@ public class CPUFragment extends PlaceHolderFragment {
             case R.id.action_governor_settings:
 
                 final String complete_path = FilePath.CPU_GOV_BASE + mCPUGovernor.getValue();
-                ArrayList<String> al = new ArrayList<String>();
 
                 /*
                  * Before we can get governor specific parameters,
@@ -513,17 +510,6 @@ public class CPUFragment extends PlaceHolderFragment {
                     PrefCat.setTitle(R.string.pref_gov_set);
                     root.addPreference(PrefCat);
 
-                    /*
-                     * Sometimes its just all about permissions;
-                     */
-
-                    for (String b : completeParamterList) {
-                        al.add("chmod 0666 " + complete_path + "/" + b);
-                        al.add("chown system:root " + complete_path + "/" + b);
-                    }
-                    String[] commands = al.toArray(new String[0]);
-                    AeroActivity.shell.setRootInfo(commands);
-
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
@@ -538,7 +524,6 @@ public class CPUFragment extends PlaceHolderFragment {
                 } catch (NullPointerException e) {
                     Toast.makeText(getActivity(), "Looks like there are no parameter for this governor?", Toast.LENGTH_LONG).show();
                     Log.e("Aero", "There isn't any folder i can check. Does this governor has parameters?", e);
-
                     return true;
                 }
 
