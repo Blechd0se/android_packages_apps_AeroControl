@@ -8,13 +8,11 @@ import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
-
-import com.aero.control.helpers.Android.Material.CheckBox;
-import com.aero.control.helpers.Android.Material.CheckBox.OnCheckListener;
-
 import android.widget.TextView;
 
 import com.aero.control.R;
+import com.aero.control.helpers.Android.Material.CheckBox;
+import com.aero.control.helpers.Android.Material.CheckBox.OnCheckListener;
 import com.aero.control.helpers.Android.Material.CustomImageButton;
 import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.HelpTextHolder;

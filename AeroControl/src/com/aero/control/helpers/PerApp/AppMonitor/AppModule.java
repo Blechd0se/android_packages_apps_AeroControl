@@ -2,7 +2,6 @@ package com.aero.control.helpers.PerApp.AppMonitor;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -11,7 +11,6 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;

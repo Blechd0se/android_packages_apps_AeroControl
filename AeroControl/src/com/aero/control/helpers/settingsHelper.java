@@ -2,10 +2,10 @@ package com.aero.control.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-import android.os.Handler;
 
 import com.aero.control.R;
 

@@ -17,14 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.aero.control.R;
-
-import org.apache.http.message.BasicListHeaderIterator;
-
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by root on 04.11.14.

@@ -6,8 +6,8 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,13 +15,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-
 import com.aero.control.helpers.Android.CirclePageIndicator;
+import com.aero.control.helpers.ZoomOutPageTransformer;
 import com.aero.control.sliderFragments.IntroductionFragment;
 import com.aero.control.sliderFragments.PerAppFragment;
 import com.aero.control.sliderFragments.SetOnBootFragment;
 import com.aero.control.sliderFragments.TutorialFragment;
-import com.aero.control.helpers.ZoomOutPageTransformer;
 
 import java.io.File;
 import java.io.FileOutputStream;

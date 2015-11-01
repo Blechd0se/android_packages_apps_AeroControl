@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.aero.control.AeroActivity;
 import com.aero.control.R;

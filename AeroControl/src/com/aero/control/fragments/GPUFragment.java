@@ -23,11 +23,13 @@ import com.aero.control.R;
 import com.aero.control.helpers.Android.CustomListPreference;
 import com.aero.control.helpers.Android.CustomPreference;
 import com.aero.control.helpers.Android.Material.Slider;
-import com.aero.control.helpers.FilePath;;
+import com.aero.control.helpers.FilePath;
 import com.aero.control.helpers.PreferenceHandler;
 import com.aero.control.helpers.Shell;
 
 import java.io.File;
+
+;
 
 /**
  * Created by ac on 16.09.13.

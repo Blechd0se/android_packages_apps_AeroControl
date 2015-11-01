@@ -1,7 +1,5 @@
 package com.aero.control.helpers.Android.Material;
 
-import com.aero.control.R;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +13,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+
+import com.aero.control.R;
 
 public class CheckBox extends CustomView {
 

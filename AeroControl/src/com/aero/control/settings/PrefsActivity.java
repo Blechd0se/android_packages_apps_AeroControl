@@ -17,7 +17,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
-import android.provider.Settings;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +29,6 @@ import com.aero.control.AeroActivity;
 import com.aero.control.R;
 import com.aero.control.helpers.Android.AboutDialog;
 import com.aero.control.helpers.Util;
-import com.aero.control.service.PerAppService;
 import com.aero.control.service.PerAppServiceHelper;
 
 import java.io.File;
