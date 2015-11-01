@@ -58,39 +58,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7820921b-a183-4104-97ee-16dbded86385" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/AeroActivity.java" afterPath="$PROJECT_DIR$/src/com/aero/control/AeroActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AeroControl.iml" afterPath="$PROJECT_DIR$/AeroControl.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/AeroFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/AeroFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/PerApp/AppMonitor/AppModule.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/PerApp/AppMonitor/AppModule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/AppMonitorDetailFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/AppMonitorDetailFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/AppMonitorFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/AppMonitorFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/CPUHotplugFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/CPUHotplugFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/Android/Material/CheckBox.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/Android/Material/CheckBox.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/Android/CustomListPreference.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/Android/CustomListPreference.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/Android/CustomPreference.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/Android/CustomPreference.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/Android/CustomTextPreference.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/Android/CustomTextPreference.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/GPUFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/GPUFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/GPUGovernorFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/GPUGovernorFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/HoloGraphLibrary/HoloGraphLibrary.iml" afterPath="$PROJECT_DIR$/library/HoloGraphLibrary/HoloGraphLibrary.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/sliderFragments/IntroductionFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/sliderFragments/IntroductionFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/MemoryDalvikFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/MemoryDalvikFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/MiscSettingsFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/MiscSettingsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/adapter/PerAppAdapter.java" afterPath="$PROJECT_DIR$/src/com/aero/control/adapter/PerAppAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/service/PerAppService.java" afterPath="$PROJECT_DIR$/src/com/aero/control/service/PerAppService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/settings/PrefsActivity.java" afterPath="$PROJECT_DIR$/src/com/aero/control/settings/PrefsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/Android/Material/RippleView.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/Android/Material/RippleView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/SplashScreen.java" afterPath="$PROJECT_DIR$/src/com/aero/control/SplashScreen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/fragments/VoltageFragment.java" afterPath="$PROJECT_DIR$/src/com/aero/control/fragments/VoltageFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/boot/bootService.java" afterPath="$PROJECT_DIR$/src/com/aero/control/boot/bootService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/discreetapprate/discreetapprate.iml" afterPath="$PROJECT_DIR$/library/discreetapprate/discreetapprate.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/floatingactionbutton/floatingactionbutton.iml" afterPath="$PROJECT_DIR$/library/floatingactionbutton/floatingactionbutton.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/ldrawer/src/main/ldrawer.iml" afterPath="$PROJECT_DIR$/library/ldrawer/src/main/ldrawer.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/libs.xml" afterPath="$PROJECT_DIR$/.idea/libraries/libs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aero/control/helpers/settingsHelper.java" afterPath="$PROJECT_DIR$/src/com/aero/control/helpers/settingsHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/showcase/showcase.iml" afterPath="$PROJECT_DIR$/library/showcase/showcase.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/android_support_annotations.xml" afterPath="$PROJECT_DIR$/.idea/libraries/android_support_annotations.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AeroControl.iws" />
@@ -173,8 +142,8 @@
       <file leaf-file-name="MiscSettingsFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/MiscSettingsFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6906077">
-              <caret line="25" column="41" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.44198895">
+              <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -671,7 +640,7 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="false" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
@@ -679,9 +648,9 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="015d3e6388180e0d" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="007af3485c4f1541" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_21" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Schreibtisch" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/android-support-annotations.jar!/" />
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
@@ -940,13 +909,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1430" y="-8" width="1940" height="1073" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44956142" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3760965" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3760965" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1656017" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39802632" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17105263" sideWeight="0.49893504" order="8" side_tool="true" content_ui="tabs" />
@@ -1517,8 +1486,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aero/control/fragments/MiscSettingsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6906077">
-          <caret line="25" column="41" selection-start-line="25" selection-start-column="41" selection-end-line="25" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.44198895">
+          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1575,7 +1544,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Android|WilliamChart</last-edited>
+          <last-edited>HoloGraphLibrary</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
