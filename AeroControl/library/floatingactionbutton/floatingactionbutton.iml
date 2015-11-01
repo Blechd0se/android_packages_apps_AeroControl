@@ -4,6 +4,9 @@
     <facet type="android" name="Android">
       <configuration>
         <option name="LIBRARY_PROJECT" value="true" />
+        <proGuardCfgFiles>
+          <file>file:///usr/lib/jvm/java-6-oracle/tools/proguard/proguard-android.txt</file>
+        </proGuardCfgFiles>
       </configuration>
     </facet>
   </component>
@@ -13,9 +16,8 @@
       <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="android-support-annotations" level="project" />
   </component>
 </module>
-

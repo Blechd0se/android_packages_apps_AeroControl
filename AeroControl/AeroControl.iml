@@ -2,7 +2,11 @@
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android" name="Android">
-      <configuration />
+      <configuration>
+        <proGuardCfgFiles>
+          <file>file://$APPLICATION_HOME_DIR$/sdk/tools/proguard/proguard-android.txt</file>
+        </proGuardCfgFiles>
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
@@ -11,14 +15,16 @@
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 20, L preview Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="showcase" />
     <orderEntry type="module" module-name="HoloGraphLibrary" />
     <orderEntry type="module" module-name="discreetapprate" />
     <orderEntry type="module" module-name="UndoBar" />
     <orderEntry type="module" module-name="ldrawer" />
+    <orderEntry type="module" module-name="floatingactionbutton" />
     <orderEntry type="library" name="android-support-v4" level="project" />
+    <orderEntry type="library" name="libs" level="project" />
+    <orderEntry type="module" module-name="WilliamChart" />
   </component>
 </module>
-
