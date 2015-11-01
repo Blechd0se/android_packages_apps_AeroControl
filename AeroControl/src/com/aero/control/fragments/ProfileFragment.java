@@ -127,8 +127,10 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
                 if (systemStatus.equals("false")) {
                     systemStatus = "true";
+                    Toast.makeText(mContext, getText(R.string.pref_profile_showSystem) + ": " + getText(R.string.enabled) , Toast.LENGTH_SHORT).show();
                 } else {
                     systemStatus = "false";
+                    Toast.makeText(mContext, getText(R.string.pref_profile_showSystem) + ": " + getText(R.string.disabled), Toast.LENGTH_SHORT).show();
                 }
 
                 mPerAppPrefs.edit().putString("systemStatus", systemStatus).commit();
@@ -774,7 +776,7 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
 
                     tmp = entry.getKey();
 
-                    // For better looking, simplify this!
+                    //ToDo: For better looking, simplify this!
                     if (tmp.contains("/sys/devices/system/cpu/cpufreq/"))
                         tmp = tmp.replace("/sys/devices/system/cpu/cpufreq/", "");
                     else if (tmp.contains("/proc/sys/vm/"))
@@ -793,6 +795,8 @@ public class ProfileFragment extends PreferenceFragment implements AdvancedUndoL
                         tmp = tmp.replace("/sys/class/misc/soundcontrol/", "");
                     else if (tmp.contains("/sys/class/misc/mako_hotplug_control/"))
                         tmp = tmp.replace("/sys/class/misc/mako_hotplug_control/", "hotplug_control -> ");
+                    else if (tmp.contains("/sys/module/cpu_boost/parameters"))
+                        tmp = tmp.replace("/sys/module/cpu_boost/parameters", "cpu_boostl -> ");
 
                     content = tmp + " = " + entry.getValue().toString() + "\n" + content;
 
