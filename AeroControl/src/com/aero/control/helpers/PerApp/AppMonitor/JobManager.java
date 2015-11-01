@@ -163,7 +163,7 @@ public final class JobManager {
      *
      * @return List<AppElement>
      */
-    public synchronized ufinal List<AppElement> getParentChildData(final Context context) {
+    public synchronized final List<AppElement> getParentChildData(final Context context) {
 
         final List<AppElement> data = new ArrayList<AppElement>();
         final PackageManager pm = context.getPackageManager();
