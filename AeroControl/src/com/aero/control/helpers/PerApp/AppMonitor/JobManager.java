@@ -163,7 +163,7 @@ public final class JobManager {
      *
      * @return List<AppElement>
      */
-    public final List<AppElement> getParentChildData(final Context context) {
+    public synchronized ufinal List<AppElement> getParentChildData(final Context context) {
 
         final List<AppElement> data = new ArrayList<AppElement>();
         final PackageManager pm = context.getPackageManager();
@@ -318,7 +318,15 @@ public final class JobManager {
         try {
             FileOutputStream fos = mContext.openFileOutput(Configuration.EMERGENCY_FILE, Context.MODE_PRIVATE);
             BufferedOutputStream bos = new BufferedOutputStream(fos, 8192);
-            bos.write(parentJson.toString().getBytes());
+            try {
+                bos.write(parentJson.toString().getBytes());
+            } catch (OutOfMemoryError e) {
+                AppLogger.print(mClassName, "We tried to save a too large file, forcing cleanup! Exception: " + e, 0);
+
+                for (AppModuleMetaData ammd : getModuleData().getAppModuleData()) {
+                    forceCleanUp(ammd.getAppContext().getAppName());
+                }
+            }
             bos.flush();
             bos.close();
             AppLogger.print(mClassName, "Data successfully written to disk in (" + (System.currentTimeMillis() - time) + " ms).", 0);
