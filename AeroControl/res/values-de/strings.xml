@@ -137,6 +137,7 @@
 
     <string name="pref_gov_set">Governor spezfische Einstellungen</string>
     <string name="pref_gov_set_sum">Setzt Governor spezfische Einstellungen</string>
+    <string name="pref_gov_set_no_parameter">Sieht so aus, als gäbe es keine Parameter für diesen Governor?</string>
 
     <string name="perf_cpu_hotplug">Hotplug Einstellungen</string>
     <string name="perf_cpu_hotplug_driver">Hotplug Treiber</string>
@@ -204,6 +205,7 @@
     <!-- IO Scheduler -->
     <string name="io_scheduler">IO Scheduler</string>
     <string name="pref_io_scheduler">IO Scheduler Parameter</string>
+    <string name="pref_io_scheduler_no_parameter">Sieht so aus, als gäbe es keine Parameter für diesen Scheduler?</string>
 
     <!-- GPU Fragment -->
     <string name="pref_gpu_control_enable">GPU Kontrolle</string>

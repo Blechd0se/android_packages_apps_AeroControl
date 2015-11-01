@@ -506,6 +506,11 @@ public class CPUFragment extends PlaceHolderFragment {
                     if (PrefCat != null)
                         root.removePreference(PrefCat);
 
+                    if (completeParamterList.length == 0) {
+                        Toast.makeText(getActivity(), R.string.pref_gov_set_no_parameter, Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+
                     PrefCat = new PreferenceCategory(getActivity());
                     PrefCat.setTitle(R.string.pref_gov_set);
                     root.addPreference(PrefCat);
@@ -522,7 +527,7 @@ public class CPUFragment extends PlaceHolderFragment {
 
                     // Probably the wrong place, should be in getDirInfo ?
                 } catch (NullPointerException e) {
-                    Toast.makeText(getActivity(), "Looks like there are no parameter for this governor?", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.pref_gov_set_no_parameter, Toast.LENGTH_LONG).show();
                     Log.e("Aero", "There isn't any folder i can check. Does this governor has parameters?", e);
                     return true;
                 }

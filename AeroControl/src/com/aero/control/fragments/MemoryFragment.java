@@ -562,6 +562,11 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
             if (PrefCat != null)
                 root.removePreference(PrefCat);
 
+            if (completeParamterList.length == 0) {
+                Toast.makeText(getActivity(), R.string.pref_io_scheduler_no_parameter, Toast.LENGTH_LONG).show();
+                return;
+            }
+
             PrefCat = new PreferenceCategory(getActivity());
             PrefCat.setTitle(R.string.pref_io_scheduler);
             root.addPreference(PrefCat);
@@ -578,7 +583,8 @@ public class MemoryFragment extends PlaceHolderFragment implements Preference.On
 
             // Probably the wrong place, should be in getDirInfo ?
         } catch (NullPointerException e) {
-            Toast.makeText(getActivity(), "Looks like there are no parameter for this governor?", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.pref_io_scheduler_no_parameter, Toast.LENGTH_LONG).show();
+            root.removePreference(PrefCat);
             Log.e("Aero", "There isn't any folder i can check. Does this governor has parameters?", e);
         }
     }
