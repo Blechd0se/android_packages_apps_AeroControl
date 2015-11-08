@@ -67,13 +67,23 @@ public final class JobManager {
             Runnable run = new Runnable() {
                 @Override
                 public void run() {
-                    importData();
+                    try {
+                        importData();
+                    } catch (OutOfMemoryError e) {
+                        AppLogger.print(mClassName, "We tried to import to much data, deleting import file..." + e, 0);
+                        new File(new ContextWrapper(mContext).getFilesDir() + "/" + Configuration.EMERGENCY_FILE).delete();
+                    }
                 }
             };
             Thread worker = new Thread(run);
             worker.start();
         } else {
-            importData();
+            try {
+                importData();
+            } catch (OutOfMemoryError e) {
+                AppLogger.print(mClassName, "We tried to import to much data, deleting import file..." + e, 0);
+                new File(new ContextWrapper(mContext).getFilesDir() + "/" + Configuration.EMERGENCY_FILE).delete();
+            }
         }
 
         AppLogger.print(mClassName, "JobManager initialized, AppMonitor Version " + getVersion() + " loaded!", -1);
