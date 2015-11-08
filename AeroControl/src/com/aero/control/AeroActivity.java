@@ -125,6 +125,10 @@ public final class AeroActivity extends Activity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
+        // Check if system has root;
+        if (!rootCheck.isDeviceRooted())
+            showRootDialog();
+
         mJobManager = JobManager.instance(AeroActivity.this);
 
         int actionBarHeight = 0;
@@ -169,10 +173,6 @@ public final class AeroActivity extends Activity {
             mActionBarTitle = (TextView) findViewById(mActionBarTitleID);
             mActionBarTitle.setTypeface(font);
         }
-
-        // Check if system has root;
-        if (!rootCheck.isDeviceRooted())
-            showRootDialog();
 
         mTitle = getTitle();
         mAeroTitle = getResources().getStringArray(R.array.aero_array);

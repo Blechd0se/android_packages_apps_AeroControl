@@ -19,31 +19,10 @@ public class rootHelper {
     private static final byte[] buffer = new byte[BUFF_LEN];
 
         public boolean isDeviceRooted() {
-            return checkRootMethod1() || checkRootMethod2() || checkRootMethod3();
+            return checkRootMethod();
         }
 
-        private boolean checkRootMethod1() {
-            try {
-                File file = new File("/system/app/Superuser.apk");
-                return file.exists();
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "An Error occured while checking for Superuser.apk.", e);
-                return false;
-            }
-
-        }
-
-        private boolean checkRootMethod2() {
-            try {
-                File file = new File("/system/xbin/su");
-                return file.exists();
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "An Error occured while checking for su.", e);
-                return false;
-            }
-        }
-
-        private boolean checkRootMethod3() {
+        private boolean checkRootMethod() {
 
             String output = suCheckRootMethod();
 
