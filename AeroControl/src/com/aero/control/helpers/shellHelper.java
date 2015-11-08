@@ -331,12 +331,21 @@ public final class shellHelper {
             return info;
         } catch (IOException e) {
 
+            String tmp = null;
+
             // Make sure that the shell is open;
             openShell();
 
+            addCommand("ls -l " + s);
+            tmp = getRootResult();
+
             // At least try to read it via root, but check for permissions;
-            if (!(getLegacyRootInfo("ls -l", s).substring(0, 10).equals("--w-------"))) {
-                info = getLegacyRootInfo("cat", s);
+            if (tmp != null) {
+                if (!(tmp.substring(0, 10).equals("--w-------"))) {
+                    //info = getLegacyRootInfo("cat", s);
+                    addCommand("cat " + s);
+                    info = getRootResult();
+                }
             }
 
             if (info.equals(NO_DATA_FOUND))
@@ -752,7 +761,7 @@ public final class shellHelper {
             rooting = Runtime.getRuntime().exec("su");
 
             DataOutputStream stdin = new DataOutputStream(rooting.getOutputStream());
-
+            
             stdin.writeBytes(command + " " + parameter + "\n");
             InputStream stdout = rooting.getInputStream();
             int read;
