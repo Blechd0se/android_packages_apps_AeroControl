@@ -188,14 +188,17 @@ public class CustomPreference extends Preference implements OnCheckListener {
      * @param checked Boolean. Handles the summary text
      *                transition.
      */
-    public void setClicked (Boolean checked) {
+    public void setClicked(Boolean checked) {
         this.mClicked = checked;
 
         if (mSummary != null) {
-            if (mClicked)
+            if (mClicked) {
                 mSummary.setText(R.string.enabled);
-            else
+                setSummary(R.string.enabled);
+            } else {
                 mSummary.setText(R.string.disabled);
+                setSummary(R.string.disabled);
+            }
         }
 
     }
@@ -206,6 +209,9 @@ public class CustomPreference extends Preference implements OnCheckListener {
      * @return Boolean
      */
     public Boolean isClicked() {
+        if (mClicked == null)
+            return false;
+
         return mClicked;
     }
 
@@ -213,15 +219,19 @@ public class CustomPreference extends Preference implements OnCheckListener {
     public CharSequence getSummary() {
         return mSummaryPref;
     }
+
     @Override
     public void setSummary(CharSequence value) {
+        super.setSummary(value);
         this.mSummaryPref = value;
     }
 
     @Override
     public void setKey(String key) {
+        super.setKey(key);
         setName(key);
     }
+
     @Override
     public String getKey() {
         return getName();
