@@ -110,7 +110,6 @@ public final class AeroActivity extends Activity {
     public TextView mActionBarTitle;
     private ActionBar mActionBar;
 
-    private static final rootHelper rootCheck = new rootHelper();
     public static final shellHelper shell = shellHelper.instance();
     public static PerAppServiceHelper perAppService;
 
@@ -124,10 +123,6 @@ public final class AeroActivity extends Activity {
         if(getResources().getBoolean(R.bool.portrait_only)){
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-
-        // Check if system has root;
-        if (!rootCheck.isDeviceRooted())
-            showRootDialog();
 
         mJobManager = JobManager.instance(AeroActivity.this);
 
@@ -521,29 +516,6 @@ public final class AeroActivity extends Activity {
      */
     public static void resetBackCounter() {
         mBackCounter = 0;
-    }
-
-    public final void showRootDialog() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View layout = inflater.inflate(R.layout.about_screen, null);
-        TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
-
-        builder.setTitle(R.string.not_rooted);
-        builder.setIcon(R.drawable.warning);
-
-        aboutText.setText(getText(R.string.root_required));
-        builder.setCancelable(false);
-
-        builder.setView(layout)
-                .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-        builder.show();
     }
 
     public final void switchContent(final Fragment fragment) {

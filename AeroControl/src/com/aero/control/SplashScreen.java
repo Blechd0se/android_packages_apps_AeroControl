@@ -1,8 +1,10 @@
 package com.aero.control;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -12,11 +14,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.aero.control.helpers.Android.CirclePageIndicator;
 import com.aero.control.helpers.ZoomOutPageTransformer;
+import com.aero.control.helpers.rootHelper;
 import com.aero.control.sliderFragments.IntroductionFragment;
 import com.aero.control.sliderFragments.PerAppFragment;
 import com.aero.control.sliderFragments.SetOnBootFragment;
@@ -40,6 +45,7 @@ public class SplashScreen extends FragmentActivity {
     private CirclePageIndicator mCircleIndicator;
     public Button mSkip;
     private List<android.support.v4.app.Fragment> mFragments = new ArrayList<android.support.v4.app.Fragment>();
+    private static final rootHelper rootCheck = new rootHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,12 @@ public class SplashScreen extends FragmentActivity {
 
         ContextWrapper cw = new ContextWrapper(getBaseContext());
         File firstrun_aero = new File(cw.getFilesDir() + "/" + FIRSTRUN_AERO);
+
+
+        // Check if system has root;
+        if (!rootCheck.isDeviceRooted())
+            showRootDialog();
+
 
         // First check if its already done;
         if (firstrun_aero.exists()) {
@@ -110,6 +122,29 @@ public class SplashScreen extends FragmentActivity {
             }
         });
 
+    }
+
+    public final void showRootDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.about_screen, null);
+        TextView aboutText = (TextView) layout.findViewById(R.id.aboutScreen);
+
+        builder.setTitle(R.string.not_rooted);
+        builder.setIcon(R.drawable.warning);
+
+        aboutText.setText(getText(R.string.root_required));
+        builder.setCancelable(false);
+
+        builder.setView(layout)
+                .setPositiveButton(R.string.got_it, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                });
+        builder.show();
     }
 
     private class ScreenSlidePagerAdapter extends android.support.v4.app.FragmentStatePagerAdapter {
