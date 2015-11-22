@@ -125,7 +125,7 @@ public class PrefsActivity extends PreferenceActivity {
             mPerAppMonitor.setEnabled(false);
 
         try {
-            version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " Beta 4");
+            version.setTitle("Version: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
             version.setSummary("Build: " + getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
         } catch (PackageManager.NameNotFoundException e) {}
 
