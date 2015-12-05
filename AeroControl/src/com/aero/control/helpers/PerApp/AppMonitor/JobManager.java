@@ -283,7 +283,7 @@ public final class JobManager {
 
                 AppLogger.print(mClassName, "Starting export for: " + context.getAppName(), 1);
 
-                List<AppModuleMetaData> moduleMetaData = getModuleData().getAppModuleData();
+                List<AppModuleMetaData> moduleMetaData = Collections.synchronizedList(getModuleData().getAppModuleData());
 
                 // Get the meta data for all loaded modules;
                 for (AppModuleMetaData ammd : moduleMetaData) {
@@ -303,7 +303,7 @@ public final class JobManager {
                             AppLogger.print(mClassName, "Adding Data for module: " + module.getName(), 1);
 
                             // Add our data to our array;
-                            List<Integer> currentValues = ammd.getRawData(module.getIdentifier());
+                            List<Integer> currentValues = Collections.synchronizedList(ammd.getRawData(module.getIdentifier()));
                             for (Integer i : currentValues) {
                                 values.put(i);
                             }
