@@ -176,7 +176,7 @@ public final class AeroActivity extends Activity {
 
         if (actionBarHeight != 0) {
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)mDrawerLayout.getLayoutParams();
-            params.setMargins(0, actionBarHeight + (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics()), 0, 0);
+            params.setMargins(0, actionBarHeight + (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()), 0, 0);
             mDrawerLayout.setLayoutParams(params);
         }
 
