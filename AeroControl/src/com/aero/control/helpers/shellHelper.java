@@ -37,6 +37,8 @@ public final class shellHelper {
     private DataOutputStream mShellOutput = null;
     private BufferedReader mOutput = null;
 
+    private boolean mShellLoaded = false;
+
     private final static String NO_DATA_FOUND = "Unavailable";
 
 
@@ -115,8 +117,11 @@ public final class shellHelper {
                 mOutput = new BufferedReader(new InputStreamReader(mProcess.getInputStream()));
             }
 
+            mShellLoaded = true;
+
         } catch (IOException e) {
             Log.e(LOG_TAG, "We were not able to create a shell!", e);
+            mShellLoaded = false;
         }
 
     }
@@ -129,18 +134,23 @@ public final class shellHelper {
 
         openShell();
 
-        List<String> commands = Collections.synchronizedList(mCommands);
+        if (mShellLoaded) {
+            List<String> commands = Collections.synchronizedList(mCommands);
 
-        try {
-            for (String cmd : commands) {
-                mShellOutput.write((cmd + "\n").getBytes("UTF-8"));
-                mShellOutput.flush();
-            }
             try {
-                mShellOutput.flush();
-            } catch (IOException e) {}
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Something interrupted our operations...", e);
+                for (String cmd : commands) {
+                    mShellOutput.write((cmd + "\n").getBytes("UTF-8"));
+                    mShellOutput.flush();
+                }
+                try {
+                    mShellOutput.flush();
+                } catch (IOException e) {
+                }
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Something interrupted our operations...", e);
+            }
+        } else {
+            // The shell couldn't be loaded correctly, we are not executing anything and clear our queue
         }
         mCommands.clear();
     }
@@ -158,35 +168,39 @@ public final class shellHelper {
         int read;
         StringBuilder response = new StringBuilder();
 
-        try {
-            for (String cmd : commands) {
-                mShellOutput.write((cmd + "\n").getBytes("UTF-8"));
-
-                while(true){
-                    read = mOutput.read(buf);
-                    if (read == -1) {
-                        return null;
-                    }
-
-                    response.append(buf, 0, read);
-
-                    if(read < BUFF_LEN){
-                        //we have read everything
-                        break;
-                    }
-                }
-
-                mShellOutput.flush();
-            }
+        if (mShellLoaded) {
             try {
-                mShellOutput.flush();
-            } catch (IOException e) {}
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Something interrupted our operations...", e);
-            return null;
-        } finally {
-            mCommands.clear();
+                for (String cmd : commands) {
+                    mShellOutput.write((cmd + "\n").getBytes("UTF-8"));
+
+                    while (true) {
+                        read = mOutput.read(buf);
+                        if (read == -1) {
+                            return null;
+                        }
+
+                        response.append(buf, 0, read);
+
+                        if (read < BUFF_LEN) {
+                            //we have read everything
+                            break;
+                        }
+                    }
+
+                    mShellOutput.flush();
+                }
+                try {
+                    mShellOutput.flush();
+                } catch (IOException e) {
+                }
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Something interrupted our operations...", e);
+                return null;
+            } finally {
+                mCommands.clear();
+            }
         }
+
         return response.toString();
     }
 
