@@ -52,6 +52,12 @@ public final class CPUFreqModule extends AppModule {
                 }
             }
         }
+
+        if (onlineCPUs == 0) {
+            // Because a system needs at least one;
+            onlineCPUs = 1;
+        }
+
         averageFreq = (averageFreq / onlineCPUs) / 1000;
         addValues(averageFreq);
         AppLogger.print(mClassName, "CPUFreqModule.operate() time: " + (System.currentTimeMillis() - temp), 1);
