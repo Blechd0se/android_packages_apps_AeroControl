@@ -518,7 +518,10 @@ public final class JobManager {
         }
 
         if (!mNotifcationShowed) {
-            for (AppModuleMetaData ammd : this.getModuleData().getAppModuleData()) {
+
+            List<AppModuleMetaData> moduleMetaData = Collections.synchronizedList(this.getModuleData().getAppModuleData());
+
+            for (AppModuleMetaData ammd : moduleMetaData) {
                 // Is this context "ready"?
                 if (ammd.getAppContext().isAboveThreshold()) {
                     if (!AeroActivity.genHelper.doesExist(mContext.getFilesDir().getAbsolutePath() + "/" + FILENAME_APPMONITOR_NOTIFY))
