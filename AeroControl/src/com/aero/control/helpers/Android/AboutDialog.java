@@ -49,10 +49,6 @@ public class AboutDialog extends DialogFragment {
         this.mPayPalIcons = b;
     }
 
-    public void setNegativeButton(int i) {
-        this.mNegativeText = mContext.getText(i).toString();
-    }
-
     public void setPositiveButton(int i) {
         this.mPositiveText = mContext.getText(i).toString();
     }
@@ -67,15 +63,7 @@ public class AboutDialog extends DialogFragment {
                 .setTitle(mTitle)
                 .setIcon(mIcon)
                 .setView(mLayout)
-                .setNegativeButton(mNegativeText, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Uri uri = Uri.parse("https://github.com/Blechd0se/android_packages_apps_AeroControl");
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
-                    }
-                }).setPositiveButton(mPositiveText, new DialogInterface.OnClickListener() {
+                .setPositiveButton(mPositiveText, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

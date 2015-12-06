@@ -58,6 +58,10 @@
             android:title="@string/xda"/>
 
         <Preference
+            android:key="github_link"
+            android:title="@string/github"/>
+
+        <Preference
             android:key="legal"
             android:title="@string/legal"/>
 

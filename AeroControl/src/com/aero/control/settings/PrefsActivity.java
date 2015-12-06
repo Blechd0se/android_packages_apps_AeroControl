@@ -100,6 +100,7 @@ public class PrefsActivity extends PreferenceActivity {
         Preference google = root.findPreference("google+");
         Preference legal = root.findPreference("legal");
         Preference xda = root.findPreference("xda_thread");
+        Preference github = root.findPreference("github_link");
 
         mRebootChecker.setIcon(R.drawable.ic_action_phone);
         setCheckedState(mRebootChecker);
@@ -117,6 +118,7 @@ public class PrefsActivity extends PreferenceActivity {
         beta.setIcon(R.drawable.beta);
         google.setIcon(R.drawable.google);
         xda.setIcon(R.drawable.xda);
+        github.setIcon(R.drawable.github);
 
         if (AeroActivity.mJobManager != null)
             mPerAppMonitor.setChecked(AeroActivity.mJobManager.getJobManagerState());
@@ -172,6 +174,16 @@ public class PrefsActivity extends PreferenceActivity {
             public boolean onPreferenceClick(Preference preference) {
 
                 Uri uri = Uri.parse("http://forum.xda-developers.com/showthread.php?t=2483827");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                return true;
+            }
+        });
+
+        github.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Uri uri = Uri.parse("https://github.com/Blechd0se/android_packages_apps_AeroControl");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
                 return true;
@@ -317,7 +329,6 @@ public class PrefsActivity extends PreferenceActivity {
                 alertDialog.setIcon(R.drawable.beer);
                 alertDialog.setView(layout);
                 alertDialog.setPayPalIcons(true);
-                alertDialog.setNegativeButton(R.string.github);
                 alertDialog.setNeutralButton(R.string.donation_quarx);
                 alertDialog.setPositiveButton(R.string.donation_blechdose);
 
