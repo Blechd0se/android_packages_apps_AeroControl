@@ -500,62 +500,64 @@ public class CPUFragment extends PlaceHolderFragment {
         });
 
 
-        mBIGMinFrequency.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
+        if (mNumCpus > 4) {
+            mBIGMinFrequency.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object o) {
 
                 /*
                  * Its pretty much the same like on the governor, except we only deal with numbers
                  * Also this should make no problems when the user is using different
                  * Clocks than default...
                  */
-                String a = (String) o;
-                ArrayList<String> array = new ArrayList<String>();
+                    String a = (String) o;
+                    ArrayList<String> array = new ArrayList<String>();
 
-                try {
-                    if (Integer.parseInt(a) < Integer.parseInt(mBIGMinFrequency.getValue()))
+                    try {
+                        if (Integer.parseInt(a) < Integer.parseInt(mBIGMinFrequency.getValue()))
+                            return false;
+                    } catch (NumberFormatException e) {
                         return false;
-                } catch (NumberFormatException e) {
-                    return false;
+                    }
+
+                    for (int k = 4; k < mNumCpus; k++) {
+                        array.add("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
+                        array.add("echo " + a + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MAX_FREQ);
+                    }
+                    mBIGMinFrequency.setSummary(AeroActivity.shell.toMHz(a));
+                    String[] commands = array.toArray(new String[0]);
+
+                    AeroActivity.shell.setRootInfo(commands);
+                    return true;
                 }
+            });
 
-                for (int k = 4; k < mNumCpus; k++) {
-                    array.add("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
-                    array.add("echo " + a + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MAX_FREQ);
-                }
-                mBIGMinFrequency.setSummary(AeroActivity.shell.toMHz(a));
-                String[] commands = array.toArray(new String[0]);
+            mBIGMaxFrequency.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object o) {
 
-                AeroActivity.shell.setRootInfo(commands);
-                return true;
-            };
-        });
+                    String a = (String) o;
+                    ArrayList<String> array = new ArrayList<String>();
 
-        mBIGMaxFrequency.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-
-                String a = (String) o;
-                ArrayList<String> array = new ArrayList<String>();
-
-                try {
-                    if (Integer.parseInt(a) > Integer.parseInt(mBIGMaxFrequency.getValue()))
+                    try {
+                        if (Integer.parseInt(a) > Integer.parseInt(mBIGMaxFrequency.getValue()))
+                            return false;
+                    } catch (NumberFormatException e) {
                         return false;
-                } catch (NumberFormatException e) {
-                    return false;
-                }
+                    }
 
-                for (int k = 4; k < mNumCpus; k++) {
-                    array.add("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
-                    array.add("echo " + a + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MIN_FREQ);
-                }
-                mBIGMaxFrequency.setSummary(AeroActivity.shell.toMHz(a));
-                String[] commands = array.toArray(new String[0]);
+                    for (int k = 4; k < mNumCpus; k++) {
+                        array.add("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
+                        array.add("echo " + a + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MIN_FREQ);
+                    }
+                    mBIGMaxFrequency.setSummary(AeroActivity.shell.toMHz(a));
+                    String[] commands = array.toArray(new String[0]);
 
-                AeroActivity.shell.setRootInfo(commands);
-                return true;
-            };
-        });
+                    AeroActivity.shell.setRootInfo(commands);
+                    return true;
+                }
+            });
+        }
 
     }
 
