@@ -194,6 +194,7 @@ public class CheckBox extends CustomView {
             super(context);
             mOpt.inPreferredConfig = Bitmap.Config.RGB_565;
             setBackgroundResource(R.drawable.background_checkbox_uncheck);
+            mOpt.inScaled = false;
             sprite = BitmapFactory.decodeResource(context.getResources(),
                     R.drawable.sprite_check, mOpt);
         }
