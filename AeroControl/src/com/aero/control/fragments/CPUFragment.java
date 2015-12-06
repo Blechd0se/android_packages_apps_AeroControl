@@ -49,8 +49,8 @@ public class CPUFragment extends PlaceHolderFragment {
     private PreferenceScreen root;
     private PreferenceCategory PrefCat;
     private CustomListPreference mCPUGovernor;
-    private CustomListPreference mMinFrequency;
-    private CustomListPreference mMaxFrequency;
+    private CustomListPreference mMinFrequency, mBIGMinFrequency;
+    private CustomListPreference mMaxFrequency, mBIGMaxFrequency;
     private boolean mVisible = true;
     private ShowcaseView mShowCase;
     private String mHotplugPath;
@@ -85,7 +85,6 @@ public class CPUFragment extends PlaceHolderFragment {
         mMaxFrequency.setTitle(R.string.pref_cpu_freqmax);
         mMaxFrequency.setDialogTitle(R.string.pref_cpu_freqmax);
         mMaxFrequency.setSummary(R.string.pref_cpu_freqmax);
-        updateMaxFreq();
         mMaxFrequency.setDialogIcon(R.drawable.lightning);
         mMaxFrequency.setOrder(0);
         cpuCategory.addPreference(mMaxFrequency);
@@ -96,10 +95,35 @@ public class CPUFragment extends PlaceHolderFragment {
         mMinFrequency.setTitle(R.string.pref_cpu_freqmin);
         mMinFrequency.setDialogTitle(R.string.pref_cpu_freqmin);
         mMinFrequency.setSummary(R.string.pref_cpu_freqmin);
-        updateMinFreq();
         mMinFrequency.setDialogIcon(R.drawable.lightning);
-        mMaxFrequency.setOrder(1);
+        mMinFrequency.setOrder(5);
         cpuCategory.addPreference(mMinFrequency);
+
+        // This means, we are probably on a big.LITTLE arch;
+        if (mNumCpus > 4) {
+            mBIGMaxFrequency = new CustomListPreference(getActivity());
+            mBIGMaxFrequency.setName("big_max_frequency");
+            mBIGMaxFrequency.setTitle(R.string.pref_big_cpu_freqmax);
+            mBIGMaxFrequency.setDialogTitle(R.string.pref_big_cpu_freqmax);
+            mBIGMaxFrequency.setSummary(R.string.pref_big_cpu_freqmax);
+            mBIGMaxFrequency.setDialogIcon(R.drawable.lightning);
+            mBIGMaxFrequency.setOrder(1);
+            cpuCategory.addPreference(mBIGMaxFrequency);
+
+            mBIGMinFrequency = new CustomListPreference(getActivity());
+            mBIGMinFrequency.setName("big_min_frequency");
+            mBIGMinFrequency.setTitle(R.string.pref_big_cpu_freqmin);
+            mBIGMinFrequency.setDialogTitle(R.string.pref_big_cpu_freqmin);
+            mBIGMinFrequency.setSummary(R.string.pref_big_cpu_freqmin);
+            mBIGMinFrequency.setDialogIcon(R.drawable.lightning);
+            mBIGMinFrequency.setOrder(6);
+            cpuCategory.addPreference(mBIGMinFrequency);
+        }
+
+        // Load the frequencies;
+        updateMaxFreq();
+        updateMinFreq();
+
 
         for (String s : FilePath.HOTPLUG_PATH) {
             if (AeroActivity.genHelper.doesExist(s))
@@ -476,6 +500,63 @@ public class CPUFragment extends PlaceHolderFragment {
         });
 
 
+        mBIGMinFrequency.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+
+                /*
+                 * Its pretty much the same like on the governor, except we only deal with numbers
+                 * Also this should make no problems when the user is using different
+                 * Clocks than default...
+                 */
+                String a = (String) o;
+                ArrayList<String> array = new ArrayList<String>();
+
+                try {
+                    if (Integer.parseInt(a) < Integer.parseInt(mBIGMinFrequency.getValue()))
+                        return false;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+
+                for (int k = 4; k < mNumCpus; k++) {
+                    array.add("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
+                    array.add("echo " + a + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MAX_FREQ);
+                }
+                mBIGMinFrequency.setSummary(AeroActivity.shell.toMHz(a));
+                String[] commands = array.toArray(new String[0]);
+
+                AeroActivity.shell.setRootInfo(commands);
+                return true;
+            };
+        });
+
+        mBIGMaxFrequency.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+
+                String a = (String) o;
+                ArrayList<String> array = new ArrayList<String>();
+
+                try {
+                    if (Integer.parseInt(a) > Integer.parseInt(mBIGMaxFrequency.getValue()))
+                        return false;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+
+                for (int k = 4; k < mNumCpus; k++) {
+                    array.add("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
+                    array.add("echo " + a + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MIN_FREQ);
+                }
+                mBIGMaxFrequency.setSummary(AeroActivity.shell.toMHz(a));
+                String[] commands = array.toArray(new String[0]);
+
+                AeroActivity.shell.setRootInfo(commands);
+                return true;
+            };
+        });
+
     }
 
     // Create our options menu;
@@ -582,6 +663,21 @@ public class CPUFragment extends PlaceHolderFragment {
             mMinFrequency.setValue(NO_DATA_FOUND);
             mMinFrequency.setSummary(NO_DATA_FOUND);
         }
+
+
+        // big.LITTLE;
+        if (mNumCpus > 4) {
+            mBIGMinFrequency.setEntries(AeroActivity.shell.getInfoArray(FilePath.CPU_BIG_AVAILABLE_FREQ, 1, 0));
+            mBIGMinFrequency.setEntryValues(AeroActivity.shell.getInfoArray(FilePath.CPU_BIG_AVAILABLE_FREQ, 0, 0));
+            try {
+                mBIGMinFrequency.setValue(AeroActivity.shell.getInfoArray(FilePath.CPU_BASE_PATH + 4 + FilePath.CPU_MIN_FREQ, 0, 0)[0]);
+                mBIGMinFrequency.setSummary(AeroActivity.shell.getInfoArray(FilePath.CPU_BASE_PATH + 4 + FilePath.CPU_MIN_FREQ, 1, 0)[0]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                mBIGMinFrequency.setValue(NO_DATA_FOUND);
+                mBIGMinFrequency.setSummary(NO_DATA_FOUND);
+            }
+        }
+
     }
 
     public void updateMaxFreq() {
@@ -595,6 +691,20 @@ public class CPUFragment extends PlaceHolderFragment {
             mMaxFrequency.setValue(NO_DATA_FOUND);
             mMaxFrequency.setSummary(NO_DATA_FOUND);
         }
+
+        // big.LITTLE;
+        if (mNumCpus > 4) {
+            mBIGMaxFrequency.setEntries(AeroActivity.shell.getInfoArray(FilePath.CPU_BIG_AVAILABLE_FREQ, 1, 0));
+            mBIGMaxFrequency.setEntryValues(AeroActivity.shell.getInfoArray(FilePath.CPU_BIG_AVAILABLE_FREQ, 0, 0));
+            try {
+                mBIGMaxFrequency.setValue(AeroActivity.shell.getInfoArray(FilePath.CPU_BASE_PATH + 4 + FilePath.CPU_MAX_FREQ, 0, 0)[0]);
+                mBIGMaxFrequency.setSummary(AeroActivity.shell.getInfoArray(FilePath.CPU_BASE_PATH + 4 + FilePath.CPU_MAX_FREQ, 1, 0)[0]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                mBIGMaxFrequency.setValue(NO_DATA_FOUND);
+                mBIGMaxFrequency.setSummary(NO_DATA_FOUND);
+            }
+        }
+
     }
 
     @Override

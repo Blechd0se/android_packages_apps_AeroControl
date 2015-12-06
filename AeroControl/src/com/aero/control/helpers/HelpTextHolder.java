@@ -45,6 +45,8 @@ public class HelpTextHolder {
         // CPU Fragment helptexts;
         putInMap("max_frequency", R.string.helptext_max_freq_cpu);
         putInMap("min_frequency", R.string.helptext_min_freq_cpu);
+        putInMap("big_max_frequency", R.string.helptext_max_freq_cpu_big);
+        putInMap("big_min_frequency", R.string.helptext_min_freq_cpu_big);
         putInMap("hotplug_control", R.string.helptext_hotplug_control);
         putInMap("voltage_values", R.string.helptext_voltage_values);
         putInMap("set_governor", R.string.helptext_set_governor);

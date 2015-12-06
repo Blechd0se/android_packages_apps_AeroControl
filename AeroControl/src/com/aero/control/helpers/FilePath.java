@@ -31,6 +31,7 @@ public final class FilePath {
     /* Used by; CPUFragment */
     public static final String CPU_BASE_PATH = "/sys/devices/system/cpu/cpu";
     public static final String CPU_AVAILABLE_FREQ = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies";
+    public static final String CPU_BIG_AVAILABLE_FREQ = "/sys/devices/system/cpu/cpu4/cpufreq/scaling_available_frequencies";
     public static final String ALL_GOV_AVAILABLE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors";
     public static final String CURRENT_GOV_AVAILABLE = "/cpufreq/scaling_governor";
     public static final String CPU_MAX_FREQ = "/cpufreq/scaling_max_freq";

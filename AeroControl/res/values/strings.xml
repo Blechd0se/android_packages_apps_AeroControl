@@ -140,6 +140,8 @@
     <string name="pref_cpu_freq">Frequencies</string>
     <string name="pref_cpu_freqmax">Max. Frequency</string>
     <string name="pref_cpu_freqmin">Min. Frequency</string>
+    <string name="pref_big_cpu_freqmax">Max. Frequency (big)</string>
+    <string name="pref_big_cpu_freqmin">Min. Frequency (big)</string>
     <string name="pref_cpu_governor">Governor Settings</string>
     <string name="perf_live_oc_uc">Live OC/UC</string>
     <string name="perf_live_oc_uc_sum">Control Frequencies and Voltage in realtime!</string>
@@ -390,6 +392,8 @@
     <string name="helptext_no_data_found">There is no information available about this item.</string>
     <string name="helptext_max_freq_cpu">This tunable lets you adjust the maximum CPU frequency. Lowering this value can save you power at the cost of performance.</string>
     <string name="helptext_min_freq_cpu">This tunable lets you adjust the minimum CPU frequency. Increasing this value can give a better performance at the cost of battery usage.</string>
+    <string name="helptext_max_freq_cpu_big">This tunable lets you adjust the maximum CPU frequency for your big (more powerful) CPUs.</string>
+    <string name="helptext_min_freq_cpu_big">This tunable lets you adjust the minimum CPU frequency for your big (more powerful) CPUs.</string>
     <string name="helptext_hotplug_control">A tap on this element allows you to change various values of your hotplug driver. The hotplug driver decides when a CPU core should be on-/ or offline.</string>
     <string name="helptext_voltage_values">In this submenu you can change the voltage values of your CPU. This might increase your battery life or allows your CPU to run on higher frequencies. However, this can cause massive issues if overdone too much.</string>
     <string name="helptext_set_governor">The CPU governor controls the scaling of the frequency of your CPU. A different governor can give a total different experience/batterylife.</string>

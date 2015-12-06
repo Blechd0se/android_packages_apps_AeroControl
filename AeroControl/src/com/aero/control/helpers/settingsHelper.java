@@ -20,6 +20,8 @@ public class settingsHelper {
     private static final String PREF_CURRENT_GOV_AVAILABLE = "set_governor";
     private static final String PREF_CPU_MAX_FREQ = "max_frequency";
     private static final String PREF_CPU_MIN_FREQ = "min_frequency";
+    private static final String PREF_CPU_BIG_MAX_FREQ = "big_max_frequency";
+    private static final String PREF_CPU_BIG_MIN_FREQ = "big_min_frequency";
     private static final String PREF_CPU_COMMANDS = "cpu_commands";
 
     private static final String PREF_CURRENT_GPU_GOV_AVAILABLE = "set_gpu_governor";
@@ -127,6 +129,8 @@ public class settingsHelper {
         // GET CPU VALUES AND COMMANDS FROM PREFERENCES
         String cpu_max = prefs.getString(PREF_CPU_MAX_FREQ, null);
         String cpu_min = prefs.getString(PREF_CPU_MIN_FREQ, null);
+        String cpu_big_max = prefs.getString(PREF_CPU_BIG_MAX_FREQ, null);
+        String cpu_big_min = prefs.getString(PREF_CPU_BIG_MIN_FREQ, null);
         String cpu_gov = prefs.getString(PREF_CURRENT_GOV_AVAILABLE, null);
 
 
@@ -201,9 +205,70 @@ public class settingsHelper {
 
         // ADD CPU COMMANDS TO THE ARRAY
         ArrayList<String> governorSettings = new ArrayList<String>();
-        String max_freq = shell.getInfo(FilePath.CPU_BASE_PATH + 0 +  FilePath.CPU_MAX_FREQ);
+        String max_freq = shell.getInfo(FilePath.CPU_BASE_PATH + 0 + FilePath.CPU_MAX_FREQ);
         String min_freq = shell.getInfo(FilePath.CPU_BASE_PATH + 0 +  FilePath.CPU_MIN_FREQ);
-        for (int k = 0; k < mNumCpus; k++) {
+
+        String max_big_freq = shell.getInfo(FilePath.CPU_BASE_PATH + 4 +  FilePath.CPU_MAX_FREQ);
+        String min_big_freq = shell.getInfo(FilePath.CPU_BASE_PATH + 4 +  FilePath.CPU_MIN_FREQ);
+
+        int cores = mNumCpus;
+
+        //big.LITTLE;
+        if (mNumCpus > 4) {
+            cores = mNumCpus / 2;
+
+            for (int k = 4; k < mNumCpus; k++) {
+                if (cpu_big_max != null) {
+
+                    shell.queueWork("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
+                    shell.queueWork("chmod 0666 " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MAX_FREQ);
+
+                    if (Profile != null) {
+                        defaultProfile.add("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
+                        defaultProfile.add("echo " + max_big_freq + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MAX_FREQ);
+                    }
+
+                    shell.queueWork("echo " + cpu_big_max + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MAX_FREQ);
+                    //Log.e("Aero", "Output: " + "echo " + cpu_big_max + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MAX_FREQ);
+                }
+
+                if (cpu_big_min != null) {
+
+                    shell.queueWork("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
+                    shell.queueWork("chmod 0666 " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MIN_FREQ);
+
+                    if (Profile != null) {
+                        defaultProfile.add("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
+                        defaultProfile.add("echo " + min_big_freq + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MIN_FREQ);
+                    }
+
+                    shell.queueWork("echo " + cpu_big_min + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MIN_FREQ);
+                    ///Log.e("Aero", "Output: " + "echo " + cpu_big_min + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MIN_FREQ);
+                }
+
+                if (cpu_gov != null) {
+
+                    shell.queueWork("chmod 0666 " + FilePath.CPU_BASE_PATH + k + FilePath.CURRENT_GOV_AVAILABLE);
+
+                /*
+                 * Needs to be executed first, otherwise we would get a NullPointer
+                 * For safety reasons we sleep this thread later
+                 */
+                    if (Profile != null) {
+                        defaultProfile.add("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
+                        defaultProfile.add("echo " + shell.getInfo(FilePath.CPU_BASE_PATH + k +
+                                FilePath.CURRENT_GOV_AVAILABLE) + " > " + FilePath.CPU_BASE_PATH +
+                                k + FilePath.CURRENT_GOV_AVAILABLE);
+                    }
+
+                    shell.queueWork("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
+                    shell.queueWork("echo " + cpu_gov + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CURRENT_GOV_AVAILABLE);
+                }
+            }
+
+        }
+
+        for (int k = 0; k < cores; k++) {
             if (cpu_max != null) {
 
                 shell.queueWork("echo 1 > " + FilePath.CPU_BASE_PATH + k + "/online");
@@ -215,6 +280,7 @@ public class settingsHelper {
                 }
 
                 shell.queueWork("echo " + cpu_max + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MAX_FREQ);
+                //Log.e("Aero", "Output: " + "echo " + cpu_max + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MAX_FREQ);
             }
 
             if (cpu_min != null) {
@@ -228,6 +294,7 @@ public class settingsHelper {
                 }
 
                 shell.queueWork("echo " + cpu_min + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MIN_FREQ);
+                //Log.e("Aero", "Output: " + "echo " + cpu_min + " > " + FilePath.CPU_BASE_PATH + k + FilePath.CPU_MIN_FREQ);
             }
 
             if (cpu_gov != null) {
