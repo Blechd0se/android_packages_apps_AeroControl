@@ -283,9 +283,9 @@ public class StatisticsFragment extends Fragment {
             String b = data[k];
             String[] c = b.split(" ");
             if(k == 0) {
-                a = Integer.parseInt(c[0]);
+                a = Long.parseLong(c[0]);
             } else {
-                a = Integer.parseInt(c[1]);
+                a = Long.parseLong(c[1]);
             }
             cpuOverallTime.add((long)a);
 
