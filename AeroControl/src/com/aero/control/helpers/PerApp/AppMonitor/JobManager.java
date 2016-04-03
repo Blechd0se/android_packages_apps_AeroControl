@@ -304,8 +304,12 @@ public final class JobManager {
 
                             // Add our data to our array;
                             List<Integer> currentValues = Collections.synchronizedList(ammd.getRawData(module.getIdentifier()));
-                            for (Integer i : currentValues) {
-                                values.put(i);
+                            synchronized (currentValues) {
+                                synchronized (values) {
+                                    for (Integer i : currentValues) {
+                                        values.put(i);
+                                    }
+                                }
                             }
 
                             // Add the data to our object;
