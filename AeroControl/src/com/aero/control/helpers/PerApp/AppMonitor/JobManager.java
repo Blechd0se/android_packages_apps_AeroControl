@@ -286,36 +286,36 @@ public final class JobManager {
                 List<AppModuleMetaData> moduleMetaData = Collections.synchronizedList(getModuleData().getAppModuleData());
 
                 // Get the meta data for all loaded modules;
-                for (AppModuleMetaData ammd : moduleMetaData) {
-                    // Find our App context;
-                    if (ammd.getAppContext() == context) {
+                synchronized (moduleMetaData) {
+                    for (AppModuleMetaData ammd : moduleMetaData) {
+                        // Find our App context;
+                        if (ammd.getAppContext() == context) {
 
-                        AppLogger.print(mClassName, "Current Context: " + context.getAppName(), 1);
+                            AppLogger.print(mClassName, "Current Context: " + context.getAppName(), 1);
 
-                        // Iterate through all loaded modules;
-                        for (AppModule module : mModules) {
+                            // Iterate through all loaded modules;
+                            for (AppModule module : mModules) {
 
-                            // For each module we need to get the data separately;
-                            JSONObject appModule = new JSONObject();
-                            // Our actual values are stored in this array;
-                            JSONArray values = new JSONArray();
+                                // For each module we need to get the data separately;
+                                JSONObject appModule = new JSONObject();
+                                // Our actual values are stored in this array;
+                                JSONArray values = new JSONArray();
 
-                            AppLogger.print(mClassName, "Adding Data for module: " + module.getName(), 1);
+                                AppLogger.print(mClassName, "Adding Data for module: " + module.getName(), 1);
 
-                            // Add our data to our array;
-                            List<Integer> currentValues = Collections.synchronizedList(ammd.getRawData(module.getIdentifier()));
-                            synchronized (currentValues) {
-                                synchronized (values) {
+                                // Add our data to our array;
+                                List<Integer> currentValues = Collections.synchronizedList(ammd.getRawData(module.getIdentifier()));
+                                synchronized (currentValues) {
                                     for (Integer i : currentValues) {
                                         values.put(i);
                                     }
                                 }
-                            }
 
-                            // Add the data to our object;
-                            appModule.put("Values", values);
-                            // Then add the object to our app data;
-                            appData.put(module.getIdentifier() + "", appModule);
+                                // Add the data to our object;
+                                appModule.put("Values", values);
+                                // Then add the object to our app data;
+                                appData.put(module.getIdentifier() + "", appModule);
+                            }
                         }
                     }
                 }
@@ -325,7 +325,15 @@ public final class JobManager {
                 parentJson.put(context.getAppName(), currentApp);
 
             }
-        } catch (JSONException e) {}
+        } catch (JSONException e) {
+
+        } catch (OutOfMemoryError e) {
+            AppLogger.print(mClassName, "We got OOM, forcing cleanup! Exception: " + e, 0);
+
+            for (AppModuleMetaData ammd : getModuleData().getAppModuleData()) {
+                forceCleanUp(ammd.getAppContext().getAppName());
+            }
+        }
 
         AppLogger.print(mClassName, "Data gathered, writing to disk..", 1);
         // Write the data to our private directory [files];
@@ -525,11 +533,13 @@ public final class JobManager {
 
             List<AppModuleMetaData> moduleMetaData = Collections.synchronizedList(this.getModuleData().getAppModuleData());
 
-            for (AppModuleMetaData ammd : moduleMetaData) {
-                // Is this context "ready"?
-                if (ammd.getAppContext().isAboveThreshold()) {
-                    if (!AeroActivity.genHelper.doesExist(mContext.getFilesDir().getAbsolutePath() + "/" + FILENAME_APPMONITOR_NOTIFY))
-                        showNotification();
+            synchronized (moduleMetaData) {
+                for (AppModuleMetaData ammd : moduleMetaData) {
+                    // Is this context "ready"?
+                    if (ammd.getAppContext().isAboveThreshold()) {
+                        if (!AeroActivity.genHelper.doesExist(mContext.getFilesDir().getAbsolutePath() + "/" + FILENAME_APPMONITOR_NOTIFY))
+                            showNotification();
+                    }
                 }
             }
         }
