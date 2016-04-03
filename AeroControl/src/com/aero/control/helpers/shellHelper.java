@@ -354,7 +354,7 @@ public final class shellHelper {
             tmp = getRootResult();
 
             // At least try to read it via root, but check for permissions;
-            if (tmp != null && tmp.length() > 0     ) {
+            if (tmp != null && tmp.length() > 10 ) {
                 if (!(tmp.substring(0, 10).equals("--w-------"))) {
                     //info = getLegacyRootInfo("cat", s);
                     addCommand("cat " + s);
@@ -554,7 +554,7 @@ public final class shellHelper {
             String result = getRootInfo("ls -l", s);
 
             // At least try to read it via root, but check for permissions;
-            if (result != null && result.length() > 0) {
+            if (result != null && result.length() > 10) {
                 if (!result.substring(0, 10).equals("--w-------")) {
                     tmp = getRootInfo("cat", s);
                     output = buildArray(tmp, flag, flag_io);
